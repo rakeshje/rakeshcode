@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
     var rememberMe = JSON.parse(localStorage.getItem('rememberMe')) ? JSON.parse(localStorage.getItem('rememberMe')) : '';
     if (rememberMe != '') {
       this.loginForm.patchValue({
-        Phone_Number : window.atob(rememberMe.Phone_Number),
+        number : window.atob(rememberMe.number),
         password: window.atob(rememberMe.password),
         rememberMe: window.atob(rememberMe.rememberMe)
       })
@@ -37,42 +37,43 @@ export class LoginComponent implements OnInit {
       rememberMe: new FormControl(false)
     });
   }
+ 
 
   // ---------  login form submit ------------- //
-  // login() {
+  login() {
     
-  //   let data = {
-  //     'mobileNumber': this.loginForm.value.mobile,
-  //     'password': this.loginForm.value.password
-  //   }
-  //   this.mainService.showSpinner()
-  //   this.mainService.postApi(ApiUrls.login, data, 0).subscribe((res: any) => {
-  //     console.log("login response ==>", res)
-  //     if (res.responseCode == 200) {
-  //       this.mainService.hideSpinner();
-  //       this.mainService.successToast(res.responseMessage)
-  //       localStorage.setItem('token', res.result.token);
-  //       this.mainService.loginStatus.next(true)
-  //       this.router.navigate(['dashboard'])
-  //       this.getProfile()
-  //       console.log(this.loginForm.value.rememberMe)
-  //       if (this.loginForm.value.rememberMe) {
-  //         let remData = {
-  //           "email": window.btoa(this.loginForm.value.email),
-  //           "password": window.btoa(this.loginForm.value.password),
-  //           "rememberMe": window.btoa(this.loginForm.value.rememberMe)
-  //         }
-  //         localStorage.setItem('rememberMe', JSON.stringify(remData))
-  //       }
-  //       else {
-  //         localStorage.removeItem("rememberMe");
-  //       }
-  //     } else {
-  //       this.mainService.hideSpinner();
-  //       this.mainService.errorToast(res.responseMessage)
-  //     }
-  //   })
-  // }
+    let data = {
+      'mobileNumber': this.loginForm.value.number,
+      'password': this.loginForm.value.password
+    }
+    this.mainService.showSpinner()
+    this.mainService.postApi(ApiUrls.login, data, 0).subscribe((res: any) => {
+      console.log("login response ==>", res)
+      if (res.responseCode == 200) {
+        this.mainService.hideSpinner();
+        this.mainService.successToast(res.responseMessage)
+        localStorage.setItem('token', res.result.token);
+        this.mainService.loginStatus.next(true)
+        this.router.navigate(['dashboard'])
+        this.getProfile()
+        console.log(this.loginForm.value.rememberMe)
+        if (this.loginForm.value.rememberMe) {
+          let remData = {
+            "email": window.btoa(this.loginForm.value.email),
+            "password": window.btoa(this.loginForm.value.password),
+            "rememberMe": window.btoa(this.loginForm.value.rememberMe)
+          }
+          localStorage.setItem('rememberMe', JSON.stringify(remData))
+        }
+        else {
+          localStorage.removeItem("rememberMe");
+        }
+      } else {
+        this.mainService.hideSpinner();
+        this.mainService.errorToast(res.responseMessage)
+      }
+    })
+  }
 
   // show and hide password and change eye
   showPassword(){
