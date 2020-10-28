@@ -32,37 +32,37 @@ export class ForgotPasswordComponent implements OnInit {
 
   get f() { return this.form.controls; }
 
-  // resetPassword(){
-  //   console.log("success1");
-  //   let apireq = {
-  //     mobileNumber : this.form.value.number,
-  //   }
-  //   console.log("apireq",apireq);
-  //   this.service.showSpinner();
+  resetPassword(){
+    console.log("success1");
+    let apireq = {
+      mobileNumber : this.form.value.number,
+    }
+    console.log("apireq",apireq);
+    this.service.showSpinner();
 
-  //   this.service.postApiReq('admin/form', apireq,  0).subscribe(success => {
-  //     console.log("success2",success);
-  //     this.service.hideSpinner()
-  //     localStorage.setItem('number', this.form.value.number)
-  //     localStorage.setItem('id',success.result._id)
-  //     if(success.response_code ==400) {
-  //       this.service.errorToastr(success.response_message)
-  //     }
-  //    else if(success.response_code == 201) {
-  //       this.service.successToastr(success.response_message)
-  //       $('#exampleModal').modal({ backdrop: 'static', keyboard: false });
-  //     }
-  //     else if (this.status == false) {
-  //         console.log("success3",success);
-  //         this.service.errorToastr(success.response_message);
-  //         this.status = true;
-  //         return;
-  //       }
+    this.service.postApi('admin/forgotPassword', apireq,  0).subscribe(success => {
+      console.log("success2",success);
+      this.service.hideSpinner()
+      localStorage.setItem('number', this.form.value.number)
+      localStorage.setItem('id',success.result._id)
+      if(success.response_code ==400) {
+        this.service.errorToast(success.response_message)
+      }
+     else if(success.response_code == 201) {
+        this.service.successToast(success.response_message)
+        $('#exampleModal').modal({ backdrop: 'static', keyboard: false });
+      }
+      else if (this.status == false) {
+          console.log("success3",success);
+          this.service.errorToast(success.response_message);
+          this.status = true;
+          return;
+        }
        
-  //   },(err)=>{
-  //     this.service.errorToastr("Something went wrong.")
-  //   })
-  // }
+    },(err)=>{
+      this.service.errorToast("Something went wrong.")
+    })
+  }
 
   
   onOtpChange(e) {
