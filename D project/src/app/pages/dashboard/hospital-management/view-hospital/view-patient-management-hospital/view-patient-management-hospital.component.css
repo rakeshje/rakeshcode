@@ -1,0 +1,37 @@
+.tabcontent {
+    animation: fadeEffect 1s; /* Fading effect takes 1 second */
+}
+
+/* Go from zero to full opacity */
+@keyframes fadeEffect {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+/* search icon */
+.table-no-record {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.btn_search_group {
+    border: 1px solid #ccc;
+    background: #fff;
+    border-left: none;
+    padding-left: 0px;
+    /* padding: .400rem 0.9rem; */
+}
+
+.date-input-box {
+    display: inline-flex;
+    width: 100%;
+}
+.date-input-box .date-input {
+    width: 49%;
+    box-shadow: 1px solid #ced4da;
+    border: 1px solid #ced4da;
+}

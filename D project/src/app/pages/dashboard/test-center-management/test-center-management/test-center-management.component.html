@@ -1,0 +1,182 @@
+<div class="wrapper">
+    <main class="middle-content">
+        <div class="page_title_block">
+            <h1 class="page_title">Test Center Management</h1>
+        </div>
+        <div class="content-section">
+            <div class="outer-box">
+                <div class="global-table no-radius p0">
+                    <div class="tab-content1">
+                        <div class="tab-pane1">
+                            <div class="sec_head_new sec_head_new_after">
+                                <form [formGroup]="searchForm">
+                                    <div class="row">
+                                        <div class="col-md-4  pr-0">
+                                            <div class="filter_search mb20 width100">
+                                                <div class="input-group filter_search_group">
+                                                    <input type="text" class="form-control overflow-text"
+                                                        formControlName="search"
+                                                        placeholder="Search by name, email & mobile number"
+                                                        maxlength="60">
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn_search_group" type="button"><img
+                                                                src="assets/img/icon-search.png" alt="Search"></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <select class="form-control" formControlName="disease">
+                                                <option value="" selected>Select Disease</option>
+                                                <option value="COVID-19">Covid-19</option>
+                                            </select>
+
+                                        </div>
+                                        <div class="col-md-3 p-0">
+                                            <div class="date-input-box">
+                                                <input type="date" name="" id="fromDate"
+                                                    class="form-control date-input mr-2" formControlName="fromDate">
+                                                <input type="date" name="" id="toDate" class="form-control date-input"
+                                                    formControlName="toDate">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="text-center admin-btn ">
+                                                <button type="button" class="btn  btn-theme ml-2 Go_btn"
+                                                    (click)="searchFormSubmit()">Submit</button>
+                                                <button type="button" class="btn  btn-theme ml-2 Go_btn"
+                                                    (click)="searchFormReset()">Reset</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center admin-btn justify-content-end">
+                                        <button type="button" class="btn  btn-theme Go_btn"
+                                            (click)="addTestCenter()">Add</button>
+                                        <button type="button" class="btn  btn-theme ml-2 Go_btn"
+                                            (click)="deleteMultiTestCenterModal()">Delete
+                                            All</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" aria-describedby="test center list">
+                                <thead>
+                                    <tr class="no_wrap_th text-center">
+                                        <th scope="col" class="Sorting-img">
+                                            <input type="checkbox" [checked]="isCheckedAll"
+                                                (change)="setAllCheckboxes($event)" />
+                                            S.No.</th>
+                                        <th scope="col" class="Sorting-img">Test Center Name</th>
+                                        <th scope="col" class="Sorting-img">Email ID</th>
+                                        <th scope="col" class="Sorting-img">Contact Number</th>
+                                        <th scope="col" class="Sorting-img">Registered Date</th>
+                                        <th scope="col" class="Sorting-img">Last Login Date</th>
+                                        <th scope="col" class="action_td_btn3 Sorting-img">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of testCenterDataList | paginate: { itemsPerPage: itemPerPage, currentPage: currentPage, totalItems: total}; let i = index"
+                                        class="text-center">
+                                        <td>
+                                            <input type="checkbox" class="tabel-body-checkbox" [value]="item._id"
+                                                [(ngModel)]="item.isChecked" [ngModelOptions]="{standalone: true}"
+                                                (change)="onCheckboxChange($event)" />
+                                            {{itemPerPage * (currentPage-1)+ i+1}}</td>
+                                        <td class="content" [tooltip]="item?.hospitalName || '--'">
+                                            {{item?.hospitalName || '--'}}</td>
+                                        <td class="content" [tooltip]="item?.email || '--'">{{item?.email || '--'}}</td>
+                                        <td class="content" [tooltip]="item?.mobileNumber || '--'">
+                                            {{item?.mobileNumber || '--'}}</td>
+                                        <td class="content">{{item?.createdAt | date:'d/M/y'}}</td>
+                                        <td class="content">{{item?.updatedAt | date:'d/M/y'}}</td>
+                                        <td class="justify-content-center d-flex">
+                                            <button class="btn btn-info ml-2 bt-margin" title="view"
+                                                (click)="viewTestCenter(item?._id)">
+                                                <i class="fa fa-eye" style="color:white"
+                                                    aria-hidden="true"></i></button>
+                                            <button class="btn btn-info ml-2 bt-margin"
+                                                (click)="editTestCenter(item?._id)"><i class="fa fa-edit"
+                                                    aria-hidden="true" style="color:white"></i></button>
+                                            <button class="btn btn-danger ml-2 bt-margin" title="delete"
+                                                (click)="deleteTestCenterModal(item?._id)"><i class="fa fa-trash"
+                                                    aria-hidden="true" style="color:white"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="!testCenterDataList.length">
+                                        <td class="table-no-record" colspan="8">No Record Found</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="custom-pagination mt-2 text-align-end" *ngIf="total > 10">
+                                <pagination-controls (pageChange)="pagination($event)"></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- delete hospital modal Start -->
+<div class="modal fade global-modal reset-modal" id="deleteTestCenter">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div class="modal-header d-block text-center modal-header-custm">
+                    <h5 class="modal-title d-inline-block">Delete Test Center?</h5>
+                </div>
+                <div class="modal-inner-content">
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p>Are you sure you want to delete this Test Center?</p>
+                                <div class="modal-btn-box">
+                                    <button type="submit" class="btn btn-theme"
+                                        (click)="deleteTestCenter()">Yes</button>
+                                    <button type="button" class="btn btn-danger btn-theme ml-2"
+                                        data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- end delete hospital modal -->
+
+<!-- delete multiple hospital modal Start -->
+<div class="modal fade global-modal reset-modal" id="deleteMultiTestCenter">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div class="modal-header d-block text-center modal-header-custm">
+                    <h5 *ngIf="testCenterIds.length == 1" class="modal-title d-inline-block">Delete Test Center?</h5>
+                    <h5 *ngIf="testCenterIds.length > 1" class="modal-title d-inline-block">Delete Test Centers?</h5>
+                </div>
+                <div class="modal-inner-content">
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p *ngIf="testCenterIds.length == 1">Are you sure you want to delete this test center?
+                                </p>
+                                <p *ngIf="testCenterIds.length > 1">Are you sure you want to delete these test centers?
+                                </p>
+                                <div class="modal-btn-box">
+                                    <button type="submit" class="btn btn-theme"
+                                        (click)="deleteMultiTestCenter()">Yes</button>
+                                    <button type="button" class="btn btn-danger btn-theme ml-2"
+                                        data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- end delete multiple hospital modal -->

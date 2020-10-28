@@ -1,0 +1,30 @@
+<div class="wrapper">
+    <main class="middle-content">
+        <div class="page_title_block">
+            <h1 class="page_title">FAQs / View</h1>
+        </div>
+        <div class="content-section">
+            <div class="order-view max-WT setting-page">
+                <div class="mb40">
+                    <div class="add-store-block input-style mb20 ">
+                        <form>
+                            <div class="form-group row align-items-baseline">
+                                <div class="col-md-12">
+                                    <h4 class="mt20">Question</h4>
+                                    <p>{{faqList?.question || '--'}} </p>
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-baseline">
+                                <div class="col-md-12">
+                                    <h4 class="mt20">Message</h4>
+                                    <p> {{faqList?.message}} </p>
+                                    <p class="mt30">{{(faqList?.createdAt | date : 'd/M/y') || '--'}}</p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

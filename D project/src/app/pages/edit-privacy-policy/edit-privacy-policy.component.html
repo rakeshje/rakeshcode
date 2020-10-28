@@ -1,0 +1,32 @@
+<div class="wrapper">
+    <main class="middle-content">
+        <div class="page_title_block">
+            <h1 class="page_title" style="font-size: 20px;"> EDIT PRIVACY POLICY</h1>
+            <hr style="width: 118%; margin-left: -9%; background-color: black;">
+        </div>
+        <div class="">
+            <label style="font-size: 18px; margin-left: 3%;">Title:</label>
+            <input type="text" formControlName="Title:" class="form-control" maxlength="50"
+                style="width:51% ; margin-left: 13%; margin-top:-4%;" placeholder="PRIVACY POLICY"
+                (keypress)="mainService.preventSpace($event)" />
+                <!-- <h5 style="margin-left: 10%;margin-top: -3%;">PRIVACY POLICY</h5> -->
+        </div>
+        <div class="" style="margin-top: 2%;">
+            <label style="position :absolute; left:20%; font-size: 18px; left: 22%;">Description:</label>
+
+             <!-- <input type="text" formControlName="Description:" class="form-control" maxlength="50" style="width:90% ; margin-left: 9%; margin-top:-4%;height: 400px;"
+             (keypress)="mainService.preventSpace($event)" /> --> 
+            <textarea name="" id="" cols="80"
+                rows="10" style="margin-left: 13%;width: 51%;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed .Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed .Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed .Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed .Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoree
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed .Lorem ipsum dolor sit <br>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed .Lorem ipsum dolor sit 
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed .Lorem ipsum dolor sit </textarea>
+        </div>
+        <div class="text-center mt40">
+            <button class="btn btn-login btn-large width100 font-100" style="width: 14%; background-color: deep blue; margin-top: 6%;margin-left: -44%;"[routerLink]="['/static-content-management']">Back</button>
+           </div>
+           <div class="text-center mt40">
+            <button class="btn btn-login btn-large width100 font-100" style="width: 14%; background-color: deep blue; margin-top: -15%;margin-left: -13%;"[routerLink]="['/static-content-management']">Update</button>
+           </div>
+  </main>
+</div>
+

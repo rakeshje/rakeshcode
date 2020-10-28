@@ -1,0 +1,60 @@
+<!-- <div class="border border-dark" style="width: 30%;
+margin-left: 33%;
+"> -->
+<div class="login-wrapper">
+    <div class="container-common">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="d-flex align-items-center minheight70vh">
+                    <form class="login_box_outer w-100" [formGroup]="form">
+                        <div class="border border-dark">
+                            <div class="login-right-block">
+                                <div class="login-heading">
+                                    <h4>OTP</h4>
+                                    <hr style="width: 118%; margin-left: -9%; background-color: black;">
+                                </div>
+
+<!-- <i class="fa    fa-times" aria-hidden="true" style="font-size: x-large; margin-left: 95%;"></i> -->
+    <section class="login-section">
+       <div class="login-div">
+      
+          <form [formGroup]="otpForm">
+             <!-- <h1 style="
+             font-size: 32px;
+             ">OTP Verification </h1>
+             <p style="text-align: center;
+             font-size: 143%;"> An OTP has been sent to your registered mobile number or email address. Please enter it below. </p> -->
+              <p style="margin-bottom: -9%;font-size: 20px;margin-left: 31%;">Enter the OTP</p>
+               <div class="text-danger"
+               *ngIf="otpForm.get('otp').invalid && (otpForm.get('otp').dirty  || otpForm.get('otp').touched)"
+               style="color: red;text-align: start">
+               <span *ngIf="otpForm.get('otp').hasError('required')" style="margin-left: 31%;
+               font-size: 149%;">otp required
+                .</span>
+                <span *ngIf="otpForm.get('otp').hasError('pattern')" style="margin-left: 31%;
+                font-size: 149%;">please enter the valid OTP
+                    .</span>
+              
+           </div>
+             <div class="row" style= "margin-left: 26%;
+             margin-top: 14%;">
+            
+                 <input type="text" id="box"  formControlName="otp">
+                 <input type="text" id="box" formControlName="otp">
+                 <input type="text" id="box" formControlName="otp">
+                 <input type="text" id="box" formControlName="otp">
+             </div>
+             <p style="margin-left: 57%;color: blue;font-size: 126%;">Resend</p>
+             <!-- <p style="text-align: center"> Didn't recieve OTP?  <a  [routerLink]="['/reset-password']">Resend OTP</a> </p> -->
+             <div class="text-center mt40">
+                <button class="btn btn-login btn-large width100 font-100"
+                [disabled]="!loginForm.valid" (click)="login()" style="width: 50%;"[routerLink]="['/reset-password']">CONFIRM</button>
+                
+  <!-- <button class="btn                 border border-dark" style="width: 42%;
+                  margin-top: 8%;
+                  margin-right: 7%;" [routerLink]="['/reset-password']">Continue</button> -->
+               </div>
+          </form>
+       </div>
+    </section>
+ </div>
