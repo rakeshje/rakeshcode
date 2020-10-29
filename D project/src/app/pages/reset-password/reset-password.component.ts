@@ -27,28 +27,28 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   resetApi() {
-    // if (this.resetPassword.valid) {
-    //   const data = {
-    //     newPassword: this.resetPassword.value.password,
-    //     confirmPassword: this.resetPassword.value.confirmPassword,
-    //   }
-    //   this.mainService.showSpinner()
-    //   this.mainService.postApi(ApiUrls.resetPassword + this.resetId, data, 0).subscribe((res: any) => {
-    //     console.log('reset password response ==>', res);
-    //     if (res.responseCode == 200) {
-    //       this.mainService.hideSpinner();
-    //       this.mainService.successToast(res.responseMessage)
+    if (this.resetPassword.valid) {
+      const data = {
+        newPassword: this.resetPassword.value.password,
+        confirmPassword: this.resetPassword.value.confirmPassword,
+      }
+      this.mainService.showSpinner()
+      this.mainService.postApi(ApiUrls.resetPassword + this.resetId, data, 0).subscribe((res: any) => {
+        console.log('reset password response ==>', res);
+        if (res.responseCode == 200) {
+          this.mainService.hideSpinner();
+          this.mainService.successToast(res.responseMessage)
           this.router.navigateByUrl('/login')
-    //     } else {
-    //       this.mainService.hideSpinner();
-    //       this.mainService.errorToast(res.responseMessage)
-    //     }
-    //   })
-    // }
-    // else {
-    //   console.log('Email is required.');
-    //   this.mainService.errorToast('Email is required.')
-    // }
+        } else {
+          this.mainService.hideSpinner();
+          this.mainService.errorToast(res.responseMessage)
+        }
+      })
+    }
+    else {
+      console.log('Email is required.');
+      this.mainService.errorToast('Email is required.')
+    }
   }
 
 }

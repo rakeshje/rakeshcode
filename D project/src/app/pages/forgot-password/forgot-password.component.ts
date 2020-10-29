@@ -15,6 +15,7 @@ export class ForgotPasswordComponent implements OnInit {
   status: boolean;
   otp: any;
   id: any;
+  otpForm: FormGroup;
 
   constructor(public service: MainService, public router:Router) { }
 
@@ -25,9 +26,9 @@ export class ForgotPasswordComponent implements OnInit {
     this.form = new FormGroup({
       number: new FormControl('',( [Validators.required, Validators.pattern(/^[0-9]*$/),Validators.maxLength(18)])),
     });
-    // this.loginPhNumberVerificationForm = new FormGroup({
-    //   verificationCode: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')])
-    // });
+    this.otpForm = new FormGroup({
+      verificationCode: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')])
+    });
   }
 
   get f() { return this.form.controls; }
@@ -45,16 +46,17 @@ export class ForgotPasswordComponent implements OnInit {
       this.service.hideSpinner()
       localStorage.setItem('number', this.form.value.number)
       localStorage.setItem('id',success.result._id)
-      if(success.response_code ==400) {
-        this.service.errorToast(success.response_message)
+      if(success.responseCode ==200) {
+        this.service.successToast(success.responseMessage);
+        $('#exampleModal').modal('show');
       }
-     else if(success.response_code == 201) {
-        this.service.successToast(success.response_message)
+     else if(success.responseCode == 401) {
+        this.service.successToast(success.responseMessage)
         $('#exampleModal').modal({ backdrop: 'static', keyboard: false });
       }
       else if (this.status == false) {
           console.log("success3",success);
-          this.service.errorToast(success.response_message);
+          this.service.errorToast(success.responseMessage);
           this.status = true;
           return;
         }
@@ -68,37 +70,38 @@ export class ForgotPasswordComponent implements OnInit {
   onOtpChange(e) {
     this.otp = e;
   }
-  // verifOtp() {
-  //   if (this.otp.length == 4) {
-  //     let data = {
-  //       mobileNumber: localStorage.getItem('number'),
-  //       otp: this.otp
-  //     }
-  //     this.service.postApiReq('admin/verifyOtp', data, 0).subscribe(success => {
-  //       console.log("success", success);
-  //       if (success.response_code == 200) {
-  //         this.service.showSpinner()
-  //         this.service.successToastr(success.response_message)
-  //         this.id = success.result._id;
-  //         console.log("sadfgsdgsdgsdfgdsfg",this.id);
-  //         $('#exampleModal').modal('hide');
-  //         this.router.navigate(['reset-password/'+this.id]);
+  verifOtp() {
+    if (this.otp.length == 4) {
+      let data = {
+        mobileNumber: localStorage.getItem('number'),
+        otp: this.otp
+      }
+      this.service.showSpinner()
+      this.service.postApi('admin/verifyOtp', data, 0).subscribe(success => {
+        console.log("success", success);
+        if (success.responseCode == 200) {
+          this.service.hideSpinner()
+          this.service.successToast(success.responseMessage)
+          this.id = success.result._id;
+          console.log("sadfgsdgsdgsdfgdsfg",this.id);
+          $('#exampleModal').modal('hide');
+          this.router.navigate(['reset-password/'+this.id]);
         
-  //       }
-  //       else {
-  //         this.service.errorToastr(success.response_message);
-  //         this.service.hideSpinner()
-  //       }
-  //     },(err)=>{
-  //       this.service.errorToastr("Something went wrong.");
-  //       this.service.hideSpinner()
-  //     })
+        }
+        else {
+          this.service.errorToast(success.responseMessage);
+          this.service.hideSpinner()
+        }
+      },(err)=>{
+        this.service.errorToast("Something went wrong.");
+        this.service.hideSpinner()
+      })
 
-  //   }
-  //   else {
-  //     return;
-  //   }
+    }
+    else {
+      return;
+    }
 
-  // }
+  }
 
 }

@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
   loginFormValidation() {
     this.loginForm = new FormGroup({
       number: new FormControl('', [Validators.required, Validators.pattern("[0-9]{10}")]),
-      password: new FormControl('', Validators.required),
+      password: new FormControl('', ([Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/)])),
       rememberMe: new FormControl(false)
     });
   }

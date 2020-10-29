@@ -85,7 +85,7 @@ import { ViewPrivacyPolicyComponent } from './pages/view-privacy-policy/view-pri
 import { EditPrivacyPolicyComponent } from './pages/edit-privacy-policy/edit-privacy-policy.component';
 import { ViewTermsComponent } from './pages/view-terms/view-terms.component';
 import { EditTermsComponent } from './pages/edit-terms/edit-terms.component';
-// import { NgOtpInputModule } from 'ng-otp-input';
+import { NgOtpInputModule } from 'ng-otp-input';
 export const MyDefaultTooltipOptions: TooltipOptions = {
   'placement': 'top',
   'show-delay': 100,
@@ -174,7 +174,7 @@ export const MyDefaultTooltipOptions: TooltipOptions = {
     GooglePlaceModule,
     AngularFontAwesomeModule,
     CKEditorModule,
-    // NgOtpInputModule,
+    NgOtpInputModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
       maxOpened: 1,
