@@ -12,15 +12,18 @@ import { ApiUrls } from 'src/app/config/api-urls/api-urls';
 export class ResetPasswordComponent implements OnInit {
   resetPassword: FormGroup;
   resetId: any;
+  showPassOrText: boolean;
+  showEyeOrCrossEye: boolean;
 
   constructor(private activatedroute: ActivatedRoute, public mainService: MainService, public router: Router) { }
 
   ngOnInit() {
     this.resetPassword = new FormGroup({
+      "number": new FormControl('',( [Validators.required, Validators.pattern(/^[0-9]*$/),Validators.maxLength(18)])),
       "password": new FormControl('', ([Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/)])),
       "confirmPassword": new FormControl('', [Validators.required])
     });
-    this.activatedroute.params.subscribe((res) => {
+    this.activatedroute.queryParams.subscribe((res) => {
       this.resetId = res.id
       console.log('res', this.resetId);
     })
@@ -29,11 +32,12 @@ export class ResetPasswordComponent implements OnInit {
   resetApi() {
     if (this.resetPassword.valid) {
       const data = {
+        mobileNumber:this.resetPassword.value.number,
         newPassword: this.resetPassword.value.password,
         confirmPassword: this.resetPassword.value.confirmPassword,
       }
       this.mainService.showSpinner()
-      this.mainService.postApi(ApiUrls.resetPassword + this.resetId, data, 0).subscribe((res: any) => {
+      this.mainService.postApi(ApiUrls.resetPassword , data, 0).subscribe((res: any) => {
         console.log('reset password response ==>', res);
         if (res.responseCode == 200) {
           this.mainService.hideSpinner();
@@ -49,6 +53,12 @@ export class ResetPasswordComponent implements OnInit {
       console.log('Email is required.');
       this.mainService.errorToast('Email is required.')
     }
+  }
+
+  // show and hide password and change eye
+  showPassword(){
+    this.showPassOrText = !this.showPassOrText;
+    this.showEyeOrCrossEye = !this.showEyeOrCrossEye
   }
 
 }

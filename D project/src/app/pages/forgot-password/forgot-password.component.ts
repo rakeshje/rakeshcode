@@ -85,7 +85,8 @@ export class ForgotPasswordComponent implements OnInit {
           this.id = success.result._id;
           console.log("sadfgsdgsdgsdfgdsfg",this.id);
           $('#exampleModal').modal('hide');
-          this.router.navigate(['reset-password/'+this.id]);
+          this.otpForm.reset()
+          this.router.navigate(['reset-password'])
         
         }
         else {

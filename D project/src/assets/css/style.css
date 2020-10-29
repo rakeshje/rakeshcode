@@ -16,6 +16,7 @@ body {
 }
 
 input:-webkit-autofill {
+    box-shadow: 0 0 0 30px white inset !important;
     -webkit-box-shadow: 0 0 0 30px white inset!important;
 }
 
@@ -1709,7 +1710,7 @@ label.checkbox-common input[type="checkbox"]:checked~span:before {
 .custome-switch {
     position: relative;
     display: block;
-    vertical-align: top;
+    /* vertical-align: top; */
     width: 65px;
     height: 26px;
     padding: 3px;
@@ -2656,8 +2657,8 @@ aside.sidebar {
 .menu-box:focus {
     /* background: linear-gradient(93deg, rgba(82,76,227,1) 0%, rgb(76, 84, 229) 100%); */
     /* background: #221d54; */
-    background-color: #f4f4fa;
-    border-left: 6px solid #86559f;
+    background-color:  #fff;
+    color: #000
 }
 
 .menu-box .card-header {
@@ -2857,7 +2858,7 @@ table.plant_table tbody tr td+td {
 }
 
 .pagination_block {
-    display: inline-block;
+    /* display: inline-block; */
     float: right;
 }
 
@@ -4275,7 +4276,7 @@ p.modal-para {
 
 aside.sidebar {
     /* background: #86559f; */
-    background: #fff;
+    background: #86559f;
 }
 
 .common_ack a {
@@ -4602,7 +4603,7 @@ aside.sidebar {
 .menu-box .side_menu span {
     font-weight: 400;
     /* color: #fff; */
-    color: #343434;
+    color:black;
 }
 
 .menu-box.active .side_menu,
@@ -5241,9 +5242,9 @@ select.form-control.select_opt {
     padding-left: 10px;
     font-size: 13px;
 }
-.login-box {
+/* .login-box {
     /* box-shadow: 0 0 14px #cacaca; */
-}
+ */
 
 /*forgot*/
 .forgot-box {
@@ -6480,7 +6481,7 @@ i.fas.fa-edit.right-icon {
 }
 .adminprofile div#admin label {
     /* color: #fff; */
-    color: #343434;
+    color: black;
 
 }
 body.toggle-wrapper div#admin {
