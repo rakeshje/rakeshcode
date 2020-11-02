@@ -32,6 +32,8 @@ export class UserManagementComponent implements OnInit {
   // =========tab link====//
   selectTab(tab){
     this.currTab = tab;
+    console.log('hh',this.currTab);
+    
     if(this.currTab === 'Customer'){
       this.router.navigate(['wallet-management'])
     }

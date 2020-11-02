@@ -69,6 +69,26 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="form-group row align-items-baseline view-label-align">
+                                <label class="col-md-4 textalignright">Mobile Number <span>:</span></label>
+                                <div class="col-md-8 textaligncenter">
+                                    <div class="form-group ">
+                                        <input type="tel" class="form-control" placeholder="Mobile Number"
+                                            formControlName="number" (keypress)="mainService.preventSpace($event)"
+                                            maxlength="15">
+                                        <div class="text-danger">
+                                            <span
+                                                *ngIf="editProfileForm.get('number').hasError('required') && (editProfileForm.get('number').dirty || editProfileForm.get('number').touched)">
+                                                *Please enter you number.
+                                            </span>
+                                            <span *ngIf="editProfileForm.get('number').hasError('pattern')">
+                                                *Please enter valid number.
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </form>
                     </div>
                     <div class="text-center mt40 mb40">

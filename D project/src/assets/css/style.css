@@ -5144,12 +5144,13 @@ select.form-control.select_opt {
     position: relative;
 }
 .custom_tabs .nav-tabs .nav-item .nav-link {
-    background: #fafafa;
+    background: #86559f;
     border: 1px solid #ccc;
     margin: -1px;
     border-radius: 0;
     text-transform: uppercase;
     font-size: 15px;
+    color: #fff;
 }
 .custom_tabs .nav-tabs .nav-item .nav-link:before {
     content: '';
