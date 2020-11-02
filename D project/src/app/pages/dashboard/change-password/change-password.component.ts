@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { MainService } from 'src/app/provider/main.service';
 import { Router } from '@angular/router';
-import { ApiUrls } from 'src/app/config/api-urls/api-urls';
 
 @Component({
   selector: 'app-change-password',
@@ -26,13 +25,18 @@ export class ChangePasswordComponent implements OnInit {
     if (this.form.value.confirmPassword != this.form.value.newPassword) {
       return false;
     }
+    else if(this.form.value.oldPassword == this.form.value.newPassword){
+      this.mainService.errorToast('old password and new password can not be the same')
+      return false;
+    }
     else {
       const item = {
         'oldPassword': this.form.value.oldPassword,
-        'newPassword': this.form.value.newPassword
+        'newPassword': this.form.value.newPassword,
+        'confirmPassword': this.form.value.confirmPassword
       }
       this.mainService.showSpinner()
-      this.mainService.postApi(ApiUrls.changePassword, item, 1).subscribe((res: any) => {
+      this.mainService.postApi('practioner/changePassword', item, 1).subscribe((res: any) => {
         console.log("change password response ==>", res)
         this.mainService.hideSpinner()
         if (res.responseCode == 200) {

@@ -20,6 +20,7 @@ export class UserManagementComponent implements OnInit {
   userIds: any = [];
   isCheckedAll: any = false;
   currTab: any='Customer';
+  practionerData: any=[];
 
   constructor(private router: Router, public mainService: MainService) { }
 
@@ -41,7 +42,7 @@ export class UserManagementComponent implements OnInit {
       this.router.navigate(['user-detail-trading'])
     }
     else if (this.currTab === 'Practioner'){
-      this.router.navigate(['login-session-activity'])
+      this.getPractioner();
     }
     
   }
@@ -100,11 +101,42 @@ export class UserManagementComponent implements OnInit {
       }
     })
   }
+  // get practioner
+  getPractioner(){
+    this.mainService.showSpinner();
+    let data ={
+
+    }
+    this.mainService.postApi('admin/practitionerList','', 1).subscribe((res:any)=>{
+      
+      if(res.responseCode==200){
+        this.mainService.hideSpinner();
+        this.practionerData=res.result.docs
+        console.log("f", this.practionerData);
+        
+      }
+    },(error)=>{
+      this.mainService.hideSpinner();
+      this.mainService.errorToast('something went wrong')
+    })
+  }
+
 
   // ----------------------------------- view user ------------------------------- //
   viewUser(id) {
+    if(this.currTab=='Customer'){
     console.log('id', id);
     this.router.navigate(['/view-user'], { queryParams: { value: id } })
+    }
+    else if(this.currTab=='Corporate'){
+      console.log('id', id);
+      this.router.navigate(['/view-corporate'], { queryParams: { value: id } })
+      }
+    else if(this.currTab=='Practioner'){
+        console.log('id', id);
+        this.router.navigate(['/view-practitioner'], { queryParams: { value: id } })
+        }
+
   }
   editUser(id) {
     console.log('id', id);

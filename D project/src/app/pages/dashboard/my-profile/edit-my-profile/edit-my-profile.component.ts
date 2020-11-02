@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MainService } from 'src/app/provider/main.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ApiUrls } from 'src/app/config/api-urls/api-urls';
 
 @Component({
   selector: 'app-edit-my-profile',
@@ -47,7 +46,7 @@ export class EditMyProfileComponent implements OnInit {
           'firstName': res.result.firstName ? res.result.firstName : '',
           'email': res.result.email ? res.result.email : '',
           'profilePic': this.imageUrl,
-          'mobileNumber':res.result.mobileNumber ? res.result.mobileNumber:''
+          'number':res.result.mobileNumber ? res.result.mobileNumber:''
         })
         this.mainService.hideSpinner();
         this.mainService.successToast(res.responseMessage);
