@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { MainService } from 'src/app/provider/main.service';
-import { ApiUrls } from 'src/app/config/api-urls/api-urls';
 declare var $: any
 
 @Component({
@@ -53,14 +52,17 @@ export class SidebarComponent implements OnInit {
   // get profile
   getProfile() {
     this.mainService.showSpinner()
-    this.mainService.getApi(ApiUrls.profile, 1).subscribe((res: any) => {
+    this.mainService.getApi('user/getProfile', 1).subscribe((res: any) => {
       console.log("sidebar profile response ==>", res);
       if (res.responseCode == 200) {
-        this.profileData = res.result
+        this.profileData = res.result;
         this.mainService.hideSpinner();
       } else {
         this.mainService.hideSpinner();
       }
+    },(error)=>{
+      this.mainService.hideSpinner();
+      this.mainService.errorToast('something went wrong ')
     })
   }
 

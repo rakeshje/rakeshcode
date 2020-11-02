@@ -19,7 +19,7 @@ export class UserManagementComponent implements OnInit {
   userId: any;
   userIds: any = [];
   isCheckedAll: any = false;
-  currTab: any;
+  currTab: any='Customer';
 
   constructor(private router: Router, public mainService: MainService) { }
 
@@ -27,6 +27,21 @@ export class UserManagementComponent implements OnInit {
     this.defaults()
     this.searchFormValidation();
     this.getUserList()
+  }
+
+  // =========tab link====//
+  selectTab(tab){
+    this.currTab = tab;
+    if(this.currTab === 'Customer'){
+      this.router.navigate(['wallet-management'])
+    }
+   else if(this.currTab === 'Corporate'){
+      this.router.navigate(['user-detail-trading'])
+    }
+    else if (this.currTab === 'Practioner'){
+      this.router.navigate(['login-session-activity'])
+    }
+    
   }
 
   searchFormValidation() {
@@ -178,10 +193,7 @@ export class UserManagementComponent implements OnInit {
     this.currTab = 'PRACTITIONER_MANAGEMENT';
   }
 
-    // to switch between tabs
-selectTab(tab) {
-  this.currTab = tab;
-  }
+    
 }
 
 
