@@ -21,13 +21,18 @@ export class UserManagementComponent implements OnInit {
   isCheckedAll: any = false;
   currTab: any='Customer';
   practionerData: any=[];
+  practionerValue:boolean=true;
+  viewData: any;
+  customerData: any=[];
 
   constructor(private router: Router, public mainService: MainService) { }
 
   ngOnInit() {
-    this.defaults()
+    this.defaults();
     this.searchFormValidation();
-    this.getUserList()
+    // this.getUserList();
+    this.selectTab('Customer');
+    this.getCustomer();
   }
 
   // =========tab link====//
@@ -47,6 +52,8 @@ export class UserManagementComponent implements OnInit {
     
   }
 
+  
+
   searchFormValidation() {
     this.searchForm = new FormGroup({
       search: new FormControl(''),
@@ -56,7 +63,7 @@ export class UserManagementComponent implements OnInit {
   }
   searchFormSubmit() {
     if (this.searchForm.value.search || this.searchForm.value.status || this.searchForm.value.disease) {
-      this.getUserList()
+      // this.getUserList()
     }
   }
   searchFormReset() {
@@ -66,7 +73,7 @@ export class UserManagementComponent implements OnInit {
         disease: '',
         status: ''
       });
-      this.getUserList()
+      // this.getUserList()
     }
   }
 
@@ -74,39 +81,56 @@ export class UserManagementComponent implements OnInit {
     this.userIds = []
     this.isCheckedAll = false
     this.currentPage = event;
-    this.getUserList()
+    // this.getUserList()
   }
 
   // ------- get user list -------- //
-  getUserList() {
-    let data = {
-      'search': this.searchForm.value.search,
-      'disease': this.searchForm.value.disease,
-      'status': this.searchForm.value.status,
-      'page': this.currentPage,
-      'limit': this.itemPerPage
-    }
+  // getUserList() {
+  //   let data = {
+  //     'search': this.searchForm.value.search,
+  //     'disease': this.searchForm.value.disease,
+  //     'status': this.searchForm.value.status,
+  //     'page': this.currentPage,
+  //     'limit': this.itemPerPage
+  //   }
+  //   this.mainService.showSpinner();
+  //   this.mainService.postApi(ApiUrls.userList, data, 1).subscribe((res: any) => {
+  //     console.log("get user management list response ==>", res)
+  //     if (res.responseCode == 200) {
+  //       this.total = res.result.total;
+  //       this.userDataList = res.result[0].docs ? res.result[0].docs : '';
+  //       this.mainService.hideSpinner();
+  //       this.mainService.successToast(res.responseMessage);
+  //     } else {
+  //       this.userDataList = res.result ? res.result : ''
+  //       this.mainService.hideSpinner();
+  //       this.mainService.errorToast(res.responseMessage)
+  //     }
+  //   })
+  // }
+
+  // get customer
+  getCustomer(){
     this.mainService.showSpinner();
-    this.mainService.postApi(ApiUrls.userList, data, 1).subscribe((res: any) => {
-      console.log("get user management list response ==>", res)
-      if (res.responseCode == 200) {
-        this.total = res.result.total;
-        this.userDataList = res.result[0].docs ? res.result[0].docs : '';
+    let data ={}
+    this.mainService.postApi('admin/listUsers','', 1).subscribe((res:any)=>{
+      
+      if(res.responseCode==200){
         this.mainService.hideSpinner();
-        this.mainService.successToast(res.responseMessage);
-      } else {
-        this.userDataList = res.result ? res.result : ''
-        this.mainService.hideSpinner();
-        this.mainService.errorToast(res.responseMessage)
+        this.customerData=res.result.docs
+        console.log("f", this.practionerData);
+        
       }
+    },(error)=>{
+      this.mainService.hideSpinner();
+      this.mainService.errorToast('something went wrong')
     })
   }
+
   // get practioner
   getPractioner(){
     this.mainService.showSpinner();
-    let data ={
-
-    }
+    let data ={}
     this.mainService.postApi('admin/practitionerList','', 1).subscribe((res:any)=>{
       
       if(res.responseCode==200){
@@ -120,27 +144,67 @@ export class UserManagementComponent implements OnInit {
       this.mainService.errorToast('something went wrong')
     })
   }
+  // view practioner
+  viewUser(id){
+    this.userId=id
+    this.viewPractioner()
+    this.practionerValue=false;
+  }
+
+  // view practioner
+  viewPractioner(){
+    
+    this.mainService.showSpinner();
+    this.mainService.getApi('admin/viewPractitioner?userId='+this.userId,1).subscribe((res)=>{
+      if(res.responseCode==200){
+        this.mainService.hideSpinner();
+        this.viewData=res.result
+      }
+    },(error)=>{
+      this.mainService.hideSpinner();
+      this.mainService.errorToast('something went wrong')
+    })
+
+  }
+
+  changeValue(){
+    this.practionerValue=true;
+  }
+
+  
 
 
   // ----------------------------------- view user ------------------------------- //
-  viewUser(id) {
-    if(this.currTab=='Customer'){
-    console.log('id', id);
-    this.router.navigate(['/view-user'], { queryParams: { value: id } })
-    }
-    else if(this.currTab=='Corporate'){
-      console.log('id', id);
-      this.router.navigate(['/view-corporate'], { queryParams: { value: id } })
-      }
-    else if(this.currTab=='Practioner'){
-        console.log('id', id);
-        this.router.navigate(['/view-practitioner'], { queryParams: { value: id } })
-        }
+  // viewUser(id) {
+  //   if(this.currTab=='Customer'){
+  //   console.log('id', id);
+  //   this.router.navigate(['/view-user'], { queryParams: { value: id } })
+  //   }
+  //   else if(this.currTab=='Corporate'){
+  //     console.log('id', id);
+  //     this.router.navigate(['/view-corporate'], { queryParams: { value: id } })
+  //     }
+  //   else if(this.currTab=='Practioner'){
+  //       console.log('id', id);
+  //       this.router.navigate(['/view-practitioner'], { queryParams: { value: id } })
+  //       }
 
-  }
+  // }
+
+  
   editUser(id) {
-    console.log('id', id);
-    this.router.navigate(['/edit-user'], { queryParams: { value: id } })
+    if(this.currTab=='Customer'){
+      console.log('id', id);
+      this.router.navigate(['/view-user'], { queryParams: { value: id } })
+      }
+      else if(this.currTab=='Corporate'){
+        console.log('id', id);
+        this.router.navigate(['/view-corporate'], { queryParams: { value: id } })
+        }
+      else if(this.currTab=='Practioner'){
+          console.log('id', id);
+          this.router.navigate(['/edit-practitioner'], { queryParams: { value: id } })
+          }
 
   }
 
@@ -159,7 +223,7 @@ export class UserManagementComponent implements OnInit {
       console.log("delete user response ==>", res)
       $('#deleteUser').modal('hide');
       if (res.responseCode == 200) {
-        this.getUserList()
+        // this.getUserList()
         this.mainService.successToast(res.responseMessage);
       } else {
         this.mainService.hideSpinner();
@@ -215,7 +279,7 @@ export class UserManagementComponent implements OnInit {
       console.log("delete multiple user response ==>", res)
       $('#deleteMultiUser').modal('hide');
       if (res.responseCode == 200) {
-        this.getUserList()
+        // this.getUserList()
         this.mainService.successToast(res.responseMessage);
       } else {
         this.mainService.hideSpinner();

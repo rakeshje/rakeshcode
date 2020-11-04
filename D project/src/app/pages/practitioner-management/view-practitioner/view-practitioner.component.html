@@ -1,78 +1,3 @@
-<!-- <div class="wrapper">
-    <main class="middle-content">
-        <div class="page_title_block">
-            <h1 class="page_title">VIEW PRACTITIONER </h1>
-            <hr style="background: black; opacity: 0.5;">
-
-        </div>
-
-        <div class="content-section">
-            <div style="position: absolute;
-left: 41%; margin-top: -2%;" >
-    <i style="font-size: 143px;" class="fa fa-user-circle-o" aria-hidden="true"></i>
-    <i style="position: absolute;
-    font-size: 40px;
-    right: -21%;
-" class="fa fa-camera" aria-hidden="true"></i>
-</div>
-
-
-            <div class="col" style="text-align: center;">
-
-                <div class="row" style="margin-left: 15%;
-                margin-top: 16%;">
-                    <label>Name :
-
-                    </label>
-                    <label style="width: 30%;
-                    margin-left: 19%;">
-
-                        Peter Parker
-                    </label>
-                    
-                </div>
-
-                <div class="row" style="margin-left: 15%;
-                margin-top: 3%;">
-                    <label>Phone number :
-
-                    </label>
-                    <label style="width: 30%;
-                    margin-left: 12%;">
-
-                        9999999999
-                    </label>
-                </div>
-
-                <div class="row" style="margin-left: 15%;
-                margin-top: 3%;">
-                    <label>Email id :
-
-                    </label>
-                    <label style="width: 30%;
-                    margin-left: 22%;">
-
-                        Peterparker@gmail.com
-                    </label>
-                </div>
-
-                <div class="row" style="margin-left: 15%;
-                margin-top: 3%;">
-                    <label>Date of birth : </label>
-                    <label style="width: 30%;
-                    margin-left: 12%;">
-
-                        17/07/2020
-                    </label>
-                </div>
-
-                    <div class="row" style="margin-left: 15%;
-                    margin-top: 10%;">
-                        <button type="button" class="btn btn-theme" style="margin-left: 10%;" [routerLink]="['/practitioner-management']">Back</button>
-                    </div>
-            </div>
-        </div> -->
-
         <div class="wrapper">
             <main class="middle-content">
                 <div class="page_title_block">
@@ -85,7 +10,7 @@ left: 41%; margin-top: -2%;" >
                             <div class="add-store-block input-style view-label-align">
                                 <div class="form-group row align-items-baseline">
                                     <div class="col-md-12" style="text-align: center">
-                                        <img alt="" src="{{profileData?.profilePic || 'assets/img/profile-img.jpg' }}"
+                                        <img alt="" src="{{viewData?.profilePic || 'assets/img/profile-img.jpg' }}"
                                             style="height: 100px;width: 100px; border-radius: 50%; border: 1px solid black!important;">
                                     </div>
                                 </div>
@@ -94,7 +19,7 @@ left: 41%; margin-top: -2%;" >
                                     <div class="col-md-8 textaligncenter">
                                         <div class="form-group">
                                             <p style="padding: 0px 5px!important;" >
-                                                {{profileData?.firstName || '--'}}</p>
+                                                {{viewData?.name || '--'}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -103,7 +28,7 @@ left: 41%; margin-top: -2%;" >
                                     <div class="col-md-8 textaligncenter">
                                         <div class="form-group ">
                                             <p class="content-view" >
-                                                {{profileData?.email || '--'}}</p>
+                                                {{viewData?.email || '--'}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -112,7 +37,7 @@ left: 41%; margin-top: -2%;" >
                                     <div class="col-md-8 textaligncenter">
                                         <div class="form-group ">
                                             <p class="content-view" >
-                                                {{profileData?.mobileNumber || '--'}}</p>
+                                                {{viewData?.mobileNumber || '--'}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -122,15 +47,14 @@ left: 41%; margin-top: -2%;" >
                                     <div class="col-md-8 textaligncenter">
                                         <div class="form-group ">
                                             <p class="content-view" >
-                                                {{profileData?.mobileNumber || '--'}}</p>
+                                                {{viewData?.mobileNumber || '--'}}</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="text-center mt40 mb40">
-                                <button class="btn btn-large  max-WT-150 btn-theme" (click)="changePassword()">Change
-                                    Password</button>
-                                <button class="btn btn-large  max-WT-150 btn-theme" (click)="editProfile(profileData?._id)">Edit</button>
+                                
+                                <button class="btn btn-large  max-WT-150 btn-theme" routerLink="/practitioner-management">Back</button>
                             </div>
                         </div>
                     </div>

@@ -27,7 +27,7 @@ export class ViewPractitionerComponent implements OnInit {
   viewPractioner(){
     
     this.mainService.showSpinner();
-    this.mainService.getApi("admin/viewPractitioner?userId=this.userId",1).subscribe((res)=>{
+    this.mainService.getApi('admin/viewPractitioner?userId='+this.userId,1).subscribe((res)=>{
       if(res.responseCode==200){
         this.mainService.hideSpinner();
         this.viewData=res.result

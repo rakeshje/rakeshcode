@@ -35,7 +35,7 @@
             <div class="outer-box">
          <div class="global-table no-radius p0">
                     <div class="tab-content1">
-                        <div class="tab-pane1" >
+                        <div class="tab-pane1" *ngIf="practionerValue==true">
                             <div class="sec_head_new sec_head_new_after">
                                 <form [formGroup]="searchForm">
                                     <div class="row">
@@ -80,58 +80,56 @@
                         </div>
                         <!-- tab link customer start -->
                         <div *ngIf="this.currTab=='Customer'">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" aria-describedby="user management list">
-                                <thead>
-                                    <tr class="no_wrap_th text-center">
-                                        <th scope="col" class="Sorting-img">S.No</th>
-                                       <th scope="col" class="Sorting-img">Name</th>
-                                        <th scope="col" class="Sorting-img">D.O.B</th>
-                                        <th scope="col" class="Sorting-img">Email Address</th>
-                                        <th scope="col" class="Sorting-img">Contact Number</th>
-                                        <th scope="col" class="Sorting-img">Company Name</th>
-                                        <th scope="col" class="action_td_btn3 Sorting-img">Actions</th>
-                                      </tr>
-                                </thead>
-                                <tbody>
-                                                                  
-                                    <tr *ngFor="let item of userDataList | paginate: { itemsPerPage: itemPerPage, currentPage: currentPage, totalItems: total}; let i = index"
-                                        class="text-center">
-                                        <td><input type="checkbox" class="tabel-body-checkbox" [value]="item._id"
-                                                [(ngModel)]="item.isChecked" [ngModelOptions]="{standalone: true}"
-                                                (change)="onCheckboxChange($event)" />
-                                            {{itemPerPage * (currentPage-1)+ i+1}}</td>
-                                        <td class="content" [tooltip]="item?.firstName + ' ' + item?.lastName || '--'">
-                                            {{item?.firstName + ' ' + item?.lastName || '--'}}</td>
-                                        <td class="content" [tooltip]="item?.email || '--'">{{item?.email || '--'}}</td>
-                                        <td class="content" [tooltip]="item?.mobileNumber || '--'">
-                                            {{item?.mobileNumber || '--'}}</td>
-                                        <td class="content">{{item?.disease || '--'}}</td>
-                                        <td class="content">{{item?.createdAt | date :'d/M/y' || '--'}}</td>
-                                        <td class="content">{{item?.testCount}}</td>
-                                        <td class="content">{{item?.testStatus || '--'}}</td>
-                                        <td class="justify-content-center d-flex">
-                                            <button class="btn btn-info ml-2 bt-margin" title="view"
-                                                (click)="viewUser(item?._id)">
-                                                <i class="fa fa-eye" aria-hidden="true"
-                                                    style="color:white"></i></button>
-                                            <button class="btn btn-info ml-2 bt-margin" (click)="editUser(item?._id)"><i
-                                                    class="fa fa-edit" aria-hidden="true"
-                                                    style="color:white"></i></button>
-                                            <button class="btn btn-danger ml-2 bt-margin" title="delete"
-                                                (click)="deleteUserModal(item?._id)"><i class="fa fa-trash"
-                                                    aria-hidden="true" style="color:white"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr *ngIf="!userDataList.length">
-                                        <td class="table-no-record" colspan="9">No Record Found</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="custom-pagination mt-2 text-align-end" *ngIf="total > 10">
-                                <pagination-controls (pageChange)="pagination($event)"></pagination-controls>
+                            <div *ngIf="practionerValue==true">
+                             <div class="table-responsive">
+                                            <table class="table table-bordered" aria-describedby="user management list">
+                                                <thead>
+                                                    <tr class="no_wrap_th text-center">
+                                                        <th scope="col" class="Sorting-img">S.No</th>
+                                                       <th scope="col" class="Sorting-img">Name</th>
+                                                        <th scope="col" class="Sorting-img">D.O.B</th>
+                                                        <th scope="col" class="Sorting-img">Email Address</th>
+                                                        <th scope="col" class="Sorting-img">Contact Number</th>
+                                                        <th scope="col" class="action_td_btn3 Sorting-img">Actions</th>
+                                                      </tr>
+                                                </thead>
+                                                <tbody>
+                                                                                  
+                                                    <tr *ngFor="let item of customerData | paginate: { itemsPerPage: itemPerPage, currentPage: currentPage, totalItems: total}; let i = index"
+                                                        class="text-center">
+                                                        <td>
+                                                            {{itemPerPage * (currentPage-1)+ i+1}}</td>
+                                                        <td class="content" >
+                                                            {{item?.name || '--'}}</td>
+                                                        <td class="content">{{item?.dob || '--'}}</td>
+                                                        <td class="content" >{{item?.email || '--'}}</td>
+                                                        <td class="content" >
+                                                            {{item?.mobileNumber || '--'}}</td>
+                                                        
+                                                        <td class="justify-content-center d-flex">
+                                                            <button class="btn btn-info ml-2 bt-margin" title="view"
+                                                                (click)="viewUser(item?._id)">
+                                                                <i class="fa fa-eye" aria-hidden="true"
+                                                                    style="color:white"></i></button>
+                                                            <button class="btn btn-info ml-2 bt-margin" (click)="editUser(item?._id)"><i
+                                                                    class="fa fa-edit" aria-hidden="true"
+                                                                    style="color:white"></i></button>
+                                                            <button class="btn btn-danger ml-2 bt-margin" title="delete"
+                                                                (click)="deleteUserModal(item?._id)"><i class="fa fa-trash"
+                                                                    aria-hidden="true" style="color:white"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr *ngIf="!customerData.length">
+                                                        <td class="table-no-record" colspan="9">No Record Found</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="custom-pagination mt-2 text-align-end" *ngIf="total > 10">
+                                                <pagination-controls (pageChange)="pagination($event)"></pagination-controls>
+                                            </div>
                             </div>
-                        </div>
+                            </div>
+                        
                     </div>
                     <!-- tab link customer end -->
                     <!-- tab link corporate start -->
@@ -192,6 +190,7 @@
                     <!-- tab link corporate end -->
                     <!-- tab link practioner start -->
                     <div *ngIf="this.currTab=='Practioner'">
+                       <div *ngIf="practionerValue==true">
                         <div class="table-responsive">
                             <table class="table table-bordered" aria-describedby="user management list">
                                 <thead>
@@ -242,8 +241,72 @@
                                 <pagination-controls (pageChange)="pagination($event)"></pagination-controls>
                             </div>
                         </div>
+                       </div>
+                       <!-- practioner view start -->
+                       <div *ngIf="practionerValue==false">
+                            <div class="content-section">
+                                    <div class="order-view  max-WT-700 mrgn-0-auto setting-page">
+                                        <div class="mb40">
+                                           
+                                            <div class="add-store-block input-style view-label-align">
+                                                <div class="form-group row align-items-baseline">
+                                                    <div class="col-md-12" style="text-align: center">
+                                                        <img alt="" src="{{viewData?.profilePic || 'assets/img/profile-img.jpg' }}"
+                                                            style="height: 100px;width: 100px; border-radius: 50%; border: 1px solid black!important;">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <label class="col-md-4 textalignright ">Name <span>:</span></label>
+                                                    <div class="col-md-8 textaligncenter">
+                                                        <div class="form-group">
+                                                            <p style="padding: 0px 5px!important;" >
+                                                                {{viewData?.name || '--'}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <label class="col-md-4 textalignright">Email Id <span>:</span></label>
+                                                    <div class="col-md-8 textaligncenter">
+                                                        <div class="form-group ">
+                                                            <p class="content-view" >
+                                                                {{viewData?.email || '--'}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <label class="col-md-4 textalignright">Mobile Number <span>:</span></label>
+                                                    <div class="col-md-8 textaligncenter">
+                                                        <div class="form-group ">
+                                                            <p class="content-view" >
+                                                                {{viewData?.mobileNumber || '--'}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                
+                                                <div class="form-group row align-items-baseline">
+                                                    <label class="col-md-4 textalignright">Date of birth  <span>:</span></label>
+                                                    <div class="col-md-8 textaligncenter">
+                                                        <div class="form-group ">
+                                                            <p class="content-view" >
+                                                                {{viewData?.mobileNumber || '--'}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-center mt40 mb40">
+                                                
+                                                <button class="btn btn-large  max-WT-150 btn-theme" (click)="changeValue()">Back</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                       </div>
+                       <!-- practioner view end -->
+                       <div *ngIf="practionerValue==false">
+
+                       </div>
                     </div>
-                    <!-- tab link practioner start -->   
+                    <!-- tab link practioner end -->   
                     </div>
                 </div>
 
