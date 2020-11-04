@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MainService } from 'src/app/provider/main.service';
 import { ApiUrls } from 'src/app/config/api-urls/api-urls';
@@ -24,6 +24,8 @@ export class UserManagementComponent implements OnInit {
   practionerValue:boolean=true;
   viewData: any;
   customerData: any=[];
+  viewCustomer: any;
+  editUserForm: FormGroup;
 
   constructor(private router: Router, public mainService: MainService) { }
 
@@ -41,7 +43,7 @@ export class UserManagementComponent implements OnInit {
     console.log('hh',this.currTab);
     
     if(this.currTab === 'Customer'){
-      this.router.navigate(['wallet-management'])
+      this.getCustomer();
     }
    else if(this.currTab === 'Corporate'){
       this.router.navigate(['user-detail-trading'])
@@ -60,6 +62,14 @@ export class UserManagementComponent implements OnInit {
       status: new FormControl(''),
       disease: new FormControl('')
     });
+    this.editUserForm= new FormGroup({
+      'firstName': new FormControl('', Validators.required),
+      'email': new FormControl('', Validators.required),
+      'number': new FormControl('', Validators.required),
+      'DOB': new FormControl('', Validators.required),
+      'image': new FormControl('', Validators.required),
+    })
+
   }
   searchFormSubmit() {
     if (this.searchForm.value.search || this.searchForm.value.status || this.searchForm.value.disease) {
@@ -127,6 +137,68 @@ export class UserManagementComponent implements OnInit {
     })
   }
 
+  // view customer
+  viewUser(id){
+    this.userId=id
+    this.viewCustomerData()
+    this.practionerValue=false;
+  }
+
+  // view customer api
+  viewCustomerData(){
+    let data={
+      'customerId':this.userId
+    }
+    this.mainService.showSpinner();
+    this.mainService.postApi('admin/viewCustomer',data,1).subscribe((res)=>{
+      if(res.responseCode==200){
+        this.mainService.hideSpinner();
+        this.viewCustomer=res.result[0]
+      }
+    },(error)=>{
+      this.mainService.hideSpinner();
+      this.mainService.errorToast('something went wrong')
+    })
+  }
+  // edit customer
+  editUser(id){
+    this.userId=id
+    this.editCustomer();
+    this.practionerValue=false;
+  }
+
+  // edit customer
+  editCustomer(){
+    let data={
+      'customerId':this.userId
+    }
+    this.mainService.showSpinner();
+    this.mainService.postApi('admin/editCustomer',data, 1).subscribe((res:any)=>{
+      
+      if(res.responseCode==200){
+        this.mainService.hideSpinner();
+        this.customerData=res.result;
+        this.editUserForm.patchValue({
+          'firstName':this.customerData.name,
+          'email':this.customerData.email,
+          'number':this.customerData.mobileNumber,
+          'DOB':this.customerData.dob,
+        })
+        console.log("f", this.practionerData);
+        
+      }
+    },(error)=>{
+      this.mainService.hideSpinner();
+      this.mainService.errorToast('something went wrong')
+    })
+  }
+
+
+
+
+
+
+
   // get practioner
   getPractioner(){
     this.mainService.showSpinner();
@@ -137,7 +209,6 @@ export class UserManagementComponent implements OnInit {
         this.mainService.hideSpinner();
         this.practionerData=res.result.docs
         console.log("f", this.practionerData);
-        
       }
     },(error)=>{
       this.mainService.hideSpinner();
@@ -145,15 +216,14 @@ export class UserManagementComponent implements OnInit {
     })
   }
   // view practioner
-  viewUser(id){
+  viewPractioner(id){
     this.userId=id
-    this.viewPractioner()
+    this.viewPractionerData()
     this.practionerValue=false;
   }
 
-  // view practioner
-  viewPractioner(){
-    
+  // view practioner api
+  viewPractionerData(){
     this.mainService.showSpinner();
     this.mainService.getApi('admin/viewPractitioner?userId='+this.userId,1).subscribe((res)=>{
       if(res.responseCode==200){
@@ -192,21 +262,21 @@ export class UserManagementComponent implements OnInit {
   // }
 
   
-  editUser(id) {
-    if(this.currTab=='Customer'){
-      console.log('id', id);
-      this.router.navigate(['/view-user'], { queryParams: { value: id } })
-      }
-      else if(this.currTab=='Corporate'){
-        console.log('id', id);
-        this.router.navigate(['/view-corporate'], { queryParams: { value: id } })
-        }
-      else if(this.currTab=='Practioner'){
-          console.log('id', id);
-          this.router.navigate(['/edit-practitioner'], { queryParams: { value: id } })
-          }
+  // editUser(id) {
+  //   if(this.currTab=='Customer'){
+  //     console.log('id', id);
+  //     this.router.navigate(['/view-user'], { queryParams: { value: id } })
+  //     }
+  //     else if(this.currTab=='Corporate'){
+  //       console.log('id', id);
+  //       this.router.navigate(['/view-corporate'], { queryParams: { value: id } })
+  //       }
+  //     else if(this.currTab=='Practioner'){
+  //         console.log('id', id);
+  //         this.router.navigate(['/edit-practitioner'], { queryParams: { value: id } })
+  //         }
 
-  }
+  // }
 
   // ------------------------------- delete user ----------------------------- //
   deleteUserModal(userId) {

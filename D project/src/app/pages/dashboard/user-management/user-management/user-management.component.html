@@ -129,6 +129,186 @@
                                             </div>
                             </div>
                             </div>
+                            <!-- customer view start -->
+                            <div *ngIf="practionerValue==false">
+                                    <div class="content-section">
+                                            <div class="order-view  max-WT-700 mrgn-0-auto setting-page">
+                                                <div class="mb40">
+                                                   
+                                                    <div class="add-store-block input-style view-label-align">
+                                                        <div class="form-group row align-items-baseline">
+                                                            <div class="col-md-12" style="text-align: center">
+                                                                <img alt="" src="{{viewCustomer?.profilePic || 'assets/img/profile-img.jpg' }}"
+                                                                    style="height: 100px;width: 100px; border-radius: 50%; border: 1px solid black!important;">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row align-items-baseline">
+                                                            <label class="col-md-4 textalignright ">Name <span>:</span></label>
+                                                            <div class="col-md-8 textaligncenter">
+                                                                <div class="form-group">
+                                                                    <p style="padding: 0px 5px!important;" >
+                                                                        {{viewCustomer?.name || '--'}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row align-items-baseline">
+                                                            <label class="col-md-4 textalignright">Email Id <span>:</span></label>
+                                                            <div class="col-md-8 textaligncenter">
+                                                                <div class="form-group ">
+                                                                    <p class="content-view" >
+                                                                        {{viewCustomer?.email || '--'}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row align-items-baseline">
+                                                            <label class="col-md-4 textalignright">Mobile Number <span>:</span></label>
+                                                            <div class="col-md-8 textaligncenter">
+                                                                <div class="form-group ">
+                                                                    <p class="content-view" >
+                                                                        {{viewCustomer?.mobileNumber || '--'}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                        
+                                                        <div class="form-group row align-items-baseline">
+                                                            <label class="col-md-4 textalignright">Date of birth  <span>:</span></label>
+                                                            <div class="col-md-8 textaligncenter">
+                                                                <div class="form-group ">
+                                                                    <p class="content-view" >
+                                                                        {{viewCustomer?.mobileNumber || '--'}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-center mt40 mb40">
+                                                        
+                                                        <button class="btn btn-large  max-WT-150 btn-theme" (click)="changeValue()">Back</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                            </div>
+                            <!-- customer view end -->
+                            <!-- customer edit start -->
+                            <div *ngIf="practionerValue==false">
+                                    <div class="page_title_block">
+                                            <h1 class="page_title">Edit Customer</h1>
+                                        </div>
+                                        <div class="content-section">
+                                            <div class="order-view  max-WT-700 mrgn-0-auto setting-page">
+                                                <div class="  mb40">
+                                                    <div class="add-store-block input-style mb20 mt20 ">
+                                                        <form [formGroup]="editUserForm" #f="ngForm">
+                                                            <div class="user-profile">
+                                                                <div class="image-box">
+                                                                    <img src="{{imageUrl || 'assets/img/profile-img.jpg'}}" id="sub-admin-image" alt="">
+                                                                    <label class="upload-label">
+                                                                        <input type="file" formControlName="image" name="image"
+                                                                            accept="image/jpg,image/jpeg,image/png" id="image"
+                                                                            (change)="ValidateFileUpload($event)" maxlength="56">
+                                                                        <em class="fa fa-pencil" style="color: #86559f!important;font-size: 12px"></em>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row align-items-baseline view-label-align">
+                                                                <label class="col-md-4 textalignright ">Name <span>:</span></label>
+                                                                <div class="col-md-8 textaligncenter">
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="form-control" placeholder="Name"
+                                                                            formControlName="firstName" (keypress)="mainService.preventSpace($event)"
+                                                                            maxlength="60">
+                                                                        <div class="text-danger">
+                                                                            <span
+                                                                                *ngIf="editUserForm.get('firstName').hasError('required') && (editUserForm.get('firstName').dirty || editUserForm.get('firstName').touched)">
+                                                                                *Please enter Name.
+                                                                            </span>
+                                                                            <span
+                                                                                *ngIf="editUserForm.get('firstName').hasError('pattern') && (editUserForm.get('firstName').dirty || f.submitted)">
+                                                                                *Name accept only alphabets.
+                                                                            </span>
+                                                                            <span
+                                                                                *ngIf="editUserForm.get('firstName').hasError('minlength') && !(editUserForm.get('firstName').hasError('pattern')) && (editUserForm.get('firstName').dirty || f.submitted)">
+                                                                                *Minimum length must be 2.
+                                                                            </span>
+                                                                            <span
+                                                                                *ngIf="editUserForm.get('firstName').hasError('maxlength') && !(editUserForm.get('firstName').hasError('pattern')) && (editUserForm.get('firstName').dirty || f.submitted)">
+                                                                                *Maximum length should not more than 20.
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row align-items-baseline view-label-align">
+                                                                <label class="col-md-4 textalignright">Email <span>:</span></label>
+                                                                <div class="col-md-8 textaligncenter">
+                                                                    <div class="form-group ">
+                                                                        <input type="text" class="form-control" placeholder="Email Address"
+                                                                            formControlName="email" (keypress)="mainService.preventSpace($event)"
+                                                                            maxlength="50">
+                                                                        <div class="text-danger">
+                                                                            <span
+                                                                                *ngIf="editUserForm.get('email').hasError('required') && (editUserForm.get('email').dirty || editUserForm.get('email').touched)">
+                                                                                *Please enter you email.
+                                                                            </span>
+                                                                            <span *ngIf="editUserForm.get('email').hasError('pattern')">
+                                                                                *Please enter valid email.
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                
+                                                            <div class="form-group row align-items-baseline view-label-align">
+                                                                <label class="col-md-4 textalignright">Mobile Number <span>:</span></label>
+                                                                <div class="col-md-8 textaligncenter">
+                                                                    <div class="form-group ">
+                                                                        <input type="tel" class="form-control" placeholder="Mobile Number"
+                                                                            formControlName="number" (keypress)="mainService.preventSpace($event)"
+                                                                            maxlength="15">
+                                                                        <div class="text-danger">
+                                                                            <span
+                                                                                *ngIf="editUserForm.get('number').hasError('required') && (editUserForm.get('number').dirty || editUserForm.get('number').touched)">
+                                                                                *Please enter you number.
+                                                                            </span>
+                                                                            <span *ngIf="editUserForm.get('number').hasError('pattern')">
+                                                                                *Please enter valid number.
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                
+                                                            <div class="form-group row align-items-baseline view-label-align">
+                                                                <label class="col-md-4 textalignright">Mobile Number <span>:</span></label>
+                                                                <div class="col-md-8 textaligncenter">
+                                                                    <div class="form-group ">
+                                                                        <input type="tel" class="form-control" placeholder="Mobile Number"
+                                                                            formControlName="DOB" (keypress)="mainService.preventSpace($event)"
+                                                                            maxlength="15">
+                                                                        <div class="text-danger">
+                                                                            <span
+                                                                                *ngIf="editUserForm.get('DOB').hasError('required') && (editUserForm.get('DOB').dirty || editUserForm.get('DOB').touched)">
+                                                                                *Please enter you DOB.
+                                                                            </span>
+                                                                            <span *ngIf="editUserForm.get('DOB').hasError('pattern')">
+                                                                                *Please enter valid DOB.
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="text-center mt40 mb40">
+                                                        <button class="btn btn-large  max-WT-150 btn-theme" [disabled]="!editUserForm.valid"
+                                                            (click)="editUser()">Save</button>
+                                                        <button class="btn btn-large  max-WT-150 btn-theme" (click)="back()">Back</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                            </div>
+                            <!-- customer edit start -->
                         
                     </div>
                     <!-- tab link customer end -->
@@ -218,7 +398,7 @@
                                         
                                         <td class="justify-content-center d-flex">
                                             <button class="btn btn-info ml-2 bt-margin" title="view"
-                                                (click)="viewUser(item?._id)">
+                                                (click)="viewPractioner(item?._id)">
                                                 <i class="fa fa-eye" aria-hidden="true"
                                                     style="color:white"></i></button>
                                             <button class="btn btn-info ml-2 bt-margin" (click)="editUser(item?._id)"><i
