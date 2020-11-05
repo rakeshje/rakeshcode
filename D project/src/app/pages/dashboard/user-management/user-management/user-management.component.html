@@ -35,52 +35,54 @@
             <div class="outer-box">
          <div class="global-table no-radius p0">
                     <div class="tab-content1">
-                        <div class="tab-pane1" *ngIf="practionerValue==true">
-                            <div class="sec_head_new sec_head_new_after">
-                                <form [formGroup]="searchForm">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <div class="filter_search mb20 width100">
-                                                <div class="input-group filter_search_group">
-                                                    <input type="text" class="form-control overflow-text"
-                                                        formControlName="search"
-                                                        placeholder="Search by name"
-                                                        maxlength="60">
-                                                    <div class="input-group-append">
-                                                        <button class="btn btn_search_group" type="button"><img
-                                                                src="assets/img/icon-search.png" alt="Search"></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="date" class="form-control" style="width: 60%;">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="date" class="form-control" style="width: 60%; margin-left: -40%;">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="text-center admin-btn">
-                                                <button type="button" class="btn  btn-theme Go_btn" style="margin-left: -36%;
-                                                min-width: 50px;"
-                                                    >Go</button>
-                                                <button type="button" class="btn  btn-theme ml-2 Go_btn" style="min-width: 50px;"
-                                                    >Reset</button>
-                                                <button type="button" class="btn btn-theme" style="margin-left: 25%;" 
-                                                    >Export
-                                                    csv</button>
-                                                    <button type="button" class="btn btn-theme Go_btn ml-2" [routerLink]="['/add-user']"
-                                                   >Add new
-                                                    </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+                        
                         <!-- tab link customer start -->
                         <div *ngIf="this.currTab=='Customer'">
-                            <div *ngIf="practionerValue==true">
+                                
+                            <div *ngIf="customerValue==true">
+                                    <div class="tab-pane1" >
+                                            <div class="sec_head_new sec_head_new_after">
+                                                <form [formGroup]="searchForm">
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            <div class="filter_search mb20 width100">
+                                                                <div class="input-group filter_search_group">
+                                                                    <input type="text" class="form-control overflow-text"
+                                                                        formControlName="search"
+                                                                        placeholder="Search by name"
+                                                                        maxlength="60">
+                                                                    <div class="input-group-append">
+                                                                        <button class="btn btn_search_group" type="button"><img
+                                                                                src="assets/img/icon-search.png" alt="Search"></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <input type="date" class="form-control" style="width: 60%;">
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <input type="date" class="form-control" style="width: 60%; margin-left: -40%;">
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="text-center admin-btn">
+                                                                <button type="button" class="btn  btn-theme Go_btn" style="margin-left: -36%;
+                                                                min-width: 50px;"
+                                                                    >Go</button>
+                                                                <button type="button" class="btn  btn-theme ml-2 Go_btn" style="min-width: 50px;"
+                                                                    >Reset</button>
+                                                                <button type="button" class="btn btn-theme" style="margin-left: 25%;" 
+                                                                    >Export
+                                                                    csv</button>
+                                                                    <button type="button" class="btn btn-theme Go_btn ml-2" (click)="addUser()"
+                                                                   >Add new
+                                                                    </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
                              <div class="table-responsive">
                                             <table class="table table-bordered" aria-describedby="user management list">
                                                 <thead>
@@ -95,13 +97,13 @@
                                                 </thead>
                                                 <tbody>
                                                                                   
-                                                    <tr *ngFor="let item of customerData | paginate: { itemsPerPage: itemPerPage, currentPage: currentPage, totalItems: total}; let i = index"
+                                                    <tr *ngFor="let item of customerData | paginate: { itemsPerPage: itemPerPage, currentPage: currentPage, totalItems: customerLength}; let i = index"
                                                         class="text-center">
                                                         <td>
                                                             {{itemPerPage * (currentPage-1)+ i+1}}</td>
                                                         <td class="content" >
                                                             {{item?.name || '--'}}</td>
-                                                        <td class="content">{{item?.dob || '--'}}</td>
+                                                        <td class="content">{{item?.dateOfBirth | date:'dd-MM-yyyy' || '--'}}</td>
                                                         <td class="content" >{{item?.email || '--'}}</td>
                                                         <td class="content" >
                                                             {{item?.mobileNumber || '--'}}</td>
@@ -130,7 +132,10 @@
                             </div>
                             </div>
                             <!-- customer view start -->
-                            <div *ngIf="practionerValue==false">
+                            <div *ngIf="customerUserValue==false">
+                                    <div class="page_title_block">
+                                    <h1 class="page_title">View Customer</h1>
+                                   </div>
                                     <div class="content-section">
                                             <div class="order-view  max-WT-700 mrgn-0-auto setting-page">
                                                 <div class="mb40">
@@ -175,7 +180,7 @@
                                                             <div class="col-md-8 textaligncenter">
                                                                 <div class="form-group ">
                                                                     <p class="content-view" >
-                                                                        {{viewCustomer?.mobileNumber || '--'}}</p>
+                                                                        {{viewCustomer?.dateOfBirth | date:'dd-MM-yyyy' || '--'}}</p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -190,7 +195,7 @@
                             </div>
                             <!-- customer view end -->
                             <!-- customer edit start -->
-                            <div *ngIf="practionerValue==false">
+                            <div *ngIf="customerUserEditValue==false">
                                     <div class="page_title_block">
                                             <h1 class="page_title">Edit Customer</h1>
                                         </div>
@@ -279,10 +284,10 @@
                                                             </div>
                                 
                                                             <div class="form-group row align-items-baseline view-label-align">
-                                                                <label class="col-md-4 textalignright">Mobile Number <span>:</span></label>
+                                                                <label class="col-md-4 textalignright">Data Of Birth <span>:</span></label>
                                                                 <div class="col-md-8 textaligncenter">
                                                                     <div class="form-group ">
-                                                                        <input type="tel" class="form-control" placeholder="Mobile Number"
+                                                                        <input type="date" class="form-control" placeholder="Mobile Number"
                                                                             formControlName="DOB" (keypress)="mainService.preventSpace($event)"
                                                                             maxlength="15">
                                                                         <div class="text-danger">
@@ -301,14 +306,153 @@
                                                     </div>
                                                     <div class="text-center mt40 mb40">
                                                         <button class="btn btn-large  max-WT-150 btn-theme" [disabled]="!editUserForm.valid"
-                                                            (click)="editUser()">Save</button>
-                                                        <button class="btn btn-large  max-WT-150 btn-theme" (click)="back()">Back</button>
+                                                            (click)="UpdateUser()">Save</button>
+                                                            <button class="btn btn-large  max-WT-150 btn-theme" (click)="changeValue()">Back</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                             </div>
-                            <!-- customer edit start -->
+                            <!-- customer edit end -->
+                            <!-- customer add start -->
+                            <div *ngIf="customerUserAddValue==false">
+                                    <div class="page_title_block">
+                                            <h1 class="page_title">Add Customer</h1>
+                                        </div>
+                                        <div class="content-section">
+                                            <div class="order-view  max-WT-700 mrgn-0-auto setting-page">
+                                                <div class="  mb40">
+                                                    <div class="add-store-block input-style mb20 mt20 ">
+                                                        <form [formGroup]="addUserForm" #f="ngForm">
+                                                            <div class="user-profile">
+                                                                <div class="image-box">
+                                                                    <img src="{{imageUrl || 'assets/img/profile-img.jpg'}}" id="sub-admin-image" alt="">
+                                                                    <label class="upload-label">
+                                                                        <input type="file" formControlName="image" name="image"
+                                                                            accept="image/jpg,image/jpeg,image/png" id="image"
+                                                                            (change)="ValidateFileUpload($event)" maxlength="56">
+                                                                        <em class="fa fa-pencil" style="color: #86559f!important;font-size: 12px"></em>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row align-items-baseline view-label-align">
+                                                                <label class="col-md-4 textalignright ">Name <span>:</span></label>
+                                                                <div class="col-md-8 textaligncenter">
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="form-control" placeholder="Name"
+                                                                            formControlName="firstName" (keypress)="mainService.preventSpace($event)"
+                                                                            maxlength="60">
+                                                                        <div class="text-danger">
+                                                                            <span
+                                                                                *ngIf="addUserForm.get('firstName').hasError('required') && (addUserForm.get('firstName').dirty || addUserForm.get('firstName').touched)">
+                                                                                *Please enter Name.
+                                                                            </span>
+                                                                            <span
+                                                                                *ngIf="addUserForm.get('firstName').hasError('pattern') && (addUserForm.get('firstName').dirty || f.submitted)">
+                                                                                *Name accept only alphabets.
+                                                                            </span>
+                                                                            <span
+                                                                                *ngIf="addUserForm.get('firstName').hasError('minlength') && !(addUserForm.get('firstName').hasError('pattern')) && (addUserForm.get('firstName').dirty || f.submitted)">
+                                                                                *Minimum length must be 2.
+                                                                            </span>
+                                                                            <span
+                                                                                *ngIf="addUserForm.get('firstName').hasError('maxlength') && !(addUserForm.get('firstName').hasError('pattern')) && (addUserForm.get('firstName').dirty || f.submitted)">
+                                                                                *Maximum length should not more than 20.
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row align-items-baseline view-label-align">
+                                                                <label class="col-md-4 textalignright">Email <span>:</span></label>
+                                                                <div class="col-md-8 textaligncenter">
+                                                                    <div class="form-group ">
+                                                                        <input type="text" class="form-control" placeholder="Email Address"
+                                                                            formControlName="email" (keypress)="mainService.preventSpace($event)"
+                                                                            maxlength="50">
+                                                                        <div class="text-danger">
+                                                                            <span
+                                                                                *ngIf="addUserForm.get('email').hasError('required') && (addUserForm.get('email').dirty || addUserForm.get('email').touched)">
+                                                                                *Please enter you email.
+                                                                            </span>
+                                                                            <span *ngIf="addUserForm.get('email').hasError('pattern')">
+                                                                                *Please enter valid email.
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                
+                                                            <div class="form-group row align-items-baseline view-label-align">
+                                                                <label class="col-md-4 textalignright">Mobile Number <span>:</span></label>
+                                                                <div class="col-md-8 textaligncenter">
+                                                                    <div class="form-group ">
+                                                                        <input type="tel" class="form-control" placeholder="Mobile Number"
+                                                                            formControlName="number" (keypress)="mainService.preventSpace($event)"
+                                                                            maxlength="15">
+                                                                        <div class="text-danger">
+                                                                            <span
+                                                                                *ngIf="addUserForm.get('number').hasError('required') && (addUserForm.get('number').dirty || addUserForm.get('number').touched)">
+                                                                                *Please enter you number.
+                                                                            </span>
+                                                                            <span *ngIf="addUserForm.get('number').hasError('pattern')">
+                                                                                *Please enter valid number.
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                
+                                                            <div class="form-group row align-items-baseline view-label-align">
+                                                                <label class="col-md-4 textalignright">Data Of Birth <span>:</span></label>
+                                                                <div class="col-md-8 textaligncenter">
+                                                                    <div class="form-group ">
+                                                                        <input type="date" class="form-control" placeholder="Mobile Number"
+                                                                            formControlName="DOB" (keypress)="mainService.preventSpace($event)"
+                                                                            maxlength="15">
+                                                                        <div class="text-danger">
+                                                                            <span
+                                                                                *ngIf="addUserForm.get('DOB').hasError('required') && (addUserForm.get('DOB').dirty || addUserForm.get('DOB').touched)">
+                                                                                *Please enter you DOB.
+                                                                            </span>
+                                                                            <span *ngIf="addUserForm.get('DOB').hasError('pattern')">
+                                                                                *Please enter valid DOB.
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row align-items-baseline view-label-align">
+                                                                    <label class="col-md-4 textalignright">Password <span>:</span></label>
+                                                                    <div class="col-md-8 textaligncenter">
+                                                                        <div class="form-group ">
+                                                                            <input type="password" class="form-control" placeholder="Mobile Number"
+                                                                                formControlName="password" (keypress)="mainService.preventSpace($event)"
+                                                                                maxlength="15">
+                                                                            <div class="text-danger">
+                                                                                <span
+                                                                                    *ngIf="addUserForm.get('password').hasError('required') && (addUserForm.get('password').dirty || addUserForm.get('password').touched)">
+                                                                                    *Please enter you password.
+                                                                                </span>
+                                                                                <span *ngIf="addUserForm.get('password').hasError('pattern')">
+                                                                                    *Please enter valid password.
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="text-center mt40 mb40">
+                                                        <button class="btn btn-large  max-WT-150 btn-theme" [disabled]="!addUserForm.valid"
+                                                            (click)="addUserDetail()">Add</button>
+                                                            <button class="btn btn-large  max-WT-150 btn-theme" (click)="changeValue()">Back</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                            </div>
+                            <!-- customer add end -->
                         
                     </div>
                     <!-- tab link customer end -->
@@ -329,21 +473,18 @@
                                 </thead>
                                 <tbody>
                                                                   
-                                    <tr *ngFor="let item of userDataList | paginate: { itemsPerPage: itemPerPage, currentPage: currentPage, totalItems: total}; let i = index"
+                                    <tr *ngFor="let item of corporateData | paginate: { itemsPerPage: itemPerPage, currentPage: currentPage, totalItems: total}; let i = index"
                                         class="text-center">
-                                        <td><input type="checkbox" class="tabel-body-checkbox" [value]="item._id"
-                                                [(ngModel)]="item.isChecked" [ngModelOptions]="{standalone: true}"
-                                                (change)="onCheckboxChange($event)" />
+                                        <td>
                                             {{itemPerPage * (currentPage-1)+ i+1}}</td>
-                                        <td class="content" [tooltip]="item?.firstName + ' ' + item?.lastName || '--'">
-                                            {{item?.firstName + ' ' + item?.lastName || '--'}}</td>
-                                        <td class="content" [tooltip]="item?.email || '--'">{{item?.email || '--'}}</td>
-                                        <td class="content" [tooltip]="item?.mobileNumber || '--'">
+                                        <td class="content" >
+                                            {{item?.name || '--'}}</td>
+                                        <td class="content" >{{item?.dob || '--'}}</td>
+                                        <td class="content" >{{item?.email || '--'}}</td>
+                                        <td class="content" >
                                             {{item?.mobileNumber || '--'}}</td>
-                                        <td class="content">{{item?.disease || '--'}}</td>
-                                        <td class="content">{{item?.createdAt | date :'d/M/y' || '--'}}</td>
-                                        <td class="content">{{item?.testCount}}</td>
-                                        <td class="content">{{item?.testStatus || '--'}}</td>
+                                        
+                                        <td class="content">{{item?.companyName || '--'}}</td>
                                         <td class="justify-content-center d-flex">
                                             <button class="btn btn-info ml-2 bt-margin" title="view"
                                                 (click)="viewUser(item?._id)">
@@ -357,7 +498,7 @@
                                                     aria-hidden="true" style="color:white"></i></button>
                                         </td>
                                     </tr>
-                                    <tr *ngIf="!userDataList.length">
+                                    <tr *ngIf="!corporateData.length">
                                         <td class="table-no-record" colspan="9">No Record Found</td>
                                     </tr>
                                 </tbody>

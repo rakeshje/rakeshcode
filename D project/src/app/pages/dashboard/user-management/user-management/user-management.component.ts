@@ -13,7 +13,7 @@ declare var $: any;
 export class UserManagementComponent implements OnInit {
   searchForm: FormGroup;
   userDataList: any = [];
-  itemPerPage = 10;
+  itemPerPage = 5;
   currentPage = 1;
   total: any;
   userId: any;
@@ -22,10 +22,20 @@ export class UserManagementComponent implements OnInit {
   currTab: any='Customer';
   practionerData: any=[];
   practionerValue:boolean=true;
+  customerValue:boolean=true;
+  customerUserValue:boolean=true;
+  customerUserEditValue:boolean=true;
+  customerUserAddValue:boolean=true;
   viewData: any;
   customerData: any=[];
   viewCustomer: any;
   editUserForm: FormGroup;
+  corporateData: any=[];
+  customerLength: any;
+  file: any;
+  imageType: any;
+  imageUrl: any;
+  addUserForm: FormGroup;
 
   constructor(private router: Router, public mainService: MainService) { }
 
@@ -44,9 +54,13 @@ export class UserManagementComponent implements OnInit {
     
     if(this.currTab === 'Customer'){
       this.getCustomer();
+      this.customerValue=true;
+      this.customerUserValue=true;
+      this.customerUserEditValue=true;
+
     }
    else if(this.currTab === 'Corporate'){
-      this.router.navigate(['user-detail-trading'])
+      this.getCorporate();
     }
     else if (this.currTab === 'Practioner'){
       this.getPractioner();
@@ -68,7 +82,16 @@ export class UserManagementComponent implements OnInit {
       'number': new FormControl('', Validators.required),
       'DOB': new FormControl('', Validators.required),
       'image': new FormControl('', Validators.required),
-    })
+    });
+    this.addUserForm= new FormGroup({
+      'firstName': new FormControl('', Validators.required),
+      'email': new FormControl('', Validators.required),
+      'number': new FormControl('', Validators.required),
+      'DOB': new FormControl('', Validators.required),
+      'image': new FormControl('', Validators.required),
+      'password':new FormControl('', Validators.required),
+    });
+    
 
   }
   searchFormSubmit() {
@@ -88,10 +111,8 @@ export class UserManagementComponent implements OnInit {
   }
 
   pagination(event) {
-    this.userIds = []
-    this.isCheckedAll = false
     this.currentPage = event;
-    // this.getUserList()
+    this.getCustomer()
   }
 
   // ------- get user list -------- //
@@ -119,6 +140,8 @@ export class UserManagementComponent implements OnInit {
   //   })
   // }
 
+// ========================= user tab all start ====================================//
+
   // get customer
   getCustomer(){
     this.mainService.showSpinner();
@@ -127,7 +150,8 @@ export class UserManagementComponent implements OnInit {
       
       if(res.responseCode==200){
         this.mainService.hideSpinner();
-        this.customerData=res.result.docs
+        this.customerData=res.result.docs;
+        this.customerLength=res.result.docs.total
         console.log("f", this.practionerData);
         
       }
@@ -141,7 +165,8 @@ export class UserManagementComponent implements OnInit {
   viewUser(id){
     this.userId=id
     this.viewCustomerData()
-    this.practionerValue=false;
+    this.customerUserValue=false;
+    this.customerValue=false;
   }
 
   // view customer api
@@ -164,7 +189,8 @@ export class UserManagementComponent implements OnInit {
   editUser(id){
     this.userId=id
     this.editCustomer();
-    this.practionerValue=false;
+    this.customerUserEditValue=false;
+    this.customerValue=false;
   }
 
   // edit customer
@@ -182,8 +208,105 @@ export class UserManagementComponent implements OnInit {
           'firstName':this.customerData.name,
           'email':this.customerData.email,
           'number':this.customerData.mobileNumber,
-          'DOB':this.customerData.dob,
+          'DOB':this.customerData.dateOfBirth,
+          'image':this.customerData.profilePic,
         })
+        console.log("f", this.practionerData);
+        
+      }
+    },(error)=>{
+      this.mainService.hideSpinner();
+      this.mainService.errorToast('something went wrong')
+    })
+  }
+
+  // update customer
+  UpdateUser(){
+    let data = {
+      'customerId':this.userId,
+      'name': this.editUserForm.value.firstName,
+      'email': this.editUserForm.value.email,
+      'profilePic': this.imageUrl,
+      'mobileNumber':this.editUserForm.value.number,
+      'dateOfBirth':this.editUserForm.value.DOB,
+    }
+    this.mainService.showSpinner();
+    this.mainService.postApi('admin/editCustomer', data, 1).subscribe((res: any) => {
+      console.log("add helpline number list response ==>", res)
+      if (res.responseCode == 200) {
+        this.mainService.hideSpinner()
+        this.mainService.successToast(res.responseMessage);
+        this.selectTab('Customer');
+        this.customerValue=true;
+        this.customerUserEditValue=true;
+      } else {
+        this.mainService.hideSpinner();
+        this.mainService.errorToast(res.responseMessage)
+      }
+    })
+  }
+  // add user
+
+  addUser(){
+    this.customerUserAddValue=false;
+    this.customerUserEditValue=true;
+    this.customerUserValue=true;
+    this.customerValue=false;
+  }
+
+  // add user api
+  addUserDetail(){
+    let data = {
+      'name': this.addUserForm.value.firstName,
+      'email': this.addUserForm.value.email,
+      'profilePic': this.imageUrl,
+      'mobileNumber':this.addUserForm.value.number,
+      'dateOfBirth':this.addUserForm.value.DOB,
+      'password':this.addUserForm.value.password,
+    }
+    this.mainService.showSpinner();
+    this.mainService.postApi('admin/user', data, 1).subscribe((res: any) => {
+      console.log("add helpline number list response ==>", res)
+      if (res.responseCode == 200) {
+        this.mainService.hideSpinner()
+        this.mainService.successToast(res.responseMessage);
+        this.selectTab('Customer');
+        this.customerValue=true;
+        this.customerUserEditValue=true;
+        this.customerUserAddValue=true;
+        this.customerUserValue=true;
+      } else {
+        this.mainService.hideSpinner();
+        this.mainService.errorToast(res.responseMessage)
+      }
+    })
+  }
+
+  // upload
+  ValidateFileUpload(event) {
+    this.file = event.target.files;
+    if (this.file[0]) {
+      this.imageType = this.file[0].type;
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.imageUrl = e.target.result;
+      };
+      reader.readAsDataURL(this.file[0]);
+    }
+  }
+
+  // =============================== user tab all end =======================================//
+  
+
+  // get corporate
+  getCorporate(){
+    this.mainService.showSpinner();
+    let data ={}
+    this.mainService.postApi('admin/corporateList','', 1).subscribe((res:any)=>{
+      
+      if(res.responseCode==200){
+        this.mainService.hideSpinner();
+        this.corporateData=res.result.docs;
         console.log("f", this.practionerData);
         
       }
@@ -238,8 +361,17 @@ export class UserManagementComponent implements OnInit {
   }
 
   changeValue(){
-    this.practionerValue=true;
+    this.getCustomer()
+    this.customerValue=true;
+    this.customerUserValue=true;
+    this.customerUserEditValue=true;
   }
+  // changeEditValue(){
+  //   this.customerValue=true;
+    
+  //   this.customerUserValue=true;
+  //   this.customerUserEditValue=true;
+  // }
 
   
 
