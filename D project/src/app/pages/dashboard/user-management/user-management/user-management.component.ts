@@ -295,6 +295,14 @@ export class UserManagementComponent implements OnInit {
     }
   }
 
+  changeValue(){
+    this.getCustomer()
+    this.customerValue=true;
+    this.customerUserValue=true;
+    this.customerUserEditValue=true;
+  }
+
+
   // =============================== user tab all end =======================================//
   
 
@@ -333,6 +341,11 @@ export class UserManagementComponent implements OnInit {
         this.practionerData=res.result.docs
         console.log("f", this.practionerData);
       }
+      else if(res.responseCode==404){
+        this.mainService.hideSpinner()
+        this.mainService.errorToast(res.responseMessage)
+
+      }
     },(error)=>{
       this.mainService.hideSpinner();
       this.mainService.errorToast('something went wrong')
@@ -360,72 +373,50 @@ export class UserManagementComponent implements OnInit {
 
   }
 
-  changeValue(){
-    this.getCustomer()
-    this.customerValue=true;
-    this.customerUserValue=true;
-    this.customerUserEditValue=true;
-  }
-  // changeEditValue(){
-  //   this.customerValue=true;
-    
-  //   this.customerUserValue=true;
-  //   this.customerUserEditValue=true;
-  // }
+  
+  
 
   
 
 
-  // ----------------------------------- view user ------------------------------- //
-  // viewUser(id) {
-  //   if(this.currTab=='Customer'){
-  //   console.log('id', id);
-  //   this.router.navigate(['/view-user'], { queryParams: { value: id } })
-  //   }
-  //   else if(this.currTab=='Corporate'){
-  //     console.log('id', id);
-  //     this.router.navigate(['/view-corporate'], { queryParams: { value: id } })
-  //     }
-  //   else if(this.currTab=='Practioner'){
-  //       console.log('id', id);
-  //       this.router.navigate(['/view-practitioner'], { queryParams: { value: id } })
-  //       }
-
-  // }
-
   
-  // editUser(id) {
-  //   if(this.currTab=='Customer'){
-  //     console.log('id', id);
-  //     this.router.navigate(['/view-user'], { queryParams: { value: id } })
-  //     }
-  //     else if(this.currTab=='Corporate'){
-  //       console.log('id', id);
-  //       this.router.navigate(['/view-corporate'], { queryParams: { value: id } })
-  //       }
-  //     else if(this.currTab=='Practioner'){
-  //         console.log('id', id);
-  //         this.router.navigate(['/edit-practitioner'], { queryParams: { value: id } })
-  //         }
-
-  // }
-
   // ------------------------------- delete user ----------------------------- //
   deleteUserModal(userId) {
-    $('#deleteUser').modal('show')
+    $('#deleteModal').modal('show')
     this.userId = userId
   }
   deleteUser() {
     let data = {
-      userId: this.userId
+      customerId: this.userId
+    }
+    if(this.currTab === 'Customer'){
+      var url="admin/deleteAndBlockUser"
+    }
+    else if(this.currTab === 'Corporate'){
+      var url1="admin/deleteAndBlockCorporateCustomer"
+    }
+    else if (this.currTab === 'Practioner'){
+      var url2="admin/blockUnblockPractitioner"
     }
     console.log(data)
     this.mainService.showSpinner();
-    this.mainService.deleteApi(ApiUrls.deleteUser, data, 1).subscribe((res: any) => {
+    this.mainService.postApi(url ||url1 ||url2, data, 1).subscribe((res: any) => {
       console.log("delete user response ==>", res)
       $('#deleteUser').modal('hide');
       if (res.responseCode == 200) {
-        // this.getUserList()
+        if(this.currTab === 'Customer'){
+          this.getCustomer();
+          this.customerValue=true;
+          this.customerUserValue=true;
+          this.customerUserEditValue=true;
+    
+        }
+       else if(this.currTab === 'Corporate'){
+          this.getCorporate();
+        }
+        else if (this.currTab === 'Practioner'){
+          this.getPractioner();
+        }
         this.mainService.successToast(res.responseMessage);
       } else {
         this.mainService.hideSpinner();
