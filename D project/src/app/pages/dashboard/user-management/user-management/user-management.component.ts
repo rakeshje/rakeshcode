@@ -73,8 +73,8 @@ export class UserManagementComponent implements OnInit {
   searchFormValidation() {
     this.searchForm = new FormGroup({
       search: new FormControl(''),
-      status: new FormControl(''),
-      disease: new FormControl('')
+      fromDate: new FormControl(''),
+      toDate: new FormControl('')
     });
     this.editUserForm= new FormGroup({
       'firstName': new FormControl('', Validators.required),
@@ -95,8 +95,8 @@ export class UserManagementComponent implements OnInit {
 
   }
   searchFormSubmit() {
-    if (this.searchForm.value.search || this.searchForm.value.status || this.searchForm.value.disease) {
-      // this.getUserList()
+    if (this.searchForm.value.search || this.searchForm.value.fromDate || this.searchForm.value.endDate) {
+      this.getCustomer()
     }
   }
   searchFormReset() {
@@ -295,6 +295,8 @@ export class UserManagementComponent implements OnInit {
     }
   }
 
+  
+
   changeValue(){
     this.getCustomer()
     this.customerValue=true;
@@ -373,7 +375,76 @@ export class UserManagementComponent implements OnInit {
 
   }
 
-  
+  //==========================serach========================================//
+  // search
+  search(){
+    console.log('h','hh');
+    
+    // if (this.searchForm.value.search || this.searchForm.value.fromDate || this.searchForm.value.toDate) {
+    //   return true;
+    // }
+    
+    let data ={
+      'search':this.searchForm.value.search,
+      'fromDate':this.searchForm.value.fromDate,
+      'toDate':this.searchForm.value.toDate,
+    }
+    this.mainService.showSpinner();
+    if(this.currTab === 'Customer'){
+      var url="admin/listUsers"
+    }
+    else if(this.currTab === 'Corporate'){
+      var url1="admin/deleteAndBlockCorporateCustomer"
+    }
+    else if (this.currTab === 'Practioner'){
+      var url2="admin/blockUnblockPractitioner"
+    }
+
+    this.mainService.postApi(url || url1 || url2,data, 1).subscribe((res:any)=>{
+      
+      if(res.responseCode==200){
+        this.mainService.hideSpinner();
+        if(this.currTab === 'Customer'){
+        this.customerData=res.result.docs;
+        this.customerLength=res.result.docs.total
+        console.log("f", this.practionerData);
+    
+        }
+       else if(this.currTab === 'Corporate'){
+          this.getCorporate();
+        }
+        else if (this.currTab === 'Practioner'){
+          this.getPractioner();
+        }
+        
+        
+      }
+    },(error)=>{
+      this.mainService.hideSpinner();
+      this.mainService.errorToast('something went wrong')
+    })
+  }
+
+  // reset
+  reset(){
+    if (this.searchForm.value.search || this.searchForm.value.fromDate || this.searchForm.value.toDate) {
+     
+        this.mainService.hideSpinner();
+        if(this.currTab === 'Customer'){
+          this.searchForm.reset()
+        this.getCustomer();
+    
+        }
+       else if(this.currTab === 'Corporate'){
+        this.searchForm.reset()
+          this.getCorporate();
+        }
+        else if (this.currTab === 'Practioner'){
+          this.searchForm.reset()
+          this.getPractioner();
+        }
+      }
+  }
   
 
   
