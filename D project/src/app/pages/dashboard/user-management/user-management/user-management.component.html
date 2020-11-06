@@ -116,8 +116,18 @@
                                                             <button class="btn btn-info ml-2 bt-margin" (click)="editUser(item?._id)"><i
                                                                     class="fa fa-edit" aria-hidden="true"
                                                                     style="color:white"></i></button>
+                                                            <button class="btn btn-success ml-2 bt-margin"
+                                                                    *ngIf="item?.status == 'ACTIVE'"
+                                                                    (click)="BlockModal(item?._id, 'ACTIVE')"
+                                                                    title="deactivate"><i class="fa fa-ban" style="color:white;background-color: green"
+                                                                        aria-hidden="true"></i></button>
+                                                            <button class="btn btn-danger ml-2 bt-margin"
+                                                                    *ngIf="item?.status == 'BLOCK'"
+                                                                    (click)="BlockModal(item?._id, 'BLOCK')"
+                                                                    title="activate"><i class="fa fa-ban" style="color:white;background-color: red"
+                                                                        aria-hidden="true"></i></button>        
                                                             <button class="btn btn-danger ml-2 bt-margin" title="delete"
-                                                                (click)="deleteUserModal(item?._id)"><i class="fa fa-trash"
+                                                                (click)="deleteUserModal(item?._id,DELETE)"><i class="fa fa-trash"
                                                                     aria-hidden="true" style="color:white"></i></button>
                                                         </td>
                                                     </tr>
@@ -538,7 +548,7 @@
                                                             class="fa fa-edit" aria-hidden="true"
                                                             style="color:white"></i></button>
                                                     <button class="btn btn-danger ml-2 bt-margin" title="delete"
-                                                        (click)="deleteUserModal(item?._id)"><i class="fa fa-trash"
+                                                        (click)="deleteUserModal(item?._id,DELETE)"><i class="fa fa-trash"
                                                             aria-hidden="true" style="color:white"></i></button>
                                                 </td>
                                             </tr>
@@ -955,7 +965,7 @@
                                                         class="fa fa-ban" aria-hidden="true"
                                                         style="color:white"></i></button>
                                             <button class="btn btn-danger ml-2 bt-margin" title="delete"
-                                                (click)="deleteUserModal(item?._id)"><i class="fa fa-trash"
+                                                (click)="deleteUserModal(item?._id,DELETE)"><i class="fa fa-trash"
                                                     aria-hidden="true" style="color:white"></i></button>
                                         </td>
                                     </tr>
@@ -1038,24 +1048,6 @@
                 </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </div>
         </div>
     </main>
@@ -1127,15 +1119,21 @@
         <form class="change_password">
             <div class="modal-content">
                 <div class="modal-header d-block text-center modal-header-custm">
-                    <h5 class="modal-title d-inline-block">Block</h5>
+                    <h5 *ngIf="this.status=='ACTIVE'" class="modal-title d-inline-block">Block</h5>
+                    <h5 *ngIf="this.status=='BLOCK'" class="modal-title d-inline-block">Unblock</h5>
                 </div>
                 <div class="modal-inner-content">
                     <div class="modal-body">
                         <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
                             <div class="w-100">
-                                <p>Are you sure you want to block this customer?</p>
+                                <p *ngIf="this.status=='ACTIVE' && this.currTab=='Customer'" >Are you sure you want to block this customer?</p>
+                                <p *ngIf="this.status=='BLOCK' && this.currTab=='Customer'" >Are you sure you want to unblock this customer?</p>
+                                <p *ngIf="this.status=='ACTIVE' && this.currTab=='Corporate'" >Are you sure you want to block this corporate customer?</p>
+                                <p *ngIf="this.status=='BLOCK' && this.currTab=='Corporate'" >Are you sure you want to unblock this corporate customer?</p>
+                                <p *ngIf="this.status=='ACTIVE' && this.currTab=='Practioner'" >Are you sure you want to block this practioner?</p>
+                                <p *ngIf="this.status=='BLOCK' && this.currTab=='Practioner'" >Are you sure you want to unblock this practioner?</p>
                                 <div class="modal-btn-box">
-                                    <button type="submit" class="btn btn-theme" (click)="deleteUser()">Yes</button>
+                                    <button type="submit" class="btn btn-theme" (click)="blockUser()">Yes</button>
                                     <button type="button" class="btn btn-danger btn-theme ml-2"
                                         data-dismiss="modal">No</button>
                                 </div>

@@ -45,13 +45,13 @@ export class UserManagementComponent implements OnInit {
   corporateDataPatch: any;
   corporateDataa: any;
   addCorporateForm: FormGroup;
+  status: any;
   
   
 
   constructor(private router: Router, public mainService: MainService) { }
 
   ngOnInit() {
-    this.defaults();
     this.searchFormValidation();
     // this.getUserList();
     this.selectTab('Customer');
@@ -184,8 +184,9 @@ export class UserManagementComponent implements OnInit {
       if(res.responseCode==200){
         this.mainService.hideSpinner();
         this.customerData=res.result.docs;
-        this.customerLength=res.result.docs.total
-        console.log("f", this.customerData);
+        this.customerLength=res.result.docs.total;
+        this.status=res.result.docs[0].status;
+        console.log("f", this.status);
         
       }
     },(error)=>{
@@ -350,6 +351,8 @@ export class UserManagementComponent implements OnInit {
       if(res.responseCode==200){
         this.mainService.hideSpinner();
         this.corporateData=res.result.docs;
+        this.status=res.result.docs.status;
+
         console.log("f", this.practionerData);
         
       }
@@ -523,7 +526,9 @@ export class UserManagementComponent implements OnInit {
       
       if(res.responseCode==200){
         this.mainService.hideSpinner();
-        this.practionerData=res.result.docs
+        this.practionerData=res.result.docs;
+        this.status=res.result.docs.status;
+
         console.log("f", this.practionerData);
       }
       else if(res.responseCode==404){
@@ -594,12 +599,17 @@ export class UserManagementComponent implements OnInit {
     
         }
        else if(this.currTab === 'Corporate'){
-          this.getCorporate();
+        this.corporateData=res.result.docs;
+        console.log("f", this.practionerData);
         }
         else if (this.currTab === 'Practioner'){
           this.getPractioner();
         }
         
+        else if(res.responseCode==404){
+          this.mainService.hideSpinner();
+          this.mainService.errorToast(res.responseMessage)
+        }
         
       }
     },(error)=>{
@@ -634,30 +644,45 @@ export class UserManagementComponent implements OnInit {
 
 
   
-  // ------------------------------- delete user ----------------------------- //
-  deleteUserModal(userId) {
+  // ------------------------------- delete functinality start----------------------------- //
+  deleteUserModal(userId,status) {
     $('#deleteModal').modal('show')
     this.userId = userId
+    this.status=status
   }
   deleteUser() {
-    let data = {
-      customerId: this.userId
-    }
+    // let data = {
+    //   customerId: this.userId,
+    //   status:this.status
+    // }
     if(this.currTab === 'Customer'){
-      var url="admin/deleteAndBlockUser"
+      var data = {
+        customerId: this.userId,
+        status:this.status
+      }
+      var url="admin/deleteAndBlockCustomer"
     }
     else if(this.currTab === 'Corporate'){
+      var data1 = {
+        corporateId: this.userId,
+        status:this.status
+      }
       var url1="admin/deleteAndBlockCorporateCustomer"
     }
     else if (this.currTab === 'Practioner'){
-      var url2="admin/blockUnblockPractitioner"
+      var data2 = {
+        practitionerId: this.userId,
+        status:this.status
+      }
+      var url2="admin/deletePractitioner"
     }
     console.log(data)
     this.mainService.showSpinner();
-    this.mainService.postApi(url ||url1 ||url2, data, 1).subscribe((res: any) => {
+    this.mainService.postApi(url ||url1 ||url2, data || data1 || data2, 1).subscribe((res: any) => {
       console.log("delete user response ==>", res)
-      $('#deleteUser').modal('hide');
       if (res.responseCode == 200) {
+        $('#deleteModal').modal('hide');
+        this.mainService.successToast(res.responseMessage);
         if(this.currTab === 'Customer'){
           this.getCustomer();
           this.customerValue=true;
@@ -679,54 +704,61 @@ export class UserManagementComponent implements OnInit {
     })
   }
 
+  // ------------------------------- delete functinality end ----------------------------- //
 
-  // ----------------------------------  delete multiple hospital ------------------------------- //
-  setAllCheckboxes(event) {
-    this.userIds = [];
-    this.isCheckedAll = event.target.checked;
-    if (this.isCheckedAll) {
-      this.userDataList.forEach((element, index) => {
-        this.userDataList[index].isChecked = true;
-        this.userIds.push(this.userDataList[index]._id);
-      });
-    } else {
-      this.userIds = []
-      this.userDataList.forEach((element, index) => {
-        this.userDataList[index].isChecked = false;
-      });
-    }
-  }
-  onCheckboxChange(event) {
-    if (event.target.checked) {
-      this.userIds.push(event.target.value)
-    } else {
-      const index: number = this.userIds.indexOf(event.target.value)
-      if (index !== -1) { this.userIds.splice(index, 1) }
-    }
-    this.checkIfAllSelected()
-  }
-  checkIfAllSelected() {
-    if (this.userDataList.length == this.userIds.length)
-      return this.isCheckedAll = true;
-    return this.isCheckedAll = false
+  // ------------------------------- block/unblock functinality start----------------------------- //
+  BlockModal(userId,status){
+    $('#blockModal').modal('show')
+    this.userId = userId
+    this.status=status
+    console.log('f',status);
+    
   }
 
-  deleteMultiUserModal() {
-    if (this.userIds.length < 1)
-      return this.mainService.infoToast('Please select item to delete.')
-    $('#deleteMultiUser').modal('show')
-  }
-  deleteMultiUser() {
-    let data = {
-      userIds: this.userIds
+  blockUser(){
+    if(this.currTab === 'Customer'){
+      var data = {
+        customerId: this.userId,
+        status:this.status
+      }
+      var url="admin/deleteAndBlockCustomer"
+    }
+    else if(this.currTab === 'Corporate'){
+      var data1 = {
+        corporateId: this.userId,
+        status:this.status
+      }
+      var url1="admin/deleteAndBlockCorporateCustomer"
+    }
+    else if (this.currTab === 'Practioner'){
+      var data2 = {
+        practitionerId: this.userId,
+        status:this.status
+      }
+      var url2="admin/blockUnblockPractitioner"
     }
     console.log(data)
     this.mainService.showSpinner();
-    this.mainService.deleteApi(ApiUrls.deleteMultiUser, data, 1).subscribe((res: any) => {
-      console.log("delete multiple user response ==>", res)
-      $('#deleteMultiUser').modal('hide');
+    this.mainService.postApi(url ||url1 ||url2, data || data1 || data2, 1).subscribe((res: any) => {
+      console.log("delete user response ==>", res)
       if (res.responseCode == 200) {
-        // this.getUserList()
+        $('#blockModal').modal('hide');
+        this.mainService.successToast(res.responseMessage);
+        console.log('f',this.status);
+        if(this.currTab === 'Customer'){
+
+          this.getCustomer();
+          this.customerValue=true;
+          this.customerUserValue=true;
+          this.customerUserEditValue=true;
+    
+        }
+       else if(this.currTab === 'Corporate'){
+          this.getCorporate();
+        }
+        else if (this.currTab === 'Practioner'){
+          this.getPractioner();
+        }
         this.mainService.successToast(res.responseMessage);
       } else {
         this.mainService.hideSpinner();
@@ -734,9 +766,10 @@ export class UserManagementComponent implements OnInit {
       }
     })
   }
-  defaults() {
-    this.currTab = 'PRACTITIONER_MANAGEMENT';
-  }
+
+
+  // ------------------------------- block/unblock functinality end----------------------------- //
+
 
     
 }

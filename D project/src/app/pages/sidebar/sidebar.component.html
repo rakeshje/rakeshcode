@@ -30,15 +30,7 @@
                             class="side_page_name head_color">USER MANAGEMENT</span></a>
                 </div>
             </div>
-            <div style="text-align: center;" class="menu-box toggle-menu"  routerLink="/user-management">
-            <h6>Customers</h6>
-            </div>
-            <div style="text-align: center;" class="menu-box toggle-menu" routerLink="/corporate-customer-management">
-                <h6>Corporate Customers</h6>
-                </div>
-                <div style="text-align: center;" class="menu-box toggle-menu"  routerLink="/practitioner-management">
-                    <h6>Practitioners</h6>
-                    </div>
+            
             <div class="menu-box toggle-menu" [ngClass]="currentUrl === '/hospital-management' ? 'active' : ''">
                 <div class="card-header clearfix" [routerLink]="['/product-management']" id="headingThree"
                     data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
