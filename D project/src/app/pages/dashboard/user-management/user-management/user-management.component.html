@@ -493,7 +493,7 @@
                                                         <button type="button" class="btn btn-theme" style="margin-left: 25%;" 
                                                             >Export
                                                             csv</button>
-                                                            <button type="button" class="btn btn-theme Go_btn ml-2" (click)="addUser()"
+                                                            <button type="button" class="btn btn-theme Go_btn ml-2" (click)="addCorporate()"
                                                            >Add new
                                                             </button>
                                                     </div>
@@ -754,6 +754,165 @@
                             </div>
                 </div>
                 <!-- corporate edit end -->
+
+                <!-- corporate add start -->
+                <div *ngIf="corporateUserAddValue==false">
+                    <div class="page_title_block">
+                            <h1 class="page_title">Add Corporate</h1>
+                        </div>
+                        <div class="content-section">
+                            <div class="order-view  max-WT-700 mrgn-0-auto setting-page">
+                                <div class="  mb40">
+                                    <div class="add-store-block input-style mb20 mt20 ">
+                                        <form [formGroup]="addCorporateForm" #f="ngForm">
+                                            <div class="user-profile">
+                                                <div class="image-box">
+                                                    <img src="{{imageUrl || 'assets/img/profile-img.jpg'}}" id="sub-admin-image" alt="">
+                                                    <label class="upload-label">
+                                                        <input type="file" formControlName="image" name="image"
+                                                            accept="image/jpg,image/jpeg,image/png" id="image"
+                                                            (change)="ValidateFileUpload($event)" maxlength="56">
+                                                        <em class="fa fa-pencil" style="color: #86559f!important;font-size: 12px"></em>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row align-items-baseline view-label-align">
+                                                <label class="col-md-4 textalignright ">Name <span>:</span></label>
+                                                <div class="col-md-8 textaligncenter">
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" placeholder="Name"
+                                                            formControlName="firstName" (keypress)="mainService.preventSpace($event)"
+                                                            maxlength="60">
+                                                        <div class="text-danger">
+                                                            <span
+                                                                *ngIf="addCorporateForm.get('firstName').hasError('required') && (addCorporateForm.get('firstName').dirty || addCorporateForm.get('firstName').touched)">
+                                                                *Please enter Name.
+                                                            </span>
+                                                            <span
+                                                                *ngIf="addCorporateForm.get('firstName').hasError('pattern') && (addCorporateForm.get('firstName').dirty || f.submitted)">
+                                                                *Name accept only alphabets.
+                                                            </span>
+                                                            <span
+                                                                *ngIf="addCorporateForm.get('firstName').hasError('minlength') && !(addCorporateForm.get('firstName').hasError('pattern')) && (addCorporateForm.get('firstName').dirty || f.submitted)">
+                                                                *Minimum length must be 2.
+                                                            </span>
+                                                            <span
+                                                                *ngIf="addCorporateForm.get('firstName').hasError('maxlength') && !(addCorporateForm.get('firstName').hasError('pattern')) && (addCorporateForm.get('firstName').dirty || f.submitted)">
+                                                                *Maximum length should not more than 20.
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row align-items-baseline view-label-align">
+                                                <label class="col-md-4 textalignright">Email <span>:</span></label>
+                                                <div class="col-md-8 textaligncenter">
+                                                    <div class="form-group ">
+                                                        <input type="text" class="form-control" placeholder="Email Address"
+                                                            formControlName="email" (keypress)="mainService.preventSpace($event)"
+                                                            maxlength="50">
+                                                        <div class="text-danger">
+                                                            <span
+                                                                *ngIf="addCorporateForm.get('email').hasError('required') && (addCorporateForm.get('email').dirty || addCorporateForm.get('email').touched)">
+                                                                *Please enter you email.
+                                                            </span>
+                                                            <span *ngIf="addCorporateForm.get('email').hasError('pattern')">
+                                                                *Please enter valid email.
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                
+                                            <div class="form-group row align-items-baseline view-label-align">
+                                                <label class="col-md-4 textalignright">Mobile Number <span>:</span></label>
+                                                <div class="col-md-8 textaligncenter">
+                                                    <div class="form-group ">
+                                                        <input type="tel" class="form-control" placeholder="Mobile Number"
+                                                            formControlName="number" (keypress)="mainService.preventSpace($event)"
+                                                            maxlength="15">
+                                                        <div class="text-danger">
+                                                            <span
+                                                                *ngIf="addCorporateForm.get('number').hasError('required') && (addCorporateForm.get('number').dirty || addCorporateForm.get('number').touched)">
+                                                                *Please enter you number.
+                                                            </span>
+                                                            <span *ngIf="addCorporateForm.get('number').hasError('pattern')">
+                                                                *Please enter valid number.
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                
+                                            <div class="form-group row align-items-baseline view-label-align">
+                                                <label class="col-md-4 textalignright">Data Of Birth <span>:</span></label>
+                                                <div class="col-md-8 textaligncenter">
+                                                    <div class="form-group ">
+                                                        <input type="date" class="form-control" placeholder="Mobile Number"
+                                                            formControlName="DOB" (keypress)="mainService.preventSpace($event)"
+                                                            maxlength="15">
+                                                        <div class="text-danger">
+                                                            <span
+                                                                *ngIf="addCorporateForm.get('DOB').hasError('required') && (addCorporateForm.get('DOB').dirty || addCorporateForm.get('DOB').touched)">
+                                                                *Please enter you DOB.
+                                                            </span>
+                                                            <span *ngIf="addCorporateForm.get('DOB').hasError('pattern')">
+                                                                *Please enter valid DOB.
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row align-items-baseline view-label-align">
+                                                    <label class="col-md-4 textalignright">Password <span>:</span></label>
+                                                    <div class="col-md-8 textaligncenter">
+                                                        <div class="form-group ">
+                                                            <input type="password" class="form-control" placeholder="Password"
+                                                                formControlName="password" (keypress)="mainService.preventSpace($event)"
+                                                                maxlength="15">
+                                                            <div class="text-danger">
+                                                                <span
+                                                                    *ngIf="addCorporateForm.get('password').hasError('required') && (addCorporateForm.get('password').dirty || addCorporateForm.get('password').touched)">
+                                                                    *Please enter you password.
+                                                                </span>
+                                                                <span *ngIf="addCorporateForm.get('password').hasError('pattern')">
+                                                                    *Please enter valid password.
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline view-label-align">
+                                                    <label class="col-md-4 textalignright">Company Name  <span>:</span></label>
+                                                    <div class="col-md-8 textaligncenter">
+                                                        <div class="form-group ">
+                                                            <input type="test" class="form-control" placeholder="Company Name"
+                                                                formControlName="company" (keypress)="mainService.preventSpace($event)"
+                                                                maxlength="15">
+                                                            <div class="text-danger">
+                                                                <span
+                                                                    *ngIf="addCorporateForm.get('company').hasError('required') && (addCorporateForm.get('company').dirty || addCorporateForm.get('company').touched)">
+                                                                    *Please enter you company.
+                                                                </span>
+                                                                <span *ngIf="addCorporateForm.get('company').hasError('pattern')">
+                                                                    *Please enter valid company.
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </form>
+                                    </div>
+                                    <div class="text-center mt40 mb40">
+                                        <button class="btn btn-large  max-WT-150 btn-theme" [disabled]="!addCorporateForm.valid"
+                                            (click)="addCorporateDetail()">Add</button>
+                                            <button class="btn btn-large  max-WT-150 btn-theme" (click)="changeValue()">Back</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+            <!-- corporate add end -->
                     </div>
                     <!-- tab link corporate end -->
                     <!-- tab link practioner start -->

@@ -29,6 +29,7 @@ export class UserManagementComponent implements OnInit {
   corporateValue:boolean=true;
   corporateUserValue: boolean=true;
   corporateUserEditValue: boolean=true;
+  corporateUserAddValue:boolean=true;
   viewData: any;
   customerData: any=[];
   viewCustomer: any;
@@ -43,6 +44,7 @@ export class UserManagementComponent implements OnInit {
   editCorporateForm: FormGroup;
   corporateDataPatch: any;
   corporateDataa: any;
+  addCorporateForm: FormGroup;
   
   
 
@@ -66,12 +68,14 @@ export class UserManagementComponent implements OnInit {
       this.customerValue=true;
       this.customerUserValue=true;
       this.customerUserEditValue=true;
+      this.customerUserAddValue=true;
 
     }
    else if(this.currTab === 'Corporate'){
       this.getCorporate();
       this.corporateUserValue=true;
       this.corporateUserEditValue=true;
+      this.corporateUserAddValue=true;
       this.corporateValue=true;
     }
     else if (this.currTab === 'Practioner'){
@@ -110,6 +114,15 @@ export class UserManagementComponent implements OnInit {
       'DOB': new FormControl('', Validators.required),
       'image': new FormControl(''),
       'company':new FormControl('', Validators.required),
+    });
+    this.addCorporateForm= new FormGroup({
+      'firstName': new FormControl('', Validators.required),
+      'email': new FormControl('', Validators.required),
+      'number': new FormControl('', Validators.required),
+      'DOB': new FormControl('', Validators.required),
+      'image': new FormControl(''),
+      'company':new FormControl('', Validators.required),
+      'password':new FormControl('', Validators.required),
     });
     
 
@@ -352,6 +365,7 @@ export class UserManagementComponent implements OnInit {
     this.viewCorporateData()
     this.corporateUserValue=false;
     this.corporateUserEditValue=true;
+    this.corporateUserAddValue=true;
     this.corporateValue=false;
   }
 
@@ -380,6 +394,7 @@ export class UserManagementComponent implements OnInit {
     this.editCorporatepatch();
     this.corporateUserValue=true;
     this.corporateUserEditValue=false;
+    this.corporateUserAddValue=true;
     this.corporateValue=false;
   }
 
@@ -439,6 +454,48 @@ export class UserManagementComponent implements OnInit {
     })
   }
 
+  // add corporate addCorporateForm
+  addCorporate(){
+    this.corporateUserValue=true;
+    this.corporateUserEditValue=true;
+    this.corporateUserAddValue=false;
+    this.corporateValue=false;
+  }
+
+  // add user api
+  addCorporateDetail(){
+    let data = {
+      'name': this.addCorporateForm.value.firstName,
+      'email': this.addCorporateForm.value.email,
+      'profilePic': this.imageUrl,
+      'mobileNumber':this.addCorporateForm.value.number,
+      'dateOfBirth':this.addCorporateForm.value.DOB,
+      'password':this.addCorporateForm.value.password,
+      'company':this.addCorporateForm.value.company,
+    }
+    this.mainService.showSpinner();
+    this.mainService.postApi('admin/addCorporateCustomer', data, 1).subscribe((res: any) => {
+      console.log("add helpline number list response ==>", res)
+      if (res.responseCode == 200) {
+        this.mainService.hideSpinner()
+        this.mainService.successToast(res.responseMessage);
+        this.selectTab('Corporate');
+        this.corporateUserValue=true;
+        this.corporateUserEditValue=true;
+        this.corporateUserAddValue=true;
+        this.corporateValue=true;
+      } else {
+        this.mainService.hideSpinner();
+        this.mainService.errorToast(res.responseMessage)
+      }
+    })
+  }
+
+
+
+
+
+
 
 
 
@@ -448,6 +505,7 @@ export class UserManagementComponent implements OnInit {
     this.getCorporate()
     this.corporateUserValue=true;
     this.corporateUserEditValue=true;
+    this.corporateUserAddValue=true;
     this.corporateValue=true;
   }
 
