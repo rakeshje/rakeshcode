@@ -26,6 +26,9 @@ export class UserManagementComponent implements OnInit {
   customerUserValue:boolean=true;
   customerUserEditValue:boolean=true;
   customerUserAddValue:boolean=true;
+  corporateValue:boolean=true;
+  corporateUserValue: boolean=true;
+  corporateUserEditValue: boolean=true;
   viewData: any;
   customerData: any=[];
   viewCustomer: any;
@@ -36,6 +39,12 @@ export class UserManagementComponent implements OnInit {
   imageType: any;
   imageUrl: any;
   addUserForm: FormGroup;
+  viewCorporate: any;
+  editCorporateForm: FormGroup;
+  corporateDataPatch: any;
+  corporateDataa: any;
+  
+  
 
   constructor(private router: Router, public mainService: MainService) { }
 
@@ -61,6 +70,9 @@ export class UserManagementComponent implements OnInit {
     }
    else if(this.currTab === 'Corporate'){
       this.getCorporate();
+      this.corporateUserValue=true;
+      this.corporateUserEditValue=true;
+      this.corporateValue=true;
     }
     else if (this.currTab === 'Practioner'){
       this.getPractioner();
@@ -81,7 +93,7 @@ export class UserManagementComponent implements OnInit {
       'email': new FormControl('', Validators.required),
       'number': new FormControl('', Validators.required),
       'DOB': new FormControl('', Validators.required),
-      'image': new FormControl('', Validators.required),
+      'image': new FormControl(''),
     });
     this.addUserForm= new FormGroup({
       'firstName': new FormControl('', Validators.required),
@@ -90,6 +102,14 @@ export class UserManagementComponent implements OnInit {
       'DOB': new FormControl('', Validators.required),
       'image': new FormControl('', Validators.required),
       'password':new FormControl('', Validators.required),
+    });
+    this.editCorporateForm= new FormGroup({
+      'firstName': new FormControl('', Validators.required),
+      'email': new FormControl('', Validators.required),
+      'number': new FormControl('', Validators.required),
+      'DOB': new FormControl('', Validators.required),
+      'image': new FormControl(''),
+      'company':new FormControl('', Validators.required),
     });
     
 
@@ -152,7 +172,7 @@ export class UserManagementComponent implements OnInit {
         this.mainService.hideSpinner();
         this.customerData=res.result.docs;
         this.customerLength=res.result.docs.total
-        console.log("f", this.practionerData);
+        console.log("f", this.customerData);
         
       }
     },(error)=>{
@@ -204,14 +224,14 @@ export class UserManagementComponent implements OnInit {
       if(res.responseCode==200){
         this.mainService.hideSpinner();
         this.customerData=res.result;
+        this.imageUrl=res.result.profilePic;
         this.editUserForm.patchValue({
           'firstName':this.customerData.name,
           'email':this.customerData.email,
           'number':this.customerData.mobileNumber,
           'DOB':this.customerData.dateOfBirth,
-          'image':this.customerData.profilePic,
+          
         })
-        console.log("f", this.practionerData);
         
       }
     },(error)=>{
@@ -307,7 +327,7 @@ export class UserManagementComponent implements OnInit {
 
   // =============================== user tab all end =======================================//
   
-
+  //========================== corporate tab start===========================//
   // get corporate
   getCorporate(){
     this.mainService.showSpinner();
@@ -324,6 +344,111 @@ export class UserManagementComponent implements OnInit {
       this.mainService.hideSpinner();
       this.mainService.errorToast('something went wrong')
     })
+  }
+
+  // view corporate
+  viewcorporate(id){
+    this.userId=id;
+    this.viewCorporateData()
+    this.corporateUserValue=false;
+    this.corporateUserEditValue=true;
+    this.corporateValue=false;
+  }
+
+  // view corporate api 
+  viewCorporateData(){
+    let data={
+      'corporateId':this.userId
+    }
+    this.mainService.showSpinner();
+    this.mainService.postApi('admin/viewCorporateCustomer',data,1).subscribe((res)=>{
+      console.log('hh', res);
+      
+      if(res.responseCode==200){
+        this.mainService.hideSpinner();
+        this.viewCorporate=res.result[0]
+      }
+    },(error)=>{
+      this.mainService.hideSpinner();
+      this.mainService.errorToast('something went wrong')
+    })
+  }
+
+  // edit corporate
+  editCorporate(id){
+    this.userId=id;
+    this.editCorporatepatch();
+    this.corporateUserValue=true;
+    this.corporateUserEditValue=false;
+    this.corporateValue=false;
+  }
+
+  // edit corporate patch
+  editCorporatepatch(){
+    let data={
+      'corporateId':this.userId
+    }
+    this.mainService.showSpinner();
+    this.mainService.postApi('admin/editCorporateCustomer',data, 1).subscribe((res:any)=>{
+      
+      if(res.responseCode==200){
+        this.mainService.hideSpinner();
+        this.corporateDataa=res.result;
+        this.imageUrl=res.result.profilePic
+        this.editCorporateForm.patchValue({
+          'firstName':this.corporateDataa.name,
+          'email':this.corporateDataa.email,
+          'number':this.corporateDataa.mobileNumber,
+          'DOB':this.corporateDataa.dateOfBirth,
+          'image':this.imageUrl,
+          'company':this.corporateDataa.company,
+        })
+        console.log("f", this.practionerData);
+        
+      }
+    },(error)=>{
+      this.mainService.hideSpinner();
+      this.mainService.errorToast('something went wrong')
+    })
+  }
+
+
+  UpdateCorporate(){
+    let data = {
+      'corporateId':this.userId,
+      'name': this.editCorporateForm.value.firstName,
+      'email': this.editCorporateForm.value.email,
+      'image': this.imageUrl,
+      'mobileNumber':this.editCorporateForm.value.number,
+      'dateOfBirth':this.editCorporateForm.value.DOB,
+      'company':this.editCorporateForm.value.company,
+    }
+    this.mainService.showSpinner();
+    this.mainService.postApi('admin/editCorporateCustomer', data, 1).subscribe((res: any) => {
+      console.log("add helpline number list response ==>", res)
+      if (res.responseCode == 200) {
+        this.mainService.hideSpinner()
+        this.mainService.successToast(res.responseMessage);
+        this.selectTab('Corporate');
+        this.corporateValue=true;
+        this.corporateUserEditValue=true;
+      } else {
+        this.mainService.hideSpinner();
+        this.mainService.errorToast(res.responseMessage)
+      }
+    })
+  }
+
+
+
+
+
+
+  changeCorporateValue(){
+    this.getCorporate()
+    this.corporateUserValue=true;
+    this.corporateUserEditValue=true;
+    this.corporateValue=true;
   }
 
 
@@ -394,10 +519,10 @@ export class UserManagementComponent implements OnInit {
       var url="admin/listUsers"
     }
     else if(this.currTab === 'Corporate'){
-      var url1="admin/deleteAndBlockCorporateCustomer"
+      var url1="admin/corporateList"
     }
     else if (this.currTab === 'Practioner'){
-      var url2="admin/blockUnblockPractitioner"
+      var url2="admin/practitionerList"
     }
 
     this.mainService.postApi(url || url1 || url2,data, 1).subscribe((res:any)=>{
