@@ -31,6 +31,7 @@ export class UserManagementComponent implements OnInit {
   practionerValue:boolean=true;
   practionerUserValue:boolean=true;
   practionerUserEditValue:boolean=true;
+  practionerUserAddValue:boolean=true;
   viewData: any;
   customerData: any=[];
   viewCustomer: any;
@@ -50,6 +51,7 @@ export class UserManagementComponent implements OnInit {
   viewPractionerDataa: any;
   editPractionerForm: FormGroup;
   practionerDataa: any;
+  addPractionerForm: FormGroup;
   
   
 
@@ -84,6 +86,10 @@ export class UserManagementComponent implements OnInit {
     }
     else if (this.currTab === 'Practioner'){
       this.getPractioner();
+      this.practionerUserValue=true;
+      this.practionerUserEditValue=true;
+      this.practionerUserAddValue=true;
+      this.practionerValue=true;
     }
     
   }
@@ -135,6 +141,14 @@ export class UserManagementComponent implements OnInit {
       'DOB': new FormControl('', Validators.required),
       'image': new FormControl(''),
       
+    });
+    this.addPractionerForm= new FormGroup({
+      'firstName': new FormControl('', Validators.required),
+      'email': new FormControl('', Validators.required),
+      'number': new FormControl('', Validators.required),
+      'DOB': new FormControl('', Validators.required),
+      'image': new FormControl(''),
+      'password':new FormControl('', Validators.required),
     });
     
 
@@ -515,11 +529,7 @@ export class UserManagementComponent implements OnInit {
     this.corporateValue=true;
   }
 
-
-
-
-
-
+  //=============================== practioner all start=============================//
 
   // get practioner
   getPractioner(){
@@ -605,16 +615,79 @@ export class UserManagementComponent implements OnInit {
       this.mainService.errorToast('something went wrong')
     })
   }
+  // update practioner
+  UpdatePractioner(){
+    let data = {
+      'practitionerId':this.userId,
+      'name': this.editPractionerForm.value.firstName,
+      'email': this.editPractionerForm.value.email,
+      'image': this.imageUrl,
+      'mobileNumber':this.editPractionerForm.value.number,
+      'dateOfBirth':this.editPractionerForm.value.DOB,
+    }
+    this.mainService.showSpinner();
+    this.mainService.postApi('admin/editPractitioner', data, 1).subscribe((res: any) => {
+      console.log("add helpline number list response ==>", res)
+      if (res.responseCode == 200) {
+        this.mainService.hideSpinner()
+        this.mainService.successToast(res.responseMessage);
+        this.selectTab('Practioner');
+        this.practionerValue=true;
+        this.practionerUserEditValue=true;
+      } else {
+        this.mainService.hideSpinner();
+        this.mainService.errorToast(res.responseMessage)
+      }
+    })
+  }
 
+  // add practioner 
+  addPractioner(){
+    this.practionerUserValue=true;
+    this.practionerUserEditValue=true;
+    this.practionerUserAddValue=false;
+    this.practionerValue=false;
+  }
+
+  // add practioner api
+  addPractionerDetail(){
+    let data = {
+      'countryCode':'',
+      'name': this.addPractionerForm.value.firstName,
+      'email': this.addPractionerForm.value.email,
+      'profilePic': this.imageUrl,
+      'mobileNumber':this.addPractionerForm.value.number,
+      'dateOfBirth':this.addPractionerForm.value.DOB,
+      'password':this.addPractionerForm.value.password,
+    }
+    this.mainService.showSpinner();
+    this.mainService.postApi('admin/addPractitioner', data, 1).subscribe((res: any) => {
+      console.log("add helpline number list response ==>", res)
+      if (res.responseCode == 200) {
+        this.mainService.hideSpinner()
+        this.mainService.successToast(res.responseMessage);
+        this.selectTab('Practioner');
+        this.practionerUserValue=true;
+        this.practionerUserEditValue=true;
+        this.practionerUserAddValue=true;
+        this.practionerValue=true;
+      } else {
+        this.mainService.hideSpinner();
+        this.mainService.errorToast(res.responseMessage)
+      }
+    })
+  }
 
 
   changePractionerValue(){
     this.getPractioner()
     this.practionerUserValue=true;
     this.practionerUserEditValue=true;
-    // this.practionerUserAddValue=true;
+    this.practionerUserAddValue=true;
     this.practionerValue=true;
   }
+
+  //=============================== practioner all end ========================//
 
   //==========================serach========================================//
   // search
@@ -656,10 +729,11 @@ export class UserManagementComponent implements OnInit {
         console.log("f", this.practionerData);
         }
         else if (this.currTab === 'Practioner'){
-          this.getPractioner();
+          this.practionerData=res.result.docs;
         }
         
         else if(res.responseCode==404){
+          
           this.mainService.hideSpinner();
           this.mainService.errorToast(res.responseMessage)
         }
