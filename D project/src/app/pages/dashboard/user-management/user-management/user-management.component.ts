@@ -32,6 +32,7 @@ export class UserManagementComponent implements OnInit {
   practionerUserValue:boolean=true;
   practionerUserEditValue:boolean=true;
   practionerUserAddValue:boolean=true;
+  viewCompanyValue:boolean=true;
   viewData: any;
   customerData: any=[];
   viewCustomer: any;
@@ -83,6 +84,7 @@ export class UserManagementComponent implements OnInit {
       this.corporateUserEditValue=true;
       this.corporateUserAddValue=true;
       this.corporateValue=true;
+      this.viewCompanyValue=true;
     }
     else if (this.currTab === 'Practioner'){
       this.getPractioner();
@@ -90,6 +92,7 @@ export class UserManagementComponent implements OnInit {
       this.practionerUserEditValue=true;
       this.practionerUserAddValue=true;
       this.practionerValue=true;
+      
     }
     
   }
@@ -103,52 +106,52 @@ export class UserManagementComponent implements OnInit {
       toDate: new FormControl('')
     });
     this.editUserForm= new FormGroup({
-      'firstName': new FormControl('', Validators.required),
-      'email': new FormControl('', Validators.required),
-      'number': new FormControl('', Validators.required),
+      'firstName': new FormControl('', [Validators.required,Validators.pattern(/^[a-zA-Z ]*$/i)]),
+      'email': new FormControl('', [Validators.required,Validators.pattern(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,9}|[0-9]{1,3})(\]?)$/i)]),
+      'number': new FormControl('', [Validators.required,Validators.pattern(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/)]),
       'DOB': new FormControl('', Validators.required),
       'image': new FormControl(''),
     });
     this.addUserForm= new FormGroup({
-      'firstName': new FormControl('', Validators.required),
-      'email': new FormControl('', Validators.required),
-      'number': new FormControl('', Validators.required),
+      'firstName': new FormControl('', [Validators.required,Validators.pattern(/^[a-zA-Z ]*$/i)]),
+      'email': new FormControl('', [Validators.required,Validators.pattern(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,9}|[0-9]{1,3})(\]?)$/i)]),
+      'number': new FormControl('', [Validators.required,Validators.pattern(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/)]),
       'DOB': new FormControl('', Validators.required),
-      'image': new FormControl('', Validators.required),
-      'password':new FormControl('', Validators.required),
+      'image': new FormControl(''),
+      'password':new FormControl('', [Validators.required,Validators.pattern(/^(?=^.{8,16}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*?[#?!@$%^&*-])(?!.*\s).*$/)]),
     });
     this.editCorporateForm= new FormGroup({
-      'firstName': new FormControl('', Validators.required),
-      'email': new FormControl('', Validators.required),
-      'number': new FormControl('', Validators.required),
+      'firstName': new FormControl('', [Validators.required,Validators.pattern(/^[a-zA-Z ]*$/i)]),
+      'email': new FormControl('', [Validators.required,Validators.pattern(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,9}|[0-9]{1,3})(\]?)$/i)]),
+      'number': new FormControl('', [Validators.required,Validators.pattern(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/)]),
       'DOB': new FormControl('', Validators.required),
       'image': new FormControl(''),
-      'company':new FormControl('', Validators.required),
+      'company':new FormControl('', [Validators.required,Validators.pattern(/^[^0-9][a-zA-Z ]*$/i)]),
     });
     this.addCorporateForm= new FormGroup({
-      'firstName': new FormControl('', Validators.required),
-      'email': new FormControl('', Validators.required),
-      'number': new FormControl('', Validators.required),
+      'firstName': new FormControl('', [Validators.required,Validators.pattern(/^[a-zA-Z ]*$/i)]),
+      'email': new FormControl('', [Validators.required,Validators.pattern(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,9}|[0-9]{1,3})(\]?)$/i)]),
+      'number': new FormControl('', [Validators.required,Validators.pattern(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/)]),
       'DOB': new FormControl('', Validators.required),
       'image': new FormControl(''),
-      'company':new FormControl('', Validators.required),
-      'password':new FormControl('', Validators.required),
+      'company':new FormControl('', [Validators.required,Validators.pattern(/^[^0-9][a-zA-Z ]*$/i)]),
+      'password':new FormControl('', [Validators.required,Validators.pattern(/^(?=^.{8,16}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*?[#?!@$%^&*-])(?!.*\s).*$/)]),
     });
     this.editPractionerForm= new FormGroup({
-      'firstName': new FormControl('', Validators.required),
-      'email': new FormControl('', Validators.required),
-      'number': new FormControl('', Validators.required),
+      'firstName': new FormControl('', [Validators.required,Validators.pattern(/^[a-zA-Z ]*$/i)]),
+      'email': new FormControl('', [Validators.required,Validators.pattern(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,9}|[0-9]{1,3})(\]?)$/i)]),
+      'number': new FormControl('', [Validators.required,Validators.pattern(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/)]),
       'DOB': new FormControl('', Validators.required),
       'image': new FormControl(''),
       
     });
     this.addPractionerForm= new FormGroup({
-      'firstName': new FormControl('', Validators.required),
-      'email': new FormControl('', Validators.required),
-      'number': new FormControl('', Validators.required),
+      'firstName': new FormControl('', [Validators.required,Validators.pattern(/^[a-zA-Z ]*$/i)]),
+      'email': new FormControl('', [Validators.required,Validators.pattern(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,9}|[0-9]{1,3})(\]?)$/i)]),
+      'number': new FormControl('', [Validators.required,Validators.pattern(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/)]),
       'DOB': new FormControl('', Validators.required),
       'image': new FormControl(''),
-      'password':new FormControl('', Validators.required),
+      'password':new FormControl('', [Validators.required,Validators.pattern(/^(?=^.{8,16}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*?[#?!@$%^&*-])(?!.*\s).*$/)]),
     });
     
 
@@ -362,6 +365,7 @@ export class UserManagementComponent implements OnInit {
     this.customerValue=true;
     this.customerUserValue=true;
     this.customerUserEditValue=true;
+    this.customerUserAddValue=true;
   }
 
 
@@ -518,6 +522,12 @@ export class UserManagementComponent implements OnInit {
         this.mainService.errorToast(res.responseMessage)
       }
     })
+  }
+
+  // view companies
+  viewCompany(){
+    this.corporateValue=false;
+    this.viewCompanyValue=false;
   }
 
 
@@ -855,6 +865,7 @@ export class UserManagementComponent implements OnInit {
         corporateId: this.userId,
         status:this.status
       }
+      console.log('jj', data1);
       var url1="admin/deleteAndBlockCorporateCustomer"
     }
     else if (this.currTab === 'Practioner'){
@@ -862,9 +873,10 @@ export class UserManagementComponent implements OnInit {
         practitionerId: this.userId,
         status:this.status
       }
+      
+      
       var url2="admin/blockUnblockPractitioner"
     }
-    console.log(data)
     this.mainService.showSpinner();
     this.mainService.postApi(url ||url1 ||url2, data || data1 || data2, 1).subscribe((res: any) => {
       console.log("delete user response ==>", res)

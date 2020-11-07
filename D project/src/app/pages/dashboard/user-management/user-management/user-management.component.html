@@ -62,7 +62,7 @@
                                                             <input type="date" formControlName="fromDate" class="form-control" style="width: 60%;">
                                                         </div>
                                                         <div class="col-md-3">
-                                                            <input type="date" formControlName="toDate" class="form-control" style="width: 60%; margin-left: -40%;">
+                                                            <input type="date" formControlName="toDate" [min]="this.searchForm.controls['fromDate'].value" (keypress)="mainService.BlockFuture()"  class="form-control" style="width: 60%; margin-left: -40%;">
                                                         </div>
                                                         <div class="col-md-4">
                                                             <div class="text-center admin-btn">
@@ -437,7 +437,7 @@
                                                                     <label class="col-md-4 textalignright">Password <span>:</span></label>
                                                                     <div class="col-md-8 textaligncenter">
                                                                         <div class="form-group ">
-                                                                            <input type="password" class="form-control" placeholder="Mobile Number"
+                                                                            <input type="password" class="form-control" placeholder="Enter Password"
                                                                                 formControlName="password" (keypress)="mainService.preventSpace($event)"
                                                                                 maxlength="15">
                                                                             <div class="text-danger">
@@ -446,7 +446,8 @@
                                                                                     *Please enter you password.
                                                                                 </span>
                                                                                 <span *ngIf="addUserForm.get('password').hasError('pattern')">
-                                                                                    *Please enter valid password.
+                                                                                        *Password should have minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, 1
+                                                                                        number and 1 special character.
                                                                                 </span>
                                                                             </div>
                                                                         </div>
@@ -492,24 +493,34 @@
                                                     <input type="date" formControlName="fromDate" class="form-control" style="width: 60%;">
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <input type="date" formControlName="toDate" class="form-control" style="width: 60%; margin-left: -40%;">
+                                                    <input type="date" formControlName="toDate" [min]="this.searchForm.controls['fromDate'].value" class="form-control" style="width: 60%; margin-left: -40%;">
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="text-center admin-btn">
                                                         <button type="button" class="btn  btn-theme Go_btn" style="margin-left: -36%;
                                                         min-width: 50px;"
                                                             (click)="search()">Go</button>
-                                                        <button type="button" class="btn  btn-theme ml-2 Go_btn" style="min-width: 50px;"
+                                                        <button type="button" class="btn  btn-theme ml-2 Go_btn" style="min-width: 60px;"
                                                             (click)="reset()">Reset</button>
-                                                        <button type="button" class="btn btn-theme" style="margin-left: 25%;" 
+                                                        <button type="button" class="btn btn-theme" style="margin-right: 15%;" 
                                                             >Export
                                                             csv</button>
-                                                            <button type="button" class="btn btn-theme Go_btn ml-2" (click)="addCorporate()"
-                                                           >Add new
-                                                            </button>
+                                                        <button type="button" class="btn btn-theme" style="margin-right: 15%; min-width:45%" 
+                                                            (click)="viewCompany()">View Companies
+                                                            </button>    
+                                                            
                                                     </div>
                                                 </div>
+                                                
                                             </div>
+                                            <div class="row" style="display: flex; justify-content: flex-end; margin-left: 10%">
+                                                    <div class="col-md-2">
+                                                            <button type="button" class="btn btn-theme Go_btn ml-2"  (click)="addCorporate()"
+                                                            >Add new
+                                                             </button>
+                                                    </div>
+                                                </div>
+                                            
                                         </form>
                                     </div>
                                 </div>
@@ -548,7 +559,7 @@
                                                     <button class="btn btn-info ml-2 bt-margin" (click)="editCorporate(item?._id)"><i
                                                             class="fa fa-edit" aria-hidden="true"
                                                             style="color:white"></i></button>
-                                                            <button class="btn btn-success ml-2 bt-margin"
+                                                    <button class="btn btn-success ml-2 bt-margin"
                                                             *ngIf="item?.status == 'ACTIVE'"
                                                             (click)="BlockModal(item?._id, 'BLOCK')"
                                                             title="deactivate"><i class="fa fa-ban" style="color:white;background-color: green"
@@ -888,7 +899,7 @@
                                                     <label class="col-md-4 textalignright">Password <span>:</span></label>
                                                     <div class="col-md-8 textaligncenter">
                                                         <div class="form-group ">
-                                                            <input type="password" class="form-control" placeholder="Password"
+                                                            <input type="password" class="form-control" placeholder=" Enter Password"
                                                                 formControlName="password" (keypress)="mainService.preventSpace($event)"
                                                                 maxlength="15">
                                                             <div class="text-danger">
@@ -897,7 +908,8 @@
                                                                     *Please enter you password.
                                                                 </span>
                                                                 <span *ngIf="addCorporateForm.get('password').hasError('pattern')">
-                                                                    *Please enter valid password.
+                                                                        *Password should have minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, 1
+                                                                        number and 1 special character.
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -909,7 +921,7 @@
                                                         <div class="form-group ">
                                                             <input type="test" class="form-control" placeholder="Company Name"
                                                                 formControlName="company" (keypress)="mainService.preventSpace($event)"
-                                                                maxlength="15">
+                                                                maxlength="60">
                                                             <div class="text-danger">
                                                                 <span
                                                                     *ngIf="addCorporateForm.get('company').hasError('required') && (addCorporateForm.get('company').dirty || addCorporateForm.get('company').touched)">
@@ -927,13 +939,155 @@
                                     <div class="text-center mt40 mb40">
                                         <button class="btn btn-large  max-WT-150 btn-theme" [disabled]="!addCorporateForm.valid"
                                             (click)="addCorporateDetail()">Add</button>
-                                            <button class="btn btn-large  max-WT-150 btn-theme" (click)="changeValue()">Back</button>
+                                            <button class="btn btn-large  max-WT-150 btn-theme" (click)="changeCorporateValue()">Back</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
             </div>
             <!-- corporate add end -->
+            <!-- corporate view company start -->
+            <div *ngIf="viewCompanyValue==false">
+            <div class="tab-pane1" >
+                    <div class="sec_head_new sec_head_new_after">
+                        <form [formGroup]="searchForm">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="filter_search mb20 width100">
+                                        <div class="input-group filter_search_group">
+                                            <input type="text" class="form-control overflow-text"
+                                                formControlName="search"
+                                                placeholder="Search by name"
+                                                maxlength="60">
+                                            <div class="input-group-append">
+                                                <button class="btn btn_search_group" type="button"><img
+                                                        src="assets/img/icon-search.png" alt="Search" (click)="search()"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="date" formControlName="fromDate" class="form-control" style="width: 60%;">
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="date" formControlName="toDate" [min]="this.searchForm.controls['fromDate'].value" class="form-control" style="width: 60%; margin-left: -40%;">
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="text-center admin-btn">
+                                        <button type="button" class="btn  btn-theme Go_btn" style="margin-left: -36%;
+                                        min-width: 50px;"
+                                            (click)="search()">Go</button>
+                                        <button type="button" class="btn  btn-theme ml-2 Go_btn" style="min-width: 60px;"
+                                            (click)="reset()">Reset</button>
+                                        <button type="button" class="btn btn-theme" style="margin-right: 15%;" 
+                                            >Export
+                                            csv</button>
+                                        <button type="button" class="btn btn-theme" style="margin-right: 15%; min-width:45%" 
+                                            (click)="viewCompany()">View Companies
+                                            </button>    
+                                            
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="row" style="display: flex; justify-content: flex-end; margin-left: 10%">
+                                    <div class="col-md-2">
+                                            <button type="button" class="btn btn-theme Go_btn ml-2"  (click)="addCorporate()"
+                                            >Add new
+                                             </button>
+                                    </div>
+                                </div>
+                            
+                        </form>
+                    </div>
+                </div>
+                <div class="col">
+                        <h5>Add Corporate Company</h5>
+
+                        <div class="row"  style=" margin-left: 4%;
+            margin-top: 0%;">
+                <label>Name :
+
+                </label>
+                <input type="text" class="form-control" style="width: 30%; margin-left: 19.5%;
+                ">
+            </div>
+
+            <div class="row"  style=" margin-left: 4%;
+            margin-top: 2%;">
+                <label>User limit :
+
+                </label>
+                
+                <select class="form-control" style="width: 30%; margin-left: 17%;" >
+                    <option value="">Select</option>
+                    <option value="NationalBankTransfer">0</option>
+                    <option value="IMPS">5</option>
+                    <option value="paypal">10</option>
+                    <option value="paypal">15</option>
+
+                    </select>               
+            </div>
+            <div class="row"  style=" margin-left: 4%;
+            margin-top: 2%;">
+                <label>Services :
+
+                </label>
+                <select class="form-control" style="width: 30%; margin-left: 18%;" >
+                    <option value="">Select</option>
+                    <option value="NationalBankTransfer">service 1</option>
+                    <option value="IMPS">service 2</option>
+                    <option value="paypal">service 3</option>
+
+                    </select>               
+            </div>
+            
+                    <button type="button" class="btn btn-theme" style="margin-left: 84%; width: 17%; margin-top: -5%;">Submit</button>
+
+
+                        </div>
+
+                        <div class="table-responsive">
+                                <table class="table table-bordered" aria-describedby="user management list">
+                                    <thead>
+                                        <tr class="no_wrap_th text-center">
+                                            <th scope="col" class="Sorting-img">S.No</th>
+                                           <th scope="col" class="Sorting-img">Name</th>
+                                            <th scope="col" class="Sorting-img">Added on</th>
+                                            <th scope="col" class="Sorting-img">Users</th>
+                                            <th scope="col" class="Sorting-img">Company code</th>
+                                            <th scope="col" class="action_td_btn3 Sorting-img">Actions</th>
+                                          </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="text-center">
+
+                                            <td class="content" >1</td>
+                                            <td class="content" > Infosys</td>
+                                            <td class="content" >09/06/2020</td>
+                                            <td class="content" >10</td>
+                                            <td class="content">1111</td>
+                                            <td class="justify-content-center d-flex">
+                                    
+                                               
+                                                <button class="btn btn-info ml-2 bt-margin" routerLink="/view-companies-edit">Edit</button>
+                                                 <button class="btn btn-info ml-2 bt-margin"  routerLink="/view-companies-view">
+                                                 View</button>
+                                                 <button class="btn btn-danger ml-2 bt-margin" data-toggle="modal" data-target="#deleteModal"
+                                                     >Delete</button>
+                                                     
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="custom-pagination mt-2 text-align-end" *ngIf="total > 10">
+                                    <pagination-controls (pageChange)="pagination($event)"></pagination-controls>
+                                </div>
+        
+                                </div>
+                                    
+                    </div>
+            <!-- corporate view company end -->
                     </div>
                     <!-- tab link corporate end -->
                     <!-- tab link practioner start -->
@@ -961,7 +1115,7 @@
                                                     <input type="date" formControlName="fromDate" class="form-control" style="width: 60%;">
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <input type="date" formControlName="toDate" class="form-control" style="width: 60%; margin-left: -40%;">
+                                                    <input type="date" formControlName="toDate" [min]="this.searchForm.controls['fromDate'].value" class="form-control" style="width: 60%; margin-left: -40%;">
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="text-center admin-btn">
@@ -1013,7 +1167,7 @@
                                             <button class="btn btn-info ml-2 bt-margin" (click)="editPractioner(item?._id)"><i
                                                     class="fa fa-edit" aria-hidden="true"
                                                     style="color:white"></i></button>
-                                                    <button class="btn btn-success ml-2 bt-margin"
+                                            <button class="btn btn-success ml-2 bt-margin"
                                                     *ngIf="item?.status == 'ACTIVE'"
                                                     (click)="BlockModal(item?._id, 'BLOCK')"
                                                     title="deactivate"><i class="fa fa-ban" style="color:white;background-color: green"
