@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MainService } from 'src/app/provider/main.service';
-import { ApiUrls } from 'src/app/config/api-urls/api-urls';
 declare var $: any;
 
 @Component({
@@ -21,7 +20,6 @@ export class UserManagementComponent implements OnInit {
   isCheckedAll: any = false;
   currTab: any='Customer';
   practionerData: any=[];
-  practionerValue:boolean=true;
   customerValue:boolean=true;
   customerUserValue:boolean=true;
   customerUserEditValue:boolean=true;
@@ -30,6 +28,9 @@ export class UserManagementComponent implements OnInit {
   corporateUserValue: boolean=true;
   corporateUserEditValue: boolean=true;
   corporateUserAddValue:boolean=true;
+  practionerValue:boolean=true;
+  practionerUserValue:boolean=true;
+  practionerUserEditValue:boolean=true;
   viewData: any;
   customerData: any=[];
   viewCustomer: any;
@@ -46,6 +47,9 @@ export class UserManagementComponent implements OnInit {
   corporateDataa: any;
   addCorporateForm: FormGroup;
   status: any;
+  viewPractionerDataa: any;
+  editPractionerForm: FormGroup;
+  practionerDataa: any;
   
   
 
@@ -123,6 +127,14 @@ export class UserManagementComponent implements OnInit {
       'image': new FormControl(''),
       'company':new FormControl('', Validators.required),
       'password':new FormControl('', Validators.required),
+    });
+    this.editPractionerForm= new FormGroup({
+      'firstName': new FormControl('', Validators.required),
+      'email': new FormControl('', Validators.required),
+      'number': new FormControl('', Validators.required),
+      'DOB': new FormControl('', Validators.required),
+      'image': new FormControl(''),
+      
     });
     
 
@@ -495,15 +507,6 @@ export class UserManagementComponent implements OnInit {
   }
 
 
-
-
-
-
-
-
-
-
-
   changeCorporateValue(){
     this.getCorporate()
     this.corporateUserValue=true;
@@ -545,22 +548,72 @@ export class UserManagementComponent implements OnInit {
   viewPractioner(id){
     this.userId=id
     this.viewPractionerData()
+    this.practionerUserValue=false;
+    this.practionerUserEditValue=true;
+    // this.practionerUserAddValue=true;
     this.practionerValue=false;
   }
 
   // view practioner api
   viewPractionerData(){
     this.mainService.showSpinner();
-    this.mainService.getApi('admin/viewPractitioner?userId='+this.userId,1).subscribe((res)=>{
+    this.mainService.getApi('admin/viewPractitioner?practitionerId='+this.userId,1).subscribe((res)=>{
       if(res.responseCode==200){
         this.mainService.hideSpinner();
-        this.viewData=res.result
+        this.viewPractionerDataa=res.result
       }
     },(error)=>{
       this.mainService.hideSpinner();
       this.mainService.errorToast('something went wrong')
     })
 
+  }
+  // edit practiner
+  editPractioner(id){
+    this.userId=id;
+    this.editPractionerPatch();
+    this.practionerUserValue=true;
+    this.practionerUserEditValue=false;
+    // this.practionerUserAddValue=true;
+    this.practionerValue=false;
+  }
+
+  // edit practioner api
+  editPractionerPatch(){
+    let data={
+      'practitionerId':this.userId
+    }
+    this.mainService.showSpinner();
+    this.mainService.postApi('admin/editPractitioner',data, 1).subscribe((res:any)=>{
+      
+      if(res.responseCode==200){
+        this.mainService.hideSpinner();
+        this.practionerDataa=res.result;
+        this.imageUrl=res.result.profilePic
+        this.editPractionerForm.patchValue({
+          'firstName':this.practionerDataa.name,
+          'email':this.practionerDataa.email,
+          'number':this.practionerDataa.mobileNumber,
+          'DOB':this.practionerDataa.dateOfBirth,
+          'image':this.imageUrl,
+        })
+        console.log("f", this.practionerData);
+        
+      }
+    },(error)=>{
+      this.mainService.hideSpinner();
+      this.mainService.errorToast('something went wrong')
+    })
+  }
+
+
+
+  changePractionerValue(){
+    this.getPractioner()
+    this.practionerUserValue=true;
+    this.practionerUserEditValue=true;
+    // this.practionerUserAddValue=true;
+    this.practionerValue=true;
   }
 
   //==========================serach========================================//
