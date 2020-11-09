@@ -53,6 +53,8 @@ export class UserManagementComponent implements OnInit {
   editPractionerForm: FormGroup;
   practionerDataa: any;
   addPractionerForm: FormGroup;
+  companyForm: FormGroup;
+  serviceData: any;
   
   
 
@@ -63,6 +65,7 @@ export class UserManagementComponent implements OnInit {
     // this.getUserList();
     this.selectTab('Customer');
     this.getCustomer();
+    this.getService();
   }
 
   // =========tab link====//
@@ -137,6 +140,12 @@ export class UserManagementComponent implements OnInit {
       'company':new FormControl('', [Validators.required,Validators.pattern(/^[^0-9][a-zA-Z ]*$/i)]),
       'password':new FormControl('', [Validators.required,Validators.pattern(/^(?=^.{8,16}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*?[#?!@$%^&*-])(?!.*\s).*$/)]),
     });
+    this.companyForm= new FormGroup({
+      'firstName': new FormControl('', [Validators.required,Validators.pattern(/^[a-zA-Z ]*$/i)]),
+      'limit': new FormControl('', Validators.required),
+      'service': new FormControl('', Validators.required),
+      
+    });
     this.editPractionerForm= new FormGroup({
       'firstName': new FormControl('', [Validators.required,Validators.pattern(/^[a-zA-Z ]*$/i)]),
       'email': new FormControl('', [Validators.required,Validators.pattern(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,9}|[0-9]{1,3})(\]?)$/i)]),
@@ -176,6 +185,28 @@ export class UserManagementComponent implements OnInit {
     this.currentPage = event;
     this.getCustomer()
   }
+
+  getService(){
+    this.mainService.showSpinner();
+    let data ={
+
+    }
+    this.mainService.postApi('admin/serviceList','', 1).subscribe((res:any)=>{
+      
+      if(res.responseCode==200){
+        this.mainService.hideSpinner();
+        this.serviceData=res.result.docs;
+        console.log("f", this.serviceData);
+        
+      }
+    },(error)=>{
+      this.mainService.hideSpinner();
+      this.mainService.errorToast('something went wrong')
+    })
+  }
+
+
+  
 
   // ------- get user list -------- //
   // getUserList() {

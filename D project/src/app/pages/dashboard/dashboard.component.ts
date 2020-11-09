@@ -13,6 +13,7 @@ export class DashboardComponent implements OnInit {
   totalPractioner: any;
   totalService: any;
   totalProduct: any;
+  totalCorporate: any;
 
   constructor(public mainService: MainService) { }
 
@@ -22,6 +23,7 @@ export class DashboardComponent implements OnInit {
     this.getPractioner();
     this.getService();
     this.getProducts();
+    this.getCorporate();
   }
 
   // total users
@@ -36,6 +38,25 @@ export class DashboardComponent implements OnInit {
         this.mainService.hideSpinner();
         this.totalUser=res.result.total
         console.log("f", this.totalUser);
+        
+      }
+    },(error)=>{
+      this.mainService.hideSpinner();
+      this.mainService.errorToast('something went wrong')
+    })
+  }
+
+  // total corporate customer
+  getCorporate(){
+    this.mainService.showSpinner();
+    let data ={}
+    this.mainService.postApi('admin/corporateList','', 1).subscribe((res:any)=>{
+      
+      if(res.responseCode==200){
+        this.mainService.hideSpinner();
+        this.totalCorporate=res.result.total;
+
+        console.log("f", this.totalCorporate);
         
       }
     },(error)=>{
