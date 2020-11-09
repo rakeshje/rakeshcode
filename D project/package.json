@@ -27,6 +27,7 @@
     "ng-otp-input": "^1.7.1",
     "ng2-tooltip-directive": "^2.9.20",
     "ngx-ckeditor": "^8.0.0",
+    "ngx-csv": "^0.3.2",
     "ngx-google-places-autocomplete": "^2.0.4",
     "ngx-pagination": "^5.0.0",
     "ngx-spinner": "^9.0.2",

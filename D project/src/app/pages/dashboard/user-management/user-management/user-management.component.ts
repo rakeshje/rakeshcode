@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MainService } from 'src/app/provider/main.service';
+import { ngxCsv } from 'ngx-csv/ngx-csv';
 declare var $: any;
 
 @Component({
@@ -185,7 +186,7 @@ export class UserManagementComponent implements OnInit {
     this.currentPage = event;
     this.getCustomer()
   }
-
+  // service api 
   getService(){
     this.mainService.showSpinner();
     let data ={
@@ -729,6 +730,26 @@ export class UserManagementComponent implements OnInit {
   }
 
   //=============================== practioner all end ========================//
+  // ================================ export csv end ================================//
+  exportCSV() {
+    let dataArr = [];
+    dataArr.push({
+        sno: "S.No.",
+        Name: "Name",
+        Added: "Added On",
+    });
+  
+    this.customerData.forEach((element,ind) => {
+        dataArr.push({
+            sno:ind+1,
+            Name:element.categoryName?element.categoryName:'--',
+            Added:element.addedOn?element.addedOn:'--',
+        })
+    }) 
+    new ngxCsv(dataArr, 'Customer_management');
+  }
+
+  // ================================ export csv end ================================//
 
   //==========================serach========================================//
   // search
@@ -939,6 +960,10 @@ export class UserManagementComponent implements OnInit {
 
 
   // ------------------------------- block/unblock functinality end----------------------------- //
+
+  // ================================ export csv start ================================//
+  
+
 
 
     
