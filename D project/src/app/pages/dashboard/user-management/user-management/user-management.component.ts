@@ -730,7 +730,7 @@ export class UserManagementComponent implements OnInit {
   }
 
   //=============================== practioner all end ========================//
-  // ================================ export csv end ================================//
+  // ================================ export csv start ================================//
   exportCSV() {
     let dataArr = [];
     dataArr.push({

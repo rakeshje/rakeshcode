@@ -1146,7 +1146,7 @@
                                     <div class="col-md-10">
                                         <select class="form-control" formControlName="service" style="width: 30%; margin-left: 18%;">
                                             <option value="">Select</option>
-                                            <option *ngFor="let service of serviceData">{{service}}</option>
+                                            <option *ngFor="let service of serviceData">{{service.subCategoryName}}</option>
 
                                         </select>
                                     </div>
@@ -1203,6 +1203,38 @@
                                                             style="color:white"></i></button>
                                                 </td>
                                             </tr>
+                                            <tr class="text-center">
+
+                                                    <td class="content">1</td>
+                                                    <td class="content"> Infosys</td>
+                                                    <td class="content">09/06/2020</td>
+                                                    <td class="content">10</td>
+                                                    <td class="content">1111</td>
+                                                     <td class="justify-content-center d-flex">
+                                                        <button class="btn btn-info ml-2 bt-margin" title="view"
+                                                            (click)="viewcorporateCompany(item?._id)">
+                                                            <i class="fa fa-eye" aria-hidden="true"
+                                                                style="color:white"></i></button>
+                                                        <button class="btn btn-info ml-2 bt-margin"
+                                                            (click)="editCorporateCompany(item?._id)"><i class="fa fa-edit"
+                                                                aria-hidden="true" style="color:white"></i></button>
+                                                        <button class="btn btn-success ml-2 bt-margin"
+                                                            *ngIf="item?.status == 'ACTIVE'"
+                                                            (click)="BlockModal(item?._id, 'BLOCK')" title="deactivate"><i
+                                                                class="fa fa-ban"
+                                                                style="color:white;background-color: green"
+                                                                aria-hidden="true"></i></button>
+                                                        <button class="btn btn-danger ml-2 bt-margin"
+                                                            *ngIf="item?.status == 'BLOCK'"
+                                                            (click)="BlockModal(item?._id, 'ACTIVE')" title="activate"><i
+                                                                class="fa fa-ban" style="color:white;background-color: red"
+                                                                aria-hidden="true"></i></button>
+                                                        <button class="btn btn-danger ml-2 bt-margin" title="delete"
+                                                            (click)="deleteUserModal(item?._id,DELETE)"><i
+                                                                class="fa fa-trash" aria-hidden="true"
+                                                                style="color:white"></i></button>
+                                                    </td>
+                                                </tr>
                                         </tbody>
                                     </table>
                                     <div class="custom-pagination mt-2 text-align-end" *ngIf="total > 10">
@@ -1213,6 +1245,76 @@
 
                             </div>
                             <!-- corporate view company end -->
+
+                            <!-- practioner view start -->
+                            <div *ngIf="companyUserValue==false">
+                                    <div class="page_title_block">
+                                        <h1 class="page_title">View Practioner</h1>
+                                    </div>
+                                    <div class="content-section">
+                                        <div class="order-view  max-WT-700 mrgn-0-auto setting-page">
+                                            <div class="mb40">
+    
+                                                <div class="add-store-block input-style view-label-align">
+                                                    <div class="form-group row align-items-baseline">
+                                                        <div class="col-md-12" style="text-align: center">
+                                                            <img alt=""
+                                                                src="{{viewPractionerDataa?.profilePic || 'assets/img/profile-img.jpg' }}"
+                                                                style="height: 100px;width: 100px; border-radius: 50%; border: 1px solid black!important;">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row align-items-baseline">
+                                                        <label class="col-md-4 textalignright ">Name <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group">
+                                                                <p style="padding: 0px 5px!important;">
+                                                                    {{viewPractionerDataa?.name || '--'}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row align-items-baseline">
+                                                        <label class="col-md-4 textalignright">Email Id
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group ">
+                                                                <p class="content-view">
+                                                                    {{viewPractionerDataa?.email || '--'}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row align-items-baseline">
+                                                        <label class="col-md-4 textalignright">Mobile Number
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group ">
+                                                                <p class="content-view">
+                                                                    {{viewPractionerDataa?.mobileNumber || '--'}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+    
+                                                    <div class="form-group row align-items-baseline">
+                                                        <label class="col-md-4 textalignright">Date of birth
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group ">
+                                                                <p class="content-view">
+                                                                    {{viewPractionerDataa?.dateOfBirth | date:'dd-MM-yyyy' || '--'}}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="text-center mt40 mb40">
+    
+                                                    <button class="btn btn-large  max-WT-150 btn-theme"
+                                                        (click)="changePractionerValue()">Back</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- practioner view end -->
                         </div>
                         <!-- tab link corporate end -->
                         <!-- tab link practioner start -->
