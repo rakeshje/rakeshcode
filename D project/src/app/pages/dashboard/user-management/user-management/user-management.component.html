@@ -1198,7 +1198,7 @@
                                                             class="fa fa-ban" style="color:white;background-color: red"
                                                             aria-hidden="true"></i></button>
                                                     <button class="btn btn-danger ml-2 bt-margin" title="delete"
-                                                        (click)="deleteUserModal(item?._id,DELETE)"><i
+                                                        (click)="DeleteUserModal(item?._id,DELETE)"><i
                                                             class="fa fa-trash" aria-hidden="true"
                                                             style="color:white"></i></button>
                                                 </td>
@@ -1302,6 +1302,10 @@
                                                             <select class="form-control" formControlName="limit"  >
                                                                 <option value="">Select</option>
                                                                 <option value="{{companyDataa?.userLimit}}">{{companyDataa?.userLimit}}</option>
+                                                                <option value="0">0</option>
+                                                                <option value="5">5</option>
+                                                                <option value="10">10</option>
+                                                                <option value="15">15</option>
                                                                 
                     
                                                             </select>
@@ -1421,13 +1425,13 @@
                                                             aria-hidden="true" style="color:white"></i></button>
                                                     <button class="btn btn-success ml-2 bt-margin"
                                                         *ngIf="item?.status == 'ACTIVE'"
-                                                        (click)="BlockModal(item?._id, 'BLOCK')" title="deactivate"><i
+                                                        (click)="blockModal(item?._id, 'BLOCK')" title="deactivate"><i
                                                             class="fa fa-ban"
                                                             style="color:white;background-color: green"
                                                             aria-hidden="true"></i></button>
                                                     <button class="btn btn-danger ml-2 bt-margin"
                                                         *ngIf="item?.status == 'BLOCK'"
-                                                        (click)="BlockModal(item?._id, 'ACTIVE')" title="activate"><i
+                                                        (click)="blockModal(item?._id, 'ACTIVE')" title="activate"><i
                                                             class="fa fa-ban" style="color:white;background-color: red"
                                                             aria-hidden="true"></i></button>
                                                     <button class="btn btn-danger ml-2 bt-margin" title="delete"
@@ -1852,6 +1856,35 @@
 </div>
 <!-- end delete  user-management modal -->
 
+<!-- delete user-management modal Start -->
+<div class="modal fade global-modal reset-modal" id="DeleteModal">
+        <div class="modal-dialog max-WT-500">
+            <form class="change_password">
+                <div class="modal-content">
+                    <div class="modal-header d-block text-center modal-header-custm">
+                        <h5 class="modal-title d-inline-block">Delete</h5>
+                    </div>
+                    <div class="modal-inner-content">
+                        <div class="modal-body">
+                            <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                                <div class="w-100">
+                                    <p >Are you sure you want to delete this company?</p>
+                                    
+                                    <div class="modal-btn-box">
+                                        <button type="submit" class="btn btn-theme" (click)="DeleteUser()">Yes</button>
+                                        <button type="button" class="btn btn-danger btn-theme ml-2"
+                                            data-dismiss="modal">No</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- end delete  user-management modal -->
+
 <!-- delete multiple hospital modal Start -->
 <div class="modal fade global-modal reset-modal" id="deleteMultiUser">
     <div class="modal-dialog max-WT-500">
@@ -1921,6 +1954,38 @@
     </div>
 </div>
 <!-- end block  user-management modal -->
+<!-- end block  company modal start -->
+<div class="modal fade global-modal reset-modal" id="BlockModal">
+        <div class="modal-dialog max-WT-500">
+            <form class="change_password">
+                <div class="modal-content">
+                    <div class="modal-header d-block text-center modal-header-custm">
+                        <h5 *ngIf="this.status=='ACTIVE'" class="modal-title d-inline-block">Unlock</h5>
+                        <h5 *ngIf="this.status=='BLOCK'" class="modal-title d-inline-block">Block</h5>
+                    </div>
+                    <div class="modal-inner-content">
+                        <div class="modal-body">
+                            <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                                <div class="w-100">
+                                    <p *ngIf="this.status=='ACTIVE'">Are you sure you want to
+                                        unblock this company?</p>
+                                    <p *ngIf="this.status=='BLOCK'">Are you sure you want to
+                                        block this company?</p>
+                                    
+                                    <div class="modal-btn-box">
+                                        <button type="submit" class="btn btn-theme" (click)="BlockUser()">Yes</button>
+                                        <button type="button" class="btn btn-danger btn-theme ml-2"
+                                            data-dismiss="modal">No</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- end block  company modal -->
 
 <!-- logout user-management modal Start -->
 <div class="modal fade global-modal reset-modal" id="logoutModal">

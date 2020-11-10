@@ -1060,6 +1060,35 @@ export class UserManagementComponent implements OnInit {
     })
   }
 
+  DeleteUserModal(userId,status) {
+    $('#DeleteModal').modal('show')
+    this.userId = userId
+    this.status=status
+  }
+
+  DeleteUser(){
+    let data = {
+      companyId: this.userId,
+      
+    }
+    this.mainService.showSpinner();
+    this.mainService.deleteApi('admin/deleteCompany',data, 1).subscribe((res: any) => {
+      console.log("delete user response ==>", res)
+      if (res.responseCode == 200) {
+        $('#DeleteModal').modal('hide');
+        this.mainService.successToast(res.responseMessage);
+        if(this.currTab === 'Corporate'){
+          this.companyList();
+          
+          this.viewCompanyValue=false;
+    
+        }
+      }
+       
+    })
+
+  }
+
   // ------------------------------- delete functinality end ----------------------------- //
 
   // ------------------------------- block/unblock functinality start----------------------------- //
@@ -1124,6 +1153,25 @@ export class UserManagementComponent implements OnInit {
       }
     })
   }
+
+  // block company
+  blockModal(userId,status){
+    $('#BlockModal').modal('show')
+    this.userId = userId
+    this.status=status
+    console.log('f',status);
+    
+  }
+
+  BlockUser(){
+    let data={
+
+    }
+  }
+
+
+
+
 
 
   // ------------------------------- block/unblock functinality end----------------------------- //
