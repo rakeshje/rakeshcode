@@ -34,6 +34,8 @@ export class UserManagementComponent implements OnInit {
   practionerUserEditValue:boolean=true;
   practionerUserAddValue:boolean=true;
   viewCompanyValue:boolean=true;
+  companyUserValue:boolean=true;
+  companyUserEditValue:boolean=true;
   viewData: any;
   customerData: any=[];
   viewCustomer: any;
@@ -57,6 +59,9 @@ export class UserManagementComponent implements OnInit {
   companyForm: FormGroup;
   serviceData: any;
   companyData: any;
+  viewCompanyDataa: any;
+  editCompanyForm: FormGroup;
+  companyDataa: any;
   
   
 
@@ -144,6 +149,12 @@ export class UserManagementComponent implements OnInit {
       'password':new FormControl('', [Validators.required,Validators.pattern(/^(?=^.{8,16}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*?[#?!@$%^&*-])(?!.*\s).*$/)]),
     });
     this.companyForm= new FormGroup({
+      'firstName': new FormControl('', [Validators.required,Validators.pattern(/^[a-zA-Z ]*$/i)]),
+      'limit': new FormControl('', Validators.required),
+      'service': new FormControl('', Validators.required),
+      
+    });
+    this.editCompanyForm= new FormGroup({
       'firstName': new FormControl('', [Validators.required,Validators.pattern(/^[a-zA-Z ]*$/i)]),
       'limit': new FormControl('', Validators.required),
       'service': new FormControl('', Validators.required),
@@ -630,6 +641,100 @@ export class UserManagementComponent implements OnInit {
       this.mainService.hideSpinner();
       this.mainService.errorToast('something went wrong')
     })
+  }
+
+  // view company
+  viewcorporateCompany(id){
+    this.userId=id
+    this.viewCorporateCompany();
+    this.companyUserValue=false;
+    this.corporateUserValue=true;
+    this.corporateUserEditValue=true;
+    this.corporateUserAddValue=true;
+    this.corporateValue=false;
+    this.viewCompanyValue=true;
+  }
+  // view corporate company
+  viewCorporateCompany(){
+    this.mainService.showSpinner();
+    this.mainService.getApi('admin/viewCompany/'+this.userId,1).subscribe((res)=>{
+      if(res.responseCode==200){
+        this.mainService.hideSpinner();
+        this.viewCompanyDataa=res.result
+      }
+    },(error)=>{
+      this.mainService.hideSpinner();
+      this.mainService.errorToast('something went wrong')
+    })
+
+  }
+
+  // edit company
+  editCorporateCompany(id){
+    this.userId=id;
+    this.editCompany();
+    this.companyUserEditValue=false;
+    this.companyUserValue=true;
+    this.viewCompanyValue=true;
+  }
+
+  // edit company api
+  editCompany(){
+    let data={
+      'companyId':this.userId
+    }
+    this.mainService.showSpinner();
+    this.mainService.putApi('admin/editCompany',data, 1).subscribe((res:any)=>{
+      
+      if(res.responseCode==200){
+        this.mainService.hideSpinner();
+        this.companyDataa=res.result;
+        this.imageUrl=res.result.profilePic
+        this.editCompanyForm.patchValue({
+          'firstName':this.companyDataa.name,
+          'service':this.companyDataa.service,
+          'limit':this.companyDataa.userLimit,
+         
+        })
+        console.log("f", this.practionerData);
+        
+      }
+    },(error)=>{
+      this.mainService.hideSpinner();
+      this.mainService.errorToast('something went wrong')
+    })
+  }
+
+  // update company
+  UpdateCompany(){
+    let data = {
+      'companyId':this.userId,
+      'firstName':this.editCompanyForm.value.name,
+      'service':this.editCompanyForm.value.service,
+      'limit':this.editCompanyForm.value.userLimit,
+    }
+    this.mainService.showSpinner();
+    this.mainService.putApi('admin/editCompany', data, 1).subscribe((res: any) => {
+      console.log("add helpline number list response ==>", res)
+      if (res.responseCode == 200) {
+        this.mainService.hideSpinner()
+        this.mainService.successToast(res.responseMessage);
+        this.selectTab('Corporate');
+        this.corporateValue=true;
+        this.corporateUserEditValue=true;
+        this.companyUserEditValue=true;
+      } else {
+        this.mainService.hideSpinner();
+        this.mainService.errorToast(res.responseMessage)
+      }
+    })
+  }
+
+
+  changeCompanyValue(){
+    this.companyUserValue=true;
+    this.companyUserEditValue=true;
+    this.viewCompanyValue=true;
   }
   //============================== view company end============================//
 

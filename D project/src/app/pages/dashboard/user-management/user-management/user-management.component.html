@@ -1051,7 +1051,7 @@
                                 </div>
                             </div>
                             <!-- corporate add end -->
-                            <!-- corporate view company start -->
+                            <!-- corporate view company button start -->
                             <div *ngIf="viewCompanyValue==false">
                                 <div class="tab-pane1">
                                     <div class="sec_head_new sec_head_new_after">
@@ -1113,7 +1113,7 @@
                                 <div class="col">
                                     <h5>Add Corporate Company</h5>
                                     <form [formGroup]="companyForm">
-                                    <div class="row" style=" margin-left: 4%; margin-top: 0%;">
+                                    <div class="row" style=" margin-left: 4%;margin-top: 2%;" >
                                         <div class="col-md-2">
                                         <label>Name :</label>
                                      </div>
@@ -1213,77 +1213,130 @@
                                 </div>
 
                             </div>
-                            <!-- corporate view company end -->
+                            <!-- corporate view company button end -->
 
-                            <!-- practioner view start -->
+                            <!-- company view start -->
                             <div *ngIf="companyUserValue==false">
                                     <div class="page_title_block">
-                                        <h1 class="page_title">View Practioner</h1>
+                                        <h1 class="page_title">View Company</h1>
                                     </div>
                                     <div class="content-section">
                                         <div class="order-view  max-WT-700 mrgn-0-auto setting-page">
                                             <div class="mb40">
     
                                                 <div class="add-store-block input-style view-label-align">
-                                                    <div class="form-group row align-items-baseline">
+                                                    <!-- <div class="form-group row align-items-baseline">
                                                         <div class="col-md-12" style="text-align: center">
                                                             <img alt=""
                                                                 src="{{viewPractionerDataa?.profilePic || 'assets/img/profile-img.jpg' }}"
                                                                 style="height: 100px;width: 100px; border-radius: 50%; border: 1px solid black!important;">
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                     <div class="form-group row align-items-baseline">
                                                         <label class="col-md-4 textalignright ">Name <span>:</span></label>
                                                         <div class="col-md-8 textaligncenter">
                                                             <div class="form-group">
                                                                 <p style="padding: 0px 5px!important;">
-                                                                    {{viewPractionerDataa?.name || '--'}}</p>
+                                                                    {{viewCompanyDataa?.name || '--'}}</p>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="form-group row align-items-baseline">
-                                                        <label class="col-md-4 textalignright">Email Id
+                                                        <label class="col-md-4 textalignright">User Limit
                                                             <span>:</span></label>
                                                         <div class="col-md-8 textaligncenter">
                                                             <div class="form-group ">
                                                                 <p class="content-view">
-                                                                    {{viewPractionerDataa?.email || '--'}}</p>
+                                                                    {{viewCompanyDataa?.userLimit || '--'}}</p>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="form-group row align-items-baseline">
-                                                        <label class="col-md-4 textalignright">Mobile Number
+                                                        <label class="col-md-4 textalignright">Service
                                                             <span>:</span></label>
                                                         <div class="col-md-8 textaligncenter">
                                                             <div class="form-group ">
                                                                 <p class="content-view">
-                                                                    {{viewPractionerDataa?.mobileNumber || '--'}}</p>
+                                                                    {{viewCompanyDataa?.service}}</p>
                                                             </div>
                                                         </div>
                                                     </div>
     
-                                                    <div class="form-group row align-items-baseline">
-                                                        <label class="col-md-4 textalignright">Date of birth
-                                                            <span>:</span></label>
-                                                        <div class="col-md-8 textaligncenter">
-                                                            <div class="form-group ">
-                                                                <p class="content-view">
-                                                                    {{viewPractionerDataa?.dateOfBirth | date:'dd-MM-yyyy' || '--'}}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    
                                                 </div>
                                                 <div class="text-center mt40 mb40">
     
                                                     <button class="btn btn-large  max-WT-150 btn-theme"
-                                                        (click)="changePractionerValue()">Back</button>
+                                                        (click)="changeCompanyValue()">Back</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- practioner view end -->
+                            <!-- company view end -->
+                             <!-- company edit start -->
+                            <div *ngIf="companyUserEditValue==false">
+                                <div class="page_title_block">
+                                    <h1 class="page_title">Edit Company</h1>
+                                </div>
+                                    <form [formGroup]="editCompanyForm">
+                                     <div class="col" style="margin-top: 10%">
+                                    <div class="content-section">
+                                        <div class="order-view  max-WT-700 mrgn-0-auto setting-page">
+                                            <div class="mb40">
+    
+                                                <div class="add-store-block input-style view-label-align">
+                                                    
+                                                    <div class="form-group row align-items-baseline">
+                                                        <label class="col-md-4 textalignright ">Name <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group">
+                                                                <input type="text" formControlName="firstName" placeholder="Enter Company " class="form-control" >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row align-items-baseline">
+                                                        <label class="col-md-4 textalignright">User Limit
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <select class="form-control" formControlName="limit"  >
+                                                                <option value="">Select</option>
+                                                                <option value="{{companyDataa?.userLimit}}">{{companyDataa?.userLimit}}</option>
+                                                                
+                    
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row align-items-baseline">
+                                                        <label class="col-md-4 textalignright">Service
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <select class="form-control" formControlName="service" >
+                                                                <option value="">Select</option>
+                                                                <option *ngFor="let service of serviceData">{{service.subCategoryName}}</option>
+                    
+                                                            </select>
+                                                        </div>
+                                                    </div>
+    
+                                                    
+                                                </div>
+                                                <div class="text-center mt40 mb40">
+                                        <button type="button" class="btn btn-theme"
+                                         [disabled]="!editCompanyForm.valid" (click)="UpdateCompany()">Submit</button>
+                                        <button type="button" class="btn btn-theme"
+                                          (click)="changeCompanyValue()">Cancel</button>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </form>
+                                
+                            </div>
+                            <!-- company edit end -->   
+
                         </div>
                         <!-- tab link corporate end -->
                         <!-- tab link practioner start -->
