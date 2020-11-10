@@ -1119,7 +1119,7 @@
                                      </div>
                                         
                                         <div class="col-md-10">
-                                            <input type="text" formControlName="firstName" placeholder="Enter Company " class="form-control" style="width: 30%; margin-left: 19.5%;">
+                                            <input type="text" formControlName="firstName" placeholder="Enter Company " class="form-control" style="width: 30%; margin-left: 16.5%">
                                         </div>
                                     </div>
 
@@ -1129,12 +1129,12 @@
                                     </div>
                                         
                                     <div class="col-md-10">
-                                        <select class="form-control" formControlName="limit"  style="width: 30%; margin-left: 17%;">
+                                        <select class="form-control" formControlName="limit"  style="width: 30%; margin-left: 16.5%;">
                                             <option value="">Select</option>
-                                            <option value="NationalBankTransfer">0</option>
-                                            <option value="IMPS">5</option>
-                                            <option value="paypal">10</option>
-                                            <option value="paypal">15</option>
+                                            <option value="0">0</option>
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                            <option value="15">15</option>
 
                                         </select>
                                     </div>
@@ -1144,7 +1144,7 @@
                                         <label>Services : </label>
                                     </div>
                                     <div class="col-md-10">
-                                        <select class="form-control" formControlName="service" style="width: 30%; margin-left: 18%;">
+                                        <select class="form-control" formControlName="service" style="width: 30%; margin-left: 16.5%;">
                                             <option value="">Select</option>
                                             <option *ngFor="let service of serviceData">{{service.subCategoryName}}</option>
 
@@ -1153,7 +1153,7 @@
                                     </div>
 
                                     <button type="button" class="btn btn-theme"
-                                        style="margin-left: 84%; width: 17%; margin-top: -5%;" [disabled]="!companyForm.valid">Submit</button>
+                                        style="margin-left: 84%; width: 17%; margin-top: -5%;" [disabled]="!companyForm.valid" (click)="addCompany()">Submit</button>
 
                                     </form>
                                 </div>
@@ -1171,14 +1171,14 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="text-center">
+                                            <tr class="text-center" *ngFor="let item of companyData | paginate: { itemsPerPage: itemPerPage, currentPage: currentPage, totalItems: customerLength}; let i = index">
 
-                                                <td class="content">1</td>
-                                                <td class="content"> Infosys</td>
-                                                <td class="content">09/06/2020</td>
-                                                <td class="content">10</td>
-                                                <td class="content">1111</td>
-                                                 <td class="justify-content-center d-flex">
+                                                <td class="content">{{itemPerPage*(currentPage-1)+i+1}}</td>
+                                                <td class="content"> {{item?.name}}</td>
+                                                <td class="content">{{item?.createdAt | date:'dd-MM-yyyy'}}</td>
+                                                <td class="content">{{item?.userLimit}}</td>
+                                                <td class="content">{{item?.companyCode || ''}}</td>
+                                                <td class="justify-content-center d-flex">
                                                     <button class="btn btn-info ml-2 bt-margin" title="view"
                                                         (click)="viewcorporateCompany(item?._id)">
                                                         <i class="fa fa-eye" aria-hidden="true"
@@ -1203,38 +1203,7 @@
                                                             style="color:white"></i></button>
                                                 </td>
                                             </tr>
-                                            <tr class="text-center">
-
-                                                    <td class="content">1</td>
-                                                    <td class="content"> Infosys</td>
-                                                    <td class="content">09/06/2020</td>
-                                                    <td class="content">10</td>
-                                                    <td class="content">1111</td>
-                                                     <td class="justify-content-center d-flex">
-                                                        <button class="btn btn-info ml-2 bt-margin" title="view"
-                                                            (click)="viewcorporateCompany(item?._id)">
-                                                            <i class="fa fa-eye" aria-hidden="true"
-                                                                style="color:white"></i></button>
-                                                        <button class="btn btn-info ml-2 bt-margin"
-                                                            (click)="editCorporateCompany(item?._id)"><i class="fa fa-edit"
-                                                                aria-hidden="true" style="color:white"></i></button>
-                                                        <button class="btn btn-success ml-2 bt-margin"
-                                                            *ngIf="item?.status == 'ACTIVE'"
-                                                            (click)="BlockModal(item?._id, 'BLOCK')" title="deactivate"><i
-                                                                class="fa fa-ban"
-                                                                style="color:white;background-color: green"
-                                                                aria-hidden="true"></i></button>
-                                                        <button class="btn btn-danger ml-2 bt-margin"
-                                                            *ngIf="item?.status == 'BLOCK'"
-                                                            (click)="BlockModal(item?._id, 'ACTIVE')" title="activate"><i
-                                                                class="fa fa-ban" style="color:white;background-color: red"
-                                                                aria-hidden="true"></i></button>
-                                                        <button class="btn btn-danger ml-2 bt-margin" title="delete"
-                                                            (click)="deleteUserModal(item?._id,DELETE)"><i
-                                                                class="fa fa-trash" aria-hidden="true"
-                                                                style="color:white"></i></button>
-                                                    </td>
-                                                </tr>
+                                            
                                         </tbody>
                                     </table>
                                     <div class="custom-pagination mt-2 text-align-end" *ngIf="total > 10">

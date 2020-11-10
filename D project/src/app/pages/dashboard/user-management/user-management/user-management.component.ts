@@ -56,6 +56,7 @@ export class UserManagementComponent implements OnInit {
   addPractionerForm: FormGroup;
   companyForm: FormGroup;
   serviceData: any;
+  companyData: any;
   
   
 
@@ -89,6 +90,7 @@ export class UserManagementComponent implements OnInit {
       this.corporateUserAddValue=true;
       this.corporateValue=true;
       this.viewCompanyValue=true;
+      
     }
     else if (this.currTab === 'Practioner'){
       this.getPractioner();
@@ -556,11 +558,7 @@ export class UserManagementComponent implements OnInit {
     })
   }
 
-  // view companies
-  viewCompany(){
-    this.corporateValue=false;
-    this.viewCompanyValue=false;
-  }
+  
 
 
   changeCorporateValue(){
@@ -570,6 +568,70 @@ export class UserManagementComponent implements OnInit {
     this.corporateUserAddValue=true;
     this.corporateValue=true;
   }
+
+  //============================== view company start============================//
+  // view companies
+  viewCompany(){
+    this.companyList();
+    this.corporateUserValue=true;
+    this.corporateUserEditValue=true;
+    this.corporateUserAddValue=true;
+    this.corporateValue=false;
+    this.viewCompanyValue=false;
+  }
+  // add company api
+  addCompany(){
+    let data = {
+      'name': this.companyForm.value.firstName,
+      'userLimit': this.companyForm.value.limit,
+      'service': this.companyForm.value.service,
+      'companyCode':'',
+    }
+    this.mainService.showSpinner();
+    this.mainService.postApi('admin/addCompany', data, 1).subscribe((res: any) => {
+      console.log("add helpline number list response ==>", res)
+      if (res.responseCode == 200) {
+        this.mainService.hideSpinner();
+        this.mainService.successToast(res.responseMessage);
+        this.selectTab('Corporate');
+        this.companyList();
+        this.corporateUserValue=true;
+        this.corporateUserEditValue=true;
+        this.corporateUserAddValue=true;
+        this.corporateValue=false;
+        this.viewCompanyValue=false;
+      } else {
+        this.mainService.hideSpinner();
+        this.mainService.errorToast(res.responseMessage)
+      }
+    })
+
+  }
+
+  // company list
+  companyList(){
+    this.mainService.showSpinner();
+    let data ={}
+    this.mainService.postApi('admin/companyList','', 1).subscribe((res:any)=>{
+      
+      if(res.responseCode==200){
+        this.mainService.hideSpinner();
+        this.companyData=res.result.docs;
+        this.status=res.result.docs.status;
+
+        console.log("f", this.practionerData);
+      }
+      else if(res.responseCode==404){
+        this.mainService.hideSpinner()
+        this.mainService.errorToast(res.responseMessage)
+
+      }
+    },(error)=>{
+      this.mainService.hideSpinner();
+      this.mainService.errorToast('something went wrong')
+    })
+  }
+  //============================== view company end============================//
 
   //=============================== practioner all start=============================//
 
