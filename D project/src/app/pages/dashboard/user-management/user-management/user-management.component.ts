@@ -62,6 +62,8 @@ export class UserManagementComponent implements OnInit {
   viewCompanyDataa: any;
   editCompanyForm: FormGroup;
   companyDataa: any;
+  corporateLength: any;
+  practionerLength: any;
   
   
 
@@ -197,7 +199,15 @@ export class UserManagementComponent implements OnInit {
 
   pagination(event) {
     this.currentPage = event;
-    this.getCustomer()
+    if(this.currTab=='Customer'){
+      this.getCustomer()
+    }
+    else if(this.currTab=='Corporate'){
+      this.getCorporate()
+    }
+    else if(this.currTab=='Practioner'){
+      this.getPractioner()
+    }
   }
   // service api 
   getService(){
@@ -252,17 +262,21 @@ export class UserManagementComponent implements OnInit {
   // get customer
   getCustomer(){
     this.mainService.showSpinner();
-    let data ={}
-    this.mainService.postApi('admin/listUsers','', 1).subscribe((res:any)=>{
+    let data ={
+      'page':this.currentPage,
+      'limit':this.itemPerPage,
+    }
+    this.mainService.postApi('admin/listUsers',data, 1).subscribe((res:any)=>{
       
       if(res.responseCode==200){
         this.mainService.hideSpinner();
         this.customerData=res.result.docs;
-        this.customerLength=res.result.docs.total;
+        this.customerLength=res.result.total;
         this.status=res.result.docs[0].status;
-        console.log("f", this.status);
+        console.log("f", this.customerLength);
         
       }
+      
     },(error)=>{
       this.mainService.hideSpinner();
       this.mainService.errorToast('something went wrong')
@@ -420,12 +434,16 @@ export class UserManagementComponent implements OnInit {
   // get corporate
   getCorporate(){
     this.mainService.showSpinner();
-    let data ={}
-    this.mainService.postApi('admin/corporateList','', 1).subscribe((res:any)=>{
+    let data ={
+      'page':this.currentPage,
+      'limit':this.itemPerPage,
+    }
+    this.mainService.postApi('admin/corporateList',data, 1).subscribe((res:any)=>{
       
       if(res.responseCode==200){
         this.mainService.hideSpinner();
         this.corporateData=res.result.docs;
+        this.corporateLength=res.result.total
         this.status=res.result.docs.status;
 
         console.log("f", this.practionerData);
@@ -743,12 +761,16 @@ export class UserManagementComponent implements OnInit {
   // get practioner
   getPractioner(){
     this.mainService.showSpinner();
-    let data ={}
-    this.mainService.postApi('admin/practitionerList','', 1).subscribe((res:any)=>{
+    let data ={
+      'page':this.currentPage,
+      'limit':this.itemPerPage,
+    }
+    this.mainService.postApi('admin/practitionerList',data, 1).subscribe((res:any)=>{
       
       if(res.responseCode==200){
         this.mainService.hideSpinner();
         this.practionerData=res.result.docs;
+        this.practionerLength=res.result.total
         this.status=res.result.docs.status;
 
         console.log("f", this.practionerData);
@@ -899,23 +921,72 @@ export class UserManagementComponent implements OnInit {
   //=============================== practioner all end ========================//
   // ================================ export csv start ================================//
   exportCSV() {
-    let dataArr = [];
-    dataArr.push({
+    if(this.currTab=='Customer'){
+      let dataArr = [];
+     dataArr.push({
         sno: "S.No.",
         Name: "Name",
-        Added: "Added On",
+        DOB: "D.O.B",
+        Email:"Email",
+        Contact:"Contact Number"
     });
   
     this.customerData.forEach((element,ind) => {
         dataArr.push({
             sno:ind+1,
-            Name:element.categoryName?element.categoryName:'--',
-            Added:element.addedOn?element.addedOn:'--',
+            Name:element.name?element.name:'--',
+            DOB:element.dateOfBirth?element.dateOfBirth:'--',
+            Email:element.email?element.email:'--',
+            Contact:element.mobileNumber?element.mobileNumber:'--',
         })
     }) 
     new ngxCsv(dataArr, 'Customer_management');
+    }
+    else if(this.currTab=='Corporate'){
+      let dataArr = [];
+     dataArr.push({
+        sno: "S.No.",
+        Name: "Name",
+        DOB: "D.O.B",
+        Email:"Email",
+        Contact:"Contact Number",
+        Company:"Company Name",
+    });
+  
+    this.customerData.forEach((element,ind) => {
+        dataArr.push({
+            sno:ind+1,
+            Name:element.name?element.name:'--',
+            DOB:element.dateOfBirth?element.dateOfBirth:'--',
+            Email:element.email?element.email:'--',
+            Contact:element.mobileNumber?element.mobileNumber:'--',
+            Company:element.company?element.company:'--',
+        })
+    }) 
+    new ngxCsv(dataArr, 'Corporate Customer_management');
+    }
+    else if(this.currTab=='Practioner'){
+        let dataArr = [];
+       dataArr.push({
+          sno: "S.No.",
+          Name: "Name",
+          DOB: "D.O.B",
+          Email:"Email",
+          Contact:"Contact Number"
+      });
+    
+      this.customerData.forEach((element,ind) => {
+          dataArr.push({
+              sno:ind+1,
+              Name:element.name?element.name:'--',
+              DOB:element.dateOfBirth?element.dateOfBirth:'--',
+              Email:element.email?element.email:'--',
+              Contact:element.mobileNumber?element.mobileNumber:'--',
+          })
+      }) 
+      new ngxCsv(dataArr, 'Practioner_management');
   }
-
+}
   // ================================ export csv end ================================//
 
   //==========================serach========================================//
@@ -961,12 +1032,26 @@ export class UserManagementComponent implements OnInit {
           this.practionerData=res.result.docs;
         }
         
-        else if(res.responseCode==404){
-          
-          this.mainService.hideSpinner();
-          this.mainService.errorToast(res.responseMessage)
-        }
         
+        
+      }
+      else if(res.responseCode==404){
+        if(this.currTab === 'Customer'){
+          this.customerData=[];
+          this.customerLength=''
+        }
+        if(this.currTab === 'Corporate'){
+          this.corporateData=[];
+          this.corporateLength=''
+        }
+        if(this.currTab === 'Practioner'){
+          this.practionerData=[];
+          this.practionerLength=''
+        }
+
+        
+        this.mainService.hideSpinner();
+        this.mainService.errorToast(res.responseMessage)
       }
     },(error)=>{
       this.mainService.hideSpinner();

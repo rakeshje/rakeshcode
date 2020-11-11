@@ -139,11 +139,11 @@
                                                 </td>
                                             </tr>
                                             <tr *ngIf="!customerData.length">
-                                                <td class="table-no-record" colspan="9">No Record Found</td>
+                                                <td class="table-no-record" colspan="6">No Record Found</td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <div class="custom-pagination mt-2 text-align-end" *ngIf="total > 10">
+                                    <div class="custom-pagination mt-2 text-align-end" *ngIf="customerLength>5">
                                         <pagination-controls (pageChange)="pagination($event)"></pagination-controls>
                                     </div>
                                 </div>
@@ -592,7 +592,7 @@
                                         </thead>
                                         <tbody>
 
-                                            <tr *ngFor="let item of corporateData | paginate: { itemsPerPage: itemPerPage, currentPage: currentPage, totalItems: customerLength}; let i = index"
+                                            <tr *ngFor="let item of corporateData | paginate: { itemsPerPage: itemPerPage, currentPage: currentPage, totalItems: corporateLength}; let i = index"
                                                 class="text-center">
                                                 <td>
                                                     {{itemPerPage * (currentPage-1)+ i+1}}</td>
@@ -635,7 +635,7 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <div class="custom-pagination mt-2 text-align-end" *ngIf="total > 10">
+                                    <div class="custom-pagination mt-2 text-align-end" *ngIf="corporateLength > 5">
                                         <pagination-controls (pageChange)="pagination($event)"></pagination-controls>
                                     </div>
                                 </div>
@@ -1186,17 +1186,7 @@
                                                     <button class="btn btn-info ml-2 bt-margin"
                                                         (click)="editCorporateCompany(item?._id)"><i class="fa fa-edit"
                                                             aria-hidden="true" style="color:white"></i></button>
-                                                    <button class="btn btn-success ml-2 bt-margin"
-                                                        *ngIf="item?.status == 'ACTIVE'"
-                                                        (click)="BlockModal(item?._id, 'BLOCK')" title="deactivate"><i
-                                                            class="fa fa-ban"
-                                                            style="color:white;background-color: green"
-                                                            aria-hidden="true"></i></button>
-                                                    <button class="btn btn-danger ml-2 bt-margin"
-                                                        *ngIf="item?.status == 'BLOCK'"
-                                                        (click)="BlockModal(item?._id, 'ACTIVE')" title="activate"><i
-                                                            class="fa fa-ban" style="color:white;background-color: red"
-                                                            aria-hidden="true"></i></button>
+                                                    
                                                     <button class="btn btn-danger ml-2 bt-margin" title="delete"
                                                         (click)="DeleteUserModal(item?._id,DELETE)"><i
                                                             class="fa fa-trash" aria-hidden="true"
@@ -1225,13 +1215,7 @@
                                             <div class="mb40">
     
                                                 <div class="add-store-block input-style view-label-align">
-                                                    <!-- <div class="form-group row align-items-baseline">
-                                                        <div class="col-md-12" style="text-align: center">
-                                                            <img alt=""
-                                                                src="{{viewPractionerDataa?.profilePic || 'assets/img/profile-img.jpg' }}"
-                                                                style="height: 100px;width: 100px; border-radius: 50%; border: 1px solid black!important;">
-                                                        </div>
-                                                    </div> -->
+                                                    
                                                     <div class="form-group row align-items-baseline">
                                                         <label class="col-md-4 textalignright ">Name <span>:</span></label>
                                                         <div class="col-md-8 textaligncenter">
@@ -1405,7 +1389,7 @@
                                         </thead>
                                         <tbody>
 
-                                            <tr *ngFor="let item of practionerData | paginate: { itemsPerPage: itemPerPage, currentPage: currentPage, totalItems: total}; let i = index"
+                                            <tr *ngFor="let item of practionerData | paginate: { itemsPerPage: itemPerPage, currentPage: currentPage, totalItems: practionerLength}; let i = index"
                                                 class="text-center">
                                                 <td>
                                                     {{itemPerPage * (currentPage-1)+ i+1}}</td>
@@ -1445,7 +1429,7 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <div class="custom-pagination mt-2 text-align-end">
+                                    <div class="custom-pagination mt-2 text-align-end" *ngIf="practionerLength>5">
                                         <pagination-controls (pageChange)="pagination($event)"></pagination-controls>
                                     </div>
                                 </div>
