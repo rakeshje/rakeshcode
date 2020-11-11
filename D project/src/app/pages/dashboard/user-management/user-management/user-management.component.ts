@@ -1014,7 +1014,7 @@ export class UserManagementComponent implements OnInit {
             UserLimit:element.userLimit?element.userLimit:'--',
             Service:element.service?element.service:'--',
             CompanyCode:element.companyCode?element.companyCode:'--',
-            AddedOn:element.createdAt?element.createdAt:'--',
+            AddedOn:element.createdAt?element.createdAt.slice(0, 10):'--',
         })
     }) 
     new ngxCsv(dataArr, 'Corporate Company_Management');

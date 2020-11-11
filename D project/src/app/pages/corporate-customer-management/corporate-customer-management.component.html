@@ -324,37 +324,7 @@
                                             (click)="deleteUserModal(item?._id)">delete</button>
                                     </td>
                                 </tr>
-                                    <!-- <tr *ngFor="let item of userDataList | paginate: { itemsPerPage: itemPerPage, currentPage: currentPage, totalItems: total}; let i = index"
-                                        class="text-center">
-                                        <td><input type="checkbox" class="tabel-body-checkbox" [value]="item._id"
-                                                [(ngModel)]="item.isChecked" [ngModelOptions]="{standalone: true}"
-                                                (change)="onCheckboxChange($event)" />
-                                            {{itemPerPage * (currentPage-1)+ i+1}}</td>
-                                        <td class="content" [tooltip]="item?.firstName + ' ' + item?.lastName || '--'">
-                                            {{item?.firstName + ' ' + item?.lastName || '--'}}</td>
-                                        <td class="content" [tooltip]="item?.email || '--'">{{item?.email || '--'}}</td>
-                                        <td class="content" [tooltip]="item?.mobileNumber || '--'">
-                                            {{item?.mobileNumber || '--'}}</td>
-                                        <td class="content">{{item?.disease || '--'}}</td>
-                                        <td class="content">{{item?.createdAt | date :'d/M/y' || '--'}}</td>
-                                        <td class="content">{{item?.testCount}}</td>
-                                        <td class="content">{{item?.testStatus || '--'}}</td>
-                                        <td class="justify-content-center d-flex">
-                                            <button class="btn btn-info ml-2 bt-margin" title="view"
-                                                (click)="viewUser(item?._id)">
-                                                <i class="fa fa-eye" aria-hidden="true"
-                                                    style="color:white"></i></button>
-                                            <button class="btn btn-info ml-2 bt-margin" (click)="editUser(item?._id)"><i
-                                                    class="fa fa-edit" aria-hidden="true"
-                                                    style="color:white"></i></button>
-                                            <button class="btn btn-danger ml-2 bt-margin" title="delete"
-                                                (click)="deleteUserModal(item?._id)"><i class="fa fa-trash"
-                                                    aria-hidden="true" style="color:white"></i></button>
-                                        </td>
-                                    </tr> -->
-                                    <!-- <tr *ngIf="!userDataList.length">
-                                        <td class="table-no-record" colspan="9">No Record Found</td>
-                                    </tr> -->
+                                    
                                 </tbody>
                             </table>
                             <div class="custom-pagination mt-2 text-align-end" *ngIf="total > 10">
