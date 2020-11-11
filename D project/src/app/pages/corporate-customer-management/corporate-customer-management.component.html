@@ -453,6 +453,34 @@
     </div>
 </div>
 <!-- block modal ends here -->
+<!-- delete modal -->
+<div class="modal fade global-modal reset-modal" id="DeleteModal">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div class="modal-header d-block text-center modal-header-custm">
+                    <h5 class="modal-title d-inline-block">Delete</h5>
+                </div>
+                <div class="modal-inner-content">
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p >Are you sure you want to delete this company?</p>
+                                
+                                <div class="modal-btn-box">
+                                    <button type="submit" class="btn btn-theme" (click)="DeleteUser()">Yes</button>
+                                    <button type="button" class="btn btn-danger btn-theme ml-2"
+                                        data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- delete modal -->
 
 <!-- logout modal start -->
 <div class="modal fade global-modal reset-modal" id="logoutModal">

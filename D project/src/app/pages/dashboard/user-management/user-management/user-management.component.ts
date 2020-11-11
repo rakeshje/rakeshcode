@@ -64,6 +64,7 @@ export class UserManagementComponent implements OnInit {
   companyDataa: any;
   corporateLength: any;
   practionerLength: any;
+  companyLength: any;
   
   
 
@@ -620,6 +621,8 @@ export class UserManagementComponent implements OnInit {
     this.mainService.postApi('admin/addCompany', data, 1).subscribe((res: any) => {
       console.log("add helpline number list response ==>", res)
       if (res.responseCode == 200) {
+        this.companyForm.reset();
+        this.companyList();
         this.mainService.hideSpinner();
         this.mainService.successToast(res.responseMessage);
         this.selectTab('Corporate');
@@ -640,12 +643,16 @@ export class UserManagementComponent implements OnInit {
   // company list
   companyList(){
     this.mainService.showSpinner();
-    let data ={}
-    this.mainService.postApi('admin/companyList','', 1).subscribe((res:any)=>{
+    let data ={
+      'page':this.currentPage,
+      'limit':this.itemPerPage,
+    }
+    this.mainService.postApi('admin/companyList',data, 1).subscribe((res:any)=>{
       
       if(res.responseCode==200){
         this.mainService.hideSpinner();
         this.companyData=res.result.docs;
+        this.companyLength=res.result.total
         this.status=res.result.docs.status;
 
         console.log("f", this.practionerData);
@@ -752,7 +759,7 @@ export class UserManagementComponent implements OnInit {
   changeCompanyValue(){
     this.companyUserValue=true;
     this.companyUserEditValue=true;
-    this.viewCompanyValue=true;
+    this.viewCompanyValue=false;
   }
   //============================== view company end============================//
 
@@ -953,7 +960,7 @@ export class UserManagementComponent implements OnInit {
         Company:"Company Name",
     });
   
-    this.customerData.forEach((element,ind) => {
+    this.practionerData.forEach((element,ind) => {
         dataArr.push({
             sno:ind+1,
             Name:element.name?element.name:'--',
@@ -987,6 +994,32 @@ export class UserManagementComponent implements OnInit {
       new ngxCsv(dataArr, 'Practioner_management');
   }
 }
+
+  // export company csv
+  exportCompanyCSV(){
+    let dataArr = [];
+     dataArr.push({
+        sno: "S.No.",
+        Name: "Name",
+        UserLimit: "UserLimit",
+        Service: "Service",
+        CompanyCode:"CompanyCode",
+        AddedOn:"AddedOn",
+    });
+  
+    this.companyData.forEach((element,ind) => {
+        dataArr.push({
+            sno:ind+1,
+            Name:element.name?element.name:'--',
+            UserLimit:element.userLimit?element.userLimit:'--',
+            Service:element.service?element.service:'--',
+            CompanyCode:element.companyCode?element.companyCode:'--',
+            AddedOn:element.createdAt?element.createdAt:'--',
+        })
+    }) 
+    new ngxCsv(dataArr, 'Corporate Company_Management');
+  
+  }
   // ================================ export csv end ================================//
 
   //==========================serach========================================//
@@ -1059,6 +1092,37 @@ export class UserManagementComponent implements OnInit {
     })
   }
 
+  // search company
+  searchCompany(){
+    this.mainService.showSpinner();
+    let data ={
+      'search':this.searchForm.value.search,
+      'fromDate':this.searchForm.value.fromDate,
+      'toDate':this.searchForm.value.toDate,
+    }
+    this.mainService.postApi('admin/companyList',data, 1).subscribe((res:any)=>{
+      
+      if(res.responseCode==200){
+        this.mainService.hideSpinner();
+        this.companyData=res.result.docs;
+        this.companyLength=res.result.total
+        this.status=res.result.docs.status;
+
+        console.log("f", this.practionerData);
+      }
+      else if(res.responseCode==404){
+        this.companyData=[];
+        this.companyLength=''
+        this.mainService.hideSpinner()
+        this.mainService.errorToast(res.responseMessage)
+
+      }
+    },(error)=>{
+      this.mainService.hideSpinner();
+      this.mainService.errorToast('something went wrong')
+    })
+  }
+
   // reset
   reset(){
     if (this.searchForm.value.search || this.searchForm.value.fromDate || this.searchForm.value.toDate) {
@@ -1079,6 +1143,14 @@ export class UserManagementComponent implements OnInit {
         }
       }
   }
+
+  // reset company
+  resetCompany(){
+    if (this.searchForm.value.search || this.searchForm.value.fromDate || this.searchForm.value.toDate) {
+      this.searchForm.reset();
+        this.companyList();
+  }
+}
   
 
   
@@ -1163,6 +1235,11 @@ export class UserManagementComponent implements OnInit {
         $('#DeleteModal').modal('hide');
         this.mainService.successToast(res.responseMessage);
         if(this.currTab === 'Corporate'){
+          this.corporateUserValue=true;
+        this.corporateUserEditValue=true;
+        this.corporateUserAddValue=true;
+        this.corporateValue=false;
+        this.viewCompanyValue=false;
           this.companyList();
           
           this.viewCompanyValue=false;
@@ -1261,7 +1338,6 @@ export class UserManagementComponent implements OnInit {
 
   // ------------------------------- block/unblock functinality end----------------------------- //
 
-  // ================================ export csv start ================================//
   
 
 
