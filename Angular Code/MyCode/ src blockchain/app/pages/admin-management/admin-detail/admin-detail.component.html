@@ -1,0 +1,48 @@
+<main class="middle-content">
+    <div class="content-section">
+        <div class="page_title_block pL0 pR0">
+            <h1 class="page_title" style="color:#26272d">ADMIN DETAIL</h1>
+        </div>
+        
+        <div class="user-profile">
+            <div class="image-box">
+                <img [src]="imageUrl" class="profile-pic" alt="profile image">
+                
+            </div>
+        </div>
+        <div class="padd_6" style="margin-top: 8%;margin-left: 26%;">
+            <div class="form-group row">
+                <label class="col-md-5 text" for="">Name</label>
+                <span class="col-md-1">:</span>
+                <p class="col-md-6">{{viewData?.firstName}}</p>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-5 text" for="">Email</label>
+                <span class="col-md-1">:</span>
+                <p class="col-md-6">{{viewData?.email}}</p>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-5 text" for="">Phone Number</label>
+                <span class="col-md-1">:</span>
+                <p class="col-md-6">{{viewData?.phoneNo}}</p>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-5 text" for="">Address</label>
+                <span class="col-md-1">:</span>
+                <p class="col-md-6">{{viewData?.address}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="head_flt_select">
+        <div class="head_flt_select input-label" style="margin-left: 1%">
+            <button  routerLink='/user-management-admin' type="submit" class="btn  btn-theme" style="width: 20%;margin-left: 40%;margin-bottom: 5%;">Back</button>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="container-fluid">
+        <p class="copyright">Alende  <strong class="theme-text-color"></strong> 
+            </p>
+    </div>
+</footer>

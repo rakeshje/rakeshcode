@@ -1,0 +1,47 @@
+
+  <div class="wrapper">
+    <main class="middle-content">
+        <div class="page_title_block">
+            <h1 class="page_title">Static Content Management</h1>
+        </div>
+        <div class="content-section">
+            <div class="outer-box">
+                <div class="global-table no-radius p0">
+                    <div class="tab-content1">
+                        <div class="tab-pane1">
+                         <div class="table-responsive">
+                            <table class="table table-bordered" aria-describedby="">
+                                <thead>
+                                    <tr class="no_wrap_th text-center">
+                                        <th id="" class="Sorting-img" >  Title  </th>
+                                        <th  id="" class="Sorting-img">  Description</th>
+                                        <th  id="" class="action_td_btn3 Sorting-img">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="text-center" *ngFor = "let item of staticData" >
+
+                                        <td class="content" >{{item?.title}}</td>
+                                        <td class="content" [innerHTML]="item?.description" >{{item?.description}}</td>
+
+                                        <td class="justify-content-center d-flex">
+                                            <button class="btn btn-info ml-2 bt-margin" (click) = "viewContent(item?.type)">
+                                              View
+                                            </button>
+                                            <button class="btn btn-info ml-2 bt-margin" (click) = "editContent(item?._id,item?.type)"> Edit</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    </div>
+
+    
+

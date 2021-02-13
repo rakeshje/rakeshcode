@@ -1,0 +1,24 @@
+
+.active.btn-light{
+    background: #2f39bd;
+    background-color: #2f39bd;
+  }
+  .btn-light{
+    color: black;
+    border: 1px solid #808080a6;
+    border-radius: 0;
+  }
+  .datelabel{
+    display: flex;
+      justify-content: space-between;
+      padding: 16px;
+      padding-left: 5%;
+  }
+  td {
+    text-align: center;
+  }
+  h5{
+    text-align: center
+  }
+  
+

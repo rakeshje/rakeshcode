@@ -1,0 +1,105 @@
+<!-- Start Right Bar -->
+<app-rightsidemenu></app-rightsidemenu>
+<!-- Close Right Bar -->
+
+<!-- Satrt Page Content -->
+<div class="page-wrap">
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="left-menu card">
+          <app-sidemenu></app-sidemenu>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="page-content" *ngIf="cart.length">
+          <div class="card post-box main-post" *ngFor="let data of cart">
+            <div class="post-warp">
+              <div class="post-content">
+                <div class="product-summery">
+                  <div class="post-summry wishlist-img" style="position: relative;">
+                    <!-- <img [src]="data.productId.productImages[0].image" class="img-fluid cart-image" (click)="displayProduct(data?.productId)"> -->
+                    <img class="img-fluid cart-image" *ngIf="data?.productId?.image || data?.productId?.productImages.length" [src]="data?.productId?.image ? data?.productId?.image : data?.productId?.productImages[0].image">
+                    <img *ngIf="!data?.productId?.image && !data?.productId?.productImages.length" class="img-fluid cart-image" src="assets/images/Layer 115.jpg">
+                    <img src="assets/images/cross.png" (click)="removeProduct(data)" style="position: absolute; width: 25px;">
+
+                    <!-- <i class="fa fa-times-circle" (click)="removeProduct(data)"></i> -->
+                  </div>
+                </div>
+              </div>
+              <div class="prodect-name">
+                <div class="heart-icon">
+                  <div>
+                    <h5>{{data.productId.productName}}</h5>
+                    <h5>{{data.productId.description}}</h5>
+                    <h5>${{data.productId.productCost}}.00</h5>
+                    <p><i class="fas fa-map-marker-alt"></i>
+                      {{data.productId.location}}, {{data.productId.city}}</p>
+                  </div>
+                  <div class="like-icon">
+                    <p>{{data.productId.createdAt}}</p>
+                    <i class="fas fa-heart" id="{{data.productId._id}}" (click)="wishlist(data.productId._id)"></i>
+                  </div>
+                </div>
+              </div>
+              <form class="qty mt-3">
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">Qty :-</label>
+                  <div class="col-sm-10">
+                    <select class="form-control" (change)="chooseQuantity($event.target.value, data.productId._id)">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row" *ngIf="data?.productId?.productSize?.length">
+                  <label class="col-sm-2 col-form-label">Size :-</label>
+                  <div class="col-sm-10">
+                    <select class="form-control" [(ngModel)]="data.size" name="size">
+                      <option *ngFor="let size of data.productId.productSize" [value]="size.size">{{size.size}}</option>
+                    </select>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="card post-box main-post">
+            <div class="new-warp">
+              <div class="prodect-name">
+                <h5>Price details</h5>
+                <div class="displayPrice marg">
+                  <p>Total price</p>
+                  <p>${{total}}.00</p>
+                </div>
+                <!-- <div class="displayPrice marg">
+                  <p>Delivery charges</p>
+                  <p>$12345.00</p>
+                </div> -->
+                <div class="displayPrice marg total">
+                  <h5 class="totalPrice">Total</h5>
+                  <h5 class="totalPrice">${{total}}.00</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="placeOrder" class="btn btn-success paynow" (click)="placeOrder()">Place order</button>
+        </div>
+        <div class="page-content" *ngIf="!cart.length">
+          <div class="card post-box main-post">
+              <div class="post-warp">
+                  <div class="post-content">
+                    <div class="product-summery">
+            Your cart is empty
+            </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end -->

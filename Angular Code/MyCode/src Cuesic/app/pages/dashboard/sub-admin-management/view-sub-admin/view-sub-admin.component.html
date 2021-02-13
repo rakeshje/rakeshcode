@@ -1,0 +1,79 @@
+<div class="wrapper">
+  <main class="middle-content">
+      <div class="page_title_block">
+          <h1 class="page_title">SubAdmin Management / View</h1>
+      </div>
+      <div class="content-section">
+          <div class="outer-box">
+              <div class="global-table no-radius p0">
+                  <div class="tab-content1">
+                      <div class="row">
+                          <div class="col-md-12">
+                              <div class=" order-view main-block-innner mb20 mt40 view-label-align">
+                                  <div class="add-store-block input-style">
+                                      <div class="form-group row ">
+                                          <div class="col-md-12">
+                                              <div class="user-profile mb-4">
+                                                  <div class="image-box">
+                                                      <img [src]=" 'assets/img/profile-img.jpg'" alt="loading...">
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <!--************ One Row Start here ********************* -->
+                                  <div class="w-86">
+                                    <div class="form-group row">
+                                      <div class="col-md-12">
+                                          <div class="form-group row">
+                                              <div class="col-md-6">
+                                                  <label>First Name <span>:</span> </label>
+                                              </div>
+                                              <div class="col-md-6">
+                                                <p>
+                                                  {{user?.name || '--'}}
+                                                </p>
+                                              </div>
+                                          </div>
+                                      </div>
+
+                                  </div>
+                                  <!--************ One Row end here ********************* -->
+                                  <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label >Email Address <span>:</span> </label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="content-view" >
+                                          {{user?.email || '--'}} </p>
+                                    </div>
+                                </div>
+
+                                
+                              <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label>Role and Accessibility <span>:</span> </label>
+                                </div>
+                                <div class="col-md-6">
+                                  <div class="form-group row">
+                                    <div class="col-sm-6"  *ngFor = "let item of myPermission;index as i">
+                                           {{item[0] | titlecase }}
+                                    </div>
+
+                                </div>
+                                </div>
+                            </div>
+                                  </div>
+                                  <div class="text-center mt40 mb40">
+                                      <button class="btn btn-large  max-WT-150 btn-theme"
+                                          routerLink="/sub-admin-management">Back</button>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </main>
+</div>

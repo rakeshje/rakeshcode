@@ -1,0 +1,48 @@
+
+<div class="wrapper">
+          <app-sidebar></app-sidebar>
+          <main class="middle-content">
+            <!-- Page Title Start -->
+            <div class="page_title_block">
+              <h5 class="page_title">Static page Management</h5>
+            </div>
+            <!-- Page Title End -->
+            <div class="content-section">
+              <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+                <div class="main-block-innner mb40 mt40">
+                  <form>
+                    <div class="add-store-block input-style">
+                      <div class="form-group row align-items-baseline">
+                        <div class="row" style="    width: 100%;">
+                          <label class="col-md-3">Title:</label>
+                          <h5 class="col-md-9" style="color: black">{{data?.title}}</h5>
+                        </div>
+                      </div>
+                      <div class="form-group row align-items-baseline ">
+                        <div class="row">
+                          <label class="col-md-3">Description:</label>
+        
+        
+                          <div class="col-md-9">
+                            <h5 style="color: black">{{data?.description}}</h5>
+                          </div>
+                        </div>
+                      </div>
+                      
+        
+                      <div class="form-group">
+                        <div class="text-center mt40" style="justify-content: space-between">
+                          <a [routerLink]="['/static-page-management']"
+                            class="btn btn-large  max-WT-200 font-100 btn-green mb-5">Cancel</a>&nbsp;
+                        </div>
+        
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <!-- Table Responsive End -->
+            
+          </main>
+        </div>

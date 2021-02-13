@@ -1,0 +1,14 @@
+<div class="fixed-rightbar">
+    <ul class="rightbar-chat">
+      <li *ngFor = "let item of friendList"><a (click) = "Chat(item?._id,item?.profilePic,item?.firstName)"><img [src]="item?.profilePic || 'assets/images/Layer 61.png'" >
+        <span *ngIf = "item?.status == 'online'" class="notify-dot">
+      </span>
+    <label for=""> 
+      {{item?.firstName}}
+
+    </label>
+    </a></li>
+    
+    <li class="chat-btn"><a href="javascript:;"><img src="assets/images/Layer 141.png"><span class="num">2</span></a></li>
+    </ul>
+  </div>

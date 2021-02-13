@@ -1,0 +1,40 @@
+
+.active.btn-light{
+  background: #2f39bd;
+  background-color: #2f39bd;
+}
+.btn-light{
+  color: white;
+  background-color: blue;
+  border: 1px solid #808080a6;
+  border-radius: 0;
+}
+.datelabel{
+  display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    padding-left: 5%;
+}
+.margin-6{
+  margin: auto;
+    margin-top: 4.7%;
+}
+.border{
+  border: 1px solid gray;
+  height: 160px;
+}
+
+img{
+  width: 100%;
+  max-width: 150px;
+  height: 200px;
+}
+.padding16{
+  padding: 16px !important;
+}
+
+.forMall{
+  width: 100%;
+    text-align: center;
+    margin: auto;
+}

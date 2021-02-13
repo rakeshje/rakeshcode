@@ -1,0 +1,194 @@
+<div class="wrapper">
+
+     <main class="middle-content">
+          <!-- Page Title Start -->
+          <div class="page_title_block">
+               <h1 class="page_title" style="text-align: center">MY PROFILE</h1>
+          </div>
+          <div class="content-section">
+               <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+                    <div class="main-block-innner mb40 mt40">
+                         <form [formGroup]="myProfileForm" #f="ngForm" style="padding: 10px;">
+                              <div class="add-store-block input-style">
+                                   <div class="form-group row align-items-baseline">
+                                        <label class="col-md-5">Name:</label>
+                                        <div class="col-md-7">
+                                             
+                                             <input type="text" (keypress)="service.preventSpace($event)"
+                                                  formControlName="name" maxlength="20" placeholder="Name"
+                                                  class="form-control">
+                                             <div class="text-danger"
+                                                  *ngIf="myProfileForm.get('name').hasError('required') && (myProfileForm.get('name').dirty || myProfileForm.get('name').touched)">
+                                                  *Please enter name.
+                                             </div>
+                                             <div class="text-danger"
+                                                  *ngIf="myProfileForm.get('name').hasError('pattern') && (myProfileForm.get('name').dirty || f.submitted)">
+                                                  *name accept only alphabets.
+                                             </div>
+                                             <div class="text-danger"
+                                                  *ngIf="myProfileForm.get('name').hasError('minlength') && !(myProfileForm.get('name').hasError('pattern')) && (myProfileForm.get('name').dirty || f.submitted)">
+                                                  *Minimum length must be 2.
+                                             </div>
+                                             <div class="text-danger"
+                                                  *ngIf="myProfileForm.get('name').hasError('maxlength') && !(myProfileForm.get('name').hasError('pattern')) && (myProfileForm.get('name').dirty || f.submitted)">
+                                                  *Maximum length should not more than 20.
+                                             </div>
+                                        </div>
+                                   </div>
+                                   <div class="form-group row align-items-baseline">
+                                        <label class="col-md-5">Email:</label>
+                                        <div class="col-md-7">
+                                             <input type="text" (keypress)="service.preventSpace($event)"
+                                                  formControlName="email" maxlength="64" placeholder="email"
+                                                  class="form-control" readonly>
+                                             <div class="text-danger"
+                                                  *ngIf="myProfileForm.get('email').hasError('required') && (myProfileForm.get('email').dirty || myProfileForm.get('email').touched)">
+                                                  *Please enter email.
+                                             </div>
+                                             <div class="text-danger"
+                                                  *ngIf="myProfileForm.get('email').hasError('pattern') && (myProfileForm.get('email').dirty || f.submitted)">
+                                                  *Please fill the valid email.
+                                             </div>
+
+                                             <div class="text-danger"
+                                                  *ngIf="myProfileForm.get('email').hasError('maxlength') && !(myProfileForm.get('email').hasError('pattern')) && (myProfileForm.get('email').dirty || f.submitted)">
+                                                  *Maximum length should not more than 64.
+                                             </div>
+                                        </div>
+                                   </div>
+                                   <div class="form-group row align-items-baseline">
+                                        <label class="col-md-5">Two Factor Authentication:</label>
+                                        <div class="col-md-7">
+                                             <label class="switch">
+                                                  <input type="checkbox" (click)="twoFaInputField($event)" formControlName="switch">
+                                                  <span class="slider round"></span>
+                                             </label>
+                                        </div>
+                                   </div>
+                                   <div class="form-group row align-items-baseline">
+                                        <div>
+                                             <label class="col-md-4" style="white-space: nowrap">Phone Number:</label>
+                                        </div>
+                                        <div class="col-md-8 d-flex" style="padding-left: 13%">
+                                             <select>
+                                                  <option value="">+91</option>
+                                             </select>
+                                             &nbsp;&nbsp;
+
+                                            <div>
+                                                  <input type="tel" class="form-control col-md-6" formControlName="number" style="width: 461px;"
+                                                  maxlength="13" placeholder="Phone number">
+                                            </div>
+
+                                        </div>
+                                        <div style="    margin-left: 45%;white-space: nowrap;">
+                                             <div class="text-danger"
+                                                  *ngIf="myProfileForm.get('number').hasError('required') && (myProfileForm.get('number').dirty || myProfileForm.get('number').touched)">
+                                                  *Please enter number.
+                                             </div>
+                                             <div class="text-danger"
+                                                  *ngIf="myProfileForm.get('number').hasError('minlength') && !(myProfileForm.get('number').hasError('pattern')) && (myProfileForm.get('number').dirty || f.submitted)">
+                                                  *Minimum length must be 8.
+                                             </div>
+                                             <div class="text-danger"
+                                                  *ngIf="myProfileForm.get('number').hasError('maxlength') && !(myProfileForm.get('number').hasError('pattern')) && (myProfileForm.get('number').dirty || f.submitted)">
+                                                  *Maximum length should not more than 13.
+                                             </div>
+                                        </div>
+
+                                   </div>
+
+
+                              </div>
+                              <div class="form-group" style="justify-content: space-between">
+                                   <div class="text-center mt40">
+                                        <button (click)="authentication()"
+                                             class="btn btn-large  max-WT-200 font-100 btn-green mb-5">Save</button>
+
+                                   </div>
+                              </div>
+
+                         </form>
+                    </div>
+               </div>
+          </div>
+     </main>
+</div>
+
+<!-- block_modal Start -->
+<div class="modal fade global-modal reset-modal" id="block">
+          <div class="modal-dialog max-WT-500">
+              <form class="change_password">
+                  <div class="modal-content">
+                      <div class="modal-header d-block text-center">
+                          <h5 class="modal-title d-inline-block">Deactivate</h5>
+                      </div>
+                      <div>
+                          <div class="modal-body">
+                              <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                                  <div class="w-100">
+                                      <p>Are you sure want to block this user?</p>
+                                      <div>
+                                          <button type="submit" class="btn btn-success ml-2">Yes</button>
+                                          <button type="button" class="btn btn-danger ml-2" data-dismiss="modal">No</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </form>
+          </div>
+      </div>
+      
+      <!-- unblock_modal Start -->
+      <div class="modal fade global-modal reset-modal" id="unblock">
+          <div class="modal-dialog max-WT-500">
+              <form class="change_password">
+                  <div class="modal-content">
+                      <div class="modal-header d-block text-center">
+                          <h5 class="modal-title d-inline-block">Activate</h5>
+                      </div>
+                      <div>
+                          <div class="modal-body">
+                              <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                                  <div class="w-100">
+                                      <p>Are you sure want to unblock this user?</p>
+                                      <div>
+                                          <button type="submit" class="btn btn-success ml-2">Yes</button>
+                                          <button type="button" class="btn btn-danger ml-2" data-dismiss="modal">No</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </form>
+          </div>
+      </div>
+      
+      <!-- Comment_modal Start -->
+      <div class="modal fade global-modal reset-modal" id="comment">
+          <div class="modal-dialog max-WT-500">
+              <form [formGroup]="searchForm" class="change_password">
+                  <div class="modal-content">
+                      <div class="modal-header d-block text-center">
+                          <h5 class="modal-title d-inline-block">Comment</h5>
+                      </div>
+                      <div>
+                          <div class="modal-body">
+                              <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                                  <div class="w-100">
+                                      <textarea formControlName="comment" style="width:100%; padding: 1%" rows="4" cols="4" maxlength="100"></textarea>
+                                      <div>
+                                          <button type="submit" (click)="rejectAccepted()" class="btn btn-success ml-2">Send</button>
+                                          <button type="button" class="btn btn-danger ml-2" data-dismiss="modal">Cancel</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </form>
+          </div>
+      </div>

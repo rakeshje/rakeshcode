@@ -1,0 +1,167 @@
+<div class="wrapper">
+  <main class="middle-content">
+      <div class="page_title_block">
+          <h1 class="page_title">SubAdmin Management / Add</h1>
+      </div>
+      <div class="content-section">
+          <div class="outer-box">
+              <div class="global-table no-radius p0">
+                  <div class="tab-content1">
+                      <form [formGroup]="form">
+                          <div class="row">
+                              <div class="col-md-12">
+                                  <div class=" order-view1 main-block-innner mb20 mt40 view-label-align">
+                                      <!--************ One Row Start here ********************* -->
+                                      <div class="form-group row m-auto" style="width: 90%">
+                                          <div class="col-md-12">
+                                              <div class="form-group row mt-3">
+                                                  <div class="col-md-6">
+                                                      <label>Name <span>:</span> </label>
+                                                  </div>
+                                                  <div class="col-md-6">
+                                                      <input (keypress)="mainService.preventSpace($event)"
+                                                          maxlength="30" formControlName="firstName" type="text"
+                                                          class="form-control">
+                                                      <span class="text-danger"
+                                                          *ngIf="form.get('firstName').hasError('required') && (form.get('firstName').dirty || form.get('firstName').touched)">
+                                                          *First name is required.
+                                                      </span>
+                                                      <span class="text-danger"
+                                                          *ngIf="form.get('firstName').hasError('pattern') && form.get('firstName').dirty">
+                                                          *Please enter valid first name.
+                                                      </span>
+                                                  </div>
+                                              </div>
+                                          </div>
+
+                                      </div>
+                                      <!--************ One Row end here ********************* -->
+
+                                      <!--************ One Row Start here ********************* -->
+                                      <div class="form-group row m-auto" style="width: 90%">
+                                          <div class="col-md-12">
+                                              <div class="form-group row">
+                                                  <div class="col-md-6">
+                                                      <label>Email Id <span>:</span> </label>
+                                                  </div>
+                                                  <div class="col-md-6">
+                                                      <input (keypress)="mainService.preventSpace($event)"
+                                                          formControlName="email" type="text" class="form-control"
+                                                          maxlength="56">
+                                                      <span class="text-danger"
+                                                          *ngIf="form.get('email').hasError('required') && (form.get('email').dirty || form.get('email').touched )">
+                                                          *Email is required.
+                                                      </span>
+                                                      <span class="text-danger"
+                                                          *ngIf="form.get('email').hasError('pattern') && form.get('email').dirty">
+                                                          *Please enter valid email.
+                                                      </span>
+
+                                                  </div>
+                                              </div>
+                                          </div>
+
+                                      </div>
+                                      <!--************ One Row end here ********************* -->
+
+                                         <!--************ One Row Start here ********************* -->
+                                         <div class="form-group row m-auto" style="width: 90%">
+                                          <div class="col-md-12">
+                                              <div class="form-group row">
+                                                  <div class="col-md-6">
+                                                      <label>Password <span>:</span> </label>
+                                                  </div>
+                                                  <div class="col-md-6">
+                                                      <input (keypress)="mainService.preventSpace($event)"
+                                                          formControlName="password" type="password" class="form-control"
+                                                          maxlength="56">
+                                                          <span class="text-danger"
+                                                          *ngIf="form.get('password').hasError('required') && (form.get('password').dirty || form.get('password').touched )">
+                                                          *Password is required.
+                                                      </span>
+                                                      <span class="text-danger"
+                                                          *ngIf="form.get('password').hasError('pattern') && form.get('password').dirty">
+                                                          *Password must be between 8 to 16 characters and contain at least one special character , one digit.
+                                                      </span>
+
+                                                  </div>
+                                              </div>
+                                          </div>
+
+                                      </div>
+                                      <!--************ One Row end here ********************* -->
+
+                                       <!--************ One Row Start here ********************* -->
+                                       <div class="form-group row m-auto" style="width: 90%">
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <div class="col-md-6">
+                                                    <label>Confirm Password <span>:</span> </label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input (keypress)="mainService.preventSpace($event)"
+                                                        formControlName="confirmPassword" type="password" class="form-control"
+                                                        maxlength="56">
+
+                                                        <span class="text-danger"
+                                                        *ngIf="(form.get('confirmPassword').value  != form.get('password').value) && !form.get('confirmPassword').hasError('required') ">
+                                                        *Password mismatched.
+                                                    </span>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!--************ One Row end here ********************* -->
+
+                                    <h4 class="mt-3 m-auto roleandAccess">Role and Accessibility</h4>
+                                    <div class="d-flex justify-content-between w-86">
+                                      <div class="d-flex">
+                                        <input class="checkbox" formControlName = "dashboard" type="checkbox" name="" id="">
+                                        <p > Dashboard</p>
+                                      </div>
+                                      <div class="d-flex">
+                                        <input class="checkbox" formControlName = "userManagement" type="checkbox" name="" id="">
+                                        <p > User Management</p>
+                                      </div>
+                                      <div class="d-flex">
+                                        <input class="checkbox" formControlName = "subAdminManagement" type="checkbox" name="" id="">
+                                        <p > Sub Admin Managment</p>
+                                      </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between w-86">
+                                      <div class="d-flex">
+                                        <input class="checkbox" formControlName = "contactUsManagement" type="checkbox" name="" id="">
+                                        <p > Contact Us Managment</p>
+                                      </div>
+                                      <div class="d-flex"  style="margin-left: -21px">
+                                        <input class="checkbox" formControlName = "subscriptionManagement" type="checkbox" name="" id="">
+                                        <p > Subscription Managment</p>
+                                      </div>
+                                      <div class="d-flex ml-3" style="margin-right: -4px">
+                                        <input class="checkbox" formControlName = "transactionManagement" type="checkbox" name="" id="">
+                                        <p > Transaction Managment</p>
+                                      </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between w-86">
+                                      <div class="d-flex">
+                                        <input class="checkbox" formControlName = "staticContentManagement" type="checkbox" name="" id="">
+                                        <p > Static Content Management </p>
+                                      </div>
+                                    </div>
+                                      <div class="text-center mt40 mb40">
+                                        <button  class="btn btn-large  max-WT-150 btn-theme" routerLink="/sub-admin-management"> Cancel </button>
+                                          <button class="btn btn-large  max-WT-150 btn-theme ml-3" (click)="addSubAdmin()" >Submit</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </form>
+
+                  </div>
+              </div>
+          </div>
+      </div>
+  </main>
+</div>

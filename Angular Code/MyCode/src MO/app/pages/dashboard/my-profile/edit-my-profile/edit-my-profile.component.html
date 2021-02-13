@@ -1,0 +1,103 @@
+<div class="wrapper">
+    <main class="middle-content">
+        <div class="page_title_block">
+            <h1 class="page_title">Profile / Edit</h1>
+        </div>
+        <div class="content-section">
+            <div class="order-view  max-WT-700 mrgn-0-auto setting-page">
+                <div class="  mb40">
+                    <div class="admin-profile">
+                        <h4 class="mb20 text-center">Edit Profile</h4>
+                    </div>
+                    <div class="add-store-block input-style mb20 mt20 ">
+                        <form [formGroup]="editProfileForm" #f="ngForm">
+                            <div class="user-profile">
+                                <div class="image-box">
+                                    <img src="{{imageUrl || 'assets/img/profile-img.jpg'}}" id="sub-admin-image" alt="">
+                                    <label class="upload-label">
+                                        <input type="file" formControlName="image" name="image"
+                                            accept="image/jpg,image/jpeg,image/png" id="image"
+                                            (change)="ValidateFileUpload($event)" maxlength="56">
+                                        <em class="fa fa-pencil" style="color: #86559f!important;font-size: 12px"></em>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-baseline view-label-align">
+                                <label class="col-md-4 textalignright ">Name <span>:</span></label>
+                                <div class="col-md-8 textaligncenter">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Name"
+                                            formControlName="firstName" (keypress)="mainService.preventSpace($event)"
+                                            maxlength="60">
+                                        <div class="text-danger">
+                                            <span
+                                                *ngIf="editProfileForm.get('firstName').hasError('required') && (editProfileForm.get('firstName').dirty || editProfileForm.get('firstName').touched)">
+                                                *Please enter Name.
+                                            </span>
+                                            <span
+                                                *ngIf="editProfileForm.get('firstName').hasError('pattern') && (editProfileForm.get('firstName').dirty || f.submitted)">
+                                                *Name accept only alphabets.
+                                            </span>
+                                            <span
+                                                *ngIf="editProfileForm.get('firstName').hasError('minlength') && !(editProfileForm.get('firstName').hasError('pattern')) && (editProfileForm.get('firstName').dirty || f.submitted)">
+                                                *Minimum length must be 2.
+                                            </span>
+                                            <span
+                                                *ngIf="editProfileForm.get('firstName').hasError('maxlength') && !(editProfileForm.get('firstName').hasError('pattern')) && (editProfileForm.get('firstName').dirty || f.submitted)">
+                                                *Maximum length should not more than 20.
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-baseline view-label-align">
+                                <label class="col-md-4 textalignright">Email <span>:</span></label>
+                                <div class="col-md-8 textaligncenter">
+                                    <div class="form-group ">
+                                        <input type="text" class="form-control" placeholder="Email Address"
+                                            formControlName="email" (keypress)="mainService.preventSpace($event)"
+                                            maxlength="50">
+                                        <div class="text-danger">
+                                            <span
+                                                *ngIf="editProfileForm.get('email').hasError('required') && (editProfileForm.get('email').dirty || editProfileForm.get('email').touched)">
+                                                *Please enter you email.
+                                            </span>
+                                            <span *ngIf="editProfileForm.get('email').hasError('pattern')">
+                                                *Please enter valid email.
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row align-items-baseline view-label-align">
+                                <label class="col-md-4 textalignright">Mobile Number <span>:</span></label>
+                                <div class="col-md-8 textaligncenter">
+                                    <div class="form-group ">
+                                        <input type="tel" class="form-control" placeholder="Mobile Number"
+                                            formControlName="number" (keypress)="mainService.preventSpace($event)"
+                                            maxlength="15">
+                                        <div class="text-danger">
+                                            <span
+                                                *ngIf="editProfileForm.get('number').hasError('required') && (editProfileForm.get('number').dirty || editProfileForm.get('number').touched)">
+                                                *Please enter you number.
+                                            </span>
+                                            <span *ngIf="editProfileForm.get('number').hasError('pattern')">
+                                                *Please enter valid number.
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="text-center mt40 mb40">
+                        <button class="btn btn-large  max-WT-150 btn-theme" [disabled]="!editProfileForm.valid"
+                            (click)="editProfile()">Save</button>
+                        <button class="btn btn-large  max-WT-150 btn-theme" (click)="back()">Back</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

@@ -1,0 +1,16 @@
+.otp-input-box {
+    display: flex;
+    justify-content: center;
+    white-space: nowrap;
+}
+.otp-resend {
+    text-align: right;
+    margin-bottom: 15px;
+}
+.otp-resend a {
+    color: #3056b3;
+    cursor: pointer;
+}
+.otp-mid-head {
+    margin-bottom: 0px;
+}

@@ -1,0 +1,59 @@
+<div class="wrapper">
+    <main class="middle-content">
+        <div class="page_title_block">
+            <h1 class="page_title">Static Content Management / Edit</h1>
+        </div>
+        <div class="content-section">
+            <div class="outer-box">
+                <div class="global-table no-radius p0">
+                    <div class="tab-content1">
+                        <form [formGroup]="form">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class=" order-view main-block-innner mb20 mt40 view-label-align">
+                                        <div class="add-store-block input-style">
+                                            <div class="form-group row ">
+                                                <div class="col-md-12">
+                                                    <div class="form-group row align-items-center">
+                                                        <label class="col-md-6"> Title <span>:</span></label>
+                                                        <div class="col-md-6">
+                                                            <input type="text" class="form-control" maxlength="100"
+                                                                formControlName="Title">
+                                                            <div *ngIf="form.get('Title').invalid && (form.get('Title').dirty || form.get('Title').touched)"
+                                                                class="text-danger">
+                                                                <span *ngIf="form.get('Title').hasError('required')">
+                                                                    *Title is required.</span>
+                                                                <span *ngIf="form.get('Title').hasError('pattern')">
+                                                                    *Please enter valid title.</span>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                 
+                                                   
+                                                    <ck-editor id="editornewData" formControlName="editorValue"
+                                                        name="editor1" language="en" [config]="config"></ck-editor>
+                                                    <div *ngIf="form.get('editorValue').invalid && (form.get('editorValue').dirty || form.get('editorValue').touched)"
+                                                        class="text-danger">
+                                                        <span *ngIf="form.get('editorValue').hasError('required')">
+                                                            *Description is required.</span>
+                                                    </div>
+                                                    <div class="text-center mt75 mb40">
+                                                        <button class="btn btn-large  max-WT-150 btn-theme"
+                                                            (click)="Update()" [disabled]="form.invalid">Update</button>
+                                                        <button class="btn btn-large  max-WT-150 btn-theme"
+                                                            routerLink="/static-content-management">Back</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

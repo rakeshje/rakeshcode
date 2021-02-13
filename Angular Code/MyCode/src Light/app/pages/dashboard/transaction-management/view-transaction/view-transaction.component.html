@@ -1,0 +1,59 @@
+<div class="wrapper">
+          <app-sidebar></app-sidebar>
+          <main class="middle-content">
+              <!-- Page Title Start -->
+              <div class="page_title_block">
+                  <h1 class="page_title">View Transaction</h1>
+              </div>
+              <!-- Page Title End -->
+              <div class="content-section">
+                  <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+                      <div class="main-block-innner mb40 mt40">
+
+                          <div class="form-group row align-items-baseline">
+                              <label class="col-md-5">Transaction ID :</label>
+                              <ul class="col-md-7">
+                                  <h5 style="color: black">{{viewData?.transactionId}}</h5>
+
+
+                              </ul>
+                          </div>
+
+                          <div class="form-group row align-items-baseline">
+                              <label class="col-md-5">Payement Date :</label>
+                              <ul class="col-md-7">
+                                  <h5 style="color: black">{{viewData?.createdAt | date}} ,{{viewData?.time}}</h5>
+                              </ul>
+                          </div>
+                          <div class="form-group row align-items-baseline">
+                              <label class="col-md-5">Name :</label>
+                              <ul class="col-md-7">
+                                  <h5 style="color: black">{{viewData?.customerName }}</h5>
+                              </ul>
+                          </div>
+                          <div class="form-group row align-items-baseline">
+                              <label class="col-md-5">Mode of Payment: :</label>
+                              <ul class="col-md-7">
+                                  <h5 style="color: black">{{viewData?.orderNote}}</h5>
+                              </ul>
+                          </div>
+                          <div class="form-group row align-items-baseline">
+                              <label class="col-md-5">Status :</label>
+                              <ul class="col-md-7">
+                                  <h5 style="color: black">{{viewData?.paymentStatus}}</h5>
+                              </ul>
+                          </div>
+
+                          <div class="form-group">
+                              <div class="text-center mt40" style="justify-content: space-between">
+                                  <a [routerLink]="['/transaction-management']" class="btn btn-large  max-WT-200 font-100 btn-green mb-5">Back</a>
+                              </div>
+
+                          </div>
+
+                      </div>
+                  </div>
+              </div>
+             
+          </main>
+      </div>

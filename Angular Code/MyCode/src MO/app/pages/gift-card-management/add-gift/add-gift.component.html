@@ -1,0 +1,40 @@
+<div class="wrapper" style="width: 80%;
+margin-left: 2%;">
+    <main class="middle-content">
+        <div class="page_title_block">
+            <h1 class="page_title"> Add New Giftcard</h1>
+            <hr style="background: black; opacity: 0.5;width: 135%;">
+        </div>
+        <form [formGroup]="addGiftForm">
+            <div class="order-view main-block-innner mb20 mt40 view-label-align" style="margin-left: 18%;">
+                <div class="row" style=" margin-left: 2%; margin-top: 8%; margin-right: 2%;">
+                    <div class="col">
+                        <label>Title :</label><br><br>
+                        <label>Discount (in %) :</label><br><br>
+                        <label>Maximum amount :</label><br><br>
+                        <label>Expiry date : </label><br><br>
+                    </div>
+                    <div class="col" style=" margin-top: -1.5%;">
+                        <input type="text" class="form-control" formControlName="title">
+                        <span class="text text-danger" *ngIf="addGiftForm.get('title').hasError('required') && addGiftForm.get('title').touched">*Title is Required</span><br>
+                        <input type="text" class="form-control" formControlName="discount">
+                        <span class="text text-danger" *ngIf="addGiftForm.get('discount').hasError('required') && addGiftForm.get('discount').touched">*Discount is Required</span><br>
+                        <input type="text" class="form-control" formControlName="maxAmount">
+                        <span class="text text-danger" *ngIf="addGiftForm.get('maxAmount').hasError('required') && addGiftForm.get('maxAmount').touched">*Maximum amount is Required</span><br>
+                        <input type="date" class="form-control" formControlName="expiry">
+                        <span class="text text-danger" *ngIf="addGiftForm.get('expiry').hasError('required') && addGiftForm.get('expiry').touched">*Expiry date is Required</span><br>
+                        <input type="file" class="form-control" formControlName="image" (change)="convertimg($event)">
+                        <span class="text text-danger" *ngIf="addGiftForm.get('image').hasError('required') && addGiftForm.get('image').touched">*Image is Required</span><br>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-left: 25%;margin-top: 5%; margin-bottom: 8%; ">
+                    <button type="button" class="btn btn-theme" style="margin-left: 10%; width: 12%;"
+                        [routerLink]="['/gift-card-management']">Back</button>
+                    <button type="button" class="btn btn-theme" style="margin-left: 10%; width: 12%;" [disabled]=addGiftForm.invalid
+                        (click)="addGift()">Save </button>
+                </div>
+            </div>
+        </form>
+    </main>
+</div>

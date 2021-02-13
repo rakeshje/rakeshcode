@@ -1,0 +1,185 @@
+<div class="wrapper">
+    <main class="middle-content">
+        <div class="page_title_block">
+            <h1 class="page_title text-center">Retailer Management</h1>
+
+        </div>
+
+        <div class="content-section">
+            <div class="outer-box">
+                <div class="global-table no-radius p0">
+                    <div class="tab-content1">
+                        <div class="tab-pane1">
+                            <div class="sec_head_new sec_head_new_after">
+                                <form [formGroup]="searchForm">
+                                    <div class="row justify-content-between">
+                                        <div class="col-md-4 col-xl-4">
+                                            <div class="filter_search mb20 width100" style="display: flex">
+                                                <div class="input-group filter_search_group">
+                                                    <input type="text" class="form-control overflow-text"
+                                                        formControlName="search" placeholder="Search by name">
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn_search_group" (click)="searchRetailerManagement()" type="button"><img
+                                                                src="assets/img/icon-search.png" alt="Search"></button>
+                                                    </div>
+                                                </div> &nbsp;
+                                                <div class="input-group filter_search_group">
+                                                    <input type="text" class="form-control overflow-text"
+                                                        formControlName="searchh" placeholder="Search by shop name">
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn_search_group" (click)="searchRetailerManagement()" type="button"><img
+                                                                src="assets/img/icon-search.png" alt="Search"></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <select formControlName="status" class="form-control custom-select">
+                                                <option value="">Select Status</option>
+                                                <option value="ACTIVE">Active</option>
+                                                <option value="INACTIVE">Inactive</option>
+                                                <option value="PENDING">Pending</option>
+                                            </select>
+
+                                        </div>
+                                        <div class="col-md-2">
+                                            <select formControlName="websiteStatus" class="form-control custom-select">
+                                                <option value="">Select Status For Website</option>
+                                                <option value="APPROVED">Approved</option>
+                                                <option value="REJECTED">Rejected</option>
+                                                <option value="PENDING">Pending</option>
+                                                <option value="INACTIVE">Inprogress</option>
+                                            </select>
+
+                                        </div>
+                                        <div class="col-md-3 col-xl-3">
+                                            <div class="text-center admin-btn ">
+                                                <button type="button" (click)="searchRetailerManagement()" class="btn  btn-theme ml-2 Go_btn">Submit</button>
+                                                <button type="button" (click)="getRetailer()" class="btn  btn-theme ml-2 Go_btn">Refresh</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center admin-btn justify-content-end">
+                                        <button type="button" (click)="exportCSV()" class="btn  btn-theme ml-2 Go_btn">Export CSV</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table aria-describedby="" class="table table-bordered">
+                                <thead>
+                                    <tr class="no_wrap_th text-center">
+                                        <th id="" class="Sorting-img">S.No.</th>
+                                        <th id="" class="Sorting-img">Mart Name <em
+                                                style="margin-right: 25px!important;"></em>
+                                        </th>
+                                        <th id="" class="Sorting-img">Retailer Name</th>
+                                        <th id="" class="Sorting-img">Shop Phone Number <em></em></th>
+                                        <th id="" class="Sorting-img">Website Status</th>
+                                        <th id="" class="Sorting-img">Registration Status</th>
+                                        <th id="" class="Sorting-img">Assigned Account Manager Name</th>
+                                        <th id="" class="action_td_btn3 Sorting-img">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                        <tr *ngFor="let item of userDataList | paginate: { id: 'user',
+                                        itemsPerPage: pagination?.limit, currentPage: pagination?.currPage,
+                                        totalItems: pagination?.total };let i=index">
+                                        <td>{{pagination?.limit * (pagination?.currPage-1)+ i+1}}</td>
+                                        <td class="content">{{martName[i]}}</td>
+                                        <td class="content">{{item?.shopName}}</td>
+                                        <td>{{item?.shopNumber}}</td>
+                                        <td>{{item?.websiteStatus}}</td>
+                                        <td>{{item?.retailerStatus}}</td>
+                                        <td>{{item?.managerName}}</td>
+                                        <td class="text-center d-flex">
+                                            <button class="btn btn-info ml-2 bt-margin" title="view"
+                                                (click)="goToView(item._id)">View</button>
+                                                <button *ngIf="item?.loginStatus == 'UNBLOCK'" 
+                                                class="btn btn-danger ml-2 bt-margin" (click)="enableDisableOrDeleteOpenModal(item?._id, 'enable')">Block</button>
+                                            <button *ngIf="item?.loginStatus == 'BLOCK'"
+                                                class="btn btn-success ml-2 bt-margin" (click)="enableDisableOrDeleteOpenModal(item?._id, 'disable')">Unblock</button>
+                                            <button type="button" (click)="clicksCredit(item?._id, item?.credit)"
+                                                class="btn  btn-theme ml-2 Go_btn">Credit</button>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="!userDataList.length">
+                                        <td colspan="8" style="text-align: center;font-size: 20px;font-weight: 600;">
+                                            No Record Found
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <pagination-controls (pageChange)="userListPagination($event)" id="user"
+                                    class="pull-right">
+                                </pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+
+
+<div class="modal global-modal reset-modal" id="enableDisableDeleteModal">
+    <div class="modal-dialog max-WT-350">
+        <div class="modal-content">
+            <div class="modal-header d-block text-center">
+                <h5 class="modal-title d-inline-block" *ngIf="whichmodal=='enable'">Unblock</h5>
+                <h5 class="modal-title d-inline-block" *ngIf="whichmodal=='disable'">Block</h5>
+                <h5 class="modal-title d-inline-block" *ngIf="whichmodal=='delete'">Delete</h5>
+            </div>
+            <div class="modal-body mt-0">
+                <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                    <div class="w-100">
+                        <p *ngIf="whichmodal=='enable'">Are you sure you want to unblock?</p>
+                        <p *ngIf="whichmodal=='disable'">Are you sure you want to block?</p>
+                        <p *ngIf="whichmodal=='delete'">Are you sure you want to delete?</p>
+                        <div>
+                            <button type="submit" *ngIf="whichmodal=='disable'" class="btn mr-2 btn-info"
+                                (click)="anableDisable('disable')">Block</button>
+                            <button type="submit" *ngIf="whichmodal=='enable'" class="btn mr-2 btn-info"
+                                (click)="anableDisable('enable')">Unblock</button>
+                            <button type="submit" *ngIf="whichmodal=='delete'" class="btn mr-2 btn-info">Delete</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal global-modal reset-modal" id="creditModal">
+    <div class="modal-dialog max-WT-350">
+        <form [formGroup]="creditForm">
+        <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" style="    padding-left: 95%;
+                color: red;">&times;</button>
+            <label style="text-align: center"><u>Adjustment</u></label> &nbsp;&nbsp;
+            <label style="text-align: center">Current Credits : {{currentCredit}}</label> &nbsp;
+            <input type="text" formControlName="credit" style="padding: 2%">
+            <label style="text-align: center">Description:</label> &nbsp;
+            <textarea rows="4" cols="5" formControlName="description" style="padding: 2%"></textarea>&nbsp;&nbsp;
+            <div style="text-align: center">
+                <button type="button" (click)="addOrsubtractRetailerCredit('sub')" class="btn btn-danger" >
+                    Substract
+                </button>&nbsp;
+                <button type="button" (click)="addOrsubtractRetailerCredit('add')" class="btn btn-success">
+                    Add
+                </button>
+            </div>
+        </div>
+    </form>
+    </div>
+</div>

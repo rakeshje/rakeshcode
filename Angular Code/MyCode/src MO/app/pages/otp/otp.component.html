@@ -1,0 +1,77 @@
+
+<div class="login-wrapper">
+    <div class="container-common">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="d-flex align-items-center minheight70vh">
+                    <form class="login_box_outer w-100" [formGroup]="form">
+                        <div class="border border-dark">
+                            <div class="login-right-block">
+                                <div class="login-heading">
+                                    <h4>OTP</h4>
+                                    <hr style="width: 118%; margin-left: -9%; background-color: black;">
+                                </div>
+
+    <section class="login-section">
+       <div class="login-div">
+      
+          <form [formGroup]="otpForm">
+             
+              <p style="margin-bottom: -9%;font-size: 20px;margin-left: 31%;">Enter the OTP</p>
+               <div class="text-danger"
+               *ngIf="otpForm.get('otp').invalid && (otpForm.get('otp').dirty  || otpForm.get('otp').touched)"
+               style="color: red;text-align: start">
+               <span *ngIf="otpForm.get('otp').hasError('required')" style="margin-left: 31%;
+               font-size: 149%;">otp required
+                .</span>
+                <span *ngIf="otpForm.get('otp').hasError('pattern')" style="margin-left: 31%;
+                font-size: 149%;">please enter the valid OTP
+                    .</span>
+              
+           </div>
+             <div class="row" style= "margin-left: 26%;
+             margin-top: 14%;">
+            
+                 <input type="text" id="box"  formControlName="otp">
+                 <input type="text" id="box" formControlName="otp">
+                 <input type="text" id="box" formControlName="otp">
+                 <input type="text" id="box" formControlName="otp">
+             </div>
+             <p style="margin-left: 57%;color: blue;font-size: 126%;">Resend</p>
+             <div class="text-center mt40">
+                <button class="btn btn-login btn-large width100 font-100"
+                [disabled]="!loginForm.valid" (click)="login()" style="width: 50%;"[routerLink]="['/reset-password']">CONFIRM</button>
+                
+  
+               </div>
+          </form>
+       </div>
+    </section>
+ </div>
+
+ <!-- modal -->
+ <div class="modal fade global-modal reset-modal" id="logoutModal">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div class="modal-header d-block text-center modal-header-custm">
+                    <h5 class="modal-title d-inline-block">Logout?</h5>
+                </div>
+                <div class="modal-inner-content">
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p>Are you sure you want to logout?</p>
+                                <div class="modal-btn-box">
+                                    <button type="button" class="btn btn-theme" >YES</button>
+                                    <button type="button" class="btn btn-danger btn-theme ml-2"
+                                        data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

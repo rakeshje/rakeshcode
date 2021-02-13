@@ -1,0 +1,17 @@
+.header-right-content {
+                  display: inline-flex;
+                  width: 100%;
+                  justify-content: flex-end;
+                  padding-right: 50px;
+              }
+              
+              .header-right-content label {
+                  white-space: nowrap;
+                  margin-top: 3%;
+              }
+              .header-right-content img {
+                  font-size: 8px;
+                  max-height: 70px;
+              }
+                
+              

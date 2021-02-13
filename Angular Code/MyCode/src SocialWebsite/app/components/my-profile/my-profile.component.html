@@ -1,0 +1,534 @@
+<app-rightsidemenu></app-rightsidemenu>
+<div class="page-wrap">
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="left-menu card">
+          <app-sidemenu></app-sidemenu>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="page-content">
+          <div class="card post-box main-post">
+            <div class="post-warp">
+              <div class="post-content-setting" style="color:#3CC114">
+                Account Setting
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="card  post-search bidding">
+          <div class="post-wrap" style="width:100%;">
+            <form class="search-form">
+              <input type="search" placeholder="Search by friend name" class="form-control">
+            </form>
+          </div>
+        </div> -->
+        <div class="mt40">
+          <img *ngIf="fileData != ''" src="{{fileData}}" alt="" class="form-control img">
+          <img *ngIf="fileData == ''" [src]="userData?.coverPhoto || 'assets/images/img.png'" alt="loading..."
+            class="img">
+
+
+
+          <div class="profile-added">
+            <div class="profile-detail">
+              <img *ngIf="ProfileData != ''" src="{{ProfileData}}" alt="loading..." class="form-control img1">
+              <img *ngIf="ProfileData == ''" [src]="userData?.image || 'assets/images/Layer 139.png'" alt="loading..."
+                class="img1">
+              <div class="add-user" style="cursor: pointer">
+                <i class="fas fa-camera"></i>
+                <!-- <img src="assets/images/camera.png"> -->
+
+                <input class="file" type="file" (change)="handleFileInput($event)" accept="image/*">
+              </div>
+            </div>
+          </div>
+          <div class="profile-added1">
+            <div class="backgroungFile">
+              <i class="fas fa-camera" style="position: relative;left: 6%;">
+              </i>
+              <input class="file1" type="file" (change)="handleFileCoverInput($event)" accept="image/*">
+              <div class="edit-text">EDIT</div>
+            </div>
+
+          </div>
+          <div class="card profile-added padding mt20">
+            <label class="text-center"> {{data?.first_name}}</label>
+              <h5 class="d-flex justify-content-center" > Add a short bio to tell people more about yourself
+                  <i class="fa fa-edit ml10" style="font-size: 20px !important;color: black;padding-top: 3px;" (click) = "addShortBio()"></i>
+
+              </h5>
+
+            <h4>Bio</h4>
+            <div class="break">
+              {{userData?.bioData}}
+            </div>
+            <div class="d-flex">
+              <div (click)="goTOPost()">
+                <div class="circle">
+                  <div class="circle1">
+                    <div class="text-center" style="margin: 28% 0;">
+                      <i class="fas fa-plus"></i>
+                    </div>
+                  </div>
+                </div>
+                <label class="ml25">Post story</label>
+              </div>
+              <div (click)="editProfile()">
+                <div class="circle">
+                  <div class="circle1">
+                    <div class="text-center" style="margin: 28% 0;">
+                      <i class="fas fa-user"></i>
+                    </div>
+                  </div>
+                </div>
+                <label class="ml25">Edit Profile</label>
+              </div>
+              <div (click)="goToActivity()">
+                <div class="circle">
+                  <div class="circle1">
+                    <div class="text-center" style="margin: 28% 0;">
+                      <i class="fas fa-list"></i>
+                    </div>
+                  </div>
+                </div>
+                <label class="ml25">Activity Profile</label>
+              </div>
+              <div (click)="moreDetails()" >
+                <div class="circle">
+                  <div class="circle1">
+                    <div class="text-center" style="margin: 28% 0;">
+                      <!-- <i class="fas fa-ellipsis-h" (click)="showList(i)"></i> -->
+                      
+                    </div>
+                  </div>
+                </div>
+                <label style="margin-left: 37%;">More</label>
+              </div>
+
+
+            </div>
+            <div class="margin" style="border-bottom: 1px solid gray;">
+              <div class="break d-flex padding">
+                <i class="fas fa-graduation-cap" style="margin: 0 15px"></i>
+                <span>
+                  {{userData?.designation}}
+                </span>
+              </div>
+              <div class="break d-flex padding">
+                <i class="fas fa-graduation-cap" style="margin: 0 15px"></i>
+                {{userData?.graduate}}
+              </div>
+
+              <div class="break d-flex padding">
+                <i class="fas fa-graduation-cap" style="margin: 0 15px"></i>
+                {{userData?.inter}}
+              </div>
+              <div class="break d-flex padding">
+                <i class="fas fa-graduation-cap" style="margin: 0 15px"></i>
+                {{userData?.metric}}
+              </div>
+              <div class="break d-flex padding">
+                <i class="fa fa-map-marker" style="margin: 0 23px"></i>
+                {{userData?.liveIn}}
+              </div>
+              <div class="break d-flex padding">
+                <i class="fa fa-map-marker" style="margin: 0 23px"></i>
+                {{userData?.from}}
+              </div>
+              <div class="break d-flex padding">
+                <i class="far fa-heart" style="margin: 0 15px"></i>
+                {{userData?.mariedStatus}}
+              </div>
+            </div>
+            <div class="d-flex justify-content-between padding">
+              <label>
+                <h4> Photos</h4>
+              </label>
+              <label routerLink="/post">
+                <strong>Add Photos </strong>
+              </label>
+            </div>
+            <div class="d-flex">
+              <div *ngFor = "let item of userPhoto | paginate : { itemsPerPage: 5, currentPage: page, totalItems: total };let i=index ">
+                  <img *ngIf = "item?.image.length != 0" [src]="item?.image[0] ||  'assets/images/img.png'" alt="" class="form-control margin" style="width: 150px;height:150px" >
+                </div>
+            </div>
+
+            <div class="mainDisable" style="margin-top: 15px;" *ngIf="userPhoto.length == 0">
+
+                <div class="userName">
+
+                  <h2>No Record Found!</h2>
+
+                </div>
+
+
+              </div>
+              <div class="d-flex justify-content-end"  *ngIf="userPhoto.length != 0">
+                <pagination-controls (pageChange)="getphotos($event)"></pagination-controls>
+              </div>
+
+            <div style="background: #3CC114">
+              <label>
+                <h6 style="padding-left: 16px;padding-top: 16px;">See all photos </h6>
+              </label>
+            </div>
+            <div class="d-flex justify-content-between padding">
+              <label>
+                <h4> Friends</h4>
+              </label>
+              <label>
+                <h6>Find friends </h6>
+              </label>
+            </div>
+            <label class="padding">{{total}} friends</label>
+            <div class="d-flex">
+              <div 
+                *ngFor="let item of suggestionList | paginate : { itemsPerPage: 5, currentPage: page, totalItems: total1 };let i=index">
+                <img [src]="item?.profilePic ||  'assets/images/img.png'" alt="" class="form-control margin"
+                  style="width: 150px;height:150px;position: relative;">
+                <div  >
+                  <label class="text-center margin friendName"> {{item?.firstName}}</label>
+                  <label class="text-center text-nowrap margin post" > 9 new posts</label>
+                </div>
+              </div>
+              <div class="mainDisable" style="margin-top: 15px;" *ngIf="suggestionList.length == 0">
+
+                <div class="userName">
+
+                  <h2>No Record Found!</h2>
+
+                </div>
+
+
+              </div>
+              <div class="d-flex justify-content-end" class="getSuggestionListPaginate" *ngIf="suggestionList.length != 0">
+                <pagination-controls (pageChange)="getSuggestionList($event)"></pagination-controls>
+              </div>
+
+            </div>
+
+
+            <div style="background: #3CC114;margin-top: 11%;" >
+              <label>
+                <h6 style="padding-left: 16px;padding-top: 16px;">See all friends </h6>
+              </label>
+            </div>
+            <h4 class="padding">Posts</h4>
+            <div class="d-flex padding">
+              <i class="fa fa-user col-md-1 text-center" style="padding: 6px"></i>
+              <input type="text" class="form-control col-md-9" placeholder="Write something here">
+            </div>
+            <div *ngFor="let item of postedDataa; let i=index">
+            <div class="d-flex padding " >
+              <!-- <i class="fas fa-user-circle col-md-1 text-center" style="padding: 6px"></i> -->
+              <img [src]="item?.userId.profilePic || 'assets/images/img.png'" alt="" style="width: 52px; border-radius: 50px; ">
+              <div style="padding: 3px">
+                <div>{{item?.userId.firstName}}</div>
+                <div> {{item?.createdAt| date}}</div>
+              </div>
+              <div class="col-md-9 d-flex justify-content-end">
+                <!-- <i class="fas fa-ellipsis-h"></i> -->
+                <i class="fas fa-ellipsis-h" (click)="showList(i)"></i>
+                <div [ngClass]="item.dynamicClass">
+                  <p (click)="actionOnEventList('DELETE',item._id,i)">Delete</p>
+                  
+                </div>
+              </div>
+            </div>
+            <!-- <div class="elips">
+              <i class="fas fa-ellipsis-h" (click)="showList(i)"></i>
+              <div [ngClass]="item.dynamicClass">
+                <p (click)="actionOnEventList('DELETE',item._id,i)">Delete</p>
+                
+              </div>
+            </div> -->
+
+           
+            <img  *ngIf="item.image  && item?.image!=''"  src="{{item?.image }}" alt="" class="form-control img" multiple>
+            <img  *ngIf="item.GIF && item?.GIF!=''" src="{{item?.GIF}}" alt="">
+            <video *ngIf="item.video && item?.video != ''" src="{{item.video}}" style="width: -webkit-fill-available;" controls type = "video/*"></video>
+            
+          
+            <!-- <div class="post-me align-items-center padding col-md-12 justify-content-between">
+              <div class="d-flex align-items-center">
+                <a href="javascript:;"><img src="assets/images/like.png"> </a>
+                <a href="javascript:;"><img src="assets/images/heart.png"> </a>
+
+                <div data-toggle="modal" data-target="#stickerModal" style="cursor: pointer;" class="emoji">
+                  <img src="assets/images/emojiii.png" *ngIf="obj.caption == ''">
+                  <div class="text-nowrap ml-2" class="emoji">{{obj.caption}}</div>
+                </div>
+              </div>
+              <div>Saswat and 150 others</div>
+              <div>200 Comments</div>
+            </div> -->
+          
+
+
+            <!-- <div class="post-meta" style="border-bottom: 0">
+             
+              <a href="javascript:;"><img src="assets/images/blue_thums_up.jpg"> Like</a>
+
+              <a href="javascript:;"><img src="assets/images/chat-comment-oval-speech-bubble-with-text-lines.png">
+                Comment</a>
+              <a><img src="assets/images/Layer 76.png"> Share</a>
+            </div> -->
+            <div class="post-me">
+              <!-- <div class="circle" (click)="addLikeEvent(data,'true')">
+                        <p><img src="assets/images/like.png"></p>
+                      </div> -->
+    
+              <!-- <div class="circle" (click)="addLikeEvent(data,'true')">
+                          <p><img src="assets/images/heart.png"></p>
+                        </div> -->
+              <a href="javascript:;" (click)="addLikePost(item,'true')"><img src="assets/images/like.png"> </a>
+              <a href="javascript:;" (click)="addLikePost(item,'true')"><img src="assets/images/heart.png"> </a>
+              <a href="javascript:;" (click)="openCommentModal(item)"><img class="cahtView"
+                  src="assets/images/chat-comment-oval-speech-bubble-with-text-lines.png"></a>
+              <!-- <div class="circle" (click)="addLikeEvent(item,'true')">
+                        <p><img src="assets/images/emojiii.png"></p>
+                      </div> -->
+              <a class="emoji" href="javascript:;" (click)="addLikePost(item,'true')"><img
+                  src="assets/images/emojiii.png"></a>
+              <a href="javascript:;" *ngIf="item.likes.length > 0 && !item.myLike" (click)="openLikesModal(item)"><img
+                  src="assets/images/Layer 76.png"> {{item.likes[item.likes.length - 1]['userName']}} and
+                {{item.likes.length}} others</a>
+              <a href="javascript:;" *ngIf="item.likes.length > 0 && item.myLike" (click)="openLikesModal(item)"><img
+                  src="assets/images/Layer 76.png"> You and {{item.likes.length - 1}} others</a>
+    
+              <a class="emojiiIcon" href="javascript:;" *ngIf="item.comments.length > 0"
+                (click)="openCommentModal(item)">{{item.comments.length}} comments</a>
+            </div>
+           
+            <div class="post-meta">
+              <a href="javascript:;" *ngIf="!item.myLike" (click)="addLikePost(item,'true')"><img
+                  src="assets/images/thumb-up.png"> Like</a>
+              <a href="javascript:;" *ngIf="item.myLike" (click)="addLikePost(item,'false')"><img
+                  src="assets/images/blue_thums_up.jpg"> Like</a>
+
+              <a href="javascript:;" (click)="openCommentModal(item)"><img
+                  src="assets/images/chat-comment-oval-speech-bubble-with-text-lines.png"> Comment</a>
+                  
+              <button (click)="openModal(item?._id)">
+                <a><img src="assets/images/Layer 76.png">Share</a>
+              </button>
+            
+            </div>
+          </div>
+          </div>
+         
+        </div>
+       
+
+
+
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<!-- Comment Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+
+    <div class="modal-content " style="margin-top: 92px; height: 400px; padding: 15px 0px; cursor:pointer;">
+      <button type="button" class="close" data-dismiss="modal" (click)="closeModal()">&times;</button>
+
+      <div class="modal-body" style="width: 100%;text-align: left;">
+
+        <a href="javascript:;" (click)="addLikePost(data,'true')"><img src="assets/images/like.png"> </a>
+        <a class="emoji" href="javascript:;" (click)="addLikePost(data,'true')"><img
+            src="assets/images/emojiii.png"></a>
+        <a href="javascript:;" (click)="addLikePost(data,'true')"><img src="assets/images/heart.png"> </a>
+        <!-- <span style=" cursor:pointer" *ngIf="likes.length > 0">Mainak and.... <img src="assets/images/rightarrow.png"> </span> -->
+        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+      </div>
+      <div class="addScroll">
+        <div class="modal-footer aarangebtn" *ngFor="let data of commentsArr; let i=index">
+
+          <div class="userimg-col"><img class="user-icon" style="border-radius: 53px;" [src]="data['userPic']"
+              class="imageComment"></div>
+          <div class="field-area" style="width: 75%; margin-left: 2%;">
+            <!-- <input class="holder" type="text"  maxlength="64" >  -->
+            <label class="holder" *ngIf="!data.showEdit">{{data.comment}} </label>
+            <input class="holder" type="text" name="edit_comment" [(ngModel)]="obj.edit_comment"
+              (keypress)="callEditApi($event,data)" style="color:green" *ngIf="data.showEdit">
+            <!-- <span class="post-time" *ngIf="data.days">{{data.days}} days ago</span>
+                        <span class="post-time" *ngIf="data.hours">{{data.hours}} hours ago</span>
+                        <span class="post-time" *ngIf="data.minutes">{{data.minutes}} minutes ago</span>
+                        <span class="post-time" *ngIf="data.seconds">{{data.seconds}} seconds ago</span> -->
+            <span class="post-time">{{data.showTime}}</span>
+
+            <!-- <span><i class="fa fa-ellipsis-v doted" (click)="deleteComment()"></i></span> -->
+
+
+          </div>
+          <a (click)="getId(data._id)" style="margin-bottom:35px" *ngIf="data.showTrashIcon"> <i class="fa fa-trash"
+              aria-hidden="true" data-toggle="tooltip" title="Delete"></i></a>
+          <a (click)="editComment(data, i)" style="margin-bottom:35px" *ngIf="data.showEditIcon"> <i class="fa fa-edit"
+              aria-hidden="true" data-toggle="tooltip" title="Edit"></i></a>
+          <!-- <i class="fa fa-trash-o" aria-hidden="true"></i> -->
+
+        </div>
+      </div>
+
+
+      <div class="modal-footer aarangebtn">
+        <div class="field-area" style="width: 81%; margin-left: 2%;">
+          <input class="holder" type="text" placeholder="Write a comment..." (keypress)="toCheckSpace($event)"
+            maxlength="64" [(ngModel)]="obj.comment"> <img class="user-icon" src="assets/images/send.png" style="width:8%;height: 5%; margin-top: -17%;
+                    margin-left: 110%; cursor:pointer" (click)="addDeleteComment('true')">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Share post start -->
+<div class="modal fade" id="sharePost" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body detail-about">
+        <form class="search-form">
+          <input type="text" placeholder="Search" class="form-control" (click)="searchFriend()">
+        </form>
+        <div *ngFor="let friend of friendsList" style="text-align: left;">
+          <input type="checkbox" (change)="chooseFriend(friend, $event)">
+          <img style="height: 60px; width: 60px; border-radius: 30px; padding: 10px;" [src]="friend?.profilePic">
+          <span>{{friend?.firstName}}</span>
+        </div>
+        <div class="btnnns">
+          <div class="flexProp">
+            <button type="submit" class="btn btn-danger btn-return" style="width: auto;"
+              data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success paynow" (click)="sharePostEvent()">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- sticker modal starts -->
+<div class="modal fade" id="stickerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body detail-about">
+        <div class="sticker-none">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4>How are you feeling?</h4>
+
+          <div class=" heding-part">
+
+            <div>
+              <emoji-mart title="Pick your emoji…" emoji="point_up" (emojiSelect)="addEmoji($event)"
+                [style]="{ position: 'relative'}"></emoji-mart>
+            </div>
+            <!-- <emoji-input></emoji-input> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for More Details -->
+<div class="modal fade" id="MoreProfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <div class="modal-body detail-about">
+        <div class="break d-flex padding" (click)="addHistory()">
+          <img class="leftImg" src="assets/images/advertisement.png">
+          <span class="class ml-2">
+            My advertisements history
+          </span>
+        </div>
+        <div>
+          <div class="break d-flex padding" (click)="applyJobHistory()" >
+            <img class="leftImg" src="assets/images/job.png">
+            <span class="class  ml-2">
+              Applied Job history
+            </span>
+          </div>
+          <div>
+            <div class="break d-flex padding" (click)="postedJobHistory()">
+              <img class="leftImg" src="assets/images/job.png">
+              <span class="class  ml-2">
+                Posted Job history
+              </span>
+
+            </div>
+            <div>
+              <div class="break d-flex padding" (click)="videoGameHistory()">
+                <img class="leftImg" src="assets/images/game.png">
+                <span class="class  ml-2">
+                  Posted video game history
+                </span>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+      <!-- Modal for More Details -->
+<div class="modal fade" id="forBio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-content">
+      <form [formGroup] = "form">
+
+      <div class="modal-header">
+          <h5 class="modal-title">Edit bio</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+    
+    <div class="modal-body detail-about">
+      <div class="break  padding" >
+        <div class="form-group row">
+          <div class=" col-md-12">
+              Add a short bio to tell people more about yourself
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-12">
+              <textarea rows="4" cols="50" type="text" class="form-control"  formControlName = "bioData"
+              placeholder="Enter your bio data"></textarea>
+              <div *ngIf = "form.get('bioData').invalid && (form.get('bioData').dirty || form.get('bioData').touched)" style="text-align: start">
+                <span *ngIf = "form.get('bioData').hasError('required')" style="color: red;" >
+                  *Bio is required.
+                </span>
+              </div>
+              <button class="btn-global pointer" (click)="updateCoverAndProfile()">Save</button>
+          </div>
+        </div>
+      </div>
+     
+
+        </div>
+      </form>
+      </div>
+    </div>
+</div>

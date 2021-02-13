@@ -1,0 +1,32 @@
+<div class="wrapper">
+     <main class="middle-content">
+          <div class="page_title_block">
+               <h1 class="page_title text-center text-center">Notification</h1>
+
+          </div>
+          <div class="row justify-content-between" style="display: flex;
+         justify-content: flex-start;
+         margin-left: 83%;">
+               <button type="submit" class="btn  btn-theme ml-2 Go_btn" (click)="clearAll()">Clear all</button>
+
+          </div>
+          <div style=" color:rgb(59, 17, 211); margin-left: 7%;">
+               
+          <ul *ngFor="let data of notificationData">
+               <li>{{data?.body}}</li>
+               <div class="row justify-content-between" style="display: flex;
+         justify-content: flex-start;
+         margin-left: 82%;">
+               <button type="submit" class="btn  btn-theme ml-2 Go_btn" (click)="clear(data._id)">Clear</button>
+
+          </div>
+          </ul>
+     
+     </div>
+
+     </main>
+</div>
+<<<<<<< HEAD
+
+=======
+>>>>>>> 939e5249dbbc2133e4536362fac1eaaf2fbfbe12

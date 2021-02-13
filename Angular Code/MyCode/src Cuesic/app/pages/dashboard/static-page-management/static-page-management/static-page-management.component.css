@@ -1,0 +1,12 @@
+.table-no-record {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+}
+.content p{
+  margin: 0px;
+  padding: 0px;
+}
+td p{
+  margin: 0px !important;
+}

@@ -1,0 +1,42 @@
+<div class="wrapper" style="width: 80%;
+margin-left: 2%;">
+    <main class="middle-content">
+        <div class="page_title_block">
+            <h1 class="page_title">LINKS</h1>
+            <hr style="background: black; opacity: 0.5;width: 135%;">
+        </div>
+        <form [formGroup]="listform">
+            <div class="card" style="margin-left: 18%;">
+                <div class="row" style=" margin-left: 2%; margin-top: 8%; margin-right: 2%;">
+                    <div class="col">
+                        <label>Customer App Android link:</label><br><br>
+                        <label>Customer App ios link:</label><br><br>
+                        <label>Practitioner App Android link:</label><br><br>
+                        <label>Practitioner App ios link:</label><br><br><br>
+                        <label>Instagram Page link:</label><br><br><br>
+                        <label>Facebook Page link:</label><br><br>
+                        <label>Twitter Page link:</label><br><br>
+                        <label>Linkedin Page link:</label>
+
+                    </div>
+                    <div class="col" style=" margin-top: -1.5%;">
+                        <input type="text" class="form-control" formControlName="CustomerAndroindUrl"><br>
+                        <input type="text" class="form-control" formControlName="Customer_IOS_Url"><br>
+                        <input type="text" class="form-control" formControlName="pratitionerAndroindUrl"><br>
+                        <input type="text" class="form-control" formControlName="pratitioner_IOS_Url"><br>
+                        <input type="text" class="form-control" formControlName="instagram"><br>
+                        <input type="text" class="form-control" formControlName="facebook"><br>
+                        <input type="text" class="form-control" formControlName="twitter"><br>
+                        <input type="text" class="form-control" formControlName="linkedin">
+
+                    </div>
+                </div>
+                <div class="row" style="margin-left: 25%;margin-top: 5%; margin-bottom: 8%; ">
+
+                    <button type="button" class="btn btn-theme"  style="margin-left: 10%; width: 12%;"
+                        (click)="saveList()">Save </button>
+                </div>
+            </div>
+        </form>
+    </main>
+</div>

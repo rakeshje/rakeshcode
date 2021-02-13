@@ -1,0 +1,32 @@
+<div class="wrapper">
+    <main class="middle-content">
+        <div class="page_title_block">
+            <h1 class="page_title"> VIEW PRODUCT
+
+            </h1>
+            <hr style="background: black; opacity: 0.5;">
+
+        </div>
+
+        <div class="content-section">
+            <div style="position: absolute;
+left: 41%; margin-top: -2%;" >
+    <img style="border-radius: 50%;" [src]="user?.categoryImage" alt="" />
+</div>
+
+
+            <div class="col" style="text-align: center;">
+
+                <div class="row" style="margin-left: 15%;
+                margin-top: 16%;">
+                    <label>Name of Product Category :
+
+                    </label>
+                    <label style="margin-left: 18%;">{{user?.categoryName}}</label>
+                </div>
+ <div class="row" style="margin-left: 15%;
+                    margin-top: 10%;">
+                        <button type="button" class="btn btn-theme" style="margin-left: 10%; width: 13%;" [routerLink]="['/product-category']">Back</button>
+                    </div>
+            </div>
+        </div>

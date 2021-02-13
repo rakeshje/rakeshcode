@@ -1,0 +1,134 @@
+<div class="wrapper">
+                  <main class="middle-content">
+                      <div class="page_title_block">
+                          <h1 class="page_title" style="color:#26272d">Static Content Management</h1>
+                      </div>
+
+                      <!-- tab start -->
+                      <div class="custom_tabs common-tabs">
+                        <div class="row mb20 justify-content-center">
+                            <div class="col-sm-11">
+                                <ul class="nav nav-tabs d-flex  justify-content-center text-center">
+                                    <li class="nav-item flex-fill"> <a class="nav-link active show"
+                                            [ngClass]="{'active': currTab=='English'}" (click)="selectTab('English')"
+                                            href="javascript:;">English</a>
+                                    </li>
+                                    <li class="nav-item flex-fill"> <a class="nav-link active show"
+                                            [ngClass]="{'active': currTab=='German'}" (click)="selectTab('German')"
+                                            href="javascript:;">German</a>
+                                    </li>
+                                    <li class="nav-item flex-fill"> <a class="nav-link active show"
+                                      [ngClass]="{'active': currTab=='Spanish'}" (click)="selectTab('Spanish')"
+                                      href="javascript:;">Spanish</a>
+                              </li>
+                              
+                                </ul>
+                            </div>
+                        </div>
+                      </div>
+                      <!-- tab end -->
+
+                      <!-- tab for english static start -->
+                      <div class="tab-pane active show" *ngIf="this.currTab =='English'">
+                      <div class="content-section">
+                          <div class="outer-box">
+                              <div class="global-table no-radius p0">
+                                  <div class="tab-content1">
+                                      <div class="tab-pane1">
+                                          <div class="table-responsive">
+                                              <table class="table table-bordered" aria-describedby="static content list">
+                                                  <thead>
+                                                      <tr class="no_wrap_th">
+                                                          <th scope="col">ID</th>
+                                                          <th scope="col">Page Name </th>
+                                                          <th scope="col" class="action_td_btn3">Action</th>
+                                                      </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                    <tr *ngFor="let items of staticData">
+                                                     <td>{{items.staticContentId}}</td>                
+                                                     <td>{{items.pageKey}}</td>                
+                                                     <td (click)="englishAbout(items.pageKey,this.currTab)" ><i class="fa fa-eye" aria-hidden="true" ></i></td>                
+                                                    </tr>
+                                                  </tbody>
+                                              </table>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                      <!-- tab for english static end -->
+                      <!-- tab for german static start -->
+                      <div class="tab-pane active show" *ngIf="this.currTab =='German'">
+                      <div class="content-section">
+                        <div class="outer-box">
+                            <div class="global-table no-radius p0">
+                                <div class="tab-content1">
+                                    <div class="tab-pane1">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" aria-describedby="static content list">
+                                                <thead>
+                                                    <tr class="no_wrap_th">
+                                                        <th scope="col">ID</th>
+                                                        <th scope="col">Page Name </th>
+                                                        <th scope="col" class="action_td_btn3">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                  <tr *ngFor="let items of staticGermanData">
+                                                   <td>{{items.staticContentId}}</td>                
+                                                   <td>{{items.pageKey}}</td>                
+                                                   <td (click)="germanAbout(items.pageKey,this.currTab)"><i class="fa fa-eye" aria-hidden="true" ></i></td>                
+                                                  </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <!-- tab for german static end -->
+                    <!-- tab for spanish static start -->
+                    <div class="tab-pane active show" *ngIf="this.currTab =='Spanish'">
+                    <div class="content-section">
+                        <div class="outer-box">
+                            <div class="global-table no-radius p0">
+                                <div class="tab-content1">
+                                    <div class="tab-pane1">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" aria-describedby="static content list">
+                                                <thead>
+                                                    <tr class="no_wrap_th">
+                                                        <th scope="col">ID</th>
+                                                        <th scope="col">Page Name </th>
+                                                        <th scope="col" class="action_td_btn3">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                  <tr *ngFor="let items of staticSpanishData">
+                                                   <td>{{items.staticContentId}}</td>                
+                                                   <td>{{items.pageKey}}</td>                
+                                                   <td (click)="spanishAbout(items.pageKey,this.currTab)"><i class="fa fa-eye" aria-hidden="true" ></i></td>                
+                                                  </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <!-- tab for spanish static end -->
+                  </main>
+                  <footer>
+                    <div class="container-fluid">
+                        <p class="copyright">Alende  <strong class="theme-text-color"></strong> 
+                            </p>
+                    </div>
+                </footer>
+              </div>

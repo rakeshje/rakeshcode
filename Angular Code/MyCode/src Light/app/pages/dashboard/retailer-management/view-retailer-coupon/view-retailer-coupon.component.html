@@ -1,0 +1,222 @@
+<div class="wrapper">
+        <main class="middle-content">
+            <div class="page_title_block">
+                <h1 class="page_title text-center">View Coupon</h1>
+            </div>
+            <div class="content-section">
+                <div class="outer-box">
+                    <div class="global-table no-radius p0">
+                        <div class="tab-content1">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class=" order-view main-block-innner mb20 mt40">
+                                        <div class="add-store-block input-style">
+                                            <div style="width: 100%">
+                                                <img [src]="bindingData?.image || 'assets/img/header-logo.png'" alt=""
+                                                    style="width: 100%">
+                                            </div>
+                                            <div class="form-group row ">
+                                                <label class="col-md-6"> Title:</label>
+                                                <div class="col-md-6 text-center">
+                                                    <label>{{bindingData?.brandName}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row ">
+                                                <label class="col-md-6">Coupon Code:</label>
+                                                <div class="col-md-6 text-center">
+                                                    <label>{{bindingData?.couponCode}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row ">
+                                                <label class="col-md-6">Discount:</label>
+                                                <div class="col-md-6 text-center" style="    white-space: nowrap;">
+                                                    <label>{{bindingData?.discount}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row ">
+                                                <label class="col-md-6">Coupon Applied On:</label>
+                                                <div class="col-md-6 text-center" style="    white-space: nowrap;">
+                                                    <label>{{bindingData?.couponAppliedOn}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row ">
+                                                <label class="col-md-6">Expiry Date:</label>
+                                                <div class="col-md-6 text-center" style="    white-space: nowrap;">
+                                                    <label>{{bindingData?.ExpiryDate | date}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row ">
+                                                <label class="col-md-6">One Time Coupon:</label>
+                                                <div class="col-md-6 text-center" style="    white-space: nowrap;">
+                                                    <label>{{bindingData?.oneTimeCoupon}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row ">
+                                                <label class="col-md-6">Shop Name:</label>
+                                                <div class="col-md-6 text-center" style="    white-space: nowrap;">
+                                                    <label>{{bindingData?.shopName}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row ">
+                                                <label class="col-md-6">Shop Number:</label>
+                                                <div class="col-md-6 text-center" style="    white-space: nowrap;">
+                                                    <label>{{bindingData?.brandName}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row ">
+                                                <label class="col-md-6">Floor Number:</label>
+                                                <div class="col-md-6 text-center" style="    white-space: nowrap;">
+                                                    <label>{{bindingData?.floorNumber}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row ">
+                                                <label class="col-md-6">Mart Number : </label>
+                                                <div class="col-md-6 text-center" style="    white-space: nowrap;">
+                                                    <label>{{bindingData?.shopPhoneNumber}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row ">
+                                                <label class="col-md-6">Shop Phone Number:</label>
+                                                <div class="col-md-6 text-center" style="    white-space: nowrap;">
+                                                    <label>{{bindingData?.shopPhoneNumber}}</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row ">
+                                                <label class="col-md-6">Restrictions:</label>
+                                                <div class="col-md-6 text-center">
+                                                    <label>{{bindingData?.restrictions}}</label>
+                                                </div>
+                                            </div>
+    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div *ngIf="couponStatus == 'PUBLISHED'" class="form-group">
+                                <div class="text-center mt40">
+                                    <button [routerLink]="['/view-retailer']"
+                                        class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ml-2">BACK</button>
+                                    <button (click)="withdrawCoupon()"
+                                        class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ml-2">Withdraw</button>
+                                </div>
+                            </div>
+                            <div *ngIf="couponStatus == 'SUBMITTED'" class="form-group">
+                                <div class="text-center mt40">
+                                    <button (click)="rejectCoupon()"
+                                        class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ml-2">Reject</button>
+                                    <button (click)="approveCoupon()"
+                                        class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ml-2">Approve</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- delete_modal Start -->
+    <div class="modal fade global-modal reset-modal" id="delete">
+        <div class="modal-dialog max-WT-500">
+            <form class="change_password">
+                <div class="modal-content">
+                    <div class="modal-header d-block text-center">
+                        <h5 class="modal-title d-inline-block">Delete</h5>
+                    </div>
+                    <div>
+                        <div class="modal-body">
+                            <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                                <div class="w-100">
+                                    <p>Are you sure want to delete this user?</p>
+                                    <div>
+                                        <button type="submit" class="btn btn-info ml-2">Delete</button>
+                                        <button type="button" class="btn btn-danger ml-2"
+                                            data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- delete_modal End -->
+    <!-- block_modal Start -->
+    <div class="modal fade global-modal reset-modal" id="block">
+        <div class="modal-dialog max-WT-500">
+            <form class="change_password">
+                <div class="modal-content">
+                    <div class="modal-header d-block text-center">
+                        <h5 class="modal-title d-inline-block">Deactivate</h5>
+                    </div>
+                    <div>
+                        <div class="modal-body">
+                            <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                                <div class="w-100">
+                                    <p>Are you sure want to block this user?</p>
+                                    <div>
+                                        <button type="submit" class="btn btn-success ml-2">Yes</button>
+                                        <button type="button" class="btn btn-danger ml-2" data-dismiss="modal">No</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- unblock_modal Start -->
+    <div class="modal fade global-modal reset-modal" id="unblock">
+        <div class="modal-dialog max-WT-500">
+            <form class="change_password">
+                <div class="modal-content">
+                    <div class="modal-header d-block text-center">
+                        <h5 class="modal-title d-inline-block">Activate</h5>
+                    </div>
+                    <div>
+                        <div class="modal-body">
+                            <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                                <div class="w-100">
+                                    <p>Are you sure want to unblock this user?</p>
+                                    <div>
+                                        <button type="submit" class="btn btn-success ml-2">Yes</button>
+                                        <button type="button" class="btn btn-danger ml-2" data-dismiss="modal">No</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Comment_modal Start -->
+    <div class="modal fade global-modal reset-modal" id="comment">
+        <div class="modal-dialog max-WT-500">
+            <form [formGroup]="searchForm" class="change_password">
+                <div class="modal-content">
+                    <div class="modal-header d-block text-center">
+                        <h5 class="modal-title d-inline-block">Comment</h5>
+                    </div>
+                    <div>
+                        <div class="modal-body">
+                            <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                                <div class="w-100">
+                                    <textarea formControlName="comment" style="width:100%; padding: 1%" rows="4" cols="4" maxlength="100"></textarea>
+                                    <div>
+                                        <button type="submit" (click)="rejectAccepted()" class="btn btn-success ml-2">Send</button>
+                                        <button type="button" class="btn btn-danger ml-2" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>

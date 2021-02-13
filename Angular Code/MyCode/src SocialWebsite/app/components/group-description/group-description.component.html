@@ -1,0 +1,307 @@
+<!-- Start Right Bar -->
+<app-rightsidemenu></app-rightsidemenu>
+<!-- Close Right Bar -->
+
+<!-- Satrt Page Content -->
+<div class="page-wrap">
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="left-menu card">
+          <app-sidemenu></app-sidemenu>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="page-content" *ngIf="groupDiscussion != null">
+          <div class="card post-box main-post">
+            <div class="post-warp">
+              <div class="post-content-setting">
+                {{groupDiscussion?.groupName}}
+              </div>
+            </div>
+          </div>
+          <div class="card post-box post-search" *ngIf="isMember">
+            <form class="search-form">
+              <input type="text" placeholder="Write something..." class="form-control" (click)="openPostModal()">
+            </form>
+          </div>
+          <div class="card post-box main-post" *ngIf="groupDiscussion.coverPic || groupDiscussion.coverPic">
+            <div class="post-warp">
+              <div class="post-content">
+                <div class="content-col">
+                  <div class="post-header">
+                  </div>
+                  <div class="post-summry">
+                    <img *ngIf="groupDiscussion.coverPic" [src]="groupDiscussion?.coverPic" class="img-fluid">
+                    <p *ngIf="groupDiscussion.coverPic">{{groupDiscussion?.description}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card post-box main-post" *ngFor="let post of posts">
+            <div class="post-warp">
+              <div class="post-content">
+                <div class="userimg-col"><img class="user-icon" [src]="post?.userId?.profilePic ? post?.userId?.profilePic : 'assets/images/profile.png'"></div>
+                <div class="content-col">
+                  <div class="post-header">
+                    <div class="elips" *ngIf="post.userId._id == userId">
+                      <i class="fa fa-ellipsis-v doted " (click)="open(post._id)"></i>
+                      <div class="hide-clas none" [id]="post._id">
+                        <p (click)="actionOnPost(post, 'DELETE')">Delete</p>
+                        <p (click)="actionOnPost(post, 'HIDE')">Hide Post</p>
+                        <!-- <p>Edit Post</p> -->
+                        <p (click)="actionOnPost(post, 'ARCHIVE')">Archive</p>
+                      </div>
+                    </div>
+                    <h4 class="post-title">{{post?.userId?.firstName}}</h4>
+                    <span class="post-time">{{post?.createdAt}} Delhi, India <i class="fa fa-users greenuser"
+                        aria-hidden="true"></i></span>
+                  </div>
+                  <div class="post-summry" style="display: grid;">
+                    <span>{{post?.text}}</span>
+                    <img *ngIf="post.image.length" [src]="post?.image[0]" class="img-fluid">
+                    <video *ngIf="post.video.length" controls [src]="post.video[0]"></video>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="post-me">
+              <a><img src="assets/images/like.png"> </a>
+              <a><img src="assets/images/heart.png"> </a>
+              <a class="emoji" href=""><img src="assets/images/emojiii.png"></a>
+              <a><img src="assets/images/Layer 76.png"> Saswat and 150 others</a>
+              <a class="emojiiIcon">{{post?.comments.length}} comments </a>
+            </div> -->
+
+
+            <div class="post-me">
+              <a (click)="likePost(post, 'like')"><img src="assets/images/like.png"> </a>
+              <a (click)="likePost(post, 'like')"><img src="assets/images/heart.png"> </a>
+              <!--   <a><img src="images/chat-comment-oval-speech-bubble-with-text-lines.png"></a> -->
+              <a (click)="likePost(post, 'like')" class="emoji"><img src="assets/images/emojiii.png"></a>
+              <a *ngIf="post.likes.length && !post.userLiked"><img src="assets/images/Layer 76.png"> {{post.likes[post.likes.length - 1]['userName']}} and
+                {{post.likes.length - 1}} others</a>
+              <a *ngIf="post.likes.length == 1 && post.userLiked"><img src="assets/images/Layer 76.png"> You liked</a>
+              <a *ngIf="post.likes.length > 1 && post.userLiked"><img src="assets/images/Layer 76.png"> You and {{post.likes.length - 1}} others</a>
+              <a class="emojiiIcon">{{post?.comments.length}} comments </a>
+            </div>
+
+
+            <div class="post-meta">
+              <a *ngIf="!post.userLiked"><img src="assets/images/thumb-up.png" (click)="likePost(post, 'like')"> Like</a>
+              <a *ngIf="post.userLiked"><img src="assets/images/liked.png" (click)="likePost(post, 'like')"> Unlike</a>
+              <a (click)="comment(post)"><img src="assets/images/chat-comment-oval-speech-bubble-with-text-lines.png">
+                Comment</a>
+              <a  (click)="openModal(post?._id)"><img src="assets/images/Layer 76.png"> Share</a>
+            </div>
+          </div>
+        </div>
+        <div class="page-content" *ngIf="groupDiscussion == null">
+          <h2>No Record Found!</h2>
+        </div>
+      </div>
+      <!-- dashboard content -->
+      <!-- end -->
+    </div>
+  </div>
+</div>
+
+<!-- Add post modal start -->
+<div class="modal fade" id="addPost" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body detail-about">
+        <form>
+          <div class="form-group" style="display: flex;">
+            <img style="width: 50px;" [src]="groupDiscussion?.coverPic">
+            <input type="text" placeholder="Write something here..." class="form-control" [(ngModel)]="postDescription"
+              name="postDescription">
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="column">
+                <input class="uploadPostImage" type="file"
+                  accept="image/png, image/jpeg, image/jpg, video/mp4, video/ogg, video/webm" (change)="upload($event)">
+                <img [src]="fileData" class="postImg">
+                <p>Photo/Video</p>
+              </div>
+              <!-- <div class="column">
+                <img src="assets/images/Tagfriend.png" class="postImg">
+                <p>Tag Friends</p>
+              </div> -->
+            </div>
+            <!-- <div class="row">
+              <div class="column">
+                <img src="assets/images/emojiii.png" class="postImg">
+                <p>Feelings/Activity/Sticker</p>
+              </div>
+              <div class="column">
+                <img src="assets/images/checkin.png" class="postImg">
+                <p>Check In</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="column">
+                <p>GIF</p>
+              </div>
+              <div class="column">
+                <p>Poll</p>
+              </div>
+            </div> -->
+            <!-- <div class="row">
+              <div class="column">
+                <p>Recommendation</p>
+              </div>
+            </div> -->
+          </div>
+          <div class="form-group" style="text-align: left;">
+            <select [(ngModel)]="postView" name="postView" (change)="selectPrivacy($event)">
+              <option value="" disabled>Select</option>
+              <option value="SPECIFICFRIENDS">Specific Friends</option>
+              <option value="PUBLIC">Public</option>
+              <option value="FRIENDS">All Friends</option>
+              <option value="ONLYME">Only Me</option>
+            </select>
+          </div>
+        </form>
+        <div class="btnnns">
+          <div class="flexProp">
+            <button type="submit" class="btn btn-danger btn-return" style="width: auto;"
+              data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success paynow" (click)="addPost()">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Add post modal end -->
+
+<!-- Add post modal start -->
+<div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body detail-about">
+        <!-- <div class="row"> -->
+
+        <!-- <div class="column"> -->
+        <div class="row" *ngFor="let data of comments">
+          <div class="structure-repeat">
+            <img [src]="data.userPic ? data.userPic : 'assets/images/profile.png'" style="width: 50px; border-radius: 25px;">
+            <!-- <div> -->
+            <div class="name-comment">
+              <p>{{data.userName}}</p>
+              <p style="text-align: left; margin-bottom: 0rem;">{{data.comment}}</p> 
+              <p>{{data.commentedTime| date:"HH:MM:ss"}}</p>
+              <!-- <a><i class="fas fa-edit" ></i></a> -->
+              
+            </div>
+            <!-- </div> -->
+            <a  (click)="replyComment(data)" style="margin-bottom:35px" *ngIf="userid!=data?.commentedUser"><i class="fa fa-reply"></i></a>
+          </div>
+        </div>
+        <div style="display: flex;">
+          <img [src]="userProfilePic ? userProfilePic : 'assets/images/profile.png'" style="width: 50px; border-radius: 25px;">
+          <input placeholder="Write a comment" class="form-control type" [(ngModel)]="newComment"
+            (keyup.enter)="likePost('', 'comment')">
+
+          <!-- <img src="assets/images/atach.png" style="width: 25px; height: 25px; margin-top: 14px;">
+          <input type="file" class="form-control file" style="bottom: 15px; right: 41px; width: 25px;"
+            placeholder="Type your Message Here....." (change)="upload($event)"
+            accept="application/pdf, image/png, image/jpeg, image/jpg"> -->
+
+          <img src="assets/images/emojiii.png" (click)="showEmoji()"
+            style="width: 25px; height: 25px; margin-top: 14px;">
+          <emoji-mart *ngIf="emoji" title="Pick your emoji…" emoji="point_up" (emojiSelect)="addEmoji($event)"
+            [style]="{ position: 'absolute'}"></emoji-mart>
+        </div>
+        <!-- </div> -->
+        <!-- </div> -->
+        <!-- <div class="btnnns">
+          <div class="flexProp">
+            <button type="submit" class="btn btn-danger btn-return" style="width: auto;" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success paynow" (click)="addPost()">Submit</button>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Add post modal end -->
+
+<!-- Share post start -->
+<!-- <div class="modal fade" id="sharePost" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body detail-about">
+        <form class="search-form">
+          <input type="text" placeholder="Search" class="form-control" (click)="searchFriend()">
+        </form>
+        <div *ngFor="let friend of friendsList" style="text-align: left;">
+          <input type="checkbox" (change)="chooseFriend(friend, $event)">
+          <img style="height: 60px; width: 60px; border-radius: 30px; padding: 10px;" [src]="friend?.profilePic">
+          <span>{{friend.firstName}}</span>
+        </div>
+        <div class="btnnns">
+          <div class="flexProp">
+            <button type="submit" class="btn btn-danger btn-return" style="width: auto;"
+              data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success paynow" (click)="sharePostFriends()">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<!-- Share post end -->
+
+
+<div class="modal fade" id="sharePost" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-content">
+    <div class="modal-body detail-about">
+      <div style="margin-top: 30px;" class="">
+        <ng-multiselect-dropdown  
+          [data]="dropdownList" [(ngModel)]="selectedItems" [settings]="dropdownSettings"
+          (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)"
+          (onDeSelectAll)="onDeSelectAll($event)" (onDeSelect)="onItemDeSelect($event)">
+        </ng-multiselect-dropdown>
+      </div>
+      <div class="btnnns">
+        <div class="flexProp">
+          <button type="submit" class="btn btn-danger btn-return" style="width: auto;"
+            data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-success paynow" (click)="sharePostFriends()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Action on post start -->
+<div class="modal fade" id="actionPost" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body detail-about">
+        <div>
+          <span>Are you sure you want to {{actionType.view}} this post?</span>
+        </div>
+        <div class="btnnns">
+          <div class="flexProp">
+            <button type="submit" class="btn btn-danger btn-return" style="width: auto;"
+              data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success paynow" (click)="action()">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Action on post end -->

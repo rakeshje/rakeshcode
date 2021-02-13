@@ -1,0 +1,59 @@
+<div class="wrapper">
+    <main class="middle-content">
+        <div class="page_title_block">
+            <h1 class="page_title text-center"> ROLE ASSIGNMENT MANAGEMENT</h1>
+        </div>
+        <div class="content-section">
+            <div class="outer-box">
+                <div class="global-table no-radius p0">
+                    <div class="tab-content1">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="order-view main-block-innner mb40 mt40">
+                                    <div class="add-store-block input-style">
+                                        <div class="form-group row">
+                                            <label class="col-md-6"> First Name :</label>
+                                            <div class="col-md-6">
+                                                <label>{{subUserData?.firstName || '--'}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-6"> Last Name :</label>
+                                            <div class="col-md-6">
+                                                <label>{{subUserData?.lastName || '--'}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-6">Phone Number:</label>
+                                            <div class="col-md-6">
+                                                <label>{{((subUserData?.countryCode + '-' + subUserData?.mobileNumber)) || ('--')}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-6">E-mail:</label>
+                                            <div class="col-md-6" style="white-space: nowrap;">
+                                                <label>{{subUserData?.email || '--'}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-6">Role :</label>
+                                            <div class="col-md-6">
+                                                <label>{{subUserData?.roleName || '--'}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="text-center mt40">
+                                            <a [routerLink]="['/role-assignment-management']"
+                                                class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ml-2">Back</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

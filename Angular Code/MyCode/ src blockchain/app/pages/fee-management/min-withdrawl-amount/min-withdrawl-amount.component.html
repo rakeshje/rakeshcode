@@ -1,0 +1,47 @@
+<main class="middle-content">
+    <div class="page_title_block">
+        <h1 class="page_title" style="color:#26272d">MINIMUM WITHDRAWAL AMOUNT</h1>
+    </div>
+    <div class="content-section">
+        <div class="outer-box">
+            <div class="global-table no-radius p0">
+                <div class="tab-content1">
+                    <div class="tab-pane1">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" aria-describedby="user list">
+                                <thead>
+                                    <tr class="no_wrap_th">
+                                        <th scope="col">S.No</th>
+                                        <th scope="col">Withrawl Fee</th>
+                                        <th scope="col">Coin name</th>
+                                        <th scope="col">Action</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of coinList  ; let i=index" >
+                                        <td>{{i+1}}</td>
+                                        <td>{{item.withdrawalAmount}}</td>
+                                        <td>{{item.coinShortName}}</td>
+                                        <td><button type="submit" class="btn  btn-theme cus-mr"  style="width: 88%;" routerLink="/update-withdrawl-amount/{{item.coinShortName}}">Edit</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                       
+                                         
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="container-fluid">
+        <p class="copyright">Alende  <strong class="theme-text-color"></strong> 
+            </p>
+    </div>
+</footer>
+

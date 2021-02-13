@@ -1,0 +1,99 @@
+   <!-- Start Right Bar -->
+<app-rightsidemenu></app-rightsidemenu>
+<!-- Close Right Bar -->
+
+   <!-- Satrt Page Content -->
+   <div class="page-wrap">
+      <div class="container-fluid py-4">
+          <div class="row">
+              <div class="col-md-3">
+                  <div class="left-menu card">
+                      <app-sidemenu></app-sidemenu>
+                  </div>
+              </div>
+              <div class="col-md-9">
+                  <div class="page-content">
+              
+                      <div class="card post-box main-post">
+                          <div class="post-warp">
+
+                              <div class="mainField" *ngFor="let data of participantsDetails">
+                                  <div class="user">
+                                      <img src="{{ data.profilePic }}">
+                                  </div>
+                                  <div class="userName">
+                                      <p style="font-weight: 500;">{{ data?.bidderName }}
+                                          <p>
+                                              <p style="color: #989696; font-size: 15px;">Biding cost:- ${{ data.enterBidding }}
+                                                  <p>
+                                                          <p>Status:- {{ data?.status }}</p>
+                                  </div>
+
+                                  <div class="userIcon">
+                                      <button type="submit" *ngIf="data.status == 'Pending'" (click)="approve('Approved',data?._id)">Approve</button>
+                                      <button type="submit" *ngIf="data.status == 'Pending'" (click)="cancel('Cancel',data?._id)">Cancel</button>
+                                  </div>
+                              </div>
+                              <div *ngIf="!participantsDetails?.length">
+                                  <h2>No participants yet</h2>
+                              </div>
+                              <!-- <div class="mainField">
+                                  <div class="user">
+                                      <img src="assets/images/download.jpeg">
+                                  </div>
+                                  <div class="userName">
+                                      <p style="font-weight: 500;">Koini Kon
+                                          <p>
+                                              <p style="color: #989696; font-size: 15px;">Biding cost:- $100.00
+                                                  <p>
+                                                          <p>Status:- Applied</p>
+                                  </div>
+
+                                  <div class="userIcon">
+                                      <button type="submit">Approved</button>
+                                      <button type="submit">Cancel</button>
+                                  </div>
+                              </div> -->
+
+                              <!-- <div class="mainField">
+                                  <div class="user">
+                                      <img src="assets/images/download.jpeg">
+                                  </div>
+                                  <div class="userName">
+                                      <p style="font-weight: 500;">Koini Kon
+                                          <p>
+                                              <p style="color: #989696; font-size: 15px;">Biding cost:- $100.00
+                                                  <p>
+                                                          <p>Status:- Applied</p>
+                                  </div>
+
+                                  <div class="userIcon">
+                                      <button type="submit">Approved</button>
+                                      <button type="submit">Cancel</button>
+                                  </div>
+                              </div> -->
+
+                              <!-- <div class="mainField">
+                                  <div class="user">
+                                      <img src="assets/images/download.jpeg">
+                                  </div>
+                                  <div class="userName">
+                                      <p style="font-weight: 500;">Koini Kon
+                                          <p>
+                                              <p style="color: #989696; font-size: 15px;">Biding cost:- $100.00
+                                                  <p>
+                                                          <p>Status:- Applied</p>
+                                  </div>
+
+                                  <div class="userIcon">
+                                      <button type="submit">Approved</button>
+                                      <button type="submit">Cancel</button>
+                                  </div>
+                              </div> -->
+                          </div>
+                      </div>
+                  </div>
+              </div>   
+          </div>
+       </div>
+    </div>

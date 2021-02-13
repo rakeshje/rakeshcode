@@ -1,0 +1,954 @@
+<!-- Start Right Bar -->
+<app-rightsidemenu></app-rightsidemenu>
+<!-- Close Right Bar -->
+
+
+<!-- Start Page Content -->
+<div class="page-wrap">
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="left-menu card">
+          <app-sidemenu></app-sidemenu>
+
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="page-content">
+          <!-- <div class="card post-box">
+                <div class="post-warp">
+                  <div class="d-flex">
+                    <div class="userimg-col"><img src="images/Layer 61.png"></div>
+                    <div class="content-col"><form><textarea class="form-control"></textarea></form></div>
+                  </div>
+                </div>
+              </div> -->
+
+
+
+          <div class="card post-box main-post">
+            <div class="post-warp">
+              <div class="header-tab">
+                <div class="tab pointer">
+                  <div class="tab">
+                    <div [ngClass]="{active : selected === 'job'}" (click)="selectTab('job')">Job
+                    </div>
+                    <div [ngClass]="{active : selected === 'addJob'}" (click)="selectTab('addJob')">Add Job</div>
+                    <div [ngClass]="{active : selected === 'viewPostedJob'}" (click)="selectTab('viewPostedJob')">View
+                      Posted Job</div>
+                    <!-- <div [ngClass]="{active : selected === 'applyJob'}" (click)="selectTab('applyJob')">Apply Job</div> -->
+                    <div [ngClass]="{active : selected === 'appliedJobHistory'}"
+                      (click)="selectTab('appliedJobHistory')">Applied Job History</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-----Searching----->
+          <div class="card post-box main-post" *ngIf="selected == 'job'">
+            <div class="post-warp" style="padding: 13px 30px;">
+              <div class="white-input" style="padding-left: 26px; margin-top: 1px;">
+                <input type="name" class="white-input" id="name" placeholder="Search by job title"
+                  (keyup)="searchTerm$.next($event.target.value)">
+                <i class="fa fa-search"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- <form  novalidate autocomplete="off">
+              <div class="card post-box main-post" *ngIf="selected == 'job'">
+                <div class="post-warp">
+                  <div class="white-input">
+                    <select class="selectOption" style=" margin-left: 15px; padding: 0 0 0 20px;">
+                      <option value="">Select country</option>
+                      <option value="saab" *ngFor="let item of countryCodeArr">{{item.name}}</option>   
+                    </select>
+                    <ngx-select-dropdown (change)="selectionChanged($event)" formControlName="country" [config]="config" [options]="countryCodeArr"></ngx-select-dropdown>
+                    <select class="selectOption" style="margin-left: 15px;padding: 0 0 0 20px">
+                      <option value="volvo">Newyork</option>
+                      <option value="saab">Saab</option>
+                      <option value="mercedes">Mercedes</option>
+                      <option value="audi">Audi</option>
+                    </select>
+                    <select class="selectOption" style="margin-left: 15px;padding: 0 0 0 20px">
+                      <option value="volvo">Industry</option>
+                      <option value="saab">Saab</option>
+                      <option value="mercedes">Mercedes</option>
+                      <option value="audi">Audi</option>
+                    </select>
+                    <select class="selectOption" style="margin-left: 15px;padding: 0 0 0 20px">
+                      <option value="volvo">Job Type</option>
+                      <option value="saab">Saab</option>
+                      <option value="mercedes">Mercedes</option>
+                      <option value="audi">jhhAudi</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </form> -->
+
+          <!---Job starts -->
+          <div class="card post-box main-post" *ngIf="selected == 'job'">
+            <div class="post-warp">
+              <div class="mainBox" *ngFor="let item of jobList">
+                <div class="fullstyle" style="margin-top: -40px;"><img class="differentView" src="{{item.jobPic}}">
+                </div>
+                <div class="userName title groupLength">
+                  <p style="font-weight: 500; color:black;">Job title: {{item.title}}<p>
+
+                      <p style="font-weight: 500; color:black;">Job details: {{item.addDetails}}<p>
+                          <p style="font-weight: 500; color:black;">Min experience required: {{item.roleExperience}}<p>
+                              <p style="font-weight: 500; color:black;">Company name: {{item.company}}<p>
+                                  <p style="color: #989696;
+                        font-size: 15px;">City: {{item.city}}<p>
+                                      <p style="color: #989696;
+                        font-size: 15px;">Posted on: {{item.createdAt | date}}<p>
+                </div>
+                <div class="applyBtn">
+
+                  <button type="submit" class="btn-global pointer" [disabled]="user_id == item.userId"
+                    (click)="selectedJob(item._id,item.addDetails,item.jobPic,item.company)">APPLY</button>
+                </div>
+              </div>
+
+
+            </div>
+
+          </div>
+          <!---Job Ends-->
+
+          <!----View Posted Job Starts-->
+          <div class="card post-box main-post" *ngIf="selected == 'viewPostedJob'">
+            <div class="post-warp" *ngFor="let data of myPostedJobArr; let i = index">
+              <div class="mainField">
+                <div class="user">
+                  <img src="{{data.jobPic}}">
+                </div>
+                <div class="userName title groupLength">
+                  <p style="font-weight: 500;color:black;">Job Title: {{data.title}}
+                    <p>
+                      <p style="font-weight: 500;color:black;">Company Name: {{data.company}}
+                        <p>
+                          <p style="font-size: 15px;color:black;">Job Details: {{data.addDetails}}
+                            <p>
+                              <p style="color: black;font-size: 15px;">City: {{data.city}}
+                                <p>
+                                  <p style="color: black;font-size: 15px;">Zipcode: {{data.pinCode}}
+                                    <p>
+                                      <p style="color: black;font-size: 15px;"> Job Status: {{data.jobStatus}}
+                                        <p>
+                                          <p style="color: black;font-size: 15px;">Job Type: {{data.jobType}}
+                                            <p>
+                                              <p style="color: #989696;font-size: 15px;">Contact Number:
+                                                {{data.phoneNumber}}
+                                                <p>
+                                                  <p style="color: #989696;font-size: 15px;">Posted On:
+                                                    {{data.updatedAt | date}}
+                                                    <p>
+                </div>
+                <div class="elips">
+                  <i class="fa fa-ellipsis-v doted" (click)="showList(i)"></i>
+                  <div [ngClass]="data.dynamicClass">
+                    <p (click)="actionOnEventList('DELETE',data['_id'],i)">Delete</p>
+
+                  </div>
+                </div>
+
+              </div>
+              <!-- <div class="mainBox">
+                        <div class="user" style="margin-top: -40px;"><img  src="assets/images/download.jpeg">
+                        </div>
+                        <div class="userName">
+                          <p style="font-weight: 500;">Jobs for Fresher<p>
+                          <p style="font-weight: 500;">Jobs for Boys and Girls<p>
+                          <p style="color: #989696;
+                          font-size: 15px;">Full time Rs. 22500 per hour<p>
+                          <p style="color: #989696;
+                          font-size: 15px;">Posted on 19/9/2019<p>
+                        </div>
+                   </div> -->
+            </div>
+          </div>
+          <!----View Posted Job Ends-->
+
+
+          <!---Add Job starts-->
+          <form [formGroup]="addJobForm" novalidate autocomplete="off">
+            <div class="card post-field main-post" *ngIf="selected == 'addJob'">
+              <div class="field-wrap">
+                <div class="profile-added">
+                  <div class="profile-detail">
+
+                    <img [src]="profileImage || 'assets/images/Layer 139.png'" alt="loading..." accept="image/*">
+                    <div class="add-user" style="cursor: pointer">
+
+                      <img src="assets/images/plus.png">
+
+                      <input style="position: absolute;
+                                      width: 110px;
+                                      opacity: 0;
+                                      top: 0px;
+                                      margin-left: -92px;" type="file" (change)="handleFileInput($event)">
+                    </div>
+                  </div>
+                </div>
+                <div class="field-area">
+                  <h6 class="heading-title">Job Title*</h6>
+                  <input class="holder" type="text" placeholder="Enter job title" maxlength="64"
+                    formControlName="jobTitle">
+                  <span class="error" *ngIf="jobTitle.invalid && (jobTitle.dirty || jobTitle.touched)">
+                    <span *ngIf="jobTitle.errors.required" padding>
+                      *Please enter job title
+                    </span>
+                    <span *ngIf="jobTitle.errors.pattern" padding>
+                      *Please enter valid job title
+                    </span>
+                  </span>
+
+                  <h6 class="heading-title">Job Details*</h6>
+                  <textarea class="selectdetail" rows="4" cols="50" placeholder="Enter job details"
+                    formControlName="jobDetails"></textarea>
+                  <span class="error" *ngIf="jobDetails.invalid && (jobDetails.dirty || jobDetails.touched)">
+                    <span *ngIf="jobDetails.errors.required" padding>
+                      *Please enter job details
+                    </span>
+                    <span *ngIf="jobDetails.errors.pattern" padding>
+                      *Please enter valid job details
+                    </span>
+                  </span>
+
+                  <h6 class="heading-title">Total Vacancies*</h6>
+                  <input class="holder" type="text" placeholder="Enter total vacancies" formControlName="jobVacancies">
+                  <span class="error" *ngIf="jobVacancies.invalid && (jobVacancies.dirty || jobVacancies.touched)">
+                    <span *ngIf="jobVacancies.errors.required" padding>
+                      *Please enter job vacancies
+                    </span>
+                    <span *ngIf="jobVacancies.errors.pattern" padding>
+                      *Please enter valid job vacancies
+                    </span>
+                  </span>
+
+                  <h6 class="heading-title">Country*</h6>
+                  <!-- <select class="selectField" (change)="getSelectedState($event)" formControlName="country">
+                        <option value="">Select country</option>
+                        <option [value]="item.name" *ngFor="let item of countryCodeArr">{{item.name}}</option>   
+                    </select> -->
+                  <ngx-select-dropdown (change)="selectionChanged($event)" formControlName="country" [config]="config"
+                    [options]="countryCodeArr"></ngx-select-dropdown>
+
+
+                  <h6 class="heading-title" *ngIf="stateArr.length">State*</h6>
+                  <!-- <select class="selectField" (change)="getSelectedCity($event)" formControlName="state">
+                        <option value="">Select state</option>
+                        <option [value]="item.name" *ngFor="let item of stateArr">{{item.name}}</option>
+                    </select> -->
+                  <ngx-select-dropdown (change)="selectionChanged($event)" formControlName="state" [config]="config"
+                    [options]="stateArr" *ngIf="stateArr.length"></ngx-select-dropdown>
+
+
+                  <h6 class="heading-title" *ngIf="cityArr.length">City*</h6>
+                  <!-- <select class="selectField" formControlName="city">
+                        <option value="">Select city</option>
+                        <option [value]="item.name" *ngFor="let item of cityArr">{{item.name}}</option>
+                    </select> -->
+                  <ngx-select-dropdown formControlName="city" [config]="config" [options]="cityArr"
+                    *ngIf="cityArr.length"></ngx-select-dropdown>
+
+                  <!-- <h6 class="heading-title">City</h6>
+                    <input class="holder" type="text"placeholder="Enter City" (keypress)="toCheckSpace($event)" formControlName="jobCity" >
+                    <span class="error" *ngIf="jobCity.invalid && (jobCity.dirty || jobCity.touched)">
+                        <span *ngIf="jobCity.errors.required" padding>
+                            *Please enter job city
+                        </span>
+                      <span *ngIf="jobCity.errors.pattern" padding>
+                            *Please enter valid job city
+                        </span>
+                      </span> -->
+
+                  <h6 class="heading-title">Zip Code*</h6>
+                  <input class="holder" type="text" placeholder="Enter zip code" formControlName="pinCode"
+                    (keypress)="toCheckSpace($event)" minlength="5" maxlength="10">
+                  <span class="error" *ngIf="pinCode.invalid && (pinCode.dirty || pinCode.touched)">
+                    <span *ngIf="pinCode.errors.required" padding>
+                      *Please enter zipcode
+                    </span>
+                    <span *ngIf="pinCode.errors.pattern" padding>
+                      *Please enter valid zipcode
+                    </span>
+                    <span *ngIf="pinCode.errors.minlength" padding>
+                      *Zip code must be atleast 5 digits
+                    </span>
+                  </span>
+
+                  <h6 class="heading-title">Industry Type*</h6>
+                  <select class="selectField" formControlName="industryType">
+                    <option value="">Select industry type</option>
+                    <option *ngFor="let item of industryTypeList" [value]="item.industryType">{{item.industryType}}
+                    </option>
+
+                  </select>
+
+
+                  <h6 class="heading-title">Job Type*</h6>
+                  <select class="selectField" formControlName="jobType">
+                    <option value="">Select job type</option>
+                    <option value="FULLTIME">Full Time</option>
+                    <option value="PARTTIME">Part Time</option>
+                  </select>
+
+                  <h6 class="heading-title">Email*</h6>
+                  <input class="holder" type="text" placeholder="Enter email address" formControlName="jobEmail"
+                    (keypress)="toCheckSpace($event)" maxlength="64">
+                  <span class="error" *ngIf="jobEmail.invalid && (jobEmail.dirty || jobEmail.touched)">
+                    <span *ngIf="jobEmail.errors.required" padding>
+                      *Please enter email
+                    </span>
+                    <span *ngIf="jobEmail.errors.pattern" padding>
+                      *Please enter valid email
+                    </span>
+                  </span>
+
+                  <h6 class="heading-title">Phone Number*</h6>
+                  <div class="row">
+                    <div class="col-md-3">
+                      <ngx-select-dropdown formControlName="phoneCountryCode"
+                                            [config]="config1" [options]="phoneCodeArr">
+                                        </ngx-select-dropdown>
+                  
+                    </div>
+                    <div class="col-md-9"> 
+                      <input class="holder" type="tel" placeholder="Enter phone number" formControlName="jobContact"
+                    (keypress)="toCheckSpaceChar($event)" maxlength="16">
+                    </div>
+                  </div>
+                  <span class="error" *ngIf="jobContact.invalid && (jobContact.dirty || jobContact.touched)">
+                    <span *ngIf="jobContact.errors.required" padding>
+                      *Enter phone number
+                    </span>
+                    <span *ngIf="jobContact.errors.minlength" padding>
+                      *Phone no must be with country code and atleast 5 digits number
+                    </span>
+                  </span>
+
+                  
+
+
+                  <!-- <h6 class="heading-title">Industry</h6>
+                    <select class="selectField">
+                        <option value="volvo">Consulting agency</option>
+                        <option value="saab">Saab</option>
+                        <option value="mercedes">Mercedes</option>
+                        <option value="audi">Audi</option>
+                    </select> hi-->
+                  <h6 class="heading-title">Company*</h6>
+                  <input class="holder" type="text" placeholder="Enter company name" formControlName="jobCompany"
+                    (keypress)="toCheckSpace($event)">
+                  <span class="error" *ngIf="jobCompany.invalid && (jobCompany.dirty || jobCompany.touched)">
+                    <span *ngIf="jobCompany.errors.required" padding>
+                      *Please enter company name.
+                    </span>
+                    <!-- <span *ngIf="jobCompany.errors.pattern" padding>
+                            *Please enter valid company name
+                        </span> -->
+                  </span>
+
+
+                  <h6 class="heading-title">Role Experience(in years)*</h6>
+                  <input class="holder" type="text" placeholder="Enter experience" formControlName="jobExperience"
+                    (keypress)="toCheckSpaceChar($event)">
+                  <span class="error" *ngIf="jobExperience.invalid && (jobExperience.dirty || jobExperience.touched)">
+                    <span *ngIf="jobExperience.errors.required" padding>
+                      *Enter job experience.
+                    </span>
+
+                  </span>
+
+
+                  <h6 class="heading-title">Langauges Known*</h6>
+                  <input class="holder" type="text" placeholder="Enter languages" formControlName="languageKnown">
+                  <span class="error" *ngIf="languageKnown.invalid && (languageKnown.dirty || languageKnown.touched)">
+                    <span *ngIf="languageKnown.errors.required" padding>
+                      *Please enter languages.
+                    </span>
+                    <span *ngIf="languageKnown.errors.pattern" padding>
+                      *Please enter valid languages.
+                    </span>
+                  </span>
+
+                  <h6 class="heading-title">Gender*</h6>
+                  <select class="selectField" formControlName="gender">
+                    <option value="">Select Gender</option>
+                    <option value="MALE">Male</option>
+                    <option value="FEMALE">Female</option>
+                    <option value="OTHERS">Others</option>
+                  </select>
+
+                  <h6 class="heading-title">Address Proof*</h6>
+                  <input class="holder file" type="file" placeholder="Upload address proof"
+                    (change)="handleFileInputDocumentAddressProof($event)">
+                  <div *ngIf="profileImageDocumentAddressProof ">
+                    <img style="height: 200px;width: 100%;" src={{profileImageDocumentAddressProof}}>
+                  </div>
+
+                  <!-- <select class="selectField" formControlName="addressProof">
+                        <option value="Voter Card">Voter Card</option>
+                        <option value="Aadhar Card">Aadhar Card</option>
+                        <option value="Driving Licence">Driving Licence</option>
+                        <option value="Passport">Passport</option>
+                    </select> -->
+                  <h6 class="heading-title">Photo Id Proof*</h6>
+                  <input class="holder file" type="file" placeholder="Upload photo Id proof"
+                    (change)="handleFileInputDocumentPhotoProof($event)">
+                  <div *ngIf="profileImageDocumentPhotoProof">
+                    <img style="height: 200px;width: 100%;" src={{profileImageDocumentPhotoProof}}>
+                  </div>
+
+                  <!-- <select class="selectField" formControlName="photoIdProof">
+                        <option value="Voter Card">Voter Card</option>
+                        <option value="Aadhar Card">Aadhar Card</option>
+                        <option value="Pan Card">Pan Card</option>
+                        <option value="Driving Licence">Driving Licence</option>
+                        <option value="Passport">Passport</option>
+                    </select> -->
+                  <div class="applyBtn">
+
+                    <button type="button" class="btn-global pointer" (click)="checkCompanyImage()" [disabled]="bankList.length == 0" *ngIf="bankList.length != 0">Post Your Job</button>
+                    <button type="button" class="btn-global pointer" (click)="addBank()" *ngIf="bankList.length == 0">Add Bank</button>
+                    <!-- [disabled]="!addJobForm.valid" -->
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </form>
+
+          <!-----Add Job ends-->
+
+
+          <!--Apply Job Starts-->
+          <form [formGroup]="applyJobForm" novalidate autocomplete="off">
+            <div class="card post-field main-post" *ngIf="selected == 'applyJob'">
+              <div class="field-wrap">
+                <div class="profile-added">
+                  <img style="margin-bottom: 20px; max-height: 500px;" src={{job_pic}}>
+                </div>
+                <div class="field-area">
+                  <div class="d-flex align-items-center managedsn">
+                    <p style="color: black;font-size: 15px;font-weight: 500;"> Company Name : </p>
+                    <p>{{job_company}}</p>
+                  </div>
+                  <div class="d-flex align-items-center managedsn">
+                    <p style="color: black;font-size: 15px;font-weight: 500;"> Job Details : </p>
+                    <p>{{job_details}}</p>
+                  </div>
+                  <!-- <p>Total   number of people   applied :-  20</p> -->
+
+                  <h6 class="heading-title">Full Name*</h6>
+                  <input class="holder" type="text" placeholder="Enter your full name" maxlength="256"
+                    formControlName="applyJobName">
+                  <span class="error" *ngIf="applyJobName.invalid && (applyJobName.dirty || applyJobName.touched)">
+                    <span *ngIf="applyJobName.errors.required" padding>
+                      *Please enter your full name
+                    </span>
+                    <span *ngIf="applyJobName.errors.pattern" padding>
+                      *Please enter valid full name
+                    </span>
+                  </span>
+
+                  <h6 class="heading-title">Mobile*</h6>
+                  <input class="holder" type="text" placeholder="Enter mobile number" maxlength="16"
+                    formControlName="applyJobContact">
+                  <span class="error"
+                    *ngIf="applyJobContact.invalid && (applyJobContact.dirty || applyJobContact.touched)">
+                    <span *ngIf="applyJobContact.errors.required" padding>
+                      *Please enter your mobile no.
+                    </span>
+                    <span *ngIf="applyJobContact.errors.minlength" padding>
+                      *Mobile no must be of atleast 5 digits
+                    </span>
+                  </span>
+
+                  <h6 class="heading-title">Email ID*</h6>
+                  <input class="holder" type="text" placeholder="Enter your email" formControlName="applyJobEmail"
+                    (keypress)="toCheckSpace($event)" maxlength="64">
+                  <span class="error" *ngIf="applyJobEmail.invalid && (applyJobEmail.dirty || applyJobEmail.touched)">
+                    <span *ngIf="applyJobEmail.errors.required" padding>
+                      *Please enter email
+                    </span>
+                    <span *ngIf="applyJobEmail.errors.pattern" padding>
+                      *Please enter valid email
+                    </span>
+                  </span>
+
+                  <h6 class="heading-title">Gender*</h6>
+                  <div class="radio-field">
+                    <label class="radio-inline">
+                      <input type="radio" style="margin-right: 5px" value="MALE" formControlName="applyJobGender">Male
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" style="margin-right: 5px" value="FEMALE"
+                        formControlName="applyJobGender">Female
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" style="margin-right: 5px" value="OTHER" formControlName="applyJobGender">Other
+                    </label>
+                  </div>
+
+
+                  <h6 class="heading-title">Country*</h6>
+                  <!-- <select class="selectField" (change)="getSelectedState($event)" formControlName="applyJobCountry">
+                        <option value="">Select country</option>
+                        <option [value]="item.name" *ngFor="let item of countryCodeArr">{{item.name}}</option>   
+                    </select> -->
+                  <ngx-select-dropdown (change)="selectionChanged($event)" formControlName="applyJobCountry"
+                    [config]="config" [options]="countryCodeArr"></ngx-select-dropdown>
+
+                  <h6 class="heading-title" *ngIf="stateArr.length">State*</h6>
+                  <!-- <select class="selectField" (change)="getSelectedCity($event)" formControlName="applyJobState">
+                        <option value="">Select state</option>
+                        <option [value]="item.name" *ngFor="let item of stateArr">{{item.name}}</option>
+                    </select> -->
+                  <ngx-select-dropdown (change)="selectionChanged($event)" formControlName="applyJobState"
+                    [config]="config" [options]="stateArr" *ngIf="stateArr.length"></ngx-select-dropdown>
+
+                  <h6 class="heading-title" *ngIf="cityArr.length">City*</h6>
+                  <!-- <select class="selectField" formControlName="applyJobCity">
+                        <option value="">Select city</option>
+                        <option [value]="item.name" *ngFor="let item of cityArr">{{item.name}}</option>
+                    </select> -->
+                  <ngx-select-dropdown formControlName="applyJobCity" [config]="config" [options]="cityArr"
+                    *ngIf="cityArr.length"></ngx-select-dropdown>
+
+                  <h6 class="heading-title">Zip Code*</h6>
+                  <input type="text" class="selectdetail" rows="4" cols="50" placeholder="Enter zip code"
+                    formControlName="applyJobZipCode" (keypress)="toCheckSpace($event)" minlength="5" maxlength="10">
+                  <span class="error"
+                    *ngIf="applyJobZipCode.invalid && (applyJobZipCode.dirty || applyJobZipCode.touched)">
+                    <span *ngIf="applyJobZipCode.errors.required" padding>
+                      *Please enter zipcode
+                    </span>
+                    <span *ngIf="applyJobZipCode.errors.pattern" padding>
+                      *Please enter valid zipcode
+                    </span>
+                    <span *ngIf="applyJobZipCode.errors.minlength" padding>
+                      *Zip code must be atleast 5 digits
+                    </span>
+                  </span>
+
+                  <h6 class="heading-title">Upload Your Resume</h6>
+                  <input class="holder file" type="file" placeholder="Upload your resume"
+                    (change)="handleFileInputDocumentResume($event)">
+                  <!-- <img src={{profileImageDocumentResume}} > -->
+
+                </div>
+                <div class="job-post" style="margin-top: 11px;">
+
+                  <button type="button" class="btn-global pointer" class="apply" [disabled]="!applyJobForm.valid"
+                    (click)="applyJob()">Apply</button>
+                </div>
+              </div>
+            </div>
+          </form>
+
+
+
+          <!-- <form class="col-md-9" [formGroup]="applyJobForm" novalidate autocomplete="off">
+              <div class="card post-box main-post" *ngIf="selected == 'applyJob'">
+                <div class="post-warp">
+                  <div class="post-content-setting">
+                      Account Profile
+                  </div>
+                </div>
+                <div class="profileNew">
+                <div>
+                  <div class="userProfile">
+                    <img src="assets/images/userImg.png">
+                  </div>
+                </div>
+              
+              <div class="mainClass">  
+                <div class="user">  
+                  <div class="email">
+                    <input placeholder="First Name*" maxlength="16" formControlName="first_name" (keypress)="toCheckSpace($event)">
+                 </div>
+                 <div class="userIcon">
+                   <img src="assets/images/fitst.png">
+                 </div>
+                 <span class="error" *ngIf="first_name.invalid && (first_name.dirty || first_name.touched)">
+                  <span *ngIf="first_name.errors.required" padding>
+                      *Please enter first name
+                  </span>
+                <span *ngIf="first_name.errors.pattern" padding>
+                      *Please enter valid first name
+                  </span>
+                </span>
+                </div>
+              
+                <div class="user" style="margin-top: 15px;">  
+                    <div class="email">
+                      <input placeholder="Last Name" maxlength="32" formControlName="last_name">
+                   </div>
+                   <div class="userIcon">
+                     <img src="assets/images/fitst.png">
+                   </div>
+                   <span class="error" *ngIf="last_name.invalid && (last_name.dirty || last_name.touched)">
+                    <span *ngIf="last_name.errors.required" padding>
+                        *Please enter last name
+                    </span>
+                    <span *ngIf="last_name.errors.pattern" padding>
+                        *Please enter valid last name
+                    </span>
+                   </span>
+                  </div>
+              
+                  <div class="user" style="margin-top: 15px;">  
+                      <div class="email">
+                        <input  placeholder="Email*" formControlName="email" maxlength="64" (keypress)="toCheckSpace($event)">
+                     </div>
+                     <div class="userIcon">
+                       <img src="assets/images/email.png">
+                     </div>
+                     <span class="error" *ngIf="email.invalid && (email.dirty || email.touched)">
+                      <span *ngIf="email.errors.required" padding>
+                          *Please enter email address
+                      </span>
+                  <span *ngIf="email.errors.pattern" padding>
+                          *Please enter valid email address.
+                      </span>
+                  <span *ngIf="email.errors.maxlength && !email.errors.pattern" padding>
+                          *Maximum length allowed is 64 characters.
+                      </span>
+                  </span>
+                    </div>
+              
+                    
+                </div>
+              </div>
+            </div>
+            </form> -->
+          <!---Apply Job Ends-->
+
+
+          <!----View Applied Job History Starts-->
+          <div class="card post-box main-post" *ngIf="selected == 'appliedJobHistory'">
+            <div class="post-warp" *ngFor="let data of appliedJobList">
+              <div class="mainField">
+                <div class="user">
+                  <img src="{{data.jobId.jobPic}}">
+                </div>
+                <div class="userName">
+
+                  <div class="d-flex align-items-center managedsn">
+                    <p style="color: black;font-weight: 500;"> Job Title : </p>
+                    <p>{{data.jobId.title}}</p>
+                  </div>
+                  <div class="d-flex align-items-center managedsn">
+                    <p style="color: black;font-weight: 500;"> Company Name : </p>
+                    <p>{{data.jobId.company}}</p>
+                  </div>
+                  <div class="d-flex align-items-center managedsn">
+                    <p style="color: black;font-weight: 500;"> Gender : </p>
+                    <p>{{data.gender}}</p>
+                  </div>
+                  <div class="d-flex align-items-center managedsn">
+                    <p style="color: black;font-weight: 500;"> City : </p>
+                    <p>{{data.city}}</p>
+                  </div>
+                  <div class="d-flex align-items-center managedsn">
+                    <p style="color: black;font-weight: 500;"> Contact Number : </p>
+                    <p>{{data.phoneNumber}}</p>
+                  </div>
+
+                  <!-- <p style="font-weight: 500; color:black;">Job Title: {{data.jobId.title}}
+                              <p> -->
+                  <!-- <p style="font-weight: 500; color:black;">Company Name: {{data.jobId.company}}
+                                      <p>
+                                          <p style="color: black;font-weight: 500;">Gender: {{data.gender}}
+                                              <p>
+                                                  <p style="font-weight: 500; color:black;">City: {{data.city}}
+                                                      <p>
+                                                          <p style="font-weight: 500; color:black;">Contact Number:{{data.phoneNumber}}
+                                                              <p> -->
+                  <!-- <p>Status:- Applied</p> -->
+                </div>
+                <!-- <div class="elips">
+                          <i class="fa fa-ellipsis-v doted "></i>
+                          </div> -->
+              </div>
+            </div>
+          </div>
+          <!----View Applied Job History Ends-->
+
+
+
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
+
+<!-- Modal Starts-->
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add New Job</h4>
+        <button type="button" class="close" data-dismiss="modal" (click)="addNewJobFormReset()">&times;</button>
+
+      </div>
+      <div class="modal-body newGrpmod">
+        <img src="assets/images/backmod.png">
+        <div>
+        </div>
+      </div>
+
+      <!-- <form [formGroup]="addNewJobForm" novalidate autocomplete="off">
+      <div class="name" style="position: relative;">
+          <input class="newInput" type="text" placeholder="Job Title" formControlName="jobName" minlength="5">
+          <span class="error" *ngIf="jobName.invalid && (jobName.dirty || jobName.touched)">
+            <span *ngIf="jobName.errors.required" padding>
+                *Please enter job name
+            </span>
+        <span *ngIf="jobName.errors.pattern" padding>
+                *Job name must be characters only
+            </span>
+        </span>
+
+         
+            <div style="margin-top: 14px; height: 40px;" class="newInput">
+              <select class="form-control" (change)="checkCat($event.target.value)">
+              <option value="">Select category</option>
+              <option *ngFor="let item of newArry" >{{item.categoryName}}</option>
+              </select>
+              </div>
+
+              <div style="margin-top: 30px;" class="newInput">
+              <ng-multiselect-dropdown formControlName= "dropdown_friendlist" [placeholder]="'Add Friends'" [data]="dropdownList" [(ngModel)]="selectedItems" [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)" (onDeSelect)="onItemDeSelect($event)">
+            </ng-multiselect-dropdown>
+             </div>
+
+          <input style="margin-top: 14px;" class="newInput" type="text" placeholder="Welcome Post" formControlName="welcomePost">
+          <span class="error" *ngIf="welcomePost.invalid && (welcomePost.dirty || welcomePost.touched)">
+          <span *ngIf="welcomePost.errors.required" padding>
+            *Please enter welcome post
+         </span>
+          </span>
+
+
+          <input style="margin-top: 14px;" class="newInput" type="text" placeholder="Description" formControlName="description">
+          <span class="error" *ngIf="description.invalid && (description.dirty || description.touched)">
+            <span *ngIf="description.errors.required" padding>
+                *Please enter classroom description
+            </span>
+       
+            </span>
+
+          
+
+        </div>
+        </form> -->
+
+
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="createClassroom()">Create</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"
+          (click)="createClassroomFormReset()">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!----Modal Ends-->
+
+
+
+
+<!-- Close Page Content -->
+
+<!-- Modal -->
+<!-- <div class="modal fade" id="payModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <div class="modal-content">
+        <form #checkout="ngForm" (ngSubmit)="onSubmit(checkout)" class="checkout">
+          <div class="form-row">
+            <label for="card-info" style="margin-left:10px;margin-right:5px">Expiry Date</label>
+            <div id="card-info">
+              <input type="date"/>
+            </div>
+            <label for="card-info" style="margin-left:10px;margin-right:5px">CVV</label>
+            <div id="card-info">
+              <input type="text"/>
+            </div>
+          </div>
+        
+          <button type="submit" data-toggle="modal" data-target="#myModal">Pay $777</button>
+        </form> 
+      </div>
+      
+    </div>
+    </div> -->
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="payModal" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <!-- <div class="modal-header" style="padding:35px 50px;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4><span class="glyphicon glyphicon-lock"></span> Login</h4>
+      </div> -->
+      <div class="modal-body" style="padding:40px 50px; margin-top: 55px;">
+        <form role="form" [formGroup]="payForm" novalidate autocomplete="off">
+          <div class="form-group">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <label for="usrname"><span class="glyphicon glyphicon-user"></span>Card Number</label>
+            <input type="text" class="form-control" formControlName="bank" placeholder="Enter valid card number"
+              (change)="getCardData($event.target.value)" (keypress)="toCheckSpaceChar($event)" maxlength="16">
+            <!-- <select class="form-control" formControlName="bank" (change)="getCardData($event.target.value)" > 
+                <option value="">SELECT-</option>
+                  <option [value]="data.bankName" *ngFor="let data of bankList; let i = index">{{data.bankName}}</option>
+                 
+                </select> -->
+
+            <!-- <span class="error" *ngIf="bank.invalid && (bank.dirty || bank.touched)">
+                    <span *ngIf="bank.errors.required" padding>
+                       *Please enter card number
+                    </span>
+                 </span> -->
+            <span *ngIf="payForm.get('bank').errors && payForm.get('bank').dirty || payForm.get('bank').touched">
+              <span *ngIf="payForm.controls['bank'].hasError('required')">
+                <span style="color: red">* Field is required</span>
+              </span>
+            </span>
+          </div>
+
+
+          <div class="form-group">
+            <label for="usrname"><span class="glyphicon glyphicon-user"></span> Expiry Month</label>
+
+            <div class="email" style="display:flex; align-items: center; position:relative;">
+
+              <input type="text" class="form-control calendarNew" style="float:none"
+                (keypress)="toCheckSpaceChar($event)" placeholder="MM" formControlName="expiry_month" maxlength="2">
+            </div>
+            <!-- <span class="error" *ngIf="expiry_month.invalid && (expiry_month.dirty || expiry_month.touched)">
+            <span *ngIf="expiry_month.errors.required" padding>
+               *Please enter expiry month
+            </span>
+         </span> -->
+            <span
+              *ngIf="payForm.get('expiry_month').errors && payForm.get('expiry_month').dirty || payForm.get('expiry_month').touched">
+              <span *ngIf="payForm.controls['expiry_month'].hasError('required')">
+                <span style="color: red">* Field is required</span>
+              </span>
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="usrname"><span class="glyphicon glyphicon-user"></span> Expiry Year</label>
+
+            <div class="email" style="display:flex; align-items: center; position:relative;">
+
+              <input type="text" class="form-control calendarNew" style="float:none"
+                (keypress)="toCheckSpaceChar($event)" placeholder="YYYY" formControlName="expiry_year" maxlength="4">
+            </div>
+            <!-- <span class="error" *ngIf="expiry_year.invalid && (expiry_year.dirty || expiry_year.touched)">
+            <span *ngIf="expiry_year.errors.required" padding>
+               *Please enter expiry year
+            </span>
+         </span> -->
+            <span
+              *ngIf="payForm.get('expiry_year').errors && payForm.get('expiry_year').dirty || payForm.get('expiry_year').touched">
+              <span *ngIf="payForm.controls['expiry_year'].hasError('required')">
+                <span style="color: red">* Field is required</span>
+              </span>
+            </span>
+          </div>
+
+
+
+          <div class="form-group">
+            <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> CVV</label>
+            <input type="password" class="form-control" id="psw" placeholder="Enter CVV"
+              (keypress)="toCheckSpaceChar($event)" formControlName="cvv" maxlength="3">
+            <!-- <span class="error" *ngIf="cvv.invalid && (cvv.dirty || cvv.touched)">
+                <span *ngIf="cvv.errors.required" padding>
+                   *Please enter cvv
+                </span>
+             </span> -->
+            <span *ngIf="payForm.get('cvv').errors && payForm.get('cvv').dirty || payForm.get('cvv').touched">
+              <span *ngIf="payForm.controls['cvv'].hasError('required')">
+                <span style="color: red">* Field is required</span>
+              </span>
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Price($)/Day</label>
+
+          </div>
+
+          <div class="form-group">
+            <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Days</label>
+            <input type="number" class="form-control" formControlName="days"
+              placeholder="Enter days for which it will be visible" (keyup)="calculate($event)" maxlength="3">
+            <!-- <span class="error" *ngIf="days.invalid && (days.dirty || days.touched)">
+                <span *ngIf="days.errors.required" padding>
+                   *Please enter days
+                </span>    
+             </span> -->
+            <span *ngIf="payForm.get('days').errors && payForm.get('days').dirty || payForm.get('days').touched">
+              <span *ngIf="payForm.controls['days'].hasError('required')">
+                <span style="color: red">* Field is required</span>
+              </span>
+            </span>
+          </div>
+
+
+          <div class="form-group">
+            <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Total($)</label>
+            <input type="number" class="form-control" [value]="totalAmount" disabled>
+          </div>
+
+
+
+
+
+          <button type="submit" class="btn btn-success btn-block" [disabled]="!payForm.valid" (click)="payment()"><span
+              class="glyphicon glyphicon-off"></span>Proceed</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+
+      <div class="modal-body detail-about">
+
+        To post the job, you have to pay $10 per day
+      </div>
+      <div class="modal-footer aarangebtn">
+        <button type="button" class="btn btn-secondary cncl-btn" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary cncl-btn" data-dismiss="modal" (click)="openpayModal()">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>

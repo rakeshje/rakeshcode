@@ -1,0 +1,137 @@
+.img{
+    width: 100% !important;
+    height: auto;
+}
+.img1{
+    width: 200px !important;
+    height: 170px !important;
+    border-radius: 30%;
+}
+
+.profile-added{
+    position: relative;
+    bottom: 110px !important
+}
+.profile-added1{
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+   
+}
+
+.padding{
+    padding: 33px !important;
+}
+.margin{
+    margin: 16px !important;  
+}
+
+.backgroungFile{
+    display: flex;
+    background: #bfbdbd;
+    position: relative;
+    bottom: 207px;
+    right: 18px;
+    width: 10%;
+}
+.getSuggestionListPaginate{
+    position: absolute;
+    top: 50.2%;
+    right: 0
+}
+@media(max-width:1440px){
+    .getSuggestionListPaginate{
+        top: 52.2%;
+    }
+}
+
+.friendName{
+    position: absolute;top: 47%;width: 14%
+}
+
+@media(max-width:1440px){
+    .friendName{
+        top: 49.5%;
+    }
+}
+
+.post{
+    position: absolute;top: 48%;width: 14%
+}
+@media(max-width:1440px){
+    .post{
+        top: 50.1%;
+    }
+}
+
+i{
+    font-size: 30px !important;
+    color: black;
+}
+.edit-text{
+    font-size: 20px !important;
+    color: black;
+    position: absolute;
+    left: 46%;
+}
+.file{
+    position: absolute;
+    width: 110px !important;
+    opacity: 0;
+    top: 0px !important;
+    margin-left: -92px !important;
+}
+
+.file1{
+    position: relative;
+    width: 110px !important;
+    opacity: 0;
+    left: -32% !important;
+}
+
+.circle{
+    border-radius: 100px !important;
+    width: 100px !important;
+    height: 100px !important;
+    border: 1px solid;
+    background: black;
+    margin: 15px 35px;
+}
+.circle1{
+    border-radius: 100px !important;
+    width: 80px !important;
+    height: 80px !important;
+    border: 1px solid;
+    margin: 9% !important;
+    background: white;
+}
+
+.forLabel1{
+    position: absolute;
+    top: 37% !important;
+    left: 6% !important;
+}
+.forLabel2{
+    position: absolute;
+    top: 37%!important;
+    left: 24% !important;}
+.forLabel3{
+    position: absolute;
+    top: 37% !important;
+    left: 42% !important;
+}
+.forLabel4{
+    position: absolute;
+    top: 37% !important;
+    left: 63.5% !important;
+}
+.break{
+    word-break: break-word;
+}
+.ml25{
+    margin-left: 25%;
+}
+
+.leftImg{
+    width:28px;
+}

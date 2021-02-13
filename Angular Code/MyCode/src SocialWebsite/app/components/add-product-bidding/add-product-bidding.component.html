@@ -1,0 +1,112 @@
+<!-- Start Right Bar -->
+<app-rightsidemenu></app-rightsidemenu>
+<!-- Close Right Bar -->
+
+<!-- Start Page Content -->
+<div class="page-wrap">
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="left-menu card">
+          <app-sidemenu></app-sidemenu>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="page-content">
+          <div class="card post-field main-post">
+            <div class="field-wrap">
+              <form [formGroup]="newProductForm">
+                <div class="profile-added">
+                  <div class="profile-detail">
+                    <span *ngFor="let file of files" class="multiple-image">
+                      <img [src]="file" class="newImage image1" alt=""><em class="fa fa-times-circle cross image2" (click)="removeImage(file)"></em>
+                    </span>
+                    <img [src]="fileData" class="newImage" *ngIf="!files.length" alt="">
+                    <div class="add-user">
+                      <input class="uploadImage" type="file" accept="image/png, image/jpeg, image/jpg"
+                        (change)="upload($event)" multiple>
+                      <img src="assets/images/plus.png" *ngIf="files.length < 5" alt="">
+                    </div>
+                  </div>
+                </div>
+                <div class="field-area">
+                  <h6 class="heading-title">Product name:</h6>
+                  <input class="holder" type="text" formControlName="name" placeholder="">
+                  <h6 class="heading-title">Product description:</h6>
+                  <textarea class="selectdetail" formControlName="description" rows="4" cols="50"></textarea>
+                  
+                  <h6 class="heading-title">Product initial cost in $:</h6>
+                  <input class="holder" type="text" formControlName="cost" placeholder="">
+                  <div *ngIf="(cost.dirty || cost.touched) && cost.invalid">
+                    <span [ngClass]='{"errorClass": cost.errors.pattern}' *ngIf="cost.errors.pattern">Please enter valid
+                      product cost</span>
+                    <span [ngClass]='{"errorClass": cost.errors.required}' *ngIf="cost.errors.required">Product cost is
+                      required</span>
+                  </div>
+                    
+                  </div> -->
+                  <h6 class="heading-title">Country:</h6>
+                  <select class="selectField" formControlName="country" (change)="selectState($event)">
+                    <option value="" disabled>Select</option>
+                    <option value="country" *ngFor="let data of countryList" [value]="data._id">{{data.country}}
+                    </option>
+                  </select>
+                  <h6 class="heading-title">State:</h6>
+                  <select class="selectField" formControlName="state">
+                    <option value="" disabled>Select</option>
+                    <option *ngFor="let data of stateList" [value]="data">{{data}}</option>
+                  </select>
+                  
+                  <h6 class="heading-title">Location</h6>
+                  <input class="holder" type="text" placeholder="" formControlName="location"
+                    ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places"
+                    (onAddressChange)="handleAddressChange($event)">
+
+                    <div class="job-post" style="margin-top: 20px;justify-content: center;">                
+                      <div class="time-date">
+                        <div class="date-input" style="float: left;">
+                          <label  style="float: left;">Start Time:</label>
+                          <input class="holder" style="width: 100%;" [min]="currentDate" [owlDateTimeTrigger]="sdt" [owlDateTime]="sdt" formControlName="startTime">
+                          <owl-date-time #sdt hour12Timer="true"></owl-date-time>
+                        </div>
+                        <div class="date-input" style="float: right;">
+                            <label  style="float: left;">End Date Time:</label>
+                            <input class="holder" style="width: 100%;" [min]="currentDate" [owlDateTimeTrigger]="edt" [owlDateTime]="edt" formControlName="endTime">
+                            <owl-date-time #edt hour12Timer="true"></owl-date-time>
+                        </div>
+                    </div>
+                    </div>
+                    <label *ngIf="newProductForm.errors" class="errorClass">{{ newProductForm.errors?.dates | json }}</label>
+                </div>
+
+                <div class="job-post" style="margin-top: 20px;justify-content: center;">
+                  <button type="submit" routerLink="/marketing-dashboard"  style="margin: 2px;" >Cancel</button>
+                  <button type="submit" [disabled]="newProductForm.invalid" style="margin: 2px;" (click)="postProduct()">Post</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end -->
+
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="postNewProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h4>For posting the product you need to add card</h4>
+      </div>
+      <div class="modal-footer">
+        <div class="retur-product" >
+          <button type="button" class="btn btn-danger btn-return"  data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success paynow btn-return"  (click)="submitCard()">OK </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

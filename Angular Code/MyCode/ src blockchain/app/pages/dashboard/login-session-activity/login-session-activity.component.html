@@ -1,0 +1,64 @@
+
+ <main class="middle-content">
+  <div class="content-section">
+      <div class="page_title_block pL0 pR0">
+          <h1 class="page_title" style="color:#26272d">USER DETAIL LOGIN HISTORY </h1>
+      </div>
+      <div class="custom_tabs common-tabs">
+          <div class="row mb20 justify-content-center">
+              <div class="col-sm-12">
+                  <ul class="nav nav-tabs d-flex  justify-content-center text-center">
+                      <li class="nav-item flex-fill"> <a class="nav-link active show"
+                              [ngClass]="{'active': currTab=='GI'}" (click)="selectTab('GI')"
+                              href="javascript:;">General Information</a>
+                      </li>
+                      <li class="nav-item flex-fill"> <a class="nav-link active show"
+                              [ngClass]="{'active': currTab=='WalletTrading'}" (click)="selectTab('WalletTrading')"
+                              href="javascript:;">Wallet Trading</a>
+                      </li>
+                      <li class="nav-item flex-fill"> <a class="nav-link active show"
+                        [ngClass]="{'active': currTab=='Trading'}" (click)="selectTab('Trading')"
+                        href="javascript:;">Trading</a>
+                </li>
+                <li class="nav-item flex-fill"> <a class="nav-link active show"
+                  [ngClass]="{'active': currTab=='Login'}" (click)="selectTab('Login')"
+                  href="javascript:;">Login Session Activity</a>
+          </li>
+                  </ul>
+              </div>
+          </div>
+        </div>
+
+        <div class="padd_6">
+          <div class="form-group row">
+            <label class="col-md-5 text" for="">Last login</label>
+            <span class="col-md-1">:</span>
+            <p class="col-md-6">02/07/2020 , 18:02 </p>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-5 text" for="">Location</label>
+          <span class="col-md-1">:</span>
+          <p class="col-md-6">New Jersy</p>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-5 text" for="">Browser Agent</label>
+        <span class="col-md-1">:</span>
+        <p class="col-md-6">Staff</p>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-5 text" for="">IP Address</label>
+      <span class="col-md-1">:</span>
+      <p class="col-md-6">172.165.10</p>
+  </div>
+    <div class="form-group row">
+      <label class="col-md-5 text" for="">Last Transaction</label>
+      <span class="col-md-1">:</span>
+      <p class="col-md-6">02/07/2020</p>
+  </div>
+
+    </div>
+
+
+
+      </div>
+    </main>

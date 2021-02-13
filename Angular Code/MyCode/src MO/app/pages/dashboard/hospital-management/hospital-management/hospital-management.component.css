@@ -1,0 +1,28 @@
+.table-no-record {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.btn_search_group {
+  border: 1px solid #ccc;
+  background: #fff;
+  border-left: none;
+  padding-left: 0px;
+  /* padding: .400rem 0.9rem; */
+}
+
+.date-input-box {
+  display: inline-flex;
+  width: 100%;
+}
+.date-input-box .date-input {
+  width: 49%;
+  box-shadow: 1px solid #ced4da;
+  border: 1px solid #ced4da;
+}
+
+.tabel-body-checkbox{
+  float: left;
+  margin: 3px 0px 0px 11px;
+}

@@ -1,0 +1,17 @@
+<div class="wrapper">
+    <main class="middle-content">
+        <div class="page_title_block">
+            <h1 class="page_title"> Notification Management>Notification View
+            </h1>
+            <hr style="background: black; opacity: 0.5;">
+        </div>
+        <div class="order-view main-block-innner mb20 mt40 view-label-align" style="width: 70%">
+            <div class="col" style="margin-left: 20%;">
+                <div class="row"><label>Title :</label> <p >{{notificationData.title}}</p></div><br>
+                <div class="row"> <label>Broadcasted On :</label><p>{{notificationData.createdAt | date}}</p></div><br>
+                <div class="row"> <label>Description :</label><p style="width: 30%">{{notificationData.description}}</p></div><br>
+                <div class="row"> <label>Shared With :</label> <p>{{notificationData.sharedWith}} </p></div><br>
+            </div>
+            
+            <button type="button" class="btn btn-theme" style="margin-left: 37%;margin-top: 5%; width: 12%;" routerLink="/notification-management">Back</button>
+        </div>

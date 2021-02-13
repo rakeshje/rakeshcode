@@ -1,0 +1,93 @@
+<main class="middle-content">
+    <div class="page_title_block">
+        <h1 class="page_title" style="color:#26272d">ALL USER TRADES</h1>
+    </div>
+    <div class="content-section">
+        <div class="outer-box">
+            <div class="global-table no-radius p0">
+                <div class="tab-content1">
+                    <div class="tab-pane1">
+                        
+                        <div class="table-responsive">
+                            <table class="table table-bordered" aria-describedby="user list">
+                                <thead>
+                                    <tr class="no_wrap_th">
+                                                      <th scope="col">S.No</th>
+                                                      <th scope="col">Transaction ID                                      </th>
+                                                      <th scope="col">Transaction Type</th>
+                                                      <th scope="col">Amount</th>
+                                                      <th scope="col">Base Coin</th>
+                                                      <th  scope="col">Executable Coin</th>
+                                                      <th  scope="col">Date and Time</th>
+                                                      <th scope="col" class="action_td_btn3">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of traderData | paginate:{itemsPerPage:20, currentPage:pageNumber, totalItems:length}; let i=index">
+                                                      <td>{{20*(this.pageNumber-1)+i+1}}</td>
+                                                      <td>{{data?.basicTradeHistoryId}}</td>
+                                                      <td>{{data?.orderType}}</td>
+                                                      <td>{{data?.baseCoinAmmount}}</td>
+                                                      <td>{{data?.baseCoinName}}</td>
+                                                      <td>{{data?.execCoinName}}</td>
+                                                      <td>{{data?.creationTime | date}}</td>
+                                                      <td>{{data?.status }}
+                                                      </td>
+                                    </tr>
+                                    <tr *ngIf="traderData?.length==0">
+                                        <td colspan="10" vertical-align="middle">
+                                            <div class="no-record">
+                                                <div class="no-recordin">
+                                                    <H5 style="margin-left: 44%;">No record found</H5>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="custom-pagination mt20 " style="display: flex; justify-content:flex-end"  >
+                            <pagination-controls (pageChange)="pageNumber=$event"></pagination-controls>
+                        </div>                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="container-fluid">
+        <p class="copyright">Alende  <strong class="theme-text-color"></strong> 
+            </p>
+    </div>
+</footer>
+
+<!-- active Start -->
+<div class="modal fade global-modal reset-modal" id="active">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div>
+                    <div class="modal-body">
+                        <h3 style="text-align: center; ">Active User </h3>
+                        <hr>
+                        <button type="button" class="close" data-dismiss="modal"
+                            style="margin-top: -85px;">&times;</button>
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p style="font-size: 25px;">Are you sure you want to active this user?</p>
+                                <div>
+                                    <button type="submit" class="btn btn-success mr-2">Yes</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+

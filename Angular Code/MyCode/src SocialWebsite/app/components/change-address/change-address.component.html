@@ -1,0 +1,54 @@
+<!-- Start Right Bar -->
+<app-rightsidemenu></app-rightsidemenu>
+<!-- Close Right Bar -->
+<!-- Satrt Page Content -->
+<div class="page-wrap">
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="left-menu card">
+                    <app-sidemenu></app-sidemenu>
+                </div>
+            </div>
+            <div class="col-md-9 post-boxorder">
+                <div class=" orderreview-page-content">
+                    <div class="head-pra">
+                        <h6> <b>Choose Address
+                            </b>
+                        </h6>
+                    </div>
+                    
+                    <div *ngIf="address.length">
+                        <div class="choose-address-box mt-3" *ngFor="let data of address">
+                            <div class="head-pra">
+                                <h5>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" (change)="setDefault(data)" value="option2" [checked]="data.addressType">
+                                        <label class="form-check-label" for="exampleRadios3">
+                                            <b>{{data.name}}</b>
+                                        </label>
+                                    </div>
+                                </h5>
+                                <p> {{data.addressDetail}}</p>
+                                <p> {{data.city}}-{{data.pinCode}}</p>
+                                <p> Mobile:-{{data.contactNumber}}</p>
+                            </div>
+
+                            <div class="edit">
+                                <em class="fas fa-pencil-alt" (click)="editAddress(data)"></em>
+                            </div>
+                        </div>
+                        <button class="placeOrder" (click)="changeAddress()">Confirm</button>
+                    </div>
+
+                    <div class="choose-address-box mt-3" *ngIf="!address.length">
+                        No address added
+                    </div>
+                    
+
+                </div>
+            </div>
+            <!-- end -->
+        </div>
+    </div>
+</div>

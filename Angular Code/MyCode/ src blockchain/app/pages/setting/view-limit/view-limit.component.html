@@ -1,0 +1,30 @@
+<main class="middle-content">
+    <div class="page_title_block">
+        <h1 class="page_title" style="color:#26272d">VIEW LIMIT</h1>
+    </div>
+    <div class="content-section">
+        <div class="outer-box">
+            <form [formGroup]="viewWithdrawForm">
+            <div class="global-table no-radius p0">
+                <div class="border  border-dark " style="width: 60%;height: 200px;margin-top: 10%;margin-left: 20%;">
+                    <div style="display: flex;margin-top: 10%;margin-left: 10%;" >
+                        <h5>Withdrawl Limit:</h5>
+                        <input type="text" formControlName="withdraw" style="margin-left: 4%;width: 55%;">
+                    </div>
+                    <div style="margin-top: 8%;margin-left: 20%;">
+                    <button type="submit" class="btn  btn-theme cus-mr"  style="width: 35%;" (click)="updateWithdraw()">save</button>
+                    <button type="submit" class="btn  btn-theme cus-mr"  style="width: 35%;" routerLink="/withdrawl-limit">cancel</button>
+                </div>
+                </div>
+            </div>
+        </form>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="container-fluid">
+        <p class="copyright">Alende  <strong class="theme-text-color"></strong> 
+            </p>
+    </div>
+</footer>

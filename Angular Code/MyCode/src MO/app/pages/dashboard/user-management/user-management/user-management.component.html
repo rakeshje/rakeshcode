@@ -1,0 +1,2067 @@
+<div class="wrapper">
+    <main class="middle-content">
+        <div class="page_title_block">
+            <h1 class="page_title">USER MANAGEMENT
+
+            </h1>
+            <hr style="background: black; opacity: 0.5;">
+
+        </div>
+
+        <div class="content-section">
+
+
+            <div class="custom_tabs common-tabs">
+                <div class="row mb20 justify-content-center">
+                    <div class="col-sm-12">
+                        <ul class="nav nav-tabs d-flex  justify-content-center text-center">
+                            <li class="nav-item flex-fill"> <a class="nav-link active show"
+                                    [ngClass]="{'active': currTab=='Customer'}" (click)="selectTab('Customer')"
+                                    href="javascript:;">CUSTOMER MANAGEMENT</a>
+                            </li>
+                            <li class="nav-item flex-fill"> <a class="nav-link active show"
+                                    [ngClass]="{'active': currTab=='Corporate'}" (click)="selectTab('Corporate')"
+                                    href="javascript:;">CORPORATE CUSTOMER MANAGEMENT</a>
+                            </li>
+                            <li class="nav-item flex-fill"> <a class="nav-link active show"
+                                    [ngClass]="{'active': currTab=='Practioner'}" (click)="selectTab('Practioner')"
+                                    href="javascript:;">PRACTIONER MANAGEMENT</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="outer-box">
+                <div class="global-table no-radius p0">
+                    <div class="tab-content1">
+
+                        <!-- tab link customer start -->
+                        <div *ngIf="this.currTab=='Customer'">
+
+                            <div *ngIf="customerValue==true">
+                                <div class="tab-pane1">
+                                    <div class="sec_head_new sec_head_new_after">
+                                        <form [formGroup]="searchForm">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <div class="filter_search mb20 width100">
+                                                        <div class="input-group filter_search_group">
+                                                            <input type="text" class="form-control overflow-text"
+                                                                formControlName="search" placeholder="Search by name"
+                                                                maxlength="60">
+                                                            <div class="input-group-append">
+                                                                <button class="btn btn_search_group" type="button"><img
+                                                                        src="assets/img/icon-search.png" alt="Search"
+                                                                        (click)="search()"></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="date" formControlName="fromDate" class="form-control"
+                                                        style="width: 60%;">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="date" formControlName="toDate"
+                                                        [min]="this.searchForm.controls['fromDate'].value"
+                                                        (keypress)="mainService.BlockFuture()" class="form-control"
+                                                        style="width: 60%; margin-left: -40%;">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="text-center admin-btn">
+                                                        <button type="button" class="btn  btn-theme Go_btn" style="margin-left: -36%;
+                                                                min-width: 50px;" (click)="search()">Go</button>
+                                                        <button type="button" class="btn  btn-theme ml-2 Go_btn"
+                                                            style="min-width: 50px;" (click)="reset()">Reset</button>
+                                                        <button type="button" class="btn btn-theme"
+                                                            style="margin-left: 25%;" (click)="exportCSV()">Export
+                                                            csv</button>
+                                                        <button type="button" class="btn btn-theme Go_btn ml-2"
+                                                            (click)="addUser()">Add new
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" aria-describedby="user management list">
+                                        <thead>
+                                            <tr class="no_wrap_th text-center">
+                                                <th scope="col" class="Sorting-img">S.No</th>
+                                                <th scope="col" class="Sorting-img">Name</th>
+                                                <th scope="col" class="Sorting-img">D.O.B</th>
+                                                <th scope="col" class="Sorting-img">Email Address</th>
+                                                <th scope="col" class="Sorting-img">Contact Number</th>
+                                                <th scope="col" class="action_td_btn3 Sorting-img">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr *ngFor="let item of customerData | paginate: { itemsPerPage: itemPerPage, currentPage: currentPage, totalItems: customerLength}; let i = index"
+                                                class="text-center">
+                                                <td>
+                                                    {{itemPerPage * (currentPage-1)+ i+1}}</td>
+                                                <td class="content">
+                                                    {{item?.name || '--'}}</td>
+                                                <td class="content">{{item?.dateOfBirth | date:'dd-MM-yyyy' || '--'}}
+                                                </td>
+                                                <td class="content">{{item?.email || '--'}}</td>
+                                                <td class="content">
+                                                    {{item?.mobileNumber || '--'}}</td>
+
+                                                <td class="justify-content-center d-flex">
+                                                    <button class="btn btn-info ml-2 bt-margin" title="view"
+                                                        (click)="viewUser(item?._id)">
+                                                        <i class="fa fa-eye" aria-hidden="true"
+                                                            style="color:white"></i></button>
+                                                    <button class="btn btn-info ml-2 bt-margin"
+                                                        (click)="editUser(item?._id)"><i class="fa fa-edit"
+                                                            aria-hidden="true" style="color:white"></i></button>
+                                                    <button class="btn btn-success ml-2 bt-margin"
+                                                        *ngIf="item?.status == 'ACTIVE'"
+                                                        (click)="BlockModal(item?._id, 'BLOCK')" title="deactivate"><i
+                                                            class="fa fa-ban"
+                                                            style="color:white;background-color: green"
+                                                            aria-hidden="true"></i></button>
+                                                    <button class="btn btn-danger ml-2 bt-margin"
+                                                        *ngIf="item?.status == 'BLOCK'"
+                                                        (click)="BlockModal(item?._id, 'ACTIVE')" title="activate"><i
+                                                            class="fa fa-ban" style="color:white;background-color: red"
+                                                            aria-hidden="true"></i></button>
+                                                    <button class="btn btn-danger ml-2 bt-margin" title="delete"
+                                                        (click)="deleteUserModal(item?._id,DELETE)"><i
+                                                            class="fa fa-trash" aria-hidden="true"
+                                                            style="color:white"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="!customerData.length">
+                                                <td class="table-no-record" colspan="6">No Record Found</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="custom-pagination mt-2 text-align-end" *ngIf="customerLength>5">
+                                        <pagination-controls (pageChange)="pagination($event)"></pagination-controls>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- customer view start -->
+                            <div *ngIf="customerUserValue==false">
+                                <div class="page_title_block">
+                                    <h1 class="page_title">View Customer</h1>
+                                </div>
+                                <div class="content-section">
+                                    <div class="order-view  max-WT-700 mrgn-0-auto setting-page">
+                                        <div class="mb40">
+
+                                            <div class="add-store-block input-style view-label-align">
+                                                <div class="form-group row align-items-baseline">
+                                                    <div class="col-md-12" style="text-align: center">
+                                                        <img alt=""
+                                                            src="{{viewCustomer?.profilePic || 'assets/img/profile-img.jpg' }}"
+                                                            style="height: 100px;width: 100px; border-radius: 50%; border: 1px solid black!important;">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <label class="col-md-4 textalignright ">Name <span>:</span></label>
+                                                    <div class="col-md-8 textaligncenter">
+                                                        <div class="form-group">
+                                                            <p style="padding: 0px 5px!important;">
+                                                                {{viewCustomer?.name || '--'}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <label class="col-md-4 textalignright">Email Id
+                                                        <span>:</span></label>
+                                                    <div class="col-md-8 textaligncenter">
+                                                        <div class="form-group ">
+                                                            <p class="content-view">
+                                                                {{viewCustomer?.email || '--'}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <label class="col-md-4 textalignright">Mobile Number
+                                                        <span>:</span></label>
+                                                    <div class="col-md-8 textaligncenter">
+                                                        <div class="form-group ">
+                                                            <p class="content-view">
+                                                                {{viewCustomer?.mobileNumber || '--'}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row align-items-baseline">
+                                                    <label class="col-md-4 textalignright">Date of birth
+                                                        <span>:</span></label>
+                                                    <div class="col-md-8 textaligncenter">
+                                                        <div class="form-group ">
+                                                            <p class="content-view">
+                                                                {{viewCustomer?.dateOfBirth | date:'dd-MM-yyyy' || '--'}}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-center mt40 mb40">
+
+                                                <button class="btn btn-large  max-WT-150 btn-theme"
+                                                    (click)="changeValue()">Back</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- customer view end -->
+                            <!-- customer edit start -->
+                            <div *ngIf="customerUserEditValue==false">
+                                <div class="page_title_block">
+                                    <h1 class="page_title">Edit Customer</h1>
+                                </div>
+                               
+                                
+                                <div class="content-section">
+                                    <div class="order-view  max-WT-700 mrgn-0-auto setting-page">
+                                        <div class="  mb40">
+                                            <div class="add-store-block input-style mb20 mt20 ">
+                                                <form [formGroup]="editUserForm" #f="ngForm">
+                                                    <div class="user-profile">
+                                                        <div class="image-box">
+                                                            <img src="{{imageUrl || 'assets/img/profile-img.jpg'}}"
+                                                                id="sub-admin-image" alt="">
+                                                            <label class="upload-label">
+                                                                <input type="file" formControlName="image" name="image"
+                                                                    accept="image/jpg,image/jpeg,image/png" id="image"
+                                                                    (change)="ValidateFileUpload($event)"
+                                                                    maxlength="56">
+                                                                <em class="fa fa-pencil"
+                                                                    style="color: #86559f!important;font-size: 12px"></em>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row align-items-baseline view-label-align">
+                                                        <label class="col-md-4 textalignright ">Name
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group">
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Name" formControlName="firstName"
+                                                                    (keypress)="mainService.preventSpace($event)"
+                                                                    maxlength="60">
+                                                                <div class="text-danger">
+                                                                    <span
+                                                                        *ngIf="editUserForm.get('firstName').hasError('required') && (editUserForm.get('firstName').dirty || editUserForm.get('firstName').touched)">
+                                                                        *Please enter Name.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="editUserForm.get('firstName').hasError('pattern') && (editUserForm.get('firstName').dirty || f.submitted)">
+                                                                        *Name accept only alphabets.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="editUserForm.get('firstName').hasError('minlength') && !(editUserForm.get('firstName').hasError('pattern')) && (editUserForm.get('firstName').dirty || f.submitted)">
+                                                                        *Minimum length must be 2.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="editUserForm.get('firstName').hasError('maxlength') && !(editUserForm.get('firstName').hasError('pattern')) && (editUserForm.get('firstName').dirty || f.submitted)">
+                                                                        *Maximum length should not more than 20.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row align-items-baseline view-label-align">
+                                                        <label class="col-md-4 textalignright">Email
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group ">
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Email Address" formControlName="email"
+                                                                    (keypress)="mainService.preventSpace($event)"
+                                                                    maxlength="50">
+                                                                <div class="text-danger">
+                                                                    <span
+                                                                        *ngIf="editUserForm.get('email').hasError('required') && (editUserForm.get('email').dirty || editUserForm.get('email').touched)">
+                                                                        *Please enter you email.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="editUserForm.get('email').hasError('pattern')">
+                                                                        *Please enter valid email.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row align-items-baseline view-label-align">
+                                                        <label class="col-md-4 textalignright">Mobile Number
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group ">
+                                                                <input type="tel" class="form-control"
+                                                                    placeholder="Mobile Number" formControlName="number"
+                                                                    (keypress)="mainService.preventSpace($event)"
+                                                                    maxlength="15">
+                                                                <div class="text-danger">
+                                                                    <span
+                                                                        *ngIf="editUserForm.get('number').hasError('required') && (editUserForm.get('number').dirty || editUserForm.get('number').touched)">
+                                                                        *Please enter you number.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="editUserForm.get('number').hasError('pattern')">
+                                                                        *Please enter valid number.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row align-items-baseline view-label-align">
+                                                        <label class="col-md-4 textalignright">Data Of Birth
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group ">
+                                                                <input type="date" class="form-control"
+                                                                    placeholder="Mobile Number" formControlName="DOB"
+                                                                    (keypress)="mainService.preventSpace($event)"
+                                                                    maxlength="15">
+                                                                <div class="text-danger">
+                                                                    <span
+                                                                        *ngIf="editUserForm.get('DOB').hasError('required') && (editUserForm.get('DOB').dirty || editUserForm.get('DOB').touched)">
+                                                                        *Please enter you DOB.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="editUserForm.get('DOB').hasError('pattern')">
+                                                                        *Please enter valid DOB.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="text-center mt40 mb40">
+                                                <button class="btn btn-large  max-WT-150 btn-theme"
+                                                    [disabled]="!editUserForm.valid"
+                                                    (click)="UpdateUser()">Save</button>
+                                                <button class="btn btn-large  max-WT-150 btn-theme"
+                                                    (click)="changeValue()">Back</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- customer edit end -->
+                            <!-- customer add start -->
+                            <div *ngIf="customerUserAddValue==false">
+                                <div class="page_title_block">
+                                    <h1 class="page_title">Add Customer</h1>
+                                </div>
+                                <div class="content-section">
+                                    <div class="order-view  max-WT-700 mrgn-0-auto setting-page">
+                                        <div class="  mb40">
+                                            <div class="add-store-block input-style mb20 mt20 ">
+                                                <form [formGroup]="addUserForm" #f="ngForm">
+                                                    <div class="user-profile">
+                                                        <div class="image-box">
+                                                            <img src="{{imageUrl || 'assets/img/profile-img.jpg'}}"
+                                                                id="sub-admin-image" alt="">
+                                                            <label class="upload-label">
+                                                                <input type="file" formControlName="image" name="image"
+                                                                    accept="image/jpg,image/jpeg,image/png" id="image"
+                                                                    (change)="ValidateFileUpload($event)"
+                                                                    maxlength="56">
+                                                                <em class="fa fa-pencil"
+                                                                    style="color: #86559f!important;font-size: 12px"></em>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row align-items-baseline view-label-align">
+                                                        <label class="col-md-4 textalignright ">Name
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group">
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Name" formControlName="firstName"
+                                                                    (keypress)="mainService.preventSpace($event)"
+                                                                    maxlength="60">
+                                                                <div class="text-danger">
+                                                                    <span
+                                                                        *ngIf="addUserForm.get('firstName').hasError('required') && (addUserForm.get('firstName').dirty || addUserForm.get('firstName').touched)">
+                                                                        *Please enter Name.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="addUserForm.get('firstName').hasError('pattern') && (addUserForm.get('firstName').dirty || f.submitted)">
+                                                                        *Name accept only alphabets.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="addUserForm.get('firstName').hasError('minlength') && !(addUserForm.get('firstName').hasError('pattern')) && (addUserForm.get('firstName').dirty || f.submitted)">
+                                                                        *Minimum length must be 2.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="addUserForm.get('firstName').hasError('maxlength') && !(addUserForm.get('firstName').hasError('pattern')) && (addUserForm.get('firstName').dirty || f.submitted)">
+                                                                        *Maximum length should not more than 20.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row align-items-baseline view-label-align">
+                                                        <label class="col-md-4 textalignright">Email
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group ">
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Email Address" formControlName="email"
+                                                                    (keypress)="mainService.preventSpace($event)"
+                                                                    maxlength="50">
+                                                                <div class="text-danger">
+                                                                    <span
+                                                                        *ngIf="addUserForm.get('email').hasError('required') && (addUserForm.get('email').dirty || addUserForm.get('email').touched)">
+                                                                        *Please enter you email.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="addUserForm.get('email').hasError('pattern')">
+                                                                        *Please enter valid email.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row align-items-baseline view-label-align">
+                                                        <label class="col-md-4 textalignright">Mobile Number
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group ">
+                                                                <input type="tel" class="form-control"
+                                                                    placeholder="Mobile Number" formControlName="number"
+                                                                    (keypress)="mainService.preventSpace($event)"
+                                                                    maxlength="15">
+                                                                <div class="text-danger">
+                                                                    <span
+                                                                        *ngIf="addUserForm.get('number').hasError('required') && (addUserForm.get('number').dirty || addUserForm.get('number').touched)">
+                                                                        *Please enter you number.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="addUserForm.get('number').hasError('pattern')">
+                                                                        *Please enter valid number.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row align-items-baseline view-label-align">
+                                                        <label class="col-md-4 textalignright">Data Of Birth
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group ">
+                                                                <input type="date" class="form-control"
+                                                                    placeholder="Mobile Number" formControlName="DOB"
+                                                                    (keypress)="mainService.preventSpace($event)"
+                                                                    maxlength="15">
+                                                                <div class="text-danger">
+                                                                    <span
+                                                                        *ngIf="addUserForm.get('DOB').hasError('required') && (addUserForm.get('DOB').dirty || addUserForm.get('DOB').touched)">
+                                                                        *Please enter you DOB.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="addUserForm.get('DOB').hasError('pattern')">
+                                                                        *Please enter valid DOB.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row align-items-baseline view-label-align">
+                                                        <label class="col-md-4 textalignright">Password
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group ">
+                                                                <input type="password" class="form-control"
+                                                                    placeholder="Enter Password"
+                                                                    formControlName="password"
+                                                                    (keypress)="mainService.preventSpace($event)"
+                                                                    maxlength="15">
+                                                                <div class="text-danger">
+                                                                    <span
+                                                                        *ngIf="addUserForm.get('password').hasError('required') && (addUserForm.get('password').dirty || addUserForm.get('password').touched)">
+                                                                        *Please enter you password.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="addUserForm.get('password').hasError('pattern')">
+                                                                        *Password should have minimum 8 characters, at
+                                                                        least 1 uppercase letter, 1 lowercase letter, 1
+                                                                        number and 1 special character.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="text-center mt40 mb40">
+                                                <button class="btn btn-large  max-WT-150 btn-theme"
+                                                    [disabled]="!addUserForm.valid"
+                                                    (click)="addUserDetail()">Add</button>
+                                                <button class="btn btn-large  max-WT-150 btn-theme"
+                                                    (click)="changeValue()">Back</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- customer add end -->
+
+                        </div>
+                        <!-- tab link customer end -->
+                        <!-- tab link corporate start -->
+                        <div *ngIf="this.currTab=='Corporate'">
+                            <div *ngIf="corporateValue==true">
+                                <div class="tab-pane1">
+                                    <div class="sec_head_new sec_head_new_after">
+                                        <form [formGroup]="searchForm">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <div class="filter_search mb20 width100">
+                                                        <div class="input-group filter_search_group">
+                                                            <input type="text" class="form-control overflow-text"
+                                                                formControlName="search" placeholder="Search by name"
+                                                                maxlength="60">
+                                                            <div class="input-group-append">
+                                                                <button class="btn btn_search_group" type="button"><img
+                                                                        src="assets/img/icon-search.png" alt="Search"
+                                                                        (click)="search()"></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="date" formControlName="fromDate" class="form-control"
+                                                        style="width: 60%;">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="date" formControlName="toDate"
+                                                        [min]="this.searchForm.controls['fromDate'].value"
+                                                        class="form-control" style="width: 60%; margin-left: -40%;">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="text-center admin-btn">
+                                                        <button type="button" class="btn  btn-theme Go_btn" style="margin-left: -36%;
+                                                        min-width: 50px;" (click)="search()">Go</button>
+                                                        <button type="button" class="btn  btn-theme ml-2 Go_btn"
+                                                            style="min-width: 60px;" (click)="reset()">Reset</button>
+                                                        <button type="button" class="btn btn-theme"
+                                                            style="margin-right: 15%;" (click)="exportCSV()">Export
+                                                            csv</button>
+                                                        <button type="button" class="btn btn-theme"
+                                                            style="margin-right: 15%; min-width:45%"
+                                                            (click)="viewCompany()">View Companies
+                                                        </button>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="row"
+                                                style="display: flex; justify-content: flex-end; margin-left: 10%">
+                                                <div class="col-md-2">
+                                                    <button type="button" class="btn btn-theme Go_btn ml-2"
+                                                        (click)="addCorporate()">Add new
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" aria-describedby="user management list">
+                                        <thead>
+                                            <tr class="no_wrap_th text-center">
+                                                <th scope="col" class="Sorting-img">S.No</th>
+                                                <th scope="col" class="Sorting-img">Name</th>
+                                                <th scope="col" class="Sorting-img">D.O.B</th>
+                                                <th scope="col" class="Sorting-img">Email Address</th>
+                                                <th scope="col" class="Sorting-img">Contact Number</th>
+                                                <th scope="col" class="Sorting-img">Company Name</th>
+                                                <th scope="col" class="action_td_btn3 Sorting-img">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr *ngFor="let item of corporateData | paginate: { itemsPerPage: itemPerPage, currentPage: currentPage, totalItems: corporateLength}; let i = index"
+                                                class="text-center">
+                                                <td>
+                                                    {{itemPerPage * (currentPage-1)+ i+1}}</td>
+                                                <td class="content">
+                                                    {{item?.name || '--'}}</td>
+                                                <td class="content">{{item?.dateOfBirth | date:'dd-MM-yyyy' || '--'}}
+                                                </td>
+                                                <td class="content">{{item?.email || '--'}}</td>
+                                                <td class="content">{{item?.mobileNumber || '--'}}</td>
+                                                <td class="content">{{item?.company || '--'}}</td>
+
+
+                                                <td class="justify-content-center d-flex">
+                                                    <button class="btn btn-info ml-2 bt-margin" title="view"
+                                                        (click)="viewcorporate(item?._id)">
+                                                        <i class="fa fa-eye" aria-hidden="true"
+                                                            style="color:white"></i></button>
+                                                    <button class="btn btn-info ml-2 bt-margin"
+                                                        (click)="editCorporate(item?._id)"><i class="fa fa-edit"
+                                                            aria-hidden="true" style="color:white"></i></button>
+                                                    <button class="btn btn-success ml-2 bt-margin"
+                                                        *ngIf="item?.status == 'ACTIVE'"
+                                                        (click)="BlockModal(item?._id, 'BLOCK')" title="deactivate"><i
+                                                            class="fa fa-ban"
+                                                            style="color:white;background-color: green"
+                                                            aria-hidden="true"></i></button>
+                                                    <button class="btn btn-danger ml-2 bt-margin"
+                                                        *ngIf="item?.status == 'BLOCK'"
+                                                        (click)="BlockModal(item?._id, 'ACTIVE')" title="activate"><i
+                                                            class="fa fa-ban" style="color:white;background-color: red"
+                                                            aria-hidden="true"></i></button>
+                                                    <button class="btn btn-danger ml-2 bt-margin" title="delete"
+                                                        (click)="deleteUserModal(item?._id,DELETE)"><i
+                                                            class="fa fa-trash" aria-hidden="true"
+                                                            style="color:white"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="!corporateData.length">
+                                                <td class="table-no-record" colspan="9">No Record Found</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="custom-pagination mt-2 text-align-end" *ngIf="corporateLength > 5">
+                                        <pagination-controls (pageChange)="pagination($event)"></pagination-controls>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- corporate view start -->
+                            <div *ngIf="corporateUserValue==false">
+                                <div class="page_title_block">
+                                    <h1 class="page_title">View Corporate</h1>
+                                </div>
+                                <div class="content-section">
+                                    <div class="order-view  max-WT-700 mrgn-0-auto setting-page">
+                                        <div class="mb40">
+
+                                            <div class="add-store-block input-style view-label-align">
+                                                <div class="form-group row align-items-baseline">
+                                                    <div class="col-md-12" style="text-align: center">
+                                                        <img alt=""
+                                                            src="{{viewCorporate?.profilePic || 'assets/img/profile-img.jpg' }}"
+                                                            style="height: 100px;width: 100px; border-radius: 50%; border: 1px solid black!important;">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <label class="col-md-4 textalignright ">Name <span>:</span></label>
+                                                    <div class="col-md-8 textaligncenter">
+                                                        <div class="form-group">
+                                                            <p style="padding: 0px 5px!important;">
+                                                                {{viewCorporate?.name || '--'}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <label class="col-md-4 textalignright">Email Id
+                                                        <span>:</span></label>
+                                                    <div class="col-md-8 textaligncenter">
+                                                        <div class="form-group ">
+                                                            <p class="content-view">
+                                                                {{viewCorporate?.email || '--'}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <label class="col-md-4 textalignright">Mobile Number
+                                                        <span>:</span></label>
+                                                    <div class="col-md-8 textaligncenter">
+                                                        <div class="form-group ">
+                                                            <p class="content-view">
+                                                                {{viewCorporate?.mobileNumber || '--'}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row align-items-baseline">
+                                                    <label class="col-md-4 textalignright">Date of birth
+                                                        <span>:</span></label>
+                                                    <div class="col-md-8 textaligncenter">
+                                                        <div class="form-group ">
+                                                            <p class="content-view">
+                                                                {{viewCorporate?.dateOfBirth | date:'dd-MM-yyyy' || '--'}}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-center mt40 mb40">
+
+                                                <button class="btn btn-large  max-WT-150 btn-theme"
+                                                    (click)="changeCorporateValue()">Back</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- corporate view end -->
+                            <!-- corporate edit start -->
+                            <div *ngIf="corporateUserEditValue==false">
+                                <div class="page_title_block">
+                                    <h1 class="page_title">Edit Corporate</h1>
+                                </div>
+                                <div class="content-section">
+                                    <div class="order-view  max-WT-700 mrgn-0-auto setting-page">
+                                        <div class="  mb40">
+                                            <div class="add-store-block input-style mb20 mt20 ">
+                                                <form [formGroup]="editCorporateForm" #f="ngForm">
+                                                    <div class="user-profile">
+                                                        <div class="image-box">
+                                                            <img src="{{imageUrl || 'assets/img/profile-img.jpg'}}"
+                                                                id="sub-admin-image" alt="">
+                                                            <label class="upload-label">
+                                                                <input type="file" formControlName="image" name="image"
+                                                                    accept="image/jpg,image/jpeg,image/png" id="image"
+                                                                    (change)="ValidateFileUpload($event)"
+                                                                    maxlength="56">
+                                                                <em class="fa fa-pencil"
+                                                                    style="color: #86559f!important;font-size: 12px"></em>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row align-items-baseline view-label-align">
+                                                        <label class="col-md-4 textalignright ">Name
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group">
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Name" formControlName="firstName"
+                                                                    (keypress)="mainService.preventSpace($event)"
+                                                                    maxlength="60">
+                                                                <div class="text-danger">
+                                                                    <span
+                                                                        *ngIf="editCorporateForm.get('firstName').hasError('required') && (editCorporateForm.get('firstName').dirty || editCorporateForm.get('firstName').touched)">
+                                                                        *Please enter Name.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="editCorporateForm.get('firstName').hasError('pattern') && (editCorporateForm.get('firstName').dirty || f.submitted)">
+                                                                        *Name accept only alphabets.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="editCorporateForm.get('firstName').hasError('minlength') && !(editCorporateForm.get('firstName').hasError('pattern')) && (editCorporateForm.get('firstName').dirty || f.submitted)">
+                                                                        *Minimum length must be 2.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="editCorporateForm.get('firstName').hasError('maxlength') && !(editCorporateForm.get('firstName').hasError('pattern')) && (editCorporateForm.get('firstName').dirty || f.submitted)">
+                                                                        *Maximum length should not more than 20.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row align-items-baseline view-label-align">
+                                                        <label class="col-md-4 textalignright">Email
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group ">
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Email Address" formControlName="email"
+                                                                    (keypress)="mainService.preventSpace($event)"
+                                                                    maxlength="50">
+                                                                <div class="text-danger">
+                                                                    <span
+                                                                        *ngIf="editCorporateForm.get('email').hasError('required') && (editCorporateForm.get('email').dirty || editCorporateForm.get('email').touched)">
+                                                                        *Please enter you email.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="editCorporateForm.get('email').hasError('pattern')">
+                                                                        *Please enter valid email.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row align-items-baseline view-label-align">
+                                                        <label class="col-md-4 textalignright">Mobile Number
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group ">
+                                                                <input type="tel" class="form-control"
+                                                                    placeholder="Mobile Number" formControlName="number"
+                                                                    (keypress)="mainService.preventSpace($event)"
+                                                                    maxlength="15">
+                                                                <div class="text-danger">
+                                                                    <span
+                                                                        *ngIf="editCorporateForm.get('number').hasError('required') && (editCorporateForm.get('number').dirty || editCorporateForm.get('number').touched)">
+                                                                        *Please enter you number.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="editCorporateForm.get('number').hasError('pattern')">
+                                                                        *Please enter valid number.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row align-items-baseline view-label-align">
+                                                        <label class="col-md-4 textalignright">Data Of Birth
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group ">
+                                                                <input type="date" class="form-control"
+                                                                    placeholder="Mobile Number" formControlName="DOB"
+                                                                    (keypress)="mainService.preventSpace($event)"
+                                                                    maxlength="15">
+                                                                <div class="text-danger">
+                                                                    <span
+                                                                        *ngIf="editCorporateForm.get('DOB').hasError('required') && (editCorporateForm.get('DOB').dirty || editCorporateForm.get('DOB').touched)">
+                                                                        *Please enter you DOB.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="editCorporateForm.get('DOB').hasError('pattern')">
+                                                                        *Please enter valid DOB.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row align-items-baseline view-label-align">
+                                                        <label class="col-md-4 textalignright">Company Name
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group ">
+                                                                <input type="test" class="form-control"
+                                                                    placeholder="Company Name" formControlName="company"
+                                                                    (keypress)="mainService.preventSpace($event)"
+                                                                    maxlength="15">
+                                                                <div class="text-danger">
+                                                                    <span
+                                                                        *ngIf="editCorporateForm.get('company').hasError('required') && (editCorporateForm.get('company').dirty || editCorporateForm.get('company').touched)">
+                                                                        *Please enter you company.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="editCorporateForm.get('company').hasError('pattern')">
+                                                                        *Please enter valid company.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="text-center mt40 mb40">
+                                                <button class="btn btn-large  max-WT-150 btn-theme"
+                                                    [disabled]="!editCorporateForm.valid"
+                                                    (click)="UpdateCorporate()">Save</button>
+                                                <button class="btn btn-large  max-WT-150 btn-theme"
+                                                    (click)="changeCorporateValue()">Back</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- corporate edit end -->
+
+                            <!-- corporate add start -->
+                            <div *ngIf="corporateUserAddValue==false">
+                                <div class="page_title_block">
+                                    <h1 class="page_title">Add Corporate</h1>
+                                </div>
+                                <div class="content-section">
+                                    <div class="order-view  max-WT-700 mrgn-0-auto setting-page">
+                                        <div class="  mb40">
+                                            <div class="add-store-block input-style mb20 mt20 ">
+                                                <form [formGroup]="addCorporateForm" #f="ngForm">
+                                                    <div class="user-profile">
+                                                        <div class="image-box">
+                                                            <img src="{{imageUrl || 'assets/img/profile-img.jpg'}}"
+                                                                id="sub-admin-image" alt="">
+                                                            <label class="upload-label">
+                                                                <input type="file" formControlName="image" name="image"
+                                                                    accept="image/jpg,image/jpeg,image/png" id="image"
+                                                                    (change)="ValidateFileUpload($event)"
+                                                                    maxlength="56">
+                                                                <em class="fa fa-pencil"
+                                                                    style="color: #86559f!important;font-size: 12px"></em>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row align-items-baseline view-label-align">
+                                                        <label class="col-md-4 textalignright ">Name
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group">
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Name" formControlName="firstName"
+                                                                    (keypress)="mainService.preventSpace($event)"
+                                                                    maxlength="60">
+                                                                <div class="text-danger">
+                                                                    <span
+                                                                        *ngIf="addCorporateForm.get('firstName').hasError('required') && (addCorporateForm.get('firstName').dirty || addCorporateForm.get('firstName').touched)">
+                                                                        *Please enter Name.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="addCorporateForm.get('firstName').hasError('pattern') && (addCorporateForm.get('firstName').dirty || f.submitted)">
+                                                                        *Name accept only alphabets.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="addCorporateForm.get('firstName').hasError('minlength') && !(addCorporateForm.get('firstName').hasError('pattern')) && (addCorporateForm.get('firstName').dirty || f.submitted)">
+                                                                        *Minimum length must be 2.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="addCorporateForm.get('firstName').hasError('maxlength') && !(addCorporateForm.get('firstName').hasError('pattern')) && (addCorporateForm.get('firstName').dirty || f.submitted)">
+                                                                        *Maximum length should not more than 20.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row align-items-baseline view-label-align">
+                                                        <label class="col-md-4 textalignright">Email
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group ">
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Email Address" formControlName="email"
+                                                                    (keypress)="mainService.preventSpace($event)"
+                                                                    maxlength="50">
+                                                                <div class="text-danger">
+                                                                    <span
+                                                                        *ngIf="addCorporateForm.get('email').hasError('required') && (addCorporateForm.get('email').dirty || addCorporateForm.get('email').touched)">
+                                                                        *Please enter you email.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="addCorporateForm.get('email').hasError('pattern')">
+                                                                        *Please enter valid email.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row align-items-baseline view-label-align">
+                                                        <label class="col-md-4 textalignright">Mobile Number
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group ">
+                                                                <input type="tel" class="form-control"
+                                                                    placeholder="Mobile Number" formControlName="number"
+                                                                    (keypress)="mainService.preventSpace($event)"
+                                                                    maxlength="15">
+                                                                <div class="text-danger">
+                                                                    <span
+                                                                        *ngIf="addCorporateForm.get('number').hasError('required') && (addCorporateForm.get('number').dirty || addCorporateForm.get('number').touched)">
+                                                                        *Please enter you number.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="addCorporateForm.get('number').hasError('pattern')">
+                                                                        *Please enter valid number.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row align-items-baseline view-label-align">
+                                                        <label class="col-md-4 textalignright">Data Of Birth
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group ">
+                                                                <input type="date" class="form-control"
+                                                                    placeholder="Mobile Number" formControlName="DOB"
+                                                                    (keypress)="mainService.preventSpace($event)"
+                                                                    maxlength="15">
+                                                                <div class="text-danger">
+                                                                    <span
+                                                                        *ngIf="addCorporateForm.get('DOB').hasError('required') && (addCorporateForm.get('DOB').dirty || addCorporateForm.get('DOB').touched)">
+                                                                        *Please enter you DOB.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="addCorporateForm.get('DOB').hasError('pattern')">
+                                                                        *Please enter valid DOB.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row align-items-baseline view-label-align">
+                                                        <label class="col-md-4 textalignright">Password
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group ">
+                                                                <input type="password" class="form-control"
+                                                                    placeholder=" Enter Password"
+                                                                    formControlName="password"
+                                                                    (keypress)="mainService.preventSpace($event)"
+                                                                    maxlength="15">
+                                                                <div class="text-danger">
+                                                                    <span
+                                                                        *ngIf="addCorporateForm.get('password').hasError('required') && (addCorporateForm.get('password').dirty || addCorporateForm.get('password').touched)">
+                                                                        *Please enter you password.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="addCorporateForm.get('password').hasError('pattern')">
+                                                                        *Password should have minimum 8 characters, at
+                                                                        least 1 uppercase letter, 1 lowercase letter, 1
+                                                                        number and 1 special character.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row align-items-baseline view-label-align">
+                                                        <label class="col-md-4 textalignright">Company Name
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group ">
+                                                                <input type="test" class="form-control"
+                                                                    placeholder="Company Name" formControlName="company"
+                                                                    (keypress)="mainService.preventSpace($event)"
+                                                                    maxlength="60">
+                                                                <div class="text-danger">
+                                                                    <span
+                                                                        *ngIf="addCorporateForm.get('company').hasError('required') && (addCorporateForm.get('company').dirty || addCorporateForm.get('company').touched)">
+                                                                        *Please enter you company.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="addCorporateForm.get('company').hasError('pattern')">
+                                                                        *Please enter valid company.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="text-center mt40 mb40">
+                                                <button class="btn btn-large  max-WT-150 btn-theme"
+                                                    [disabled]="!addCorporateForm.valid"
+                                                    (click)="addCorporateDetail()">Add</button>
+                                                <button class="btn btn-large  max-WT-150 btn-theme"
+                                                    (click)="changeCorporateValue()">Back</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- corporate add end -->
+                            <!-- corporate view company button start -->
+                            <div *ngIf="viewCompanyValue==false">
+                                <div class="tab-pane1">
+                                    <div class="sec_head_new sec_head_new_after">
+                                        <form [formGroup]="searchForm">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <div class="filter_search mb20 width100">
+                                                        <div class="input-group filter_search_group">
+                                                            <input type="text" class="form-control overflow-text"
+                                                                formControlName="search" placeholder="Search by name"
+                                                                maxlength="60">
+                                                            <div class="input-group-append">
+                                                                <button class="btn btn_search_group" type="button"><img
+                                                                        src="assets/img/icon-search.png" alt="Search"
+                                                                        (click)="searchCompany()"></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="date" formControlName="fromDate" class="form-control"
+                                                        style="width: 60%;">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="date" formControlName="toDate"
+                                                        [min]="this.searchForm.controls['fromDate'].value"
+                                                        class="form-control" style="width: 60%; margin-left: -40%;">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="text-center admin-btn">
+                                                        <button type="button" class="btn  btn-theme Go_btn" style="margin-left: -36%;
+                                        min-width: 50px;" (click)="searchCompany()">Go</button>
+                                                        <button type="button" class="btn  btn-theme ml-2 Go_btn"
+                                                            style="min-width: 60px;" (click)="resetCompany()">Reset</button>
+                                                        <button type="button" class="btn btn-theme"
+                                                            style="margin-right: 15%;" (click)="exportCompanyCSV()">Export
+                                                            csv</button>
+                                                        <button type="button" class="btn btn-theme"
+                                                            style="margin-right: 15%; min-width:45%"
+                                                            (click)="viewCompany()">View Companies
+                                                        </button>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="row"
+                                                style="display: flex; justify-content: flex-end; margin-left: 10%">
+                                                <div class="col-md-2">
+                                                    <button type="button" class="btn btn-theme Go_btn ml-2"
+                                                        (click)="addCorporate()">Add new
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <h5>Add Corporate Company</h5>
+                                    <form [formGroup]="companyForm">
+                                    <div class="row" style=" margin-left: 4%;margin-top: 2%;" >
+                                        <div class="col-md-2">
+                                        <label>Name :</label>
+                                     </div>
+                                        
+                                        <div class="col-md-10">
+                                            <input type="text" formControlName="firstName" placeholder="Enter Company " class="form-control" style="width: 30%; margin-left: 16.5%">
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style=" margin-left: 4%;margin-top: 2%;">
+                                        <div class="col-md-2">
+                                        <label>User limit :</label>
+                                    </div>
+                                        
+                                    <div class="col-md-10">
+                                        <select class="form-control" formControlName="limit"  style="width: 30%; margin-left: 16.5%;">
+                                            <option value="">Select</option>
+                                            <option value="0">0</option>
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                            <option value="15">15</option>
+
+                                        </select>
+                                    </div>
+                                    </div>
+                                    <div class="row" style=" margin-left: 4%; margin-top: 2%;">
+                                        <div class="col-md-2">
+                                        <label>Services : </label>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <select class="form-control" formControlName="service" style="width: 30%; margin-left: 16.5%;">
+                                            <option value="">Select</option>
+                                            <option *ngFor="let service of serviceData">{{service.subCategoryName}}</option>
+
+                                        </select>
+                                    </div>
+                                    </div>
+
+                                    <button type="button" class="btn btn-theme"
+                                        style="margin-left: 84%; width: 17%; margin-top: -5%;" [disabled]="!companyForm.valid" (click)="addCompany()">Submit</button>
+
+                                    </form>
+                                </div>
+
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" aria-describedby="user management list">
+                                        <thead>
+                                            <tr class="no_wrap_th text-center">
+                                                <th scope="col" class="Sorting-img">S.No</th>
+                                                <th scope="col" class="Sorting-img">Name</th>
+                                                <th scope="col" class="Sorting-img">Service</th>
+                                                
+                                                <th scope="col" class="Sorting-img">Users</th>
+                                                <th scope="col" class="Sorting-img">Added on</th>
+                                                <th scope="col" class="Sorting-img">Company code</th>
+                                                <th scope="col" class="action_td_btn3 Sorting-img">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="text-center" *ngFor="let item of companyData | paginate: { itemsPerPage: itemPerPage, currentPage: currentPage, totalItems: companyLength}; let i = index">
+
+                                                <td class="content">{{itemPerPage*(currentPage-1)+i+1}}</td>
+                                                <td class="content"> {{item?.name}}</td>
+                                                <td class="content"> {{item?.service}}</td>
+                                                
+                                                <td class="content">{{item?.userLimit}}</td>
+                                                <td class="content">{{item?.createdAt | date:'dd-MM-yyyy'}}</td>
+                                                <td class="content">{{item?.companyCode || ''}}</td>
+                                                <td class="justify-content-center d-flex">
+                                                    <button class="btn btn-info ml-2 bt-margin" title="view"
+                                                        (click)="viewcorporateCompany(item?._id)">
+                                                        <i class="fa fa-eye" aria-hidden="true"
+                                                            style="color:white"></i></button>
+                                                    <button class="btn btn-info ml-2 bt-margin"
+                                                        (click)="editCorporateCompany(item?._id)"><i class="fa fa-edit"
+                                                            aria-hidden="true" style="color:white"></i></button>
+                                                    
+                                                    <button class="btn btn-danger ml-2 bt-margin" title="delete"
+                                                        (click)="DeleteUserModal(item?._id,DELETE)"><i
+                                                            class="fa fa-trash" aria-hidden="true"
+                                                            style="color:white"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="!companyData?.length">
+                                                <td class="table-no-record" colspan="9">No Record Found</td>
+                                            </tr>
+                                            
+                                        </tbody>
+                                    </table>
+                                    <div class="custom-pagination mt-2 text-align-end" *ngIf="companyLength > 5">
+                                        <pagination-controls (pageChange)="pagination($event)"></pagination-controls>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <!-- corporate view company button end -->
+
+                            <!-- company view start -->
+                            <div *ngIf="companyUserValue==false">
+                                    <div class="page_title_block">
+                                        <h1 class="page_title">View Company</h1>
+                                    </div>
+                                    <div class="content-section">
+                                        <div class="order-view  max-WT-700 mrgn-0-auto setting-page">
+                                            <div class="mb40">
+    
+                                                <div class="add-store-block input-style view-label-align">
+                                                    
+                                                    <div class="form-group row align-items-baseline">
+                                                        <label class="col-md-4 textalignright ">Name <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group">
+                                                                <p style="padding: 0px 5px!important;">
+                                                                    {{viewCompanyDataa?.name || '--'}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row align-items-baseline">
+                                                        <label class="col-md-4 textalignright">User Limit
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group ">
+                                                                <p class="content-view">
+                                                                    {{viewCompanyDataa?.userLimit || '--'}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row align-items-baseline">
+                                                        <label class="col-md-4 textalignright">Service
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group ">
+                                                                <p class="content-view">
+                                                                    {{viewCompanyDataa?.service}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+    
+                                                    
+                                                </div>
+                                                <div class="text-center mt40 mb40">
+    
+                                                    <button class="btn btn-large  max-WT-150 btn-theme"
+                                                        (click)="changeCompanyValue()">Back</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <!-- company view end -->
+                             <!-- company edit start -->
+                            <div *ngIf="companyUserEditValue==false">
+                                <div class="page_title_block">
+                                    <h1 class="page_title">Edit Company</h1>
+                                </div>
+                                    <form [formGroup]="editCompanyForm">
+                                     <div class="col" style="margin-top: 10%">
+                                    <div class="content-section">
+                                        <div class="order-view  max-WT-700 mrgn-0-auto setting-page">
+                                            <div class="mb40">
+    
+                                                <div class="add-store-block input-style view-label-align">
+                                                    
+                                                    <div class="form-group row align-items-baseline">
+                                                        <label class="col-md-4 textalignright ">Name <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group">
+                                                                <input type="text" formControlName="firstName" placeholder="Enter Company " class="form-control" >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row align-items-baseline">
+                                                        <label class="col-md-4 textalignright">User Limit
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <select class="form-control" formControlName="limit"  >
+                                                                <option value="">Select</option>
+                                                                <option value="{{companyDataa?.userLimit}}">{{companyDataa?.userLimit}}</option>
+                                                                <option value="0">0</option>
+                                                                <option value="5">5</option>
+                                                                <option value="10">10</option>
+                                                                <option value="15">15</option>
+                                                                
+                    
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row align-items-baseline">
+                                                        <label class="col-md-4 textalignright">Service
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <select class="form-control" formControlName="service" >
+                                                                <option value="">Select</option>
+                                                                <option *ngFor="let service of serviceData">{{service.subCategoryName}}</option>
+                    
+                                                            </select>
+                                                        </div>
+                                                    </div>
+    
+                                                    
+                                                </div>
+                                                <div class="text-center mt40 mb40">
+                                        <button type="button" class="btn btn-theme"
+                                         [disabled]="!editCompanyForm.valid" (click)="UpdateCompany()">Submit</button>
+                                        <button type="button" class="btn btn-theme"
+                                          (click)="changeCompanyValue()">Cancel</button>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </form>
+                                
+                            </div>
+                            <!-- company edit end -->   
+
+                        </div>
+                        <!-- tab link corporate end -->
+                        <!-- tab link practioner start -->
+                        <div *ngIf="this.currTab=='Practioner'">
+                            <div *ngIf="practionerValue==true">
+                                <div class="tab-pane1">
+                                    <div class="sec_head_new sec_head_new_after">
+                                        <form [formGroup]="searchForm">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <div class="filter_search mb20 width100">
+                                                        <div class="input-group filter_search_group">
+                                                            <input type="text" class="form-control overflow-text"
+                                                                formControlName="search" placeholder="Search by name"
+                                                                maxlength="60">
+                                                            <div class="input-group-append">
+                                                                <button class="btn btn_search_group" type="button"><img
+                                                                        src="assets/img/icon-search.png" alt="Search"
+                                                                        (click)="search()"></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="date" formControlName="fromDate" class="form-control"
+                                                        style="width: 60%;">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="date" formControlName="toDate"
+                                                        [min]="this.searchForm.controls['fromDate'].value"
+                                                        class="form-control" style="width: 60%; margin-left: -40%;">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="text-center admin-btn">
+                                                        <button type="button" class="btn  btn-theme Go_btn" style="margin-left: -36%;
+                                                        min-width: 50px;" (click)="search()">Go</button>
+                                                        <button type="button" class="btn  btn-theme ml-2 Go_btn"
+                                                            style="min-width: 50px;" (click)="reset()">Reset</button>
+                                                        <button type="button" class="btn btn-theme"
+                                                            style="margin-left: 25%;" (clcik)="exportCSV">Export
+                                                            csv</button>
+                                                        <button type="button" class="btn btn-theme Go_btn ml-2"
+                                                            (click)="addPractioner()">Add new
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" aria-describedby="user management list">
+                                        <thead>
+                                            <tr class="no_wrap_th text-center">
+                                                <th scope="col" class="Sorting-img">S.No</th>
+                                                <th scope="col" class="Sorting-img">Name</th>
+                                                <th scope="col" class="Sorting-img">Email Address</th>
+                                                <th scope="col" class="Sorting-img">Contact Number</th>
+                                                <th scope="col" class="Sorting-img">D.O.B</th>
+                                                <th scope="col" class="action_td_btn3 Sorting-img">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr *ngFor="let item of practionerData | paginate: { itemsPerPage: itemPerPage, currentPage: currentPage, totalItems: practionerLength}; let i = index"
+                                                class="text-center">
+                                                <td>
+                                                    {{itemPerPage * (currentPage-1)+ i+1}}</td>
+                                                <td class="content">{{item?.name || '--'}}</td>
+                                                <td class="content">{{item?.email || '--'}}</td>
+                                                <td class="content">{{item?.mobileNumber || '--'}}</td>
+                                                <td class="content">{{item?.dateOfBirth | date :'dd/M/yyyy' || '--'}}
+                                                </td>
+
+                                                <td class="justify-content-center d-flex">
+                                                    <button class="btn btn-info ml-2 bt-margin" title="view"
+                                                        (click)="viewPractioner(item?._id)">
+                                                        <i class="fa fa-eye" aria-hidden="true"
+                                                            style="color:white"></i></button>
+                                                    <button class="btn btn-info ml-2 bt-margin"
+                                                        (click)="editPractioner(item?._id)"><i class="fa fa-edit"
+                                                            aria-hidden="true" style="color:white"></i></button>
+                                                    <button class="btn btn-success ml-2 bt-margin"
+                                                        *ngIf="item?.status == 'ACTIVE'"
+                                                        (click)="blockModal(item?._id, 'BLOCK')" title="deactivate"><i
+                                                            class="fa fa-ban"
+                                                            style="color:white;background-color: green"
+                                                            aria-hidden="true"></i></button>
+                                                    <button class="btn btn-danger ml-2 bt-margin"
+                                                        *ngIf="item?.status == 'BLOCK'"
+                                                        (click)="blockModal(item?._id, 'ACTIVE')" title="activate"><i
+                                                            class="fa fa-ban" style="color:white;background-color: red"
+                                                            aria-hidden="true"></i></button>
+                                                    <button class="btn btn-danger ml-2 bt-margin" title="delete"
+                                                        (click)="deleteUserModal(item?._id,DELETE)"><i
+                                                            class="fa fa-trash" aria-hidden="true"
+                                                            style="color:white"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="!practionerData.length">
+                                                <td class="table-no-record" colspan="9">No Record Found</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="custom-pagination mt-2 text-align-end" *ngIf="practionerLength>5">
+                                        <pagination-controls (pageChange)="pagination($event)"></pagination-controls>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- practioner view start -->
+                            <div *ngIf="practionerUserValue==false">
+                                <div class="page_title_block">
+                                    <h1 class="page_title">View Practioner</h1>
+                                </div>
+                                <div class="content-section">
+                                    <div class="order-view  max-WT-700 mrgn-0-auto setting-page">
+                                        <div class="mb40">
+
+                                            <div class="add-store-block input-style view-label-align">
+                                                <div class="form-group row align-items-baseline">
+                                                    <div class="col-md-12" style="text-align: center">
+                                                        <img alt=""
+                                                            src="{{viewPractionerDataa?.profilePic || 'assets/img/profile-img.jpg' }}"
+                                                            style="height: 100px;width: 100px; border-radius: 50%; border: 1px solid black!important;">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <label class="col-md-4 textalignright ">Name <span>:</span></label>
+                                                    <div class="col-md-8 textaligncenter">
+                                                        <div class="form-group">
+                                                            <p style="padding: 0px 5px!important;">
+                                                                {{viewPractionerDataa?.name || '--'}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <label class="col-md-4 textalignright">Email Id
+                                                        <span>:</span></label>
+                                                    <div class="col-md-8 textaligncenter">
+                                                        <div class="form-group ">
+                                                            <p class="content-view">
+                                                                {{viewPractionerDataa?.email || '--'}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row align-items-baseline">
+                                                    <label class="col-md-4 textalignright">Mobile Number
+                                                        <span>:</span></label>
+                                                    <div class="col-md-8 textaligncenter">
+                                                        <div class="form-group ">
+                                                            <p class="content-view">
+                                                                {{viewPractionerDataa?.mobileNumber || '--'}}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row align-items-baseline">
+                                                    <label class="col-md-4 textalignright">Date of birth
+                                                        <span>:</span></label>
+                                                    <div class="col-md-8 textaligncenter">
+                                                        <div class="form-group ">
+                                                            <p class="content-view">
+                                                                {{viewPractionerDataa?.dateOfBirth | date:'dd-MM-yyyy' || '--'}}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-center mt40 mb40">
+
+                                                <button class="btn btn-large  max-WT-150 btn-theme"
+                                                    (click)="changePractionerValue()">Back</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- practioner view end -->
+                            <!-- practioner edit start -->
+                            <div *ngIf="practionerUserEditValue==false">
+                                <div class="page_title_block">
+                                    <h1 class="page_title">Edit Practioner</h1>
+                                </div>
+                                <div class="content-section">
+                                    <div class="order-view  max-WT-700 mrgn-0-auto setting-page">
+                                        <div class="  mb40">
+                                            <div class="add-store-block input-style mb20 mt20 ">
+                                                <form [formGroup]="editPractionerForm" #f="ngForm">
+                                                    <div class="user-profile">
+                                                        <div class="image-box">
+                                                            <img src="{{imageUrl || 'assets/img/profile-img.jpg'}}"
+                                                                id="sub-admin-image" alt="">
+                                                            <label class="upload-label">
+                                                                <input type="file" formControlName="image" name="image"
+                                                                    accept="image/jpg,image/jpeg,image/png" id="image"
+                                                                    (change)="ValidateFileUpload($event)"
+                                                                    maxlength="56">
+                                                                <em class="fa fa-pencil"
+                                                                    style="color: #86559f!important;font-size: 12px"></em>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row align-items-baseline view-label-align">
+                                                        <label class="col-md-4 textalignright ">Name
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group">
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Name" formControlName="firstName"
+                                                                    (keypress)="mainService.preventSpace($event)"
+                                                                    maxlength="60">
+                                                                <div class="text-danger">
+                                                                    <span
+                                                                        *ngIf="editPractionerForm.get('firstName').hasError('required') && (editPractionerForm.get('firstName').dirty || editPractionerForm.get('firstName').touched)">
+                                                                        *Please enter Name.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="editPractionerForm.get('firstName').hasError('pattern') && (editPractionerForm.get('firstName').dirty || f.submitted)">
+                                                                        *Name accept only alphabets.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="editPractionerForm.get('firstName').hasError('minlength') && !(editPractionerForm.get('firstName').hasError('pattern')) && (editPractionerForm.get('firstName').dirty || f.submitted)">
+                                                                        *Minimum length must be 2.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="editPractionerForm.get('firstName').hasError('maxlength') && !(editPractionerForm.get('firstName').hasError('pattern')) && (editPractionerForm.get('firstName').dirty || f.submitted)">
+                                                                        *Maximum length should not more than 20.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row align-items-baseline view-label-align">
+                                                        <label class="col-md-4 textalignright">Email
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group ">
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Email Address" formControlName="email"
+                                                                    (keypress)="mainService.preventSpace($event)"
+                                                                    maxlength="50">
+                                                                <div class="text-danger">
+                                                                    <span
+                                                                        *ngIf="editPractionerForm.get('email').hasError('required') && (editPractionerForm.get('email').dirty || editPractionerForm.get('email').touched)">
+                                                                        *Please enter you email.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="editPractionerForm.get('email').hasError('pattern')">
+                                                                        *Please enter valid email.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row align-items-baseline view-label-align">
+                                                        <label class="col-md-4 textalignright">Mobile Number
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group ">
+                                                                <input type="tel" class="form-control"
+                                                                    placeholder="Mobile Number" formControlName="number"
+                                                                    (keypress)="mainService.preventSpace($event)"
+                                                                    maxlength="15">
+                                                                <div class="text-danger">
+                                                                    <span
+                                                                        *ngIf="editPractionerForm.get('number').hasError('required') && (editPractionerForm.get('number').dirty || editPractionerForm.get('number').touched)">
+                                                                        *Please enter you number.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="editPractionerForm.get('number').hasError('pattern')">
+                                                                        *Please enter valid number.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row align-items-baseline view-label-align">
+                                                        <label class="col-md-4 textalignright">Data Of Birth
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group ">
+                                                                <input type="date" class="form-control"
+                                                                    placeholder="Mobile Number" formControlName="DOB"
+                                                                    (keypress)="mainService.preventSpace($event)"
+                                                                    maxlength="15">
+                                                                <div class="text-danger">
+                                                                    <span
+                                                                        *ngIf="editPractionerForm.get('DOB').hasError('required') && (editPractionerForm.get('DOB').dirty || editPractionerForm.get('DOB').touched)">
+                                                                        *Please enter you DOB.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="editPractionerForm.get('DOB').hasError('pattern')">
+                                                                        *Please enter valid DOB.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="text-center mt40 mb40">
+                                                <button class="btn btn-large  max-WT-150 btn-theme"
+                                                    [disabled]="!editPractionerForm.valid"
+                                                    (click)="UpdatePractioner()">Save</button>
+                                                <button class="btn btn-large  max-WT-150 btn-theme"
+                                                    (click)="changePractionerValue()">Back</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- practioner edit end -->
+                            <!-- practioner add start -->
+                            <div *ngIf="practionerUserAddValue==false">
+                                <div class="page_title_block">
+                                    <h1 class="page_title">Add Practioner</h1>
+                                </div>
+                                <div class="content-section">
+                                    <div class="order-view  max-WT-700 mrgn-0-auto setting-page">
+                                        <div class="  mb40">
+                                            <div class="add-store-block input-style mb20 mt20 ">
+                                                <form [formGroup]="addPractionerForm" #f="ngForm">
+                                                    <div class="user-profile">
+                                                        <div class="image-box">
+                                                            <img src="{{imageUrl || 'assets/img/profile-img.jpg'}}"
+                                                                id="sub-admin-image" alt="">
+                                                            <label class="upload-label">
+                                                                <input type="file" formControlName="image" name="image"
+                                                                    accept="image/jpg,image/jpeg,image/png" id="image"
+                                                                    (change)="ValidateFileUpload($event)"
+                                                                    maxlength="56">
+                                                                <em class="fa fa-pencil"
+                                                                    style="color: #86559f!important;font-size: 12px"></em>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row align-items-baseline view-label-align">
+                                                        <label class="col-md-4 textalignright ">Name
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group">
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Name" formControlName="firstName"
+                                                                    (keypress)="mainService.preventSpace($event)"
+                                                                    maxlength="60">
+                                                                <div class="text-danger">
+                                                                    <span
+                                                                        *ngIf="addPractionerForm.get('firstName').hasError('required') && (addPractionerForm.get('firstName').dirty || addPractionerForm.get('firstName').touched)">
+                                                                        *Please enter Name.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="addPractionerForm.get('firstName').hasError('pattern') && (addPractionerForm.get('firstName').dirty || f.submitted)">
+                                                                        *Name accept only alphabets.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="addPractionerForm.get('firstName').hasError('minlength') && !(addPractionerForm.get('firstName').hasError('pattern')) && (addPractionerForm.get('firstName').dirty || f.submitted)">
+                                                                        *Minimum length must be 2.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="addPractionerForm.get('firstName').hasError('maxlength') && !(addPractionerForm.get('firstName').hasError('pattern')) && (addPractionerForm.get('firstName').dirty || f.submitted)">
+                                                                        *Maximum length should not more than 20.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row align-items-baseline view-label-align">
+                                                        <label class="col-md-4 textalignright">Email
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group ">
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Email Address" formControlName="email"
+                                                                    (keypress)="mainService.preventSpace($event)"
+                                                                    maxlength="50">
+                                                                <div class="text-danger">
+                                                                    <span
+                                                                        *ngIf="addPractionerForm.get('email').hasError('required') && (addPractionerForm.get('email').dirty || addPractionerForm.get('email').touched)">
+                                                                        *Please enter you email.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="addPractionerForm.get('email').hasError('pattern')">
+                                                                        *Please enter valid email.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row align-items-baseline view-label-align">
+                                                        <label class="col-md-4 textalignright">Mobile Number
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group ">
+                                                                <input type="tel" class="form-control"
+                                                                    placeholder="Mobile Number" formControlName="number"
+                                                                    (keypress)="mainService.preventSpace($event)"
+                                                                    maxlength="15">
+                                                                <div class="text-danger">
+                                                                    <span
+                                                                        *ngIf="addPractionerForm.get('number').hasError('required') && (addPractionerForm.get('number').dirty || addPractionerForm.get('number').touched)">
+                                                                        *Please enter you number.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="addPractionerForm.get('number').hasError('pattern')">
+                                                                        *Please enter valid number.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row align-items-baseline view-label-align">
+                                                        <label class="col-md-4 textalignright">Data Of Birth
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group ">
+                                                                <input type="date" class="form-control"
+                                                                    placeholder="Mobile Number" formControlName="DOB"
+                                                                    (keypress)="mainService.preventSpace($event)"
+                                                                    maxlength="15">
+                                                                <div class="text-danger">
+                                                                    <span
+                                                                        *ngIf="addPractionerForm.get('DOB').hasError('required') && (addPractionerForm.get('DOB').dirty || addPractionerForm.get('DOB').touched)">
+                                                                        *Please enter you DOB.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="addPractionerForm.get('DOB').hasError('pattern')">
+                                                                        *Please enter valid DOB.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row align-items-baseline view-label-align">
+                                                        <label class="col-md-4 textalignright">Password
+                                                            <span>:</span></label>
+                                                        <div class="col-md-8 textaligncenter">
+                                                            <div class="form-group ">
+                                                                <input type="password" class="form-control"
+                                                                    placeholder="Password" formControlName="password"
+                                                                    (keypress)="mainService.preventSpace($event)"
+                                                                    maxlength="15">
+                                                                <div class="text-danger">
+                                                                    <span
+                                                                        *ngIf="addPractionerForm.get('password').hasError('required') && (addPractionerForm.get('password').dirty || addPractionerForm.get('password').touched)">
+                                                                        *Please enter you password.
+                                                                    </span>
+                                                                    <span
+                                                                        *ngIf="addPractionerForm.get('password').hasError('pattern')">
+                                                                        *Please enter valid password.
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                            <div class="text-center mt40 mb40">
+                                                <button class="btn btn-large  max-WT-150 btn-theme"
+                                                    [disabled]="!addPractionerForm.valid"
+                                                    (click)="addPractionerDetail()">Add</button>
+                                                <button class="btn btn-large  max-WT-150 btn-theme"
+                                                    (click)="changeValue()">Back</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- practioner add end -->
+                        </div>
+                        <!-- tab link practioner end -->
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- delete user-management modal Start -->
+<div class="modal fade global-modal reset-modal" id="deleteModal">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div class="modal-header d-block text-center modal-header-custm">
+                    <h5 class="modal-title d-inline-block">Delete</h5>
+                </div>
+                <div class="modal-inner-content">
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p *ngIf="this.currTab=='Customer'">Are you sure you want to delete this customer?</p>
+                                <p *ngIf="this.currTab=='Practioner'">Are you sure you want to delete this practioner?
+                                </p>
+                                <p *ngIf="this.currTab=='Corporate'">Are you sure you want to delete this corporate?</p>
+                                <div class="modal-btn-box">
+                                    <button type="submit" class="btn btn-theme" (click)="deleteUser()">Yes</button>
+                                    <button type="button" class="btn btn-danger btn-theme ml-2"
+                                        data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- end delete  user-management modal -->
+
+<!-- delete user-management modal Start -->
+<div class="modal fade global-modal reset-modal" id="DeleteModal">
+        <div class="modal-dialog max-WT-500">
+            <form class="change_password">
+                <div class="modal-content">
+                    <div class="modal-header d-block text-center modal-header-custm">
+                        <h5 class="modal-title d-inline-block">Delete</h5>
+                    </div>
+                    <div class="modal-inner-content">
+                        <div class="modal-body">
+                            <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                                <div class="w-100">
+                                    <p >Are you sure you want to delete this company?</p>
+                                    
+                                    <div class="modal-btn-box">
+                                        <button type="submit" class="btn btn-theme" (click)="DeleteUser()">Yes</button>
+                                        <button type="button" class="btn btn-danger btn-theme ml-2"
+                                            data-dismiss="modal">No</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- end delete  user-management modal -->
+
+<!-- delete multiple hospital modal Start -->
+<div class="modal fade global-modal reset-modal" id="deleteMultiUser">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div class="modal-header d-block text-center modal-header-custm">
+                    <h5 *ngIf="userIds.length == 1" class="modal-title d-inline-block">Delete User?</h5>
+                    <h5 *ngIf="userIds.length > 1" class="modal-title d-inline-block">Delete Users?</h5>
+                </div>
+                <div class="modal-inner-content">
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p *ngIf="userIds.length == 1">Are you sure you want to delete this user?</p>
+                                <p *ngIf="userIds.length > 1">Are you sure you want to delete these users?</p>
+                                <div class="modal-btn-box">
+                                    <button type="submit" class="btn btn-theme" (click)="deleteMultiUser()">Yes</button>
+                                    <button type="button" class="btn btn-danger btn-theme ml-2"
+                                        data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- end delete multiple hospital modal -->
+
+<!-- block user-management modal Start -->
+<div class="modal fade global-modal reset-modal" id="blockModal">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div class="modal-header d-block text-center modal-header-custm">
+                    <h5 *ngIf="this.status=='ACTIVE'" class="modal-title d-inline-block">Unlock</h5>
+                    <h5 *ngIf="this.status=='BLOCK'" class="modal-title d-inline-block">Block</h5>
+                </div>
+                <div class="modal-inner-content">
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p *ngIf="this.status=='ACTIVE' && this.currTab=='Customer'">Are you sure you want to
+                                    unblock this customer?</p>
+                                <p *ngIf="this.status=='BLOCK' && this.currTab=='Customer'">Are you sure you want to
+                                    block this customer?</p>
+                                <p *ngIf="this.status=='ACTIVE' && this.currTab=='Corporate'">Are you sure you want to
+                                    unblock this corporate customer?</p>
+                                <p *ngIf="this.status=='BLOCK' && this.currTab=='Corporate'">Are you sure you want to
+                                    block this corporate customer?</p>
+                                <p *ngIf="this.status=='ACTIVE' && this.currTab=='Practioner'">Are you sure you want to
+                                    unblock this practioner?</p>
+                                <p *ngIf="this.status=='BLOCK' && this.currTab=='Practioner'">Are you sure you want to
+                                    block this practioner?</p>
+                                <div class="modal-btn-box">
+                                    <button type="submit" class="btn btn-theme" (click)="blockUser()">Yes</button>
+                                    <button type="button" class="btn btn-danger btn-theme ml-2"
+                                        data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- end block  user-management modal -->
+<!-- end block  company modal start -->
+<div class="modal fade global-modal reset-modal" id="BlockModal">
+        <div class="modal-dialog max-WT-500">
+            <form class="change_password">
+                <div class="modal-content">
+                    <div class="modal-header d-block text-center modal-header-custm">
+                        <h5 *ngIf="this.status=='ACTIVE'" class="modal-title d-inline-block">Unlock</h5>
+                        <h5 *ngIf="this.status=='BLOCK'" class="modal-title d-inline-block">Block</h5>
+                    </div>
+                    <div class="modal-inner-content">
+                        <div class="modal-body">
+                            <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                                <div class="w-100">
+                                    <p *ngIf="this.status=='ACTIVE'">Are you sure you want to
+                                        unblock this company?</p>
+                                    <p *ngIf="this.status=='BLOCK'">Are you sure you want to
+                                        block this company?</p>
+                                    
+                                    <div class="modal-btn-box">
+                                        <button type="submit" class="btn btn-theme" (click)="BlockUser()">Yes</button>
+                                        <button type="button" class="btn btn-danger btn-theme ml-2"
+                                            data-dismiss="modal">No</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- end block  company modal -->
+
+<!-- logout user-management modal Start -->
+<div class="modal fade global-modal reset-modal" id="logoutModal">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div class="modal-header d-block text-center modal-header-custm">
+                    <h5 class="modal-title d-inline-block">Log Out</h5>
+                </div>
+                <div class="modal-inner-content">
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p>Are you sure you want to Log Out?</p>
+                                <div class="modal-btn-box">
+                                    <button type="submit" class="btn btn-theme" (click)="deleteUser()">Yes</button>
+                                    <button type="button" class="btn btn-danger btn-theme ml-2"
+                                        data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- end logout user-management modal -->
+
+<div class="modal fade global-modal reset-modal" id="delet">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div class="modal-header d-block text-center modal-header-custm">
+                    <h5 class="modal-title d-inline-block">Delete</h5>
+                </div>
+                <div class="modal-inner-content">
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p *ngIf="this.currTab=='Customer'">Are you sure you want to delete this customer?</p>
+                                <p *ngIf="this.currTab=='Practioner'">Are you sure you want to delete this practioner?
+                                </p>
+                                <p *ngIf="this.currTab=='Corporate'">Are you sure you want to delete this corporate?</p>
+                                <div class="modal-btn-box">
+                                    <button type="submit" class="btn btn-theme" (click)="deleteUser()">Yes</button>
+                                    <button type="button" class="btn btn-danger btn-theme ml-2"
+                                        data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade global-modal reset-modal" id="deleted">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div class="modal-header d-block text-center modal-header-custm">
+                    <h5 class="modal-title d-inline-block">Delete</h5>
+                </div>
+                <div class="modal-inner-content">
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p *ngIf="this.currTab=='Customer'">Are you sure you want to delete this customer?</p>
+                                <p *ngIf="this.currTab=='Practioner'">Are you sure you want to delete this practioner?
+                                </p>
+                                <p *ngIf="this.currTab=='Corporate'">Are you sure you want to delete this corporate?</p>
+                                <div class="modal-btn-box">
+                                    <button type="submit" class="btn btn-theme" (click)="deleteUser()">Yes</button>
+                                    <button type="button" class="btn btn-danger btn-theme ml-2"
+                                        data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

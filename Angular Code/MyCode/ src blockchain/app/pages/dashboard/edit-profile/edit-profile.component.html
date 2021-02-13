@@ -1,0 +1,138 @@
+<div class="wrapper">
+                  <main class="middle-content">
+                      <div class="page_title_block">
+                          <h1 class="page_title" style="color:#26272d">Edit Profile</h1>
+                      </div>
+                      <div class="content-section">
+                          <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+                                            <div class="text-left" routerLink="/change-password" >
+                                          <button type="button"  style="margin-left: 72%; " class="btn btn-lg btn-success ">Change Password</button>
+                                    </div>
+                              <div class="main-block-innner mb40 ">
+                                                
+                                  <div class="add-store-block input-style">
+                                        <div class="user-profile">
+                                                <div class="image-box">
+                                                    <img [src]="editImage" class="profile-pic" alt="profile image">
+                                                    <label class="upload-label">
+                                                          <input type="file" class="hidden" accept=".png, .jpg, .jpeg"
+                                                              (change)="uploadImg($event)" />
+                                                          <i class="fas fa-camera" aria-hidden="true"></i>
+                                                      </label>
+                                                </div>
+                                            </div>
+                                        <form [formGroup]="editForm">
+                                      
+                                      <div class="form-group row align-items-baseline">
+                                          <label class="col-md-5">Name </label>
+                                          <div class="col-md-1"> :</div>
+                                          <div class="col-md-6">
+                                              <input type="text" formControlName="name" placeholder="enter your name" class="form-control"
+                                              maxlength="30" (keypress)="service.preventSpace($event)"/>
+                                              <span class="error">
+                                                    <p *ngIf="editForm.get('name').hasError('required') && (editForm.get('name').dirty || editForm.get('name').touched )"
+                                                        class="error" padding>*Field is required</p>
+                                                </span>
+                                              <span class="error">
+                                                    <p *ngIf="editForm.get('name').hasError('pattern') && editForm.get('name').dirty"
+                                                        class="error" padding>*Please enter valid name</p>
+                                                </span>
+                                          </div>
+                                      </div>
+                                      <div class="form-group row align-items-baseline">
+                                          <label class="col-md-5">Email </label>
+                                          <div class="col-md-1"> :</div>
+                                          <div class="col-md-6">
+                                              <input type="text" placeholder="enter your email" class="form-control"
+                                              maxlength="64" (keypress)="service.preventSpace($event)" formControlName="email"/>
+                                              <span class="error">
+                                                    <p *ngIf="editForm.get('email').hasError('required') && (editForm.get('email').dirty || editForm.get('email').touched )"
+                                                        class="error" padding>*Field is required</p>
+                                                </span>
+                                              <span class="error">
+                                                  <p *ngIf="editForm.get('email').hasError('pattern') && editForm.get('email').dirty"
+                                                      class="error" padding>*Please enter valid email</p>
+                                              </span>
+                                              
+                                          </div>
+                                      </div>
+                                      <div class="form-group row align-items-baseline">
+                                          <label class="col-md-5">Phone Number</label>
+                                          <div class="col-md-1"> :</div>
+                                          <div class="col-md-6">
+                                              <input type="tel" formControlName="phone" placeholder="enter your phone number" class="form-control"
+                                              maxlength="15" (keypress)="service.preventSpace($event)"/>
+                                              <span class="error">
+                                                    <p *ngIf="editForm.get('phone').hasError('required') && (editForm.get('phone').dirty || editForm.get('phone').touched )"
+                                                        class="error" padding>*Field is required</p>
+                                                </span>
+                                              <span class="error">
+                                                  <p *ngIf="editForm.get('phone').hasError('pattern') && editForm.get('phone').dirty"
+                                                      class="error" padding>*Please enter valid phone number</p>
+                                              </span>
+                                              
+                                          </div>
+                                      </div>
+                                      <div class="form-group row align-items-baseline">
+                                          <label class="col-md-5">Date of Birth </label>
+                                          <div class="col-md-1"> :</div>
+                                          <div class="col-md-6">
+                                              <input type="date" formControlName="DOB" placeholder="enter your DOB" class="form-control"
+                                              [max]='this.date'/>
+                                              <span class="error">
+                                                    <p *ngIf="editForm.get('DOB').hasError('required') && (editForm.get('DOB').dirty || editForm.get('DOB').touched )"
+                                                        class="error" padding>*Field is required</p>
+                                                </span>
+                                          </div>
+                                      </div>
+                                      <div class="form-group row align-items-baseline">
+                                          <label class="col-md-5">Gender </label>
+                                          <div class="col-md-1"> :</div>
+                                          <div class="col-md-6">
+                                              <input type="text" formControlName="gender" placeholder="enter your male" class="form-control"
+                                              minlength="1" maxlength="7" (keypress)="service.preventSpace($event)"/>
+                                              <span class="error">
+                                                    <p *ngIf="editForm.get('gender').hasError('required') && (editForm.get('gender').dirty || editForm.get('gender').touched )"
+                                                        class="error" padding>*Field is required</p>
+                                                </span> 
+                                                <span class="error">
+                                                        <p *ngIf="editForm.get('gender').hasError('pattern') && (editForm.get('gender').dirty || editForm.get('gender').touched )"
+                                                            class="error" padding>*Please enter valid gender</p>
+                                                    </span> 
+                                          </div>
+                                      </div>
+                                      <div class="form-group row align-items-baseline">
+                                          <label class="col-md-5">Address </label>
+                                          <div class="col-md-1"> :</div>
+                                          <div class="col-md-6">
+                                              <input type="text" formControlName="address" placeholder="enter your address" class="form-control"
+                                              minlength="50" maxlength="100"
+                                              (keypress)="service.preventSpace($event)"/>
+                                              <span class="error">
+                                                    <p *ngIf="editForm.get('address').hasError('required') && (editForm.get('address').dirty || editForm.get('address').touched )"
+                                                        class="error" padding>*Field is required</p>
+                                                </span>
+                                          </div>
+                                      </div>
+                                      <div class="text-left mt40">
+                                          <a class="btn btn-large max-WT-200 font-100 btn-green mr-2" 
+                                              routerLinkActive="router-link-active" (click)="updateProfile()">Update Profile</a>
+                                          <a href="javascript:void(0)" class="btn btn-large max-WT-200 font-100 btn-green ml5"
+                                              [routerLink]="['/setting']">Cancel</a>
+                                      </div>
+                                      </form>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </main>
+              </div>
+              <footer>
+                <footer>
+                    <div class="container-fluid">
+                        <p class="copyright">Alende  <strong class="theme-text-color"></strong> 
+                            </p>
+                    </div>
+                </footer>
+              
+

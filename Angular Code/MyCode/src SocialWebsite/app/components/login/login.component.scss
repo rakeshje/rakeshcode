@@ -1,0 +1,40 @@
+.otpBox{
+    border: 1px solid #cecece;
+    width: 70px;
+    height: 40px;
+    border-radius: 15px;
+    margin-left: 5px;
+}
+
+.checkmarkNew{
+    height: 25px;
+    width: 25px;
+    background-color: #ecdfdf;;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.remeberBox input:checked ~ .checkmarkNew {
+    background-color: #36f321;
+}
+
+.remeberBox .checkmarkNew:after {
+    left: 7px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.timer {
+    width: 100%;
+    text-align: right;
+    margin-top: 10px;
+}
+.ngxmdp{
+right:64px;
+}

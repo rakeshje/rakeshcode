@@ -1,0 +1,490 @@
+
+<!-- Start Right Bar -->
+<app-rightsidemenu></app-rightsidemenu>
+<!-- Close Right Bar -->
+
+    <!-- Satrt Page Content -->
+    <div class="page-wrap">
+        <div class="container-fluid py-4">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="left-menu card">
+                      <app-sidemenu></app-sidemenu>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="page-content">
+                        <div class="card post-box main-post">
+                            <div class="post-warp">
+                                <div class="post-content-setting">
+                                    Gaming Video </div>
+                            </div>
+                            <div class="post-meta">
+                                <div class="tab">
+                                    <div class="tab pointer">
+                                    <div [ngClass]="{active : selected === 'gamingvideo'}" (click)="selectTab('gamingvideo')">
+                                      Gaming Video
+                                    </div>
+                                    <div [ngClass]="{active : selected === 'addgamingvideo'}" (click)="selectTab('addgamingvideo')">Add Gaming Video </div>
+                                    <div [ngClass]="{active : selected === 'viewmygamingvideo'}" (click)="selectTab('viewmygamingvideo')">
+                                      View My Gaming Video
+                                    </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!---Add Gaming Video Starts-->
+                        <form [formGroup]="AddGamingVideoForm" novalidate autocomplete="off">
+                        <div class="card post-field main-post" *ngIf="selected == 'addgamingvideo'">
+                            <div class="field-wrap">
+                                <div class="profile-added">
+                                  <div class="profile-detail">
+                                    <!-- <img [src]="base64Image" alt="loading..." *ngIf="type != 'video/mp4' && type != 'video/mov' && type != 'video/flv'">  -->
+                                    <video style="height: 300px;width:100%;" [src]="base64Image" controls="type === 'video/mp4' || type === 'video/mov' || type === 'video/flv'">
+                  
+                                  </video>
+                                    <div class="add-user" >
+                                    <img src="assets/images/plus.png">
+                                    <input style="position: absolute;     
+                                        width: 110px;                                         
+                                          opacity: 0;
+                                          top: 0px;
+                                          margin-left: -92px;" type="file" (change)="handleFileInput($event)">
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="field-area">
+                                    <h6 class="heading-title">Title</h6>
+                                    <input class="holder" type="text" placeholder="Your video title"formControlName="gamingVideoTitle">
+                                    <span class="error" *ngIf="gamingVideoTitle.invalid && (gamingVideoTitle.dirty || gamingVideoTitle.touched)">
+                                      <span *ngIf="gamingVideoTitle.errors.required" padding>
+                                          *Please enter gaming video title
+                                      </span>
+                                  <!-- <span *ngIf="gamingVideoTitle.errors.pattern" padding>
+                                          * name must be characters only
+                                      </span> -->
+                                  </span>
+
+                                    <h6 class="heading-title">Description</h6>
+                                    <textarea class="selectdetail" rows="4" cols="50" placeholder="Your video description"formControlName="gamingVideoDescription"></textarea>
+                                    <span class="error" *ngIf="gamingVideoDescription.invalid && (gamingVideoDescription.dirty || gamingVideoDescription.touched)">
+                                      <span *ngIf="gamingVideoDescription.errors.required" padding>
+                                          *Please enter gaming video description
+                                      </span>
+                                  <!-- <span *ngIf="gamingVideoTitle.errors.pattern" padding>
+                                          * name must be characters only
+                                      </span> -->
+                                  </span>
+                                  <div class="job-post">
+                                      <button type="button" class="btn btn-default" [disabled]="!AddGamingVideoForm.valid" (click)="showModal()" >
+                                             Upload
+                                          </button>
+                                  <button type="submit" class="addVank"  (click)="resetAddGamingVideoForm()">Cancel</button>
+                              </div>
+                                </div>
+                               
+                            </div>
+                        </div>
+                        </form>
+                        
+                         <!---Add Gaming Video Ends-->
+
+                         <!----Searching starts-->
+                         <div class="card post-box post-search" *ngIf="selected=='viewmygamingvideo'|| selected=='gamingvideo'">
+                          <div class="post-wrap">
+                                  <form class="search-form" novalidate autocomplete="off">
+                                      <input type="text" placeholder="Search by game name" class="form-control" (keyup)="searchTerm$.next($event.target.value)">
+                                  </form>
+                        </div>
+                        </div>
+                        <!---Searching ends-->
+
+                        <!----All Gaming Video Starts-->
+                        <div  *ngIf="selected == 'gamingvideo'">
+                        <div class="card post-box main-post"  *ngFor="let data of gamingList; let i = index">
+                            <div class="post-warp">
+                              <div class="post-content">
+                                <div class="userimg-col"><img class="user-icon" [src]="data?.userId?.profilePic"></div>
+                                <div class="content-col">
+                                  <div class="post-header">
+                                    <div class="elips">
+                                      <i class="fa fa-ellipsis-v doted" (click)="showList(i)"></i>
+                                      <div [ngClass]="data.dynamicClass">
+                                        <p (click)="actionOnEventList('DELETE',data._id)">Delete</p>
+                                        <!-- <p (click)="actionOnEventList('hide')" >Hide</p> -->
+                                        <!-- <p (click)="actionOnEventList('archieve')">Archive</p> -->
+                                      </div>
+                                    </div>
+                                    <h4 class="post-title">{{data.title}}</h4>
+                                    <span class="post-time">{{data.location}}</span>
+                                    <span class="post-time">{{data.showTime}}</span>
+                                  </div>
+                                  <div class="post-summry">
+                                    <img style="width:100%;" [src]="data.PicVideo" class="img-fluid" *ngIf="data.PicVideo">
+                                    <video [src]="data.video" controls *ngIf="data.video" style="width:100%" (click)="viewers(data._id,data.userId._id)"></video>
+                                    <span *ngIf="data.video">{{data.viewers.length}}views</span>
+                                    <p>{{data.description}}</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="post-me">
+                                <a href="javascript:;" (click)="addLikeGame(data,'true')"><img src="assets/images/like.png"> </a>
+                                <a href="javascript:;" (click)="addLikeGame(data,'true')"><img src="assets/images/heart.png"> </a>
+                                <a href="javascript:;" (click)="openCommentModal(data)"><img class="cahtView" src="assets/images/chat-comment-oval-speech-bubble-with-text-lines.png"></a>
+                                <a class="emoji" href="javascript:;" (click)="addLikeGame(data,'true')"><img src="assets/images/emojiii.png"></a>
+                               
+                                <a href="javascript:;" *ngIf="data.likes.length > 0 && !data.myLike" (click)="openLikesModal(data)"><img src="assets/images/Layer 76.png" > {{data.likes[data.likes.length - 1]['userName']}} and {{data.likes.length - 1}} others</a>
+                                <a href="javascript:;" *ngIf="data.likes.length > 0 && data.myLike" (click)="openLikesModal(data)"><img src="assets/images/Layer 76.png" > You and {{data.likes.length - 1}} others</a>
+                                <a class="emojiiIcon" href="javascript:;" *ngIf="data.comments.length > 0" (click)="openCommentModal(data)">{{data.comments.length}} comments</a>
+                                </div>
+                            <div class="post-meta">
+                              <a href="javascript:;" *ngIf="!data.myLike" (click)="addLikeGame(data,'true')"><img src="assets/images/thumb-up.png"> Like</a>
+                              <a href="javascript:;" *ngIf="data.myLike" (click)="addLikeGame(data,'false')"><img src="assets/images/blue_thums_up.jpg"> Like</a>
+            
+                              <a href="javascript:;"(click)="openCommentModal(data)" ><img src="assets/images/chat-comment-oval-speech-bubble-with-text-lines.png" > Comment</a>
+                              <!-- <a href="javascript:;"><img src="assets/images/Layer 76.png"> Share</a> -->
+                              <button   (click)="openModal(data._id)">
+                                <a href="javascript:;"><img src="assets/images/Layer 76.png">Share</a>
+                              </button>
+                            </div>
+                          </div>
+                              <!-- when gaming is empty-->
+                                  <div class="card post-box main-post" style="padding: 20px;" *ngIf="length == 0">
+                                    <h3>No Record Found!</h3> 
+                                  </div>
+                          </div>
+
+                         <!----All Gaming Video Ends-->
+
+
+
+
+                         <!----View My Gaming Video Starts-->
+                        
+                        <div *ngIf="selected == 'viewmygamingvideo'">
+                         <div class="card post-box main-post" *ngFor="let data of myPostedGamingArr; let i = index">
+                            <div class="post-warp">
+                              <div class="post-content">
+                                <div class="userimg-col"><img class="user-icon" [src]="data['userId']['profilePic']"></div>
+                                <div class="content-col">
+                                  <div class="post-header">
+                                    <div class="elips">
+                                      <i class="fa fa-ellipsis-v doted" (click)="showList1(i)"></i>
+                                      <div [ngClass]="data.dynamicClass">
+                                        <p (click)="actionOnEventList('DELETE',data._id)">Delete</p>
+                                        <!-- <p (click)="actionOnEventList('hide')" >Hide</p> -->
+                                        <!-- <p (click)="actionOnEventList('archieve')">Archive</p> -->
+                                      </div>
+                                    </div>
+                                    <h4 class="post-title">{{data.title}}</h4>
+                                    <span class="post-time">{{data.location}}</span>
+                                    <span class="post-time">{{data.showTime}}</span>
+                                  </div>
+                                  <div class="post-summry">
+                                    <img style="width:100%;" [src]="data.PicVideo" class="img-fluid" *ngIf="data.PicVideo">
+                                    <video [src]="data.video" controls *ngIf="data.video" style="width:100%" (click)="viewers(data._id)"></video>
+                                    <span *ngIf="data.video">{{data.viewers.length}}views</span>
+                                    <p>{{data.description}}</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="post-me">
+                                <a href="javascript:;" (click)="addLikeGame(data,'true')"><img src="assets/images/like.png"> </a>
+                                <a href="javascript:;" (click)="addLikeGame(data,'true')"><img src="assets/images/heart.png"> </a>
+                                <a href="javascript:;" (click)="openCommentModal(data)"><img class="cahtView" src="assets/images/chat-comment-oval-speech-bubble-with-text-lines.png"></a>
+                                <a class="emoji" href="javascript:;" (click)="addLikeGame(data,'true')"><img src="assets/images/emojiii.png"></a>
+                                <a href="javascript:;" *ngIf="data.likes.length > 0 && !data.myLike" (click)="openLikesModal(data)"><img src="assets/images/Layer 76.png" > {{data.likes[data.likes.length - 1]['userName']}} and {{data.likes.length - 1}} others</a>
+                                <a href="javascript:;" *ngIf="data.likes.length > 0 && data.myLike" (click)="openLikesModal(data)"><img src="assets/images/Layer 76.png" > You and {{data.likes.length - 1}} others</a>
+                                <a class="emojiiIcon" href="javascript:;" *ngIf="data.comments.length > 0" (click)="openCommentModal(data)">{{data.comments.length}} comments</a>
+                                </div>
+                            <div class="post-meta">
+                              <a href="javascript:;" *ngIf="!data.myLike" (click)="addLikeGame(data,'true')"><img src="assets/images/thumb-up.png"> Like</a>
+                              <a href="javascript:;" *ngIf="data.myLike" (click)="addLikeGame(data,'false')"><img src="assets/images/blue_thums_up.jpg"> Like</a>
+
+                                
+
+                              <a href="javascript:;"(click)="openCommentModal(data)" ><img src="assets/images/chat-comment-oval-speech-bubble-with-text-lines.png" > Comment</a>
+                              <a href="javascript:;"><img src="assets/images/Layer 76.png"> Share</a>
+                              
+                            </div>
+                          </div>
+                          <!-- when gaming is empty-->
+                            <div class="card post-box main-post" style="padding: 20px;" *ngIf="length == 0">
+                              <h3>No Record Found!</h3> 
+                            </div>
+                      </div>
+
+                         <!----View My Gaming Video Starts-->
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+             
+                        <!-- Button trigger modal -->
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                 
+                                    <div class="modal-body detail-about">
+                                      
+                                          For uploading the video you have to pay 10$
+                                    </div>
+                                    <div class="modal-footer aarangebtn">
+                                        <button type="button" class="btn btn-secondary cncl-btn" data-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-primary cncl-btn" data-dismiss="modal" (click)="makePayment()">Ok</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="exampleModalBank" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                              <div class="modal-content">
+                               
+                                  <div class="modal-body detail-about">
+                                    
+                                    For posting the product you need to add bank details
+                                  </div>
+                                  <div class="modal-footer aarangebtn">
+                                      <button type="button" class="btn btn-secondary cncl-btn" data-dismiss="modal">Cancel</button>
+                                      <button type="button" class="btn btn-primary cncl-btn" data-dismiss="modal" (click)="AddBank()">Ok</button>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                        
+                          <!-- Comment Modal -->
+                        <div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                              
+                              <div class="modal-content" style="margin-top: 92px; height: 400px; padding: 15px 0px;cursor:pointer;">
+                                <button type="button" class="close" data-dismiss="modal" (click)="closeModal()">&times;</button>
+
+                                  <div class="modal-body" style="width: 100%;text-align: left;" >
+                                    
+                                      <a  href="javascript:;" (click)="addLikeGame(data,'true')"><img src="assets/images/like.png"> </a>
+                                      <a class="emoji"  href="javascript:;" (click)="addLikeGame(data,'true')"><img src="assets/images/emojiii.png"></a>
+                                      <a  href="javascript:;" (click)="addLikeGame(data,'true')"><img src="assets/images/heart.png"> </a>
+                                      <!-- <span style=" cursor:pointer" *ngIf="likes.length > 0">Mainak and.... <img src="assets/images/rightarrow.png"> </span> -->
+                                      <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                                  </div>
+                                  <div class="addScroll">
+                                  <div class="modal-footer aarangebtn" *ngFor="let data of commentsArr; let i=index">
+
+                                      <div class="userimg-col"><img class="user-icon" style="border-radius: 69%; height: 60px;" [src]="data['userPic']" class="imageComment"></div>
+                                      <div class="field-area" style="width: 75%; margin-left: 2%;">
+                                        <!-- <input class="holder" type="text"  maxlength="64" >  -->
+                                        <label class="holder" *ngIf="!data.showEdit">{{data.comment}} </label>
+                                        <input class="holder" type="text" name="edit_comment" [(ngModel)]="obj.edit_comment" (keyup.enter)="callEditApi($event,data)" style="color:green" *ngIf="data.showEdit">
+                                        <!-- <span><i class="fa fa-ellipsis-v doted" (click)="deleteComment()"></i></span> -->
+                                        <span class="post-time">{{data.showTime}}</span>
+                                    
+                                  </div>
+                                  <a (click)="getId(data._id)" style="margin-bottom:35px"  *ngIf="data.showTrashIcon">  <i class="fa fa-trash" aria-hidden="true"  data-toggle="tooltip"  title="Delete" ></i></a> 
+                                  <a (click)="editComment(data, i)" style="margin-bottom:35px" *ngIf="data.showEditIcon"> <i  class="fa fa-edit" aria-hidden="true"  data-toggle="tooltip"  title="Edit" ></i></a>
+                                  <a *ngIf="userid!=data?.commentedUser" (click)="replyComment(data)" style="margin-bottom:35px"><i class="fa fa-reply"></i></a>
+                                </div>
+                              </div>
+                                
+                                  
+                                  <div class="modal-footer aarangebtn">
+                                  <div class="field-area" style="width: 81%; margin-left: 2%;">
+                                          <input class="holder" type="text" placeholder="Write a comment..." (keypress)="toCheckSpace($event)" maxlength="64" [(ngModel)]="obj.comment"> <img class="user-icon" src="assets/images/send.png" style="width:8%;height: 5%; margin-top: -17%;
+                                          margin-left: 110%; cursor:pointer" (click)="addDeleteComment('true')">
+                                  </div>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
+
+
+                        <!----Liked Modal-->
+
+                        <div class="modal fade" id="likedmodal" tabindex="-1" role="dialog" aria-labelledby="likedmodal" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered" role="document">
+                              <div class="modal-content" style="margin-top: 92px; height: 275px; padding: 15px 0px;">
+                                <button type="button" class="close" data-dismiss="modal" (click)="closeModal()">&times;</button>
+
+                                  <div class="modal-body" style="width: 100%;text-align: center;"  >
+                                      <h4 class="modal-title" style="color:#3CC114">People who reacted</h4>
+                                     
+                                  </div>
+                                  <div class="addScroll">
+
+                                    <div class="modal-footer aarangebtn" >
+                                      <span class="userimg-col"><img class="user-icon" [src]="likesArr.userPic" style="height: 51px;margin-left: 14%;"></span>
+                                      <span class="field-area" style="width: 75%; margin-left: -4%; margin-top: 6%;">
+                                        
+                                          <a class="emoji"  href="javascript:;" (click)="addLikeGame(data,'true')"><img src="assets/images/emojiii.png"></a>
+                                      </span><span style="padding-right: 11%;width: 100%">{{likesArr['userName']}}</span>
+                                      <button type="button" class="btn btn-success" style="width: 100%" (click)="addFriend(likesArr['likedId'])" *ngIf=" likesArr.likedId != myId">Add Friend</button>
+                                      <button type="button" class="btn btn-success" style="width: 100%" *ngIf="likesArr.likedId != myId">Request Sent</button>
+                                      <button type="button" class="btn btn-success" style="width: 100%" *ngIf="likesArr.likedId == myId">Liked</button>
+                                  </div>
+                                 </div>
+                              </div>
+                          </div>
+                        </div>
+
+                        <!-- Share post start -->
+<!-- <div class="modal fade" id="sharePost" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-content">
+    <div class="modal-body detail-about">
+      <form class="search-form">
+        <input type="text" placeholder="Search" class="form-control" (click)="searchFriend()">
+      </form>
+      <div *ngFor="let friend of friendsList" style="text-align: left;">
+        <input type="checkbox" (change)="chooseFriend(friend, $event)">
+        <img style="height: 60px; width: 60px; border-radius: 30px; padding: 10px;" [src]="friend?.profilePic">
+        <span>{{friend?.firstName}}</span>
+      </div>
+      <div class="btnnns">
+        <div class="flexProp">
+          <button type="submit" class="btn btn-danger btn-return" style="width: auto;"
+            data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-success paynow" (click)="shareEvent()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div> -->
+
+<div class="modal fade" id="sharePost" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-content">
+    <div class="modal-body detail-about">
+      <div style="margin-top: 30px;" class="">
+        <ng-multiselect-dropdown  
+          [data]="dropdownList" [(ngModel)]="selectedItems" [settings]="dropdownSettings"
+          (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)"
+          (onDeSelectAll)="onDeSelectAll($event)" (onDeSelect)="onItemDeSelect($event)">
+        </ng-multiselect-dropdown>
+      </div>
+      <div class="btnnns">
+        <div class="flexProp">
+          <button type="submit" class="btn btn-danger btn-return" style="width: auto;"
+            data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-success paynow" (click)="shareEvent()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+                      
+                <!-- Payment Modal -->
+                              <div class="modal fade" id="payModal" role="dialog">
+                                <div class="modal-dialog">
+                                
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                  <!-- <div class="modal-header" style="padding:35px 50px;">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4><span class="glyphicon glyphicon-lock"></span> Login</h4>
+                                  </div> -->
+                                  <div class="modal-body" style="padding:40px 50px; margin-top: 55px;">
+                                    <form role="form" [formGroup]="payForm" novalidate autocomplete="off">
+                                        <div class="form-group">
+                                            <button type="button" class="close" data-dismiss="modal" (click)="closeModal()">&times;</button>
+                                            <label for="usrname"><span class="glyphicon glyphicon-user"></span>Bank Account</label>
+                                            <select class="form-control" formControlName="bank" (change)="getCardData($event.target.value)">
+                                              <option value="">-SELECT-</option>
+                                              <option [value]="data.bankName" *ngFor="let data of bankList; let i = index">{{data.bankName}}</option>
+                                              <!-- <option value=""></option> -->
+                                            </select>
+
+                                            <span class="error" *ngIf="bank.invalid && (bank.dirty || bank.touched)">
+                                                <span *ngIf="bank.errors.required" padding>
+                                                  *Please select bank account
+                                                </span>
+                                            </span>
+                                          </div>
+
+
+                                      <!-- <div class="form-group">
+                                        <label for="usrname"><span class="glyphicon glyphicon-user"></span> Expiry Date</label>
+                                        <div class="email" style="display:flex; align-items: center; position:relative;">
+                                  <input class="form-control calendarNew" style="float:none" placeholder="Select a date" ngx-mydatepicker
+                                                        name="expiry_date" formControlName="expiry_date" [options]="myOptions" #dp="ngx-mydatepicker"
+                                                        />
+                                                    <span style="display:flex" class="form-group-btn calendar1">
+                                                        <span style="    margin-right: 10px;" (click)="dp.toggleCalendar()">
+                                                          <i style="color:#818181" class="fa fa-calendar"></i>
+                                                        </span>
+                                                        <span  (click)="dp.clearDate()">
+                                                          <i style="color:#818181" class="far fa-times-circle"></i>
+                                                        </span>
+                                                    </span>
+                                                    
+                                      </div>
+                                      <span class="error" *ngIf="expiry_date.invalid && (expiry_date.dirty || expiry_date.touched)">
+                                        <span *ngIf="expiry_date.errors.required" padding>
+                                          *Please select expiry date
+                                        </span>
+                                    </span>
+                                      </div> -->
+                                      
+                                      <div class="form-group">
+                                        <label for="usrname"><span class="glyphicon glyphicon-user"></span> Expiry Month/Year</label>
+                                        <!-- <div class="email" style="display:flex; align-items: center; position:relative;">
+                                              <input class="form-control calendarNew" style="float:none" placeholder="Select a date" ngx-mydatepicker
+                                                        name="expiry_date" formControlName="expiry_date" [options]="myOptions" #dp="ngx-mydatepicker"
+                                                        />
+                                                     <span style="display:flex" class="form-group-btn calendar1">
+                                                        <span style="    margin-right: 10px;" (click)="dp.toggleCalendar()">
+                                                           <i style="color:#818181" class="fa fa-calendar"></i>
+                                                        </span>
+                                                        <span  (click)="dp.clearDate()">
+                                                           <i style="color:#818181" class="far fa-times-circle"></i>
+                                                        </span>
+                                                     </span>
+                                                    
+                                      </div> -->
+                                      <div class="email" style="display:flex; align-items: center; position:relative;">
+                                        <!-- <input class="form-control calendarNew" style="float:none" placeholder="Select a date" 
+                                        name="expiry_date" formControlName="expiry_date" [options]="myOptions"/> -->
+                                        <input type="text" class="form-control calendarNew" style="float:none" placeholder="(MM/YYYY)" formControlName="expiry_date" />
+                                        </div>
+                                      <span class="error" *ngIf="expiry_date.invalid && (expiry_date.dirty || expiry_date.touched)">
+                                        <span *ngIf="expiry_date.errors.required" padding>
+                                           *Please select expiry date
+                                        </span>
+                                     </span>
+                                      </div>
+
+
+                                      <div class="form-group">
+                                        <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> CVV</label>
+                                        <input type="password" class="form-control" id="psw" placeholder="Enter CVV" (keypress)="toCheckIfNumber($event)" formControlName="cvv" maxlength="3">
+                                        <span class="error" *ngIf="cvv.invalid && (cvv.dirty || cvv.touched)">
+                                            <span *ngIf="cvv.errors.required" padding>
+                                              *Please enter cvv
+                                            </span>
+                                        </span>
+                                      </div>
+                                  
+                                        <button type="submit" class="btn btn-success btn-block" [disabled]="!payForm.valid" (click)="addGamingVideo()"><span class="glyphicon glyphicon-off"></span>Proceed</button>
+                                    </form>
+                                  </div>
+                                  </div>
+                                  </div>
+                                  </div>
+
+                         <!----hover on icons of comment modal--->
+                        <script>
+                            $(document).ready(function(){
+                                $('[data-toggle="tooltip"]').tooltip();   
+                            });
+                        </script>

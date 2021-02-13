@@ -1,0 +1,111 @@
+<!-- Start Right Bar -->
+<app-rightsidemenu></app-rightsidemenu>
+<!-- Close Right Bar -->
+<!-- Satrt Page Content -->
+<div class="page-wrap">
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="left-menu card">
+          <app-sidemenu></app-sidemenu>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="page-content">
+          <div class="card post-box main-post">
+            <div class="post-warp">
+              <div class="post-content-setting">
+                Choose Card
+              </div>
+            </div>
+          </div>
+          <div class="card post-field main-post">
+            <div class="field-wrap">
+              <div class="backgrnd">
+                <div *ngIf="cards.length">
+                  <div class=" bank" style="padding-top:35px; padding-left:20px;" *ngFor="let data of cards">
+                    <div class="container" style="font-size: 15px; margin-top: 20px;">
+                      <img style="margin-right: 15px; width: 60px;" src="assets/images/icici.png" alt="">
+                      <strong>{{data.bankName}}</strong> {{data.newNumber}}
+                      <input type="radio" name="card" [value]="data._id" [id]="data._id" (change)="chooseCard($event, data)">
+                    </div>
+                    <div class="edit-pencil">
+                      <em class="fas fa-pencil-alt edit-icon-sh"></em>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="!cards.length">
+                  No cards added
+                </div>
+                <button class="btn btn-success paynow" style="float: right;" (click)="addBank()">Add bank</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end -->
+    </div>
+  </div>
+</div>
+
+<!-- Change status Modal -->
+<div class="modal fade" id="chooseCard" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body detail-about">
+        <form>
+          <div class="form-group">
+            <label>Expiry date</label>
+            <input class="holder" placeholder="Select a date" ngx-mydatepicker name="accountHolderExpiryDate"
+              [(ngModel)]="editCard.expiryDate" [options]="myOptions" #dp="ngx-mydatepicker" />
+            <span style="display:flex" class="form-group-btn calendar1">
+              <span style="    margin-right: 10px;" (click)="dp.toggleCalendar()">
+                <em style="color:#818181" class="fa fa-calendar"></em>
+              </span>
+              <span (click)="dp.clearDate()">
+                <em style="color:#818181" class="far fa-times-circle"></em>
+              </span>
+            </span>
+          </div>
+          <div class="form-group">
+            <label>CVV</label>
+            <input type="text" class="form-control" [(ngModel)]="editCard.cvv" name="cvv" autocomplete="off"
+              (keyup)="testCvv()">
+            <span *ngIf="!validateCvv" class="errorCvv">Enter valid CVV</span>
+          </div>
+        </form>
+        <div class="btnnns">
+          <div class="flexProp">
+            <button type="submit" class="btn btn-danger btn-return" style="width: auto;"
+              (click)="cancel('chooseCard')">Cancel</button>
+            <button type="submit" class="btn btn-success paynow"
+              [disabled]="!editCard.cvv || !editCard.expiryDate || !validateCvv" (click)="addCard()">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal End -->
+
+<!-- Change status Modal -->
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-body detail-about">
+        <span *ngIf="type == 'market' || type == 'bidding'">Congratulation you have successfully posted the product,
+          ID({{productId}})</span>
+        <span *ngIf="type == 'advertisement'">Congratulation you have successfully posted the advertisement</span>
+        <div class="btnnns">
+          <div class="flexProp">
+            <button type="submit" class="btn btn-success paynow" (click)="addNew()">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal End -->

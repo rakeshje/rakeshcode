@@ -1,0 +1,38 @@
+.tab-order-view {
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 0 10px #ccc;
+  width: 800px;
+}
+.tab-over-view{
+  border: 1px solid #d3d9df;
+  margin-bottom: 10px;
+}
+
+.tab-over-view button {
+    background-color: #2F3ABD;
+    border-color: #d3d9df;
+    text-align: center;
+    width: 20%;
+}
+
+.tab-over-view button:hover {
+  background-color: #3056B3;
+  border-color: #d3d9df;
+  text-align: center;
+  width: 20%;
+}
+
+.tab-over-view button:active {
+  background-color:#2a86d1;
+  border-color: #d3d9df;
+  text-align: center;
+  width: 20%;
+}
+
+.tab-btn-container {
+  padding: 20px;
+}
+td {
+  text-align: center
+}

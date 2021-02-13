@@ -1,0 +1,139 @@
+<div class="wrapper">
+     <main class="middle-content">
+         <div class="page_title_block">
+             <h1 class="page_title text-center"> ROLE  MANAGEMENT</h1>
+         </div>
+         <div class="content-section">
+             <div class="outer-box">
+                 <div class="global-table no-radius p0">
+                     <div class="tab-content1">
+                         <div class="row">
+                             <div class="col-md-12">
+                                 <div class="order-view main-block-innner mb40 mt40">
+                                     <div class="add-store-block input-style">
+                                         <div class="form-group row">
+                                             <label class="col-md-6">  Name :</label>
+                                             <div class="col-md-6">
+                                                 <label>{{viewData?.roleName || '--'}}</label>
+                                             </div>
+                                         </div>
+                                         <div class="form-group row">
+                                             <label class="col-md-6"> Role and Accessibility: </label>
+                                         </div>
+                                         <div class="form-group row">
+                                                <form [formGroup]="roleForm">
+                                            <div class="col-md-12">
+                                                <div class="form-group row">
+                                                    <div class="col-md-6" *ngIf="permissions?.permissions[0]?.dashboard == true ">
+                                                        <input type="checkbox" formControlName="dashboard"
+                                                        checked/>
+                                                        <span class="col-md-6">
+                                                            Dashboard
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-md-6" *ngIf="permissions?.permissions[0]?.retailerManagement == true ">
+                                                        <input type="checkbox" formControlName="Retailer"
+                                                            
+                                                        checked/>
+                                                        <span class="col-md-6">
+                                                             Retailer  Mangement
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-md-6" *ngIf="permissions?.permissions[0]?.faqManagement == true ">
+                                                        <input type="checkbox" formControlName="FAQ"
+                                                        checked/>
+                                                        <span class="col-md-6">
+                                                             FAQ Management
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-md-6" *ngIf="permissions?.permissions[0]?.contactUsManagement == true ">
+                                                        <input type="checkbox" formControlName="Contact"
+                                                        checked/>
+                                                        <span class="col-md-6">
+                                                             Contact Us Management
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-md-6" *ngIf="permissions?.permissions[0]?.categoryManagement == true ">
+                                                        <input type="checkbox" formControlName="Catgeory"
+                                                        checked/>
+                                                        <span class="col-md-6">
+                                                             Catgeory Management
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-md-6" *ngIf="permissions?.permissions[0]?.userManagement == true ">
+                                                        <input type="checkbox" formControlName="User"
+                                                        checked/>
+                                                        <span class="col-md-6">
+                                                             User Management
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                 
+                                                <div class="form-group row">
+                                                    <div class="col-md-6" *ngIf="permissions?.permissions[0]?.couponManagement == true ">
+                                                        <input type="checkbox" formControlName="Coupon"
+                                                        checked/>
+                                                        <span class="col-md-6">
+                                                             Coupon Management
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-md-6" *ngIf="permissions?.permissions[0]?.transactionManagement == true ">
+                                                        <input type="checkbox" formControlName="Transaction"
+                                                        checked/>
+                                                        <span class="col-md-6">
+                                                            Transaction Management
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="form-group row">
+                                                    <div class="col-md-6" *ngIf="permissions?.permissions[0]?.staticContentManagement == true ">
+                                                        <input type="checkbox" formControlName="Static"
+                                                        checked/>
+                                                        <span class="col-md-6">
+                                                            Static Management
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-md-6" *ngIf="permissions?.permissions[0]?.subCategoryManagement == true ">
+                                                        <input type="checkbox" formControlName="SubCatgeory"
+                                                        checked/>
+                                                        <span class="col-md-6" >
+                                                             SubCatgeory Management
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" >
+                                                   <div class="col-md-6" *ngIf="permissions?.permissions[0]?.martManagement == true ">
+                                                       <input type="checkbox" formControlName="Mart"
+                                                       checked/>
+                                                       <span class="col-md-6">
+                                                            Mart Management
+                                                       </span>
+                                                   </div>
+                                              </div>
+                                            </div>
+                                        </form>
+                                        </div>
+                                    
+                                        
+                                         
+                                     </div>
+                                     <div class="form-group">
+                                         <div class="text-center mt40">
+                                             <a [routerLink]="['/role-management']"
+                                                 class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ml-2">Back</a>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </main>
+ </div>

@@ -1,0 +1,140 @@
+	/* for profile */
+	.shape{
+        background-color:black;
+    width:500px;
+    height:100px;
+    border-radius: 0 0 50% 50% / 50%;
+    }
+    
+    
+    .userProfile{
+        width: 152px;
+        border: 2px solid #3cc114;
+        border-style: dotted;
+        border-radius: 100px;
+        box-shadow: 0px 2px 9px 4px #cecece;
+        margin: 0 auto;
+        margin-top: 6vh;
+        height: 155px;
+    }
+    
+    .userProfile img{
+        width: 146px;
+        height: 125px;
+        max-width: 170px;
+        margin-top: -20px;
+        text-align: center;
+        margin-top: -21px;
+        border-radius: 50px;
+    }
+    
+    .email {
+        border: 1px solid #cecece;
+        padding: 6px 12px;
+        border-radius: 10px;
+    }
+    
+    .custom-checkbox .left-s .item{background: transparent;padding: 0;min-height: auto;}
+    .custom-checkbox .left-s .item .checkbox{margin: 0 8px 0 0;}
+    .custom-checkbox .item-inner{border: none !important;padding: 0;color: #6c7b8a;}
+    .custom-checkbox .left-s{display: inline-block;width: 100%;}
+    .custom-checkbox .right-s{display: inline-block;width: 49%;text-align: right;vertical-align: top;}
+    .custom-checkbox .right-s a{color: #6c7b8a;text-decoration: none; font-size: 1.4rem;}
+    .custom-checkbox .item-inner .label{font-size: 1.4rem; margin: 0;}
+    .custom-checkbox .item-inner .input-wrapper{height: 20px;}
+    .custom-checkbox .checkbox .checkbox-icon {border-radius: 0px;width: 22px;height: 22px;border-width: 1px; border-style: solid; border-color : #aaa; background-color: #fff;}
+    .custom-checkbox .checkbox .checkbox-checked {border-color: #3cc114;
+    background-color: #3cc114;}
+    .custom-checkbox .checkbox .checkbox-checked .checkbox-inner {left: 7px; top: 2px; width: 7px; height: 13px; border-width: 2px; border-top-width: 0; border-left-width: 0;}
+    .remember-me{margin: 15px 0 10px;}
+    .form-box.list{margin: 0;}
+    .login{min-height: calc(100vh - 93px);}
+    .btn-block{margin-top: 20px;}
+    
+    .mainClass{
+    padding: 30px;
+    }
+    
+    .user{
+    position: relative;
+    }
+    
+    .userIcon{
+        position: absolute;
+        top: -7px;
+        width: 30px;
+        right: 6px;
+    }
+    
+    .customHeader{
+        --background: rgb(60 193 20);
+        text-align: center;
+        color: #fff;
+    }
+    
+    ion-button.btn-global{
+        --background: #3cc113;
+        margin-top: 22px;
+        border-radius: 10px;
+        width: 100%;
+        box-shadow: 0px 3px 10px #dadada;
+    }
+    
+    button{
+    
+        --background-color: rgb(60, 193, 20);
+        margin-top: 22px;
+        border-radius: 10px;
+    
+    }
+    
+    checkbox-icon{
+        border-radius:  0px;
+    }
+    
+    .back img{
+        width: 32px;
+    }
+    
+    .checkboxTerms{
+        --border-radius: 0px!important;
+        --ion-color-base: #3cc113 !important;
+    }
+    
+    .email input{
+        border: none;
+        width: 100%;
+        outline: none;
+    }
+    
+    .profileNew{
+        max-width: 600px;
+        margin: 0 auto;
+        width: 600px;
+    }
+
+    .selector.selectorarrow.selectorarrowleft {
+        width: 252px!important;
+        height: 232px!important;
+        top: 57px!important;
+        /* left: 0px; */
+        right: 0px!important;
+    }
+
+    .modalInnerContentnew{
+        min-height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 15px;
+    }
+
+    .modalInnerContentnewotp{
+        min-height: 90px;
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    padding: 0 15px;
+    }
+
+    

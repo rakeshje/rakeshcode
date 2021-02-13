@@ -1,0 +1,51 @@
+<div class="wrapper">
+  <main class="middle-content">
+      <div class="page_title_block">
+          <h1 class="page_title">Static Content Management / View</h1>
+      </div>
+      <div class="content-section">
+          <div class="outer-box">
+              <div class="global-table no-radius p0">
+                  <div class="tab-content1">
+                      <form >
+                          <div class="row">
+                              <div class="col-md-12">
+                                  <div class=" order-view main-block-innner mb20 mt40 view-label-align">
+                                      <div class="add-store-block input-style">
+                                          <div class="form-group row ">
+                                              <div class="col-md-12">
+                                                  <div class="form-group row ">
+                                                      <label class="col-md-2">  Title <span>:</span></label>
+                                                      <div class="col-md-10">
+                                                         <p style="margin: auto">{{staticData?.title}}</p>
+                                                      </div>
+                                                  </div>
+                                                  <div class="form-group row ">
+                                                    <div class="col-md-12" >
+                                                        Description:
+                                                    </div>
+                                                   
+                                                </div>
+                                                <div class="form-group row ">
+                                                    
+                                                    <div class="col-md-12" style="word-break: break-all">
+                                                       <p [innerHTML]="staticData?.description">{{staticData?.description}}</p>
+                                                    </div>
+                                                </div>
+
+                                                  <div class="text-center mt75 mb40" style="margin-right:9%">
+                                                          <button class="btn btn-large  max-WT-150 btn-theme" routerLink="/static-page-management">Back</button>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </main>
+</div>

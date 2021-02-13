@@ -1,0 +1,80 @@
+<div class="wrapper">
+                  <main class="middle-content">
+                      <div class="page_title_block">
+                          <h1 class="page_title" style="color:#26272d">My Profile</h1>
+                      </div>
+                      <div class="content-section">
+                          <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+                                            <div class="text-left" routerLink="/change-password" >
+                                          <button type="button"  style="margin-left: 72%; " class="btn btn-lg btn-success">Change Password</button>
+                                    </div>
+                              <div class="main-block-innner mb40 ">
+                                                
+                                  <div class="add-store-block input-style">
+                                    
+
+                                      <div class="user-profile">
+                                          <div class="image-box">
+                                              <img [src]="userDetail?.imageUrl" class="profile-pic" alt="profile image">
+                                          </div>
+                                      </div>
+                                      <div class="form-group row align-items-baseline">
+                                          <label class="col-md-5">Name </label>
+                                          <div class="col-md-1"> :</div>
+                                          <div class="col-md-6">
+                                              <label>{{userDetail?.firstName}}</label>
+                                          </div>
+                                      </div>
+                                      <div class="form-group row align-items-baseline">
+                                          <label class="col-md-5">Email </label>
+                                          <div class="col-md-1"> :</div>
+                                          <div class="col-md-6">
+                                              <label>{{userDetail?.email}}</label>
+                                          </div>
+                                      </div>
+                                      <div class="form-group row align-items-baseline">
+                                          <label class="col-md-5">Phone Number</label>
+                                          <div class="col-md-1"> :</div>
+                                          <div class="col-md-6">
+                                              <label>{{userDetail?.phoneNo}}</label>
+                                          </div>
+                                      </div>
+                                      <div class="form-group row align-items-baseline">
+                                          <label class="col-md-5">Date of Birth </label>
+                                          <div class="col-md-1"> :</div>
+                                          <div class="col-md-6">
+                                              <label>{{userDetail?.dob | date:'dd/MM/yyyy'}}</label>
+                                          </div>
+                                      </div>
+                                      <div class="form-group row align-items-baseline">
+                                          <label class="col-md-5">Gender </label>
+                                          <div class="col-md-1"> :</div>
+                                          <div class="col-md-6">
+                                              <label>{{userDetail?.gender}}</label>
+                                          </div>
+                                      </div>
+                                      <div class="form-group row align-items-baseline">
+                                          <label class="col-md-5">Address </label>
+                                          <div class="col-md-1"> :</div>
+                                          <div class="col-md-6">
+                                              <label style="word-wrap: break-word;">{{userDetail?.address}}</label>
+                                          </div>
+                                      </div>
+                                      <div class="text-left mt40">
+                                          <a class="btn btn-large max-WT-200 font-100 btn-green mr-2" [routerLink]="['/edit-profile']"
+                                              routerLinkActive="router-link-active">Edit Profile</a>
+                                          <a href="javascript:void(0)" class="btn btn-large max-WT-200 font-100 btn-green ml5"
+                                              [routerLink]="['/setting']">Cancel</a>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </main>
+              </div>
+              <footer>
+                <div class="container-fluid">
+                    <p class="copyright">Alende  <strong class="theme-text-color"></strong> 
+                        </p>
+                </div>
+            </footer>

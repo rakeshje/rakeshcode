@@ -1,0 +1,73 @@
+<div class="wrapper">
+    
+                  <!-- Aside End -->
+                  <main class="middle-content">
+                      <!-- Page Title Start -->
+                      <div class="page_title_block">
+                          <h1 class="page_title" style="color:black"> ADD ANNOUNCEMENT</h1>
+                         
+                      </div>
+                      <!-- Page Title End -->
+
+                      <div class="content-section">
+                          <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+                              <div class="main-block-innner mb40 mt40">
+                                  <div class="add-store-block input-style">
+                                    <!-- image upload start-->
+                                     <div class="user-profile">
+                                                <div class="image-box">
+                                                    <img [src]="editImage || 'assets/img/testimonial-img1.jpg' " class="profile-pic" alt="profile image">
+                                                    <label class="upload-label">
+                                                          <input type="file" class="hidden" accept=".png, .jpg, .jpeg"
+                                                              (change)="uploadImg($event)" />
+                                                          <i class="fas fa-camera" aria-hidden="true"></i>
+                                                      </label>
+                                                </div>
+                                            </div>
+                                            <!-- image upload end -->
+                                    <form [formGroup]="announcementForm">
+                                      <div class="form-group row ">
+                                          <label class="col-md-4">Page Name :</label>
+                                          <div class="col-md-8">
+                                              <input type="text" class="form-control " formControlName="page" (keypress)="service.preventSpace($event)" />
+
+                                              <span class="error">
+                                                <p *ngIf="announcementForm.get('page').hasError('required') && (announcementForm.get('page').dirty || announcementForm.get('page').touched )"
+                                                    class="error" padding>*Field is required</p>
+                                            </span> 
+                                            <span class="error">
+                                                    <p *ngIf="announcementForm.get('page').hasError('pattern') && (announcementForm.get('page').dirty || announcementForm.get('page').touched )"
+                                                        class="error" padding>*Please enter valid page name</p>
+                                                </span>
+                                          </div>
+
+                                      </div>
+                                      <div class="form-group row">
+                                  
+                                          <label class="col-md-4">Description:</label>
+                                          <div class="col-md-8" class="ex1" style="width: 66%;
+                                          margin-left: 36%;" >
+                                            <textarea  class="ex1" class="form-control" cols="150" rows="5" formControlName="description" (keypress)="service.preventSpace($event)"></textarea>
+                                            
+                                        </div>
+                                        
+                                      </div>
+                                      <div class="text-center mt40">
+                                          <button href="javascript:void(0)" class="btn btn-large  max-WT-200 font-100 btn-green mr-2" [disabled]="!announcementForm.valid" (click)="addAnnouncement()">ADD</button>
+                                          <a href="javascript:void(0)" class="btn btn-large  max-WT-200 font-100 btn-grey ml5" [routerLink]="['/announcement-management']">Cancel</a>
+                                      </div>
+                                    </form>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </main>
+                  <!-- Middle Content End -->
+              </div>
+              
+              <footer>
+                <div class="container-fluid">
+                    <p class="copyright">Alende  <strong class="theme-text-color"></strong> 
+                        </p>
+                </div>
+            </footer>

@@ -1,0 +1,346 @@
+<!-- Start Right Bar -->
+<app-rightsidemenu></app-rightsidemenu>
+<!-- Close Right Bar -->
+
+<!-- Start Page Content -->
+<div class="page-wrap">
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="left-menu card">
+          <app-sidemenu></app-sidemenu>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="page-content">
+          <div class="card post-box main-post">
+            <div class="post-warp">
+              <div class="post-content-setting">
+                Advertisement
+              </div>
+            </div>
+          </div>
+          <div class="card post-box main-post">
+            <div class="post-warp">
+              <div class="header-tab">
+                <div class="tab">
+                  <div><a [ngClass]="{'activeTab': tabActive=='viewAllAdd'}"
+                      (click)="changeTab('viewAllAdd')">Advertisement</a></div>
+                  <div><a [ngClass]="{'activeTab': tabActive=='addAdd'}" (click)="changeTab('addAdd')">Add
+                      Advertisement</a></div>
+                  <div><a [ngClass]="{'activeTab': tabActive=='viewAdd'}" (click)="changeTab('viewAdd')">View My Add
+                      Advertisement</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card post-box post-search" *ngIf="tabActive == 'viewAllAdd' || tabActive == 'viewAdd'">
+            <form class="search-form">
+              <input type="text" placeholder="Search by advertisement name" class="form-control"
+                (keyup)="searchChange.next($event.target.value)">
+            </form>
+          </div>
+          <div *ngIf="tabActive == 'viewAllAdd'">
+            <div *ngIf="allAdds.length">
+              <div class="card post-box main-post" *ngFor="let adv of allAdds; let i=index">
+                  <ng-container *ngIf="adv.userId">
+                <div class="post-warp">
+                  <div class="post-content">
+                    <div class="userimg-col"><img class="user-icon" [src]="profilePic ? profilePic : 'assets/images/Layer 61.png'"></div>
+                    <div class="content-col">
+                      <div class="post-header">
+                        <div class="elips" *ngIf="adv.userId == userId">
+                          <!-- <i class="fa fa-ellipsis-v doted "></i> -->
+                          <i class="fa fa-ellipsis-v doted " (click)="open(adv._id)"></i>
+                          <div class="hide-clas none" [id]="adv._id">
+                            <p (click)="actionOnAdv(adv, 'DELETE', 0)">Delete</p>
+                            <p (click)="actionOnAdv(adv, 'HIDE', 0)">Hide Advertisement</p>
+                            <!-- <p>Edit Post</p> -->
+                            <p (click)="actionOnAdv(adv, 'ARCHIVE', 0)">Archive</p>
+                          </div>
+                        </div>
+                        <h4 class="post-title">{{adv?.userName}}</h4>
+                        <span class="post-time">{{adv?.createdAt}}</span>
+
+                      </div>
+                      <div class="post-summry">
+                        <img *ngIf="adv.image.length" [src]="adv.image" class="img-fluid" (click)="viewAdv(adv)">
+                        <!-- *ngFor="let url of adv.image" -->
+                        <video *ngIf="adv.video.length" controls [src]="adv.video" (click)="viewAdv(adv)"></video> 
+                        <p>{{adv?.title}}</p>
+                        <p>{{adv?.description}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="post-me">
+                  <a (click)="likePost(adv, 0)"><img src="assets/images/like.png"> </a>
+                  <a (click)="likePost(adv, 0)"><img src="assets/images/heart.png"> </a>
+                  <!--   <a><img src="images/chat-comment-oval-speech-bubble-with-text-lines.png"></a> -->
+                  <a (click)="likePost(adv, 0)" class="emoji"><img src="assets/images/emojiii.png"></a>
+                  <a *ngIf="adv.likes.length && !adv.userLiked"><img src="assets/images/Layer 76.png">
+                    {{adv.likes[adv.likes.length - 1]['userName']}} and
+                    {{adv.likes.length - 1}} others</a>
+                  <a *ngIf="adv.likes.length == 1 && adv.userLiked"><img src="assets/images/Layer 76.png"> You liked</a>
+                  <a *ngIf="adv.likes.length > 1 && adv.userLiked"><img src="assets/images/Layer 76.png"> You and
+                    {{adv.likes.length - 1}} others</a>
+                  <a class="emojiiIcon">{{adv?.comments.length}} comments </a>
+                </div>
+                <div class="post-meta">
+                  <a *ngIf="!adv.userLiked"><img src="assets/images/thumb-up.png" (click)="likePost(adv, 0)"> Like</a>
+                  <a *ngIf="adv.userLiked"><img src="assets/images/liked.png" (click)="likePost(adv, 0)"> Unlike</a>
+                  <a (click)="comment(adv, i)"><img
+                      src="assets/images/chat-comment-oval-speech-bubble-with-text-lines.png">
+                    Comment</a>
+                  <a (click)="sharePost(adv._id)"><img src="assets/images/Layer 76.png"> Share</a>
+                </div>
+                </ng-container>
+              </div>
+            </div>
+            <div *ngIf="!allAdds.length">
+              <div class="card post-box main-post">
+                <div class="post-warp">
+                  <div class="post-content">
+                    No advertisement found!
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="tabActive == 'addAdd'">
+            <div class="card post-field main-post">
+              <div class="field-wrap">
+                <div class="profile-added">
+                  <!-- <div class="profile-detail">
+                          <img src="assets/images/Layer 139.png">
+                          <div class="add-user">
+                          <img src="assets/images/plus.png">
+                      </div>
+                      </div> -->
+                  <div class="profile-detail">
+                    <img *ngFor="let url of fileData" [src]="url" class="newImage rounded mb-3">
+                    <div class="add-user">
+                      <input class="uploadImage" type="file" multiple
+                        accept="image/png, image/jpeg, image/jpg, video/mp4,video/x-m4v,video/*"
+                        (change)="upload($event)">
+                      <img src="assets/images/plus.png">
+                    </div>
+                  </div>
+                </div>
+                <div class="field-area">
+                  <h6 class="heading-title">Title</h6>
+                  <input class="holder" type="text" placeholder="" [(ngModel)]="title">
+                  <h6 class="heading-title">Description</h6>
+                  <textarea class="selectdetail" rows="4" cols="50" [(ngModel)]="description"></textarea>
+
+                </div>
+                <div class="job-post">
+                  <button type="submit">Cancel</button>
+                  <button type="submit" (click)="uploadAdd()">Upload</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="tabActive == 'viewAdd'">
+            <div *ngIf="myAdds.length">
+              <div class="card post-box main-post" *ngFor="let add of myAdds">
+                <div class="post-warp">
+                  <div class="post-content">
+                    <div class="userimg-col"><img class="user-icon" [src]="profilePic ? profilePic : 'assets/images/Layer 61.png'"></div>
+                    <div class="content-col">
+                      <div class="post-header">
+                        <!-- <div class="elips">
+                                <i class="fa fa-ellipsis-v doted "></i>
+                              </div> -->
+                        <div class="elips">
+                          <!-- <i class="fa fa-ellipsis-v doted "></i> -->
+                          <i class="fa fa-ellipsis-v doted " (click)="open(add._id)"></i>
+                          <div class="hide-clas none" [id]="add._id">
+                            <p (click)="actionOnAdv(add, 'DELETE', 1)">Delete</p>
+                            <p (click)="actionOnAdv(add, 'HIDE', 1)">Hide Advertisement</p>
+                            <!-- <p>Edit Post</p> -->
+                            <p (click)="actionOnAdv(add, 'ARCHIVE', 1)">Archive</p>
+                          </div>
+                        </div>
+                        <h4 class="post-title">{{add?.userName}}</h4>
+                      </div>
+                      <div class="post-summry">
+                        <!-- <img [src]="add?.image ? add.image : add.video" class="img-fluid" (click)="viewAdv(adv)"> -->
+                        <img *ngIf="add.image.length" [src]="add.image" class="img-fluid" (click)="viewAdv(add)">
+                        <video *ngIf="add.video.length" controls [src]="add.video" (click)="viewAdv(add)"></video>
+                        <p>{{add?.title}}</p>
+                        <p>{{add?.description}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="post-me">
+                  <a (click)="likePost(add, 1)"><img src="assets/images/like.png"> </a>
+                  <a (click)="likePost(add, 1)"><img src="assets/images/heart.png"> </a>
+                  <!--   <a><img src="images/chat-comment-oval-speech-bubble-with-text-lines.png"></a> -->
+                  <a (click)="likePost(add, 1)" class="emoji"><img src="assets/images/emojiii.png"></a>
+                  <a *ngIf="add.likes.length && !add.userLiked"><img src="assets/images/Layer 76.png">
+                    {{add.likes[add.likes.length - 1]['userName']}} and
+                    {{add.likes.length - 1}} others</a>
+                  <a *ngIf="add.likes.length == 1 && add.userLiked"><img src="assets/images/Layer 76.png"> You liked</a>
+                  <a *ngIf="add.likes.length > 1 && add.userLiked"><img src="assets/images/Layer 76.png"> You and
+                    {{add.likes.length - 1}} others</a>
+                  <a class="emojiiIcon">{{add?.comments.length}} comments </a>
+                </div>
+                <!-- <div class="post-meta">
+                        <a href="#"><img src="assets/images/thumb-up.png"> Like</a>
+                        <a href="#"><img src="assets/images/chat-comment-oval-speech-bubble-with-text-lines.png"> Comment</a>
+                        <a href="#"><img src="assets/images/Layer 76.png"> Share</a>
+                      </div> -->
+                <div class="post-meta">
+                  <a *ngIf="!add.userLiked"><img src="assets/images/thumb-up.png" (click)="likePost(add, 1)"> Like</a>
+                  <a *ngIf="add.userLiked"><img src="assets/images/liked.png" (click)="likePost(add, 1)"> Unlike</a>
+                  <a (click)="comment(add, 1)"><img
+                      src="assets/images/chat-comment-oval-speech-bubble-with-text-lines.png">
+                    Comment</a>
+                  <a (click)="sharePost(add._id)"><img src="assets/images/Layer 76.png"> Share</a>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="!myAdds.length">
+              <div class="card post-box main-post">
+                <div class="post-warp">
+                  <div class="post-content">
+                    No advertisement found!
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Close Page Content -->
+
+<!-- Add post modal start -->
+<div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body detail-about">
+        <!-- <div class="row"> -->
+
+        <!-- <div class="column"> -->
+        <div class="row" *ngFor="let data of comments">
+          <div class="structure-repeat">
+            <img [src]="data.userPic" style="width: 50px; border-radius: 25px;">
+            <!-- <div> -->
+            <div class="name-comment">
+              <p>{{data.userName}}</p>
+              <p style="text-align: left; margin-bottom: 0rem;">{{data.comment}}</p>
+              <p style="text-align: left; margin-bottom: 0rem;">{{data.commentedTime| date:"hh:mm:ss"}}</p>
+            </div>
+            <!-- </div> -->
+            <br>
+            <div>
+              
+              <!-- <a (click)="getId(data._id)" style="margin-bottom:35px"  *ngIf="userid==data?.commentedUser">  <i class="fa fa-trash" aria-hidden="true"  data-toggle="tooltip"  title="Delete" ></i></a> 
+            <a (click)="editComment(data, i)" style="margin-bottom:35px" *ngIf="userid==data?.commentedUser"> <i  class="fa fa-edit" aria-hidden="true"  data-toggle="tooltip"  title="Edit" ></i></a> -->
+            <a  (click)="replyComment(data)" style="margin-bottom:35px" *ngIf="userid!=data?.commentedUser"><i class="fa fa-reply"></i></a>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex;">
+          <img [src]="userProfilePic" style="width: 50px; border-radius: 25px;">
+          <input placeholder="Write a comment" class="form-control type" [(ngModel)]="newComment"
+            (keyup.enter)="commentAdv()">
+
+          <!-- <img src="assets/images/atach.png" style="width: 25px; height: 25px; margin-top: 14px;">
+          <input type="file" class="form-control file" style="bottom: 15px; right: 41px; width: 25px;"
+            placeholder="Type your Message Here....." accept="application/pdf, image/png, image/jpeg, image/jpg"> -->
+
+          <img src="assets/images/emojiii.png" (click)="showEmoji()"
+            style="width: 25px; height: 25px; margin-top: 14px;">
+          <emoji-mart *ngIf="emoji" title="Pick your emoji…" emoji="point_up" (emojiSelect)="addEmoji($event)"
+            [style]="{ position: 'absolute'}"></emoji-mart>
+        </div>
+        <!-- </div> -->
+        <!-- </div> -->
+        <!-- <div class="btnnns">
+          <div class="flexProp">
+            <button type="submit" class="btn btn-danger btn-return" style="width: auto;" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success paynow" (click)="addPost()">Submit</button>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Add post modal end -->
+
+<!-- Share post start -->
+<div class="modal fade" id="sharePost" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body detail-about">
+        <form class="search-form">
+          <input type="text" placeholder="Search" class="form-control" (click)="searchFriend()">
+        </form>
+        <div *ngFor="let friend of friendsList" style="text-align: left;">
+          <input type="checkbox" (change)="chooseFriend(friend, $event)">
+          <img style="height: 60px; width: 60px; border-radius: 30px; padding: 10px;" [src]="friend?.profilePic">
+          <span>{{friend?.firstName}}</span>
+        </div>
+        <div class="btnnns">
+          <div class="flexProp">
+            <button type="submit" class="btn btn-danger btn-return" style="width: auto;"
+              data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success paynow" (click)="shareAdvFriends()">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Share post end -->
+
+<!-- View advertisement start -->
+<div class="modal fade" id="viewAdv" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body detail-about">       
+        <img *ngIf="viewAdvMedia?.type == 'image'" [src]="viewAdvMedia?.media" class="img-fluid">
+        <video *ngIf="viewAdvMedia?.type == 'video'" controls [src]="viewAdvMedia?.media"></video> 
+        <div class="btnnns">
+          <div class="flexProp">
+            <button type="submit" class="btn btn-success paynow" style="width: auto;"
+              data-dismiss="modal">OK</button>
+            <!-- <button type="submit" class="btn btn-success paynow">Submit</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- View advertisement end -->
+
+<!-- Action on advertisement start -->
+<div class="modal fade" id="actionAdvertisement" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body detail-about">
+        <div>
+          <span>Are you sure you want to {{actionType.view}} this advertisement?</span>
+        </div>
+        <div class="btnnns">
+          <div class="flexProp">
+            <button type="submit" class="btn btn-danger btn-return" style="width: auto;"
+              data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success paynow" (click)="action()">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Action on advertisement end -->

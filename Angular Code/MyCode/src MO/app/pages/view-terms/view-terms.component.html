@@ -1,0 +1,27 @@
+<div class="wrapper">
+    <main class="middle-content">
+        <div class="page_title_block">
+            <h1 class="page_title" style="font-size: 20px;">VIEW STATIC CONTENT</h1>
+            <hr style="width: 118%; margin-left: -9%; background-color: black;">
+        </div>
+        <div class="col order-view main-block-innner mb20 mt40 view-label-align" style=" margin-left: 10%;margin-top: 2% ;width: 65%">
+            <div class="row" style="margin-left: 2%; margin-right:2%">
+                <div class="col">
+                    <label>Title:</label><br><br>
+                    <label>Description:</label>
+                </div>
+
+                <div class="col ">
+                    <h5>{{result.title}}</h5><br><br>
+                    <textarea class="form-control" rows="7"  [innerHtml]=result.description readonly></textarea>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 8%;margin-left: 25%;">
+                <button class="btn btn-login btn-large width100 font-100"
+                    style="width: 14%; background-color: deep blue;" routerLink="/static-content-management">Back</button>
+                <button class="btn btn-login btn-large width100 font-100"
+                    style="width: 14%; background-color: deep blue;margin-left: 2%;">Edit</button>
+            </div>
+        </div>
+    </main>
+</div>

@@ -1,0 +1,279 @@
+Start Right Bar
+<app-rightsidemenu></app-rightsidemenu>
+<!-- Close Right Bar -->
+
+    <div class="page-wrap">
+      <div class="container-fluid py-4">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="left-menu card">
+                <app-sidemenu></app-sidemenu>
+            </div>
+          </div>
+          <div class="col-md-9">
+            <div class="page-content">
+              <div class="card post-box main-post">
+                <div class="post-warp">
+                  <div class="header-tab">
+                    <div class="tab pointer" >
+                        <div [ngClass]="{active : selected === 'pages'}"  (click)="groups()">
+                         pages
+                        </div>
+                        <div [ngClass]="{active : selected === 'discoverPage'}" (click)="discoverGroup()">
+                          Discover page
+                        </div>
+
+                        <div [ngClass]="{active : selected === 'createPage'}" (click)="getCategoryList()"> 
+                          Create Page
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card post-box main-post"  *ngIf="selected=='discoverGroup'">
+                <div class="post-warp">
+                  <div class="white-input" style="padding-left: 26px; margin-top: 1px;">
+                    <input type="name" class="white-input" id="name" placeholder="Search by group name"  (keyup)="searchByName($event.target.value)">
+                    <em class="fa fa-search"></em>
+                  </div>
+                </div>
+              </div>
+            
+
+              
+             <!--  Groups  -->
+              <div class="card post-box main-post" *ngIf="selected == 'pages'">
+                <div class="post-warp" >
+                <div class="mainBox" style="margin-top: 10px;" *ngFor="let item of groupsList  | paginate: { itemsPerPage: limit, currentPage: page1, totalItems: total1 }; let i = index">
+                  <div class="user col-md-1"><img  [src]="item?.coverPic ? item?.coverPic : 'assets/images/profile.png'" alt="">
+                  </div>
+                  <div  class="userName col-md-11" (click)="showDescription(item)"><label class="groupLength">{{item.pageName}}</label>
+                    <div>{{item.privacy}}</div>
+                    <div>{{item.createdAt|date}}</div>
+                    <div>{{item.websiteUrl}}</div>
+                  </div>
+                 
+
+                  
+                  
+              </div>
+              <h2 *ngIf="groupsList.length == 0">No Record Found!</h2>
+                </div>
+                
+              </div>
+
+           
+                <!--  Discover Groups  -->
+                 
+                      <div class="card post-box main-post" *ngIf="selected == 'discoverPage'">
+                          <div class="post-warp" >
+                          <div class="mainBox" style="margin-top: 10px;" *ngFor="let item of discoverGroupList | paginate: { itemsPerPage: limit, currentPage: page1, totalItems: total }; let i = index">
+                            <div class="user"><img [src]="item.coverPic ? item.coverPic : 'assets/images/profile.png'" alt="">
+                            </div>
+                            <div  class="userName" (click)="showDescription(item)"><label class="groupLength">{{item.pageName}}</label>
+                            </div>
+
+                            <div class="userIcon" >
+                              <button type="button" *ngIf="!(item?.likes[0]?.likedId == userInfo)"    (click)="likePage(item,'true')">Like</button>
+                              <button type="button"  *ngIf="((item?.likes[0]?.likedId) == userInfo)"  (click)="likePage(item,'false')">Unlike</button>
+                            </div>
+
+                            <div class="userIcon" >
+                              <button type="button" *ngIf="!(item?.followers[0]?.followerId == userInfo)"    (click)="joinGroup(item,'true')">Follow</button>
+                              <button type="button"  *ngIf="((item?.followers[0]?.followerId) == userInfo)"  (click)="joinGroup(item,'false')">Unfollow</button>
+                            </div>
+                        </div>
+                        <h2 *ngIf="discoverGroupList.length == 0">No Record Found!</h2>
+                          </div>
+                          
+                        </div>
+
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog"> 
+      <div class="modal-dialog" style="top: 200px!important;left: 42px!important;">
+      
+        <!-- Modal content-->
+        <div class="modal-content">
+          <form [formGroup]="createGroupForm" novalidate autocomplete="off">
+          <div class="modal-header">
+              <h4 class="modal-title">Create New Page</h4>
+            <button type="button" class="close" data-dismiss="modal"  style="margin: 0rem 0rem 0rem 0rem!important;" (click)="createGroupFormReset()">&times;</button>
+           
+          </div>
+          <div class="modal-body">
+           
+            <img [src]="fileData" >
+            <div class="add-user">
+              <input class="uploadImage" type="file" accept="image/png, image/jpeg, image/jpg"  (change)="upload($event)" multiple>
+              <img src="assets/images/plus.png">
+            </div>
+          </div>
+          
+       
+          <div class="name" style="position: relative;">
+              <input class="newInput" type="text" placeholder="Name your page" formControlName="pageName">
+              <!-- <span class="error" *ngIf="pageName.invalid && (pageName.dirty || pageName.touched)">
+                <span *ngIf="pageName.errors.required" padding>
+                    *Please enter page name
+                </span>
+            <span *ngIf="pageName.errors.pattern" padding>
+                    *Page name must be characters only
+                </span>
+            </span> -->
+
+             
+                <div style="margin-top: 14px; height: 40px;" class="">
+                  <input style="margin-top: 14px;" class="newInput" type="text" placeholder="Category" formControlName="category">
+                  <!-- <select class="form-control" (change)="checkCat($event.target.value)" formControlName="category">
+                  <option value="">Select category</option>
+                  <option *ngFor="let item of newArry" >{{item.categoryName}}</option>
+                  </select> -->
+                  </div>
+
+                  <!-- <div style="margin-top: 30px;" class="row">
+                    <div class="col-md-6">
+                      <input type="file" #img style="display: none; " formControlName="pageImage"  accept="image/png, image/jpeg, image/jpg" (change)="uploadImage($event)"/>
+                      <input type="button" (click)="img.click()" value="Upload Page Image">
+                    </div>
+                    <div class="col-md-6" >
+                      <img [src]="imageUpload" style="width:200px;height: 200px;border:1px solid black;">
+                    </div>
+                    
+                 </div> -->
+                 <div style="margin-top: 30px;" class="row">
+                  <div class="col-md-6">
+                    <input type="file"   formControlName="pageImage"  accept="image/png, image/jpeg, image/jpg" (change)="uploadImage($event)"/>
+                    
+                  </div>
+               </div>
+
+              <input style="margin-top: 14px;" class="newInput" type="text" placeholder="Website Url" formControlName="websiteUrl">
+              <!-- <span class="error" *ngIf="websiteUrl.invalid && (websiteUrl.dirty || websiteUrl.touched)">
+              <span *ngIf="websiteUrl.errors.required" padding>
+                *Please enter websiteUrl
+             </span>
+              </span> -->
+
+
+              <input style="margin-top: 14px;" class="newInput" type="text" placeholder="Description" formControlName="description">
+              <span class="error" *ngIf="description.invalid && (description.dirty || description.touched)">
+                <span *ngIf="description.errors.required" padding>
+                    *Please enter group description
+                </span>
+           
+                </span>
+
+              <!-- <span style="position: absolute;
+              right: 29px;
+              bottom: 12.5em;">
+                  <img style="width: 17px;" src="assets/images/addNew.png">
+              </span> -->
+
+              <!-- <p style="font-weight: 500;
+              margin-top: 15px;">
+                Select Privacy
+              </p> -->
+
+              <!-- <div style="border: 1px solid #cecece;
+              display: flex;
+              padding: 14px 17px;">
+                  <div>
+                    <img src="assets/images/privacy.png">
+                  </div>
+                  <div>
+                    <p style="    margin-left: 10px;
+                    margin-bottom: 0px;
+                    font-weight: 600;">Close Group</p>
+                    <p style="    margin-left: 11px;">
+                        Anyone can find the group and see who runs it. Only members
+                        can see whjo’s in it and what they post.
+                    </p>
+                  </div>
+              </div> -->
+
+            </div>
+            </form>
+            
+          
+          
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger btn-return" data-dismiss="modal" (click)="createGroupFormReset()">Close</button>
+            <button type="button" class="btn btn-success paynow btn-return" [disabled]="!createGroupForm.valid" (click)="createGroup()" >Create</button>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+
+
+
+    <!-- Modal -->
+  <div class="modal fade" id="myModalOpen" role="dialog"> 
+    <div class="modal-dialog" style="top: 200px!important;left: 42px!important;">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <form [formGroup]="createGroupForm" novalidate autocomplete="off">
+        <div class="modal-header">
+            <label class="modal-title text-center" > {{myPageName}}</label>
+          <button type="button" class="close" style="margin: 0rem 0rem 0rem 0rem!important;" data-dismiss="modal" (click)="createGroupFormReset()">&times;</button>
+         
+        </div>
+        <div class="modal-body">
+          
+          <img [src]="fileData" style="height:200px">
+          <img [src]="imageUpload?imageUpload:'assets/images/wall-img6.png'" style="width:200px;height: 200px;border:1px solid black;border-radius:50%;left: 152px;
+         
+          position: absolute;">
+          <!-- <div class="add-user">
+            <input class="uploadImage" type="file" accept="image/png, image/jpeg, image/jpg"  (change)="upload($event)" multiple>
+          </div> -->
+        </div>
+        
+          
+        <div class="name" style="position: relative;">
+
+          <div style="height: 40px;" class="">
+            <input class="newInput" type="text" placeholder="Name your page" formControlName="pageName">
+            </div>
+
+           
+         
+           
+              <div style="margin-top: 14px; height: 40px;" class="form-group">
+                <input style="margin-top: 14px;" class="newInput" type="text" placeholder="Category" formControlName="category">
+                <!-- <select class="form-control" (change)="checkCat($event.target.value)" formControlName="category">
+                <option value="">Select category</option>
+                <option *ngFor="let item of newArry" >{{item.categoryName}}</option>
+                </select> -->
+                </div>
+
+               <!-- <div style="margin-top: 30px;" class="row">
+                <div class="col-md-6">
+                  <input type="file"   formControlName="pageImage"  accept="image/png, image/jpeg, image/jpg" (change)="uploadImage($event)"/>
+                  
+                </div>
+             </div> -->
+
+            <input style="margin-top: 14px;" class="newInput" type="text" placeholder="Website Url" formControlName="websiteUrl">
+          
+            <input style="margin-top: 14px;" class="newInput" type="text" placeholder="Description" formControlName="description">
+            <span class="error" *ngIf="description.invalid && (description.dirty || description.touched)">
+              <span *ngIf="description.errors.required" padding>
+                  *Please enter group description
+              </span>
+         
+              </span>
+          </div>
+          </form>
+      </div>
+    </div>
+  </div>

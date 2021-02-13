@@ -1,0 +1,139 @@
+<div class="wrapper">
+    <main class="middle-content">
+        <div class="page_title_block">
+            <h1 class="page_title text-center">ROLE MANAGEMENT</h1>
+        </div>
+        <div class="content-section">
+            <div class="outer-box">
+                <div class="global-table no-radius p0">
+                    <div class="tab-content1">
+                        <div class="tab-pane1">
+                            <div class="sec_head_new sec_head_new_after">
+                                <form [formGroup]="searchForm">
+                                    <div class="row justify-content-between">
+                                        <div class="col-md-4 col-xl-4">
+                                            <div class="filter_search mb20 width100">
+                                                <div class="input-group filter_search_group">
+                                                    <input type="text" class="form-control overflow-text"
+                                                        placeholder="Search by name" formControlName="search"
+                                                        (keypress)="mainService.preventSpace($event)">
+                                                    <div class="input-group-append">
+                                                        <button class="btn btn_search_group" type="button"
+                                                            (click)="searchFormSubmit()">
+                                                            <img src="assets/img/icon-search.png" alt="Search">
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-xl-3">
+                                            <div class="text-center admin-btn">
+                                                <button type="button" class="btn btn-theme ml-2 Go_btn"
+                                                    (click)="searchFormReset()">Refresh</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-between text-center">
+                                        <div class="col-md-12 col-xl-12">
+                                            <div class="text-center admin-btn justify-content-end">
+                                                <button type="button" class="btn btn-theme ml-2 Go_btn"
+                                                    (click)="exportCsv()">Export CSV</button>
+                                                <button type="button" class="btn btn-theme ml-3 Go_btn"
+                                                    (click)="addRole()">Add Role</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table aria-describedby="" class="table table-bordered">
+                                <thead>
+                                    <tr class="no_wrap_th text-center">
+                                        <th  id=""class="Sorting-img">S.No.</th>
+                                        <th  id="" class="Sorting-img">Role Name </th>
+                                        <th  id="" class="action_td_btn3 Sorting-img">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        *ngFor="let item of roleListData | paginate: { itemsPerPage: itemPerPage, currentPage: currentPage, totalItems: total}; let i = index">
+                                        <td>{{itemPerPage * (currentPage-1)+ i+1}}</td>
+                                        <td class="content">{{item?.roleName || '--'}}</td>
+                                        <td class="text-center btn-action">
+                                            <button class="btn btn-info ml-2 bt-margin"
+                                                (click)="viewRole(item?._id)">View</button>
+                                            <button class="btn btn-info ml-2 bt-margin"
+                                                (click)="editRole(item)">Edit</button>
+                                            <button class="btn btn-danger ml-2 bt-margin"
+                                                (click)="deleteRoleModal(item?._id)">Delete</button>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="!roleListData.length">
+                                        <td class="table-no-record" colspan="8">No Record Found</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="custom-pagination mt-2 text-align-end" *ngIf="total > 10">
+                                <pagination-controls (pageChange)="pagination($event)"></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+
+<!-- delete_modal Start -->
+<div class="modal fade global-modal reset-modal" id="delete">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div class="modal-inner-content">
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p>Are you sure you want to delete this role?</p>
+                                <div class="modal-btn-box">
+                                    <button type="button" class="btn btn-danger ml-2" data-dismiss="modal">No</button>
+                                    <button type="submit" class="btn btn-success ml-2"
+                                        (click)="deleteRole()">Yes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- delete_modal End -->
+
+
+ <!-- delete_modal Start -->
+ <div class="modal fade global-modal reset-modal" id="delete">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div class="modal-inner-content">
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p>Are you sure you want to delete this role?</p>
+                                <div class="modal-btn-box">
+                                    <button type="button" class="btn btn-danger ml-2" data-dismiss="modal">No</button>
+                                    <button type="submit" class="btn btn-success ml-2"
+                                        (click)="deleteRole()">Yes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- delete_modal End -->

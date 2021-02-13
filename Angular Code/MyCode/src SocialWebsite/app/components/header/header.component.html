@@ -1,0 +1,99 @@
+
+    <!-- loder -->
+    <!-- loder-end -->
+    
+    <header class="header " *ngIf="!loginStatus">
+       <div class="#">
+          <div class="container">
+             <!-- <a href="login.html">Sign In</a> -->
+             <ul class="headerSignin">
+                <li class="signup" (click)="passMsg('login')">
+                   Sign In
+                </li>
+                <li class="signup" (click)="passMsg('signup')">
+                   Sign Up
+                </li>
+             </ul>
+          </div>
+       </div>
+      
+    </header>
+    <header class="header" *ngIf="loginStatus">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="javascript">Bayise</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <form class="header-search my-lg-0">
+            <input class="form-control" type="search" placeholder="Search here people or pages" aria-label="Search">
+            <button class="btn" type="submit"></button>
+          </form>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="javascript:;"><img src="assets/images/Layer 63.png"></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="javascript:;"><img src="assets/images/Layer 64.png"></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="javascript:;"><img src="assets/images/Layer 57.png"><span class="bg-success notify-count">6</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="javascript:;" (click) = "openChat()"><img src="assets/images/Layer 55.png"></a>
+            </li>
+            <li class="nav-item" (click)="goToNotification()">
+              <a class="nav-link" href="javascript:;"><img src="assets/images/Layer 59.png"><span *ngIf="isNotification" class="bg-danger notify-count">{{total}}</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" (click)="openCart()"><img src="assets/images/shopping-cart.png"><span *ngIf="cartQuantity" class="bg-danger notify-count">{{cartQuantity}}</span></a>
+            </li>
+              <!-- <li class="nav-item">
+                <a class="nav-link" href="javascript:;"><img src="assets/images/Layer 66.png"></a>
+              </li> -->
+            <li class="nav-item dropdown user-dropdon">
+              <a class="nav-link dropdown-toggle" href="javascript:;" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img class="shuray" [src]=data.profileImage> <span>{{data.first_name}}</span> 
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="javascript:;" (click)="logout()">Logout</a>
+                <!-- <a class="dropdown-item" href="javascript:;">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="javascript:;">Something else here</a> -->
+              </div>
+            </li>
+          </ul>
+          
+        </div>
+      </nav>
+     
+    </header>
+
+
+    <router-outlet></router-outlet>
+
+    <footer class="footer">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6">
+            <ul class="footer-menu">
+              <li><a routerLink="/about-us">About Us </a></li>
+              <li><a routerLink="/contact">Contact Us </a></li>
+              <li><a routerLink="/help">Help </a></li>
+              <li><a routerLink="/privacy-policy">Privacy Policy </a></li>
+              <li><a routerLink="/terms-conditions">Terms & Conditions </a></li>
+            </ul>
+          </div>
+          <div class="col-md-6 text-right">
+            <div class="social-icon">
+              <a class="linkedin" href=""><i class="fab fa-linkedin-in"></i></a>
+              <a class="facebook" href=""><i class="fab fa-facebook-f"></i></a>
+              <a class="google" href=""><i class="fab fa-google-plus-g"></i></a>
+              <a class="youtube" href=""><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+

@@ -1,0 +1,65 @@
+<!-- Start Right Bar -->
+<app-rightsidemenu></app-rightsidemenu>
+<!-- Close Right Bar -->
+
+<!-- Satrt Page Content -->
+<div class="page-wrap">
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="left-menu card">
+          <app-sidemenu></app-sidemenu>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="page-content">
+          <div class="card post-box main-post">
+            <div class="post-warp">
+              <div class="post-content-setting">
+                Account Settings
+
+              </div>
+            </div>
+            <div class="post-meta pointer" (click)="navigateTo('profile')">
+              <div style="font-size: 21px;"><img style="margin-right: 15px; width: 28px;" src="assets/images/user.png">
+                Personal Information<p style="margin-left: 50px; font-size: 16px;">Update your name, phone numbers and
+                  email
+                  address
+              </div>
+            </div>
+            <div class="post-meta pointer" (click)="navigateTo('select-lang')">
+              <div style="font-size: 21px;"><img style="margin-right: 15px; width: 28px;"
+                  src="assets/images/language.png"> Languages</div>
+            </div>
+            <div class="post-meta pointer" (click)="navigateTo('bank/Bank_Details')">
+              <div style="font-size: 21px;"><img style="margin-right: 15px; width: 28px;" src="assets/images/bank.jpg">
+                Bank Details</div>
+            </div>
+            <div class="post-meta pointer" (click)="navigateTo('help')">
+              <div style="font-size: 21px;"><img style="margin-right: 15px; width: 28px;" src="assets/images/bank.jpg">
+                Help & Community</div>
+            </div>
+            <div class="post-meta pointer" (click)="callHeader()">
+              <div style="font-size: 21px;"><img style="margin-right: 15px; width: 28px;"
+                  src="assets/images/logout.png"> Logout</div>
+            </div>
+
+            <!-- <div class="post-meta">
+                  <div style="font-size: 21px;"><img style="margin-right: 15px; width: 28px;" src="assets/images/home.png"> Bank Detial
+                    address
+                  </div>
+                </div> -->
+
+          </div>
+
+
+
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Close Page Content -->

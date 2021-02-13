@@ -1,0 +1,44 @@
+
+    
+      <app-rightsidemenu></app-rightsidemenu>
+      <div class="page-wrap">
+          <div class="container-fluid py-4">
+              <div class="row">
+                  <div class="col-md-3">
+                      <div class="left-menu card">
+                          <app-sidemenu></app-sidemenu>
+                      </div>
+                  </div>
+      
+                  <div class="col-md-9">
+                      <div class="page-content">
+                          <div class="card post-box main-post">
+                              <div class="post-warp">
+                                  <div class="post-content-setting" style="color:#3CC114" >
+                                        {{aboutdata?.title}}
+                                  </div>
+                              </div>
+                          </div>
+      
+      
+                      </div>
+                      <ul>
+                          <div class="row">
+                              <div class="col-md-12">
+                                  <div class="page-content">
+                                      <div class="card post-box main-post">
+                                          <div class="post-warp">
+                                              <div class="post-content-setting" style="color:black" [innerHTML]="aboutdata?.description">
+                                                    {{aboutdata?.description}}
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+      
+                      </ul>
+                  </div>
+              </div>
+          </div>
+      </div>

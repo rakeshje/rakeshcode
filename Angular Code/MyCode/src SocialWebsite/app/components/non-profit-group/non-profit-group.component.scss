@@ -1,0 +1,50 @@
+.active {
+    color: #3cc114;
+}
+@media(max-width:375px){
+    .tab{
+        font-size: 14px;
+    }
+    .post-me{
+        font-size:9px!important;
+    
+        padding: 8px;
+        margin: 0px;
+    }
+    
+    .emojiiIcon {
+        margin: 1px 0px 0 auto;
+    }
+}
+@media(max-width:414px){
+    .tab{
+        font-size: 14px;
+    }
+    .post-me{
+        font-size:11px;
+    
+        padding: 8px;
+        margin: 0px;
+    }
+    
+    .emojiiIcon {
+        margin: 1px 0px 0 auto;
+    }
+}
+@media(max-width:768px){
+    .tab{
+        font-size: 14px;
+    }
+    .post-me{
+        font-size:11px;
+    
+        padding: 8px;
+        margin: 0px;
+    }
+    
+    .emojiiIcon {
+        margin: 1px 0px 0 auto;
+    }
+}
+
+

@@ -1,0 +1,63 @@
+        <div class="wrapper">
+            <main class="middle-content">
+                <div class="page_title_block">
+                    <h1 class="page_title">VIEW PRACTITIONER</h1>
+                </div>
+                <div class="content-section">
+                    <div class="order-view  max-WT-700 mrgn-0-auto setting-page">
+                        <div class="mb40">
+                           
+                            <div class="add-store-block input-style view-label-align">
+                                <div class="form-group row align-items-baseline">
+                                    <div class="col-md-12" style="text-align: center">
+                                        <img alt="" src="{{viewData?.profilePic || 'assets/img/profile-img.jpg' }}"
+                                            style="height: 100px;width: 100px; border-radius: 50%; border: 1px solid black!important;">
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-baseline">
+                                    <label class="col-md-4 textalignright ">Name <span>:</span></label>
+                                    <div class="col-md-8 textaligncenter">
+                                        <div class="form-group">
+                                            <p style="padding: 0px 5px!important;" >
+                                                {{viewData?.name || '--'}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-baseline">
+                                    <label class="col-md-4 textalignright">Email Id <span>:</span></label>
+                                    <div class="col-md-8 textaligncenter">
+                                        <div class="form-group ">
+                                            <p class="content-view" >
+                                                {{viewData?.email || '--'}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-baseline">
+                                    <label class="col-md-4 textalignright">Mobile Number <span>:</span></label>
+                                    <div class="col-md-8 textaligncenter">
+                                        <div class="form-group ">
+                                            <p class="content-view" >
+                                                {{viewData?.mobileNumber || '--'}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row align-items-baseline">
+                                    <label class="col-md-4 textalignright">Date of birth  <span>:</span></label>
+                                    <div class="col-md-8 textaligncenter">
+                                        <div class="form-group ">
+                                            <p class="content-view" >
+                                                {{viewData?.mobileNumber || '--'}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center mt40 mb40">
+                                
+                                <button class="btn btn-large  max-WT-150 btn-theme" routerLink="/practitioner-management">Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>

@@ -1,0 +1,276 @@
+
+ 
+    <app-rightsidemenu></app-rightsidemenu>
+
+    <div class="page-wrap">
+      <div class="container-fluid py-4">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="left-menu card">
+             <app-sidemenu></app-sidemenu>
+            </div>
+          </div>
+          <form class="col-md-9" [formGroup]="profileForm" novalidate autocomplete="off">
+            <div class="page-content">
+             
+
+              <div class="card post-box main-post">
+                <div class="post-warp">
+                  <div class="post-content-setting">
+                      Account Profile
+                  </div>
+                </div>
+                <div class="profileNew">
+                <div>
+                  <div class="userProfile" style="position: relative;">
+                    <i style="font-size: 30px;" class="fas fa-camera pointer"></i>
+                    <img [src]="server.profileImage" alt="loading...">
+                    <input style="position: absolute;
+                    width: 110px;
+                    opacity: 0;
+                    top: 0px;
+                    right: 44px" type="file" (change)="handleFileInput($event)">
+                 
+                  </div>
+                </div>
+              
+              <div class="mainClass">  
+                <div class="user">  
+                  <div class="email">
+                    <input placeholder="First Name*" maxlength="16" formControlName="first_name" (keypress)="toCheckSpace($event)">
+                 </div>
+                 <div class="userIcon">
+                   <img src="assets/images/fitst.png">
+                 </div>
+                 <span class="error" *ngIf="first_name.invalid && (first_name.dirty || first_name.touched)">
+                    <span *ngIf="first_name.errors.required" padding>
+                        *Please enter first name
+                    </span>
+                <span *ngIf="first_name.errors.pattern" padding>
+                        *Please enter valid first name
+                    </span>
+                </span>
+                </div>
+              
+                <div class="user" style="margin-top: 15px;">  
+                    <div class="email">
+                      <input placeholder="Last Name" maxlength="32" formControlName="last_name">
+                   </div>
+                   <div class="userIcon">
+                     <img src="assets/images/fitst.png">
+                   </div>
+                   <span class="error" *ngIf="last_name.invalid && (last_name.dirty || last_name.touched)">
+                      <span *ngIf="last_name.errors.required" padding>
+                          *Please enter last name
+                      </span>
+                  <span *ngIf="last_name.errors.pattern" padding>
+                          *Please enter valid last name
+                      </span>
+                  </span>
+                  </div>
+              
+                  <div class="user" style="margin-top: 15px;" (click)="changeEmail()" *ngIf="this.showSecondForm">  
+                      <div class="email">
+                        <input placeholder="Email*" formControlName="email" maxlength="64" (keypress)="toCheckSpace($event)" readonly >
+                     </div>
+                     <div class="userIcon">
+                       <img src="assets/images/email.png">
+                     </div>
+                     <span class="error" *ngIf="email.invalid && (email.dirty || email.touched)">
+                        <span *ngIf="email.errors.required" padding>
+                            *Please enter email address
+                        </span>
+                    <span *ngIf="email.errors.pattern" padding>
+                            *Please enter valid email address.
+                        </span>
+                    <span *ngIf="email.errors.maxlength && !email.errors.pattern" padding>
+                            *Maximum length allowed is 64 characters.
+                        </span>
+                    </span>
+                    </div>
+              
+                    <div class="user" style="margin-top: 15px; display: flex;" (click)="changeNumber()" *ngIf="this.showSecondForm">  
+                        <div class="email" style="width: 37%;">
+                            <input formControlName="dialCode" placeholder={{mobile_code}} readonly>
+
+                         </div>
+                      <div class="email" style="width: 64%; margin-left: 10px;">
+                          <input placeholder="Phone No*" formControlName="contact" (keypress)="toCheckSpaceChar($event)" maxlength="16" readonly>
+                       </div>
+                       <div class="userIcon">
+                         <img src="assets/images/mobile.png">
+                       </div>
+                       <span class="error" *ngIf="contact.invalid && (contact.dirty || contact.touched)">
+                          <!-- <span *ngIf="contact.errors.required" padding>
+                              *Enter contact no.
+                          </span>
+                      <span *ngIf="contact.errors.minlength" padding>
+                              *contact no must be of atleast 8 digits
+                          </span> -->
+                      </span>
+                      </div>
+              
+                      <div class="user" style="margin-top: 15px;">  
+                          <div class="email" style="display:flex; align-items: center;">
+                            <!-- <input type="date" placeholder="Date of birth*(MM-DD-YY)" formControlName="dateOfBirth" > -->
+                            <input class="form-control calendarNew" style="float:none" placeholder="Select a date" ngx-mydatepicker
+                            name="dateOfBirth" formControlName="dateOfBirth" [options]="myOptions" #dp="ngx-mydatepicker"
+                            />
+                         <span style="display:flex" class="form-group-btn calendar1">
+                            <span style="    margin-right: 10px;" (click)="dp.toggleCalendar()">
+                               <i style="color:#818181" class="fa fa-calendar"></i>
+                            </span>
+                            <span  (click)="dp.clearDate()">
+                               <i style="color:#818181" class="far fa-times-circle"></i>
+                            </span>
+                         </span>
+                         </div>
+                       
+                         <span class="error" *ngIf="dateOfBirth.invalid && (dateOfBirth.dirty || dateOfBirth.touched)">
+                            <span *ngIf="dateOfBirth.errors.required" padding>
+                                *Please select date of birth
+                            </span>
+                        </span>
+                        </div>
+                              <button class="btn-global pointer" [disabled]="!profileForm.valid || disableCheck" (click)="updateProfile()">UPDATE</button>
+            </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+</div>
+
+<!-- Number not match Modal Start-->
+<!-- <div class="modal fade" id="otpModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog max-WT-500 modal-dialog-centered" role="document">
+     <div class="modal-content">
+
+      <div class="boxMainnew">
+        <div class="box">
+           <div>
+              OTP Verification
+           </div>
+        </div>
+        <form style="height: 200px;" class="emailField" novalidate autocomplete="off">
+
+           <div style="display: flex;">
+              <input class="form-control" type="tel" maxlength="1" name="one" [(ngModel)]="otp.one"
+                 (keyup)="onKey(otp.one,1)">
+              <input class="form-control" type="tel" maxlength="1" name="two" [(ngModel)]="otp.two"
+                 (keyup)="onKey(otp.two,2)" id="otp2">
+              <input class="form-control" type="tel" maxlength="1" name="three" [(ngModel)]="otp.three"
+                 (keyup)="onKey(otp.three,3)" id="otp3">
+              <input class="form-control" type="tel" maxlength="1" name="four" [(ngModel)]="otp.four"
+                 (keyup)="onKey(otp.four,4)" id="otp4">
+
+             
+           </div>
+           <div class="green_color pointer timer" style="text-align: right;"  (click)="tester()"
+              *ngIf="resendButton">Resend?</div>
+           <div class="green_color pointer timer" style="text-align: right;" *ngIf="hiddenTimer && !resendButton">00 :
+              0{{count}}</div>
+           <div class="green_color pointer timer" style="text-align: right;" *ngIf="!hiddenTimer && !resendButton">00
+              : {{count}}</div>
+
+           <div class="login">
+              <button class="btn-global pointer" (click)="verifyOTP()" data-dismiss="modal">Verify </button>
+           </div>
+        </form>
+     </div>
+     </div>
+  </div>
+</div> -->
+<!-- Number not match Modal End -->
+
+
+<div class="modal fade"  id="changeEmailId" tabindex="-1" role="dialog">
+  <form [formGroup]="changeEmailForm" novalidate autocomplete="off" class="modal-dialog max-WT-500 modal-dialog-centered" role="document">
+     <div class="modal-content">
+
+        <div class="modal-body p0">
+           <div class="modalInnerContentnew">
+              <div class="w-100">
+                 <div class="sectionHead text-center headLine mb0">
+                  <div class="password" style="padding: 23px;
+               ">
+                    <input type="text" class="form-control" placeholder="Email*" formControlName="change_email" maxlength="64"
+                       (keypress)="toCheckSpace($event)">
+                 </div>
+                 <span class="error" *ngIf="change_email.invalid && (change_email.dirty || change_email.touched)">
+                    <span *ngIf="change_email.errors.required" padding>
+                       *Please enter email address
+                    </span>
+                    <span *ngIf="change_email.errors.pattern" padding>
+                       *Please enter valid email address.
+                    </span>
+                    <span *ngIf="change_email.errors.maxlength && !change_email.errors.pattern" padding>
+                       *Maximum length allowed is 64 characters.
+                    </span>
+                 </span>
+                 </div>
+              </div>
+           </div>
+           <div class=" pb15 text-center">
+              <button style="width: 250px;
+              margin: 0 auto;" type="button" class="btn-global pointer" (click)="changeEmailApi()" [disabled]="!changeEmailForm.valid" data-dismiss="modal">Send OTP</button>
+           </div>
+        </div>
+     </div>
+   </form>
+</div>
+
+
+<div class="modal fade" id="changeNumberId" tabindex="-1" role="dialog">
+   <div class="modal-dialog max-WT-500 modal-dialog-centered" role="document">
+      <div class="modal-content">
+ 
+         <div class="modal-body p0">
+            <div class="modalInnerContentnewotp">
+               <form class="emailField" [formGroup]="changeNumberForm" novalidate autocompletet="off">
+                  
+                  <div class="row" style="margin-top: -22px;">
+                     <div class="com-md-12" style="width: 100%;text-align: right;">
+                        <span style="font-size: 27px;" data-dismiss="modal">&times;</span>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-sm-5 col-lg-5 col-md-5">
+                        <div class="email">
+                           <!-- <input style="font-size: 12px;" type="text" class="form-control" placeholder="DialCode(+91)" formControlName="change_dialCode2"> -->
+                           <select type="text" class="form-control" formControlName="change_dialCode2">
+                              <option value="">-Select-</option>
+                              <option *ngFor="let option of dialCodeArr" [value]="option.dial_code">{{option.name}}</option>
+                           </select>
+                        </div>
+                        <span class="error" style="cursor:pointer"*ngIf="change_dialCode2.invalid && (change_dialCode2.dirty || change_dialCode2.touched)">
+                           <span *ngIf="change_dialCode2.errors.required" padding>
+                              *Please select dial code
+                           </span>
+                        </span>
+                     </div>
+                     <div class="col-sm-7 col-lg-7 col-md-7" style="padding-left: 0px;">
+                        <div class="email">
+                           <input style="font-size: 12px;" type="text" class="form-control" placeholder="Phone number" formControlName="change_forgot_ph" (keypress)="toCheckSpaceChar($event)">
+                        </div>
+                        <span class="error" *ngIf="change_forgot_ph.invalid && (change_forgot_ph.dirty || change_forgot_ph.touched)">
+                           <span *ngIf="change_forgot_ph.errors.required" padding>
+                              *Please enter mobile no.
+                           </span>
+                           <span *ngIf="change_forgot_ph.errors.minlength" padding>
+                              *Mobile no. must be of eight digits
+                           </span>
+                        </span>
+                     </div>
+            </div>
+            </form>
+            <div class=" pb15 text-center">
+               <button style="width: 250px;
+               margin: 0 auto;" type="button" class="btn-global pointer" (click)= "changeNumberApi()" [disabled]="!changeNumberForm.valid" data-dismiss="modal">Send OTP</button>
+            </div>
+         </div>
+      </div>
+   </div>
+ </div>
+ </div>

@@ -1,0 +1,40 @@
+<div class="wrapper">
+    <main class="middle-content">
+        <div class="page_title_block">
+            <h1 class="page_title"> VIEW PRODUCT
+
+            </h1>
+            <hr style="background: black; opacity: 0.5;">
+
+        </div>
+
+        <div class="content-section">
+            
+            <div style="margin-left: 37%;">
+                <img style="border-radius: 50%;" [src]="profile?profile:'assets/img/profile-img.jpg'" alt="" />
+             </div>
+            <div class="card" style="margin-left: 13%;
+        margin-right: 19%;">
+            <div class="row" style=" margin-left: 2%; margin-top: 8%; margin-right: 2%;">
+                <div class="col">
+                    <label>Name of product :</label><br><br>
+                    <label>Price :</label><br><br>
+                    <label>Used for :</label><br><br>
+                    <label>Type : </label><br><br>
+                </div>
+                <div class="col">
+                    <label>{{user?.productName}}</label><br><br>
+                    <label>{{user?.price}}</label><br><br>
+                    <label>{{user?.usedFor}}</label><br><br>
+                    <label>{{user?.type}}</label><br><br>
+                </div>
+                
+            </div>
+
+            <div class="row" style="margin-left: 25%;margin-top: 5%; margin-bottom: 8%; ">
+                <button type="button" class="btn btn-theme" style="margin-left: 10%; width: 12%;"
+                [routerLink]="['/product-management']">Back</button>
+                
+            </div>
+        </div>
+        </div>

@@ -1,0 +1,59 @@
+<div class="wrapper">
+     <app-sidebar></app-sidebar>
+     <main class="middle-content">
+         <!-- Page Title Start -->
+         <div class="page_title_block">
+             <h1 class="page_title">View HELP CENTER MANAGEMENT</h1>
+         </div>
+         <!-- Page Title End -->
+         <div class="content-section">
+             <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+                 <div class="main-block-innner mb40 mt40">
+
+                     <div class="form-group row align-items-baseline">
+                         <label class="col-md-5">Name :</label>
+                         <ul class="col-md-7">
+                             <h5 style="color: black">{{viewData?.name}}</h5>
+
+
+                         </ul>
+                     </div>
+
+                     <div class="form-group row align-items-baseline">
+                         <label class="col-md-5">Phone Number :</label>
+                         <ul class="col-md-7">
+                             <h5 style="color: black">{{viewData?.mobileNumber}}</h5>
+                         </ul>
+                     </div>
+                     <div class="form-group row align-items-baseline">
+                         <label class="col-md-5">Email Id :</label>
+                         <ul class="col-md-7">
+                             <h5 style="color: black">{{viewData?.email}}</h5>
+                         </ul>
+                     </div>
+                     <div class="form-group row align-items-baseline">
+                         <label class="col-md-5">Subject: :</label>
+                         <ul class="col-md-7">
+                             <h5 style="color: black">{{viewData?.subject}}</h5>
+                         </ul>
+                     </div>
+                     <div class="form-group row align-items-baseline">
+                         <label class="col-md-5">Description :</label>
+                         <ul class="col-md-7">
+                             <h5 style="color: black">{{viewData?.description}}</h5>
+                         </ul>
+                     </div>
+
+                     <div class="form-group">
+                         <div class="text-center mt40" style="justify-content: space-between">
+                             <a (click)="addAgent()" class="btn btn-large  max-WT-200 font-100 btn-green mb-5"
+                                 [routerLink]="['/help-center-management']">Back</a>
+                         </div>
+
+                     </div>
+
+                 </div>
+             </div>
+         </div>
+     </main>
+ </div>

@@ -1,0 +1,110 @@
+<main class="middle-content">
+    <div class="page_title_block">
+        <h1 class="page_title" style="color:#26272d">VIEW KYC DETAILS</h1>
+    </div>
+    <div class="content-section">
+        <div class="outer-box">
+            <div class="global-table no-radius p0">
+                <div class="tab-content1">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm" style="padding-left:5%;margin-top: 4%;">
+                                <h3 style="text-decoration: underline;"><p>Document:{{viewData?.documentNumber}}</p> </h3>
+                                <div class="col" style="padding-left: 13%; margin-top: 3%;">
+                                    <h4>{{viewData?.docName}}</h4>
+                                    <h4>{{viewData?.docIdNumber}}</h4>
+                                    <h4 style="margin-top: 2%;">Proof</h4>
+                                    <div class="row" style="margin-left: 10%;"> <img src="/img/active-user-image1.png"
+                                            alt="">
+                                        <p>Front Image</p><img [src]="viewData?.frontIdUrl"  alt=""
+                                            style="padding-left: 6%;">
+                                        <p>Back Image </p><img [src]="viewData?.backIdUrl" alt=""
+                                        style="padding-left: 6%;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div  style="margin-top: 2%; ">
+                    <div class="two-btnline" style="margin-right: 54%;">
+                        <div class="text-left" style="margin-left: 1%"  >
+                            <button type="submit" class="btn  btn-theme cus-mr"  style="width: 100%;"  (click)="approved()">Approve</button>
+                        </div>
+                        <div class="text-left" style="margin-left: 1%" >
+                            <button type="submit" class="btn  btn-theme cus-mr "  style="width: 110%;margin-left: 25%;"  (click)="rejected()">Reject</button>
+                        </div>
+                        <div class="text-left" style="margin-left: 1%" >
+                            <button type="submit" class="btn  btn-theme cus-mr"  style="width: 120%;margin-left: 68%;" routerLink="/kyc-update">Back</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="container-fluid">
+        <p class="copyright">Alende  <strong class="theme-text-color"></strong> 
+            </p>
+    </div>
+</footer>
+<!-- appraved_modal Start -->
+<div class="modal fade global-modal reset-modal" id="approveModal">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div>
+                    <div class="modal-body">
+                        <h3 style="text-align: center; ">KYC Approve</h3>
+                        <hr>
+                        <button type="button" class="close" data-dismiss="modal"
+                            style="margin-top: -85px;">&times;</button>
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p style="font-size: 25px;">Are you sure you want to approve kyc with data entered?</p>
+                                <div>
+                                    <button type="submit" class="btn btn-info mr-2 " style="width: 25%;" (click)="approveKyc()">Yes</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal" style="width: 25%;">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- appraved_modal End -->
+<!-- rejected_modal Start -->
+<div class="modal fade global-modal reset-modal" id="rejectModal">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password" [formGroup]="modalForm">
+            <div class="modal-content">
+                <div>
+                    <div class="modal-body">
+                             <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p style="font-size: 25px;">Are you sure you want to reject kyc </p>
+                                <div class="row" style="margin-left: 6%;">
+                                <p style="font-size: 30px;">Reason:</p>
+                                <textarea  formControlName="reason" class="form-control" id="exampleFormControlTextarea1" rows="3" style="width: 60%;height: 115px;"></textarea></div>
+                                <div style="margin-top: 2%;margin-bottom: 2%; margin-right: 13%;">
+                                <input class="form-check-input" type="checkbox" value="" id="Notify User" >
+                                
+                            </div>
+                                <div>
+                                    <button type="submit" class="btn btn-info mr-2 " style="width: 25%;" (click)="rejectKyc()">Yes</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal" style="width: 25%;">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- rejected_modal End -->

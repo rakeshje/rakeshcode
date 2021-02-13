@@ -1,0 +1,251 @@
+<app-rightsidemenu></app-rightsidemenu>
+<div class="page-wrap">
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="left-menu card">
+          <app-sidemenu></app-sidemenu>
+        </div>
+      </div>
+
+      <div class="col-md-9">
+        <div class="page-content">
+          <div class="card post-box main-post">
+            <div class="post-warp">
+              <div class="post-content-setting" style="color:#3CC114">
+                Add Profile
+              </div>
+            </div>
+          </div>
+        </div>
+       
+        <div lass="mt40">
+
+          <img [src]="profileImageCover ||'assets/images/img.png'" alt="" class="form-control img">
+
+          <div class="profile-added">
+            <div class="profile-detail  text-align: center;">
+
+              <img [src]="profileImage || 'assets/images/Layer 139.png'" alt="loading..." class="img1">
+              <div class="add-user" style="cursor: pointer">
+                <em class="fas fa-camera  cam"></em>
+
+                <input class="file" type="file" (change)="handleFileInput($event)"
+                  accept="image/png || image/jpg || image/jpeg">
+              </div>
+
+
+            </div>
+
+          </div>
+         
+
+          <div class="profile-added1">
+            <div class="backgroungFile">
+              <em class="fas fa-camera" style="position: relative;left: 6%;">
+              </em>
+              <input class="file1" type="file" (change)="handleCoverInput($event)" accept="image/*">
+              <div class="edit-text">Upload</div>
+            </div>
+
+          </div>
+          <!-- FormGroup -->
+          <form [formGroup]="profileForm">
+            <div class="card post-field main-post">
+              <div class="field-wrap">
+
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label for="">Designation</label>
+                      <input type="text" class="form-control" formControlName="designation"
+                        (keypress)="toCheckSpaceChar($event)" placeholder="enter your designation">
+                      <div
+                        *ngIf="profileForm.get('designation').errors && profileForm.get('designation').dirty || profileForm.get('designation').touched">
+                        <div *ngIf="profileForm.controls['designation'].hasError('required')">
+                          <span style="color: red">*Field is required</span>
+                        </div>
+                        <div *ngIf="profileForm.controls['designation'].hasError('pattern')">
+                          <span style="color: red">*Please filled the valid one!</span>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label for="">Add College</label>
+                      <input type="text" class="form-control" formControlName="college"
+                        (keypress)="toCheckSpaceChar($event)" placeholder="enter your college name">
+
+                      <div
+                        *ngIf="profileForm.get('college').errors && profileForm.get('college').dirty || profileForm.get('college').touched">
+                        <div *ngIf="profileForm.controls['college'].hasError('required')">
+                          <span style="color: red">*Field is required</span>
+                        </div>
+                        <div *ngIf="profileForm.controls['college'].hasError('pattern')">
+                          <span style="color: red">*Please filled the valid one!</span>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label for="">Higher School</label>
+                      <input type="text" class="form-control" formControlName="inter"
+                        (keypress)="toCheckSpaceChar($event)" placeholder="enter your  higher school name">
+
+                      <div
+                        *ngIf="profileForm.get('inter').errors && profileForm.get('inter').dirty || profileForm.get('inter').touched">
+                        <div *ngIf="profileForm.controls['inter'].hasError('required')">
+                          <span style="color: red">*Field is required</span>
+                        </div>
+                        <div *ngIf="profileForm.controls['inter'].hasError('pattern')">
+                          <span style="color: red">*Please filled the valid one!</span>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label for="">Secondary School</label>
+                      <input type="text" class="form-control" formControlName="metric"
+                        (keypress)="toCheckSpaceChar($event)" placeholder="enter your matriculation school name">
+
+                      <div
+                        *ngIf="profileForm.get('metric').errors && profileForm.get('metric').dirty || profileForm.get('metric').touched">
+                        <div *ngIf="profileForm.controls['metric'].hasError('required')">
+                          <span style="color: red">*Field is required</span>
+                        </div>
+                        <div *ngIf="profileForm.controls['metric'].hasError('pattern')">
+                          <span style="color: red">*Please filled the valid one!</span>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label for="">Current Location</label>
+                      <input type="text" class="form-control" formControlName="liveIn"
+                        (keypress)="toCheckSpaceChar($event)" placeholder="enter your current location">
+
+                      <div
+                        *ngIf="profileForm.get('liveIn').errors && profileForm.get('liveIn').dirty || profileForm.get('liveIn').touched">
+                        <div *ngIf="profileForm.controls['liveIn'].hasError('required')">
+                          <span style="color: red">*Field is required</span>
+                        </div>
+                        <div *ngIf="profileForm.controls['liveIn'].hasError('pattern')">
+                          <span style="color: red">*Please filled the valid one!</span>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label for="">From</label>
+                      <input type="text" class="form-control" formControlName="From" placeholder="where are you from"
+                        (keypress)="toCheckSpaceChar($event)">
+
+                      <div
+                        *ngIf="profileForm.get('From').errors && profileForm.get('From').dirty || profileForm.get('From').touched">
+                        <div *ngIf="profileForm.controls['From'].hasError('required')">
+                          <span style="color: red">*Field is required</span>
+                        </div>
+                        <div *ngIf="profileForm.controls['From'].hasError('pattern')">
+                          <span style="color: red">*Please filled the valid one!</span>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label>Marrital Status:</label>
+                      <select formControlName="marrital">
+                        <option value="">--select--</option>
+                        <option value="single">Single</option>
+                        <option value="Married">Married</option>
+                        <option value="Married">Divorced</option>
+                        <option value="Married">Widow</option>
+                      </select>
+
+                    </div>
+
+                   
+                    <div class="col-md-6">
+                      <label>Gender:</label>
+                      <select formControlName="gender">
+                        <option value="">--select--</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Others">Others</option>
+                      </select>
+
+                    </div>
+
+                  </div>
+
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label for="">BIO-Data</label>
+                      <textarea rows="4" cols="50" type="text" class="form-control" formControlName="biodata"
+                        placeholder="enter your Bio data"></textarea>
+
+                      <div
+                        *ngIf="profileForm.get('biodata').errors && profileForm.get('biodata').dirty || profileForm.get('biodata').touched">
+                        <div *ngIf="profileForm.controls['biodata'].hasError('required')">
+                          <span style="color: red">*Field is required</span>
+                        </div>
+                        <div *ngIf="profileForm.controls['biodata'].hasError('pattern')">
+                          <span style="color: red">*Please filled the valid one!</span>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+              </div>
+              <div>
+                <button class="button"  [disabled]="!profileForm.valid" (click)="addUserProfile()">Add
+                  Profile</button>
+              </div>
+            </div>
+
+          </form>
+
+
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>

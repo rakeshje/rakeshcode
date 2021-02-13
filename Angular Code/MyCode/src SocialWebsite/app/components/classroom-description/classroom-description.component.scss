@@ -1,0 +1,21 @@
+.name-comment p:nth-child(2) {
+    font-weight: 400;
+    font-size: 12px;
+    margin-bottom: 0px;
+    margin-top: -4px;
+}
+.name-comment p:first-child {
+    margin-bottom: 0px;
+    font-weight: 500;
+}
+
+.name-comment {
+    margin-left: 10px;
+
+}
+.structure-repeat {
+    display: flex;
+    align-items: initial;
+    margin-bottom: 6px;
+    margin-left: 20px;
+}

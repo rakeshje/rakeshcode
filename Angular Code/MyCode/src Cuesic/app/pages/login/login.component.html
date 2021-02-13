@@ -1,0 +1,91 @@
+<div class="login-wrapper">
+     <div class="container-common">
+         <div class="row justify-content-center">
+             <div class="col-md-6">
+                 <div class="d-flex align-items-center minheight70vh">
+                     <form class="login_box_outer w-100" [formGroup]="loginForm">
+                         <div class="login-box max-WT-520">
+                             <div class="login-right-block">
+                                 <div class="login-heading">
+                                     <h4>LOGIN</h4>
+                                 </div>
+                                 <div class="login-box-body">
+                                     <div class="form-group" >
+                                         <input type="text" formControlName="email" class="form-control" maxlength="45"
+                                             placeholder="Email ID" (keypress)="mainService.preventSpace($event)" />
+                                         <div class="text-danger log_span"
+                                             *ngIf="loginForm.get('email').invalid && (loginForm.get('email').dirty  || loginForm.get('email').touched)"
+                                             style="color: red;text-align: start ; padding-bottom: 10px;" >
+                                             <span *ngIf="loginForm.get('email').hasError('required')">*Email address is
+                                                 required.</span>
+                                             <span *ngIf="loginForm.get('email').hasError('pattern')">*Please enter
+                                                 valid email.</span>
+                                         </div>
+                                     </div>
+                                     <div class="form-group eyeicon">
+                                         <input type="password" maxlength="16" formControlName="password"
+                                             class="form-control " placeholder="Password"
+                                             (keypress)="mainService.preventSpace($event)" />
+                                         <div class="text-danger"
+                                             *ngIf="loginForm.get('password').invalid && (loginForm.get('password').dirty  || loginForm.get('password').touched)"
+                                             style="color: red;text-align: start;padding-bottom: 10px;">
+                                             <span *ngIf="loginForm.get('password').hasError('required')">*Password is
+                                                 required.</span>
+                                         </div>
+                                     </div>
+                                     <div class="d-flex">
+                                         <label class="checkbox-design">
+                                             <input type="checkbox" formControlName="rememberMe" /><span></span>Remember
+                                             me
+                                         </label>
+                                         <span class="ml-auto forgot-links">
+                                             <a [routerLink]="['/forget-password']" class="link font17">Forgot
+                                                 Password?</a>
+                                         </span>
+                                     </div>
+
+                                 </div>
+                                 <div class="text-center mt40">
+                                     <button class="btn btn-login btn-large width100 font-100" (click)="login()"
+                                         [disabled]="!loginForm.valid" >LOGIN</button>
+                                 </div>
+                             </div>
+                         </div>
+                     </form>
+                 </div>
+             </div>
+         </div>
+     </div>
+ </div>
+
+
+ <!-- delete contact modal Start -->
+<div class="modal fade global-modal reset-modal" id="deleteContactUser">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div class="modal-header d-block text-center modal-header-custm">
+                    <h5 class="modal-title d-inline-block">Delete Contact?</h5>
+                </div>
+                <div class="modal-inner-content">
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p>Are you sure you want to delete this User?</p>
+                                <div class="modal-btn-box">
+                                    <button type="submit" class="btn btn-theme" >Yes</button>
+                                    <button type="button" class="btn btn-danger btn-theme ml-2"
+                                        data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- end delete contact modal -->
+
+
+ 

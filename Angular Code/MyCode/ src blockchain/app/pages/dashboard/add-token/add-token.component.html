@@ -1,0 +1,97 @@
+
+ <main class="middle-content">
+  <div class="content-section">
+      <div class="page_title_block pL0 pR0">
+          <h1 class="page_title" style="color:#26272d">Add Token</h1>
+      </div>
+      
+         <form [formGroup]="addForm">
+          <div class="form-group row" >
+            <label class="col-md-5 text" for="">Token Image</label>
+            <span class="col-md-1">:</span>
+            <div class="col-md-6">
+            <img src="assets/img/profile-img.jpg" style="width: 100px; height: 100px;" alt="">
+        </div>
+        </div>
+        <div class="form-group row" >
+            <label class="col-md-5 text" for="">Contract Address</label>
+            <span class="col-md-1">:</span>
+            <div class="col-md-6">
+            <textarea cols="50" rows="5" formControlName="address" placeholder="write here......"></textarea>
+            </div>
+            <div
+                 *ngIf="addForm.get('address').hasError('required') && addForm.get('address').touched" style="margin-left: 52%">
+                  <span  class="error">*Address is required.</span>
+                  </div>
+                  
+        </div>
+        <div class="form-group row" >
+            <label class="col-md-5 text" for="">Decimal</label>
+            <span class="col-md-1">:</span>
+            <div class="col-md-6">
+            <input  type="text" formControlName="decimal" class="form-control" placeholder="decimal">
+            </div>
+            <div
+                 *ngIf="addForm.get('decimal').hasError('required') && addForm.get('decimal').touched" style="margin-left: 52%">
+                  <span  class="error">*Decimal is required.</span>
+                  </div>
+        </div>
+        <div class="form-group row" >
+            <label class="col-md-5 text" for="">Price</label>
+            <span class="col-md-1">:</span>
+            <div class="col-md-6">
+            <input  type="text"  formControlName="price" class="form-control" placeholder="price">
+            </div>
+            <div
+                 *ngIf="addForm.get('price').hasError('required') && addForm.get('price').touched" style="margin-left: 52%">
+                  <span  class="error">*Price is required.</span>
+                  </div>
+        </div>
+     </form>
+        
+                  <div class="row form-group w-100 d-flex justify-content-center" >
+                  <div class="col-md-3">
+                  <button type="submit" class="btn btn-lg btn-success" style="background-color: #2d3498;" (click)="addToken()">Add Token</button>
+                  </div>
+                  
+                  </div>
+
+
+
+
+      </div>
+    </main>
+    <footer>
+        <div class="container-fluid">
+            <p class="copyright">Alende  <strong class="theme-text-color"></strong> 
+                </p>
+        </div>
+    </footer>
+
+    <!-- delete_modal Start -->
+<div class="modal fade global-modal reset-modal" id="deleteModal">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div>
+                    <div class="modal-body">
+                        <h3 style="text-align: center; ">Delete Token </h3>
+                        <hr>
+                        <button type="button" class="close" data-dismiss="modal"
+                            style="margin-top: -85px;">&times;</button>
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p style="font-size: 25px;">Are you sure you want to delete this token?</p>
+                                <div>
+                                    <button type="submit" class="btn btn-info mr-2" >Yes</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- delete_modal End -->

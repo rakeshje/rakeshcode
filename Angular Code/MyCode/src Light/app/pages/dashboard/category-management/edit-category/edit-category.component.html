@@ -1,0 +1,65 @@
+<div class="wrapper">
+        <main class="middle-content">
+            <!-- Page Title Start -->
+            <div class="page_title_block">
+                <h1 class="page_title">CATEGORY MANAGEMENT
+    
+                </h1>
+            </div>
+            <!-- Page Title End -->
+            <div class="content-section">
+                <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+                    <div class="main-block-innner mb40 mt40">
+                        <form [formGroup]="addSubadminForm" #f="ngForm" style="padding: 10px;">
+                            <div class="add-store-block input-style">
+                                <div class="user-profile">
+                                    <div class="image-box">
+                                    <img [src]="imageUrl || 'assets/img/profile-img.jpg'" id="sub-admin-image" alt="">
+                                    <label class="upload-label">
+                                        <input type="file" name="image" accept="image/jpg,image/jpeg,image/png" id="image" (change)="ValidateFileUpload($event)"
+                                            maxlength="56">
+                                        <em class="fas fa-pencil-alt" style="color: #26abe6!important;font-size: 12px"></em>
+                                    </label>
+                                </div>
+                                </div>
+                                <div class="form-group row align-items-baseline">
+                                    <label class="col-md-5">Product Service Type :</label>
+                                    <div class="col-md-7">
+                                        <input type="text" (keypress)="service.preventSpace($event)" formControlName="name"
+                                            maxlength="20" placeholder="Name" class="form-control">
+                                        <div class="text-danger"
+                                            *ngIf="addSubadminForm.get('name').hasError('required') && (addSubadminForm.get('name').dirty || addSubadminForm.get('name').touched)">
+                                            *Please enter name.
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="form-group row align-items-baseline">
+                                    <label class="col-md-5">Name:</label>
+                                    <div class="col-md-7">
+                                            <select formControlName="category" class="form-control">
+                                                    <option style="width: 100%;" value="">Select</option>
+                                                    <option style="width: 100%;" value="SERVICE">Service</option>
+                                                    <option style="width: 100%;" value="PRODUCT">Product</option>
+                                                </select>
+
+                                    </div>
+                                </div>
+                            
+                                <div class="form-group">
+                                    <div class="text-center mt40">
+                                        <button (click)="addCategoryComponent()"
+                                            class="btn btn-large  max-WT-200 font-100 btn-green mb-5">Save</button>
+                                        <button [routerLink]="['/category-management']"
+                                            class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ml-2">Cancel</button>
+                                    </div>
+    
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Table Responsive End -->
+        </main>
+    </div>

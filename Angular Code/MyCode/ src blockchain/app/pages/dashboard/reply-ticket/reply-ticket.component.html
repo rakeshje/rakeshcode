@@ -1,0 +1,47 @@
+<main class="middle-content">
+                  <div class="content-section">
+                      <div class="page_title_block pL0 pR0">
+                          <h1 class="page_title" style="color:#26272d">TICKET REPLY</h1>
+                      </div>
+                      <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+                          <div class="main-block-innner mb40 mt40">
+                              <div class="add-store-block input-style">
+                <div *ngFor="let data of replyList">
+                <div class="row form-group" style="max-width: 70%">
+                  <div  style=" display: flex">
+                    <em class="fa fa-user-circle" style="font-size: xx-large"></em>&nbsp;
+                    <p style="white-space: nowrap; margin-top: 4%">Ticket Id {{data?.ticketId}}</p>
+
+                  </div> 
+                                 
+                </div>
+
+                
+                <div class="row form-group" style=" margin-left:40%">
+                  <div class="col-md-3"  >
+                    <img  src="{{data?.imageUrl}}" class="admin" alt="profile image">
+                  </div>
+                    <span class="col-md-4" style="margin-top: 4%" >
+                     <p style="white-space: nowrap;">{{data?.message}}</p>
+                     <p>{{data?.createdAt | date}}</p>
+                    </span> 
+                </div>
+              </div>
+                <form [formGroup]="chatForm">
+              <div class="row form-group d-flex">
+                <div class="col-md-6">
+                  <textarea cols="70" rows="3" formControlName="text" placeholder="write something here....."></textarea>
+                </div>
+                <div class="col-md-6" >
+                    <button type="submit" class="btn  btn-theme cus-mr"  style="margin-left: 105%; margin-top: 5%" (click)="sendMessage()" >SEND</button>
+                </div>
+              </div>
+
+            </form>
+              </div>
+            </div>
+          </div>
+                
+
+                </div>
+                </main>

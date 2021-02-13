@@ -1,0 +1,45 @@
+<header [hidden]="!showLoginHeader" class="header">
+    <nav  aria-label="" class="navbar clearfix">
+        <div class="logo-box" [routerLink]="['/user-management']" style="background:#2f39bd;">
+            <a class="navbar-brand logo">
+                <img style="font-size: 8px; max-height: 70px;" src="assets/img/header-logo-light.png" alt="ICON" class="lg-logo">
+
+            </a>
+        </div>
+        <div class="d-flex align-items-center justify-content-between header-padding">
+            <div class="header-right-part">
+                <button class="btn btn-toggle" type="button" style="color:#000">
+                    <em class="fas fa-bars"></em>
+                </button>
+                <button class="btn btn-outline-secondary btn-mobsearch" type="button"><em
+                        class="fas fa-search"></em></button>
+
+            </div>
+            <div class="" style="display: inline-flex;
+            width: 100%;
+            justify-content: flex-end;
+            padding-right: 50px;" >
+                
+                
+                <img style="font-size: 8px; max-height: 70px;" (click)="goToNotification()" src="assets/img/notification-.png" alt="ICON" class="lg-logo">
+
+            </div>
+        </div>
+
+    </nav>
+</header>
+
+<header [hidden]="showLoginHeader" class="header">
+    <nav aria-label="" class="navbar clearfix">
+        <div class="logo-box" style="background: none">
+            <a class="navbar-brand logo">
+                <img style="font-size: 8px; max-height: 70px;" src="assets/img/header-logo.png" alt="ICON" class="lg-logo">
+
+            </a>
+        </div>
+
+        
+        
+
+    </nav>
+</header>

@@ -1,0 +1,32 @@
+<header  [hidden]="!showLoginHeader" class="header">
+                  <nav class="navbar clearfix" aria-label="">
+                      <div class="logo-box" [routerLink]="['dashboard']">
+                          <a class="navbar-brand logo" id="logo" *ngIf="showLogo == false">
+                              <img style="font-size: 8px; max-height: 70px;" src="assets/img/cuejams_updated_1.png" alt="ICON" class="lg-logo">
+                          </a>
+                          <a class="navbar-brand logo" id="logo1" *ngIf="showLogo == true">
+                              <img style="font-size: 8px; max-height: 70px;" src="assets/img/cuejams_updated_1.png" alt="ICON" class="lg-logo">
+                          </a>
+                      </div>
+                      <div class="d-flex align-items-center justify-content-between header-padding">
+                          <div class="header-right-part" (click)="head()">
+                              <button class="btn btn-toggle" type="button" style="color:#007bff">
+                                  <em class="fa fa-bars"></em>
+                              </button>
+                          </div>
+                      </div>
+
+                  </nav>
+              </header>
+
+              
+
+              <header *ngIf="this.success==''" [hidden]="showLoginHeader" class="header">
+                  <nav class="navbar clearfix" aria-label="">
+                      <div class="logo-box" style="background: none">
+                          <a class="navbar-brand logo" [routerLink]="['login']">
+                              <img style="font-size: 8px; max-height: 70px;" src="assets/img/cuejams_updated_1.png" alt="ICON" class="lg-logo">
+                          </a>
+                      </div>
+                  </nav>
+              </header>

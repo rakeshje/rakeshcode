@@ -1,0 +1,80 @@
+<main class="middle-content">
+    <div class="content-section">
+        <div class="page_title_block pL0 pR0">
+            <h1 class="page_title" style="color:#26272d">WALLET TRANSACTION HISTORY</h1>
+        </div>
+        <div class="custom_tabs common-tabs">
+            <div class="row mb20 justify-content-center">
+                <div class="col-sm-12">
+                    <ul class="nav nav-tabs d-flex  justify-content-center text-center">
+                        <li class="nav-item flex-fill"> <a class="nav-link active show"
+                                [ngClass]="{'active': currTab=='HOT'}" (click)="selectTab('HOT')"
+                                href="javascript:;">Hot Wallet</a>
+                        </li>
+                        <li class="nav-item flex-fill"> <a class="nav-link active show"
+                                [ngClass]="{'active': currTab=='COLD'}" (click)="selectTab('COLD')"
+                                href="javascript:;">Hot Wallet to cold wallet transactions</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+
+            <div class="tab-content">
+                <div class="tab-pane active show" >
+                    <div class="tab-pane1">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" aria-describedby="hot wallet list">
+                                <thead>
+                                    <tr class="no_wrap_th">
+                                        <th scope="col">S.No</th>
+                                        <th scope="col">Transaction hash</th>
+                                        <th scope="col">Coin Name</th>
+                                        <th scope="col">Transaction Date and Time</th>
+                                        <th scope="col">Transaction Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let item of transactionList| paginate: { 
+                                    itemsPerPage:20,
+                                    currentPage: pageNumber,
+                                    totalItems: transactionList?.length };let i=index ">
+                                       <td>{{20*(this.pageNumber-1)+i+1}}</td>
+                                       <td>{{item.txnHash}}</td> 
+                                       <td>{{item.coinType}}</td> 
+                                       <td>{{item.txnTime | date}}</td> 
+                                       <td>{{item.status}}</td> 
+                                 
+                                   </tr>
+                                   <tr *ngIf="transactionList?.length==0">
+                                    <td colspan="10" vertical-align="middle">
+                                        <div class="no-record">
+                                            <div class="no-recordin">
+                                                <H5 style="margin-left: 44%;">No record found</H5>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="custom-pagination mt20 " style="display: flex; justify-content:flex-end" *ngIf="transactionList?.length>20">
+                            <pagination-controls (pageChange)="pageNumber = $event"></pagination-controls>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="container-fluid">
+        <p class="copyright">Alende  <strong class="theme-text-color"></strong> 
+            </p>
+    </div>
+</footer>

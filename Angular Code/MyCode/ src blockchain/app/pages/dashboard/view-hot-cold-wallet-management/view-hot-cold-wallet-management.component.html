@@ -1,0 +1,66 @@
+
+ <main class="middle-content" >
+  <div class="content-section">
+      <div class="page_title_block pL0 pR0">
+          <h1 class="page_title" style="color:#26272d">HOT WALLET TO COLD WALLET TRANSFER-VIEW</h1>
+      </div>
+      <div class="tab-pane active show" >
+        <div class="order-view mt30 max-WT-800 mrgn-0-auto">
+            <div class="main-block-innner mb40 mt40">
+                <div class="add-store-block input-style">
+        
+          <div class="form-group row" >
+            <label class="col-md-5 text" for="">Currency</label>
+            <span class="col-md-1">:</span>
+            <p class="col-md-6">{{list.coinType}}</p>
+        </div>
+        <div class="form-group row" >
+            <label class="col-md-5 text" for="">Total Available Balance</label>
+            <span class="col-md-1">:</span>
+            <p class="col-md-6">{{list.hotWalletBalance}}</p>
+        </div>
+        <div class="form-group row" >
+            <label class="col-md-5 text" for="">Hot Wallet Address</label>
+            <span class="col-md-1">:</span>
+            <p class="col-md-6">{{list.address}}</p>
+        </div>
+        <div class="form-group row" >
+            <label class="col-md-5 text" for="">Cold Wallet Transfer Address</label>
+                <p class="col-md-1">:</p>
+                <input [(ngModel)]="toAddress" class="col-md-6" class="form-control" style="width: 50%;" >
+        </div>
+        <div class="form-group row" >
+            <label class="col-md-5 text" for="">Enter Hot Wallet To Cold Wallet Amount</label>
+            
+            <p class="col-md-1">:</p>
+                <input [(ngModel)]="amount" class="col-md-6" class="form-control" style="width: 50%;">
+            
+           
+        </div>
+        
+        
+                 
+                  <div class="row form-group w-100 d-flex justify-content-center">
+                    <div class="text-left mt40 " class="col-md-6">
+                        <button  class="btn btn-large  max-WT-200 font-100 btn-green" style="background-color: #2d3498;" (click)="submit()" >Submit</button>
+                    </div>
+                    <div class="text-left mt40 " class="col-md-6">
+                        <button routerLink="/hot-wallet-management" class="btn btn-large  max-WT-200 font-100 btn-green" style="background-color: #2d3498;">Back</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+
+
+      </div>
+    </main>
+
+    <footer>
+        <div class="container-fluid">
+            <p class="copyright">Alende  <strong class="theme-text-color"></strong> 
+                </p>
+        </div>
+    </footer>

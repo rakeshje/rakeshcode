@@ -1,0 +1,101 @@
+<main class="middle-content">
+    <div class="page_title_block">
+        <h1 class="page_title" style="color:#26272d">HOT WALLET MANAGEMENT</h1>
+    </div>
+    <div class="content-section">
+        <div class="outer-box">
+            <div class="global-table no-radius p0">
+                <div class="tab-content1">
+                    <div class="tab-pane1">
+                        <div class="user-main-head sec_head_new sec_head_new_after">
+                            <form [formGroup]="hotWalletForm">
+                            <div class="row form-group">
+                                <span style="margin-left: 10%; margin-top: 1%">Search By</span>
+                                <div class="col-md-2">
+                                    <div class="serch-boxuser">
+                                        <div class="input-group filter_search_group">
+                                            <input type="text" class="form-control" formControlName="coin" placeholder="Coin Name">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+
+                                <div class="col-md-2 user-lst">
+                                    <div class="two-btnline">
+                                        <div class="text-left" style="margin-left: 1%">
+                                            <button type="submit" class="btn  btn-theme cus-mr" (click)="search()">Search</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-2 user-lst">
+                                    <div class="two-btnline">
+                                        <div class="text-left" style="margin-left: 1%">
+                                            <button type="submit" class="btn  btn-theme cus-mr" (click)="reset()">Reset</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        </div>
+
+
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered" aria-describedby="user list">
+                                <thead>
+                                    <tr class="no_wrap_th">
+                                        <th scope="col">S.No</th>
+                                        <th scope="col">Coin</th>
+                                        <th scope="col">Hot Wallet</th>
+                                        <th scope="col">Last withdraw On</th>
+                                        <th scope="col">Wallet Address</th>
+                                        <th scope="col" class="action_td_btn3">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of coinData | paginate:{itemsPerPage:20, currentPage:pageNumber, totalItems:coinData?.length}; let i = index" >
+                                        <td>{{20*(this.pageNumber-1)+i+1}}</td>
+                                        <td>{{item.HotWalletData.coinType}}</td>
+                                        <td>{{item.HotWalletData.hotWalletBalance}}</td>
+                                        <td>{{item.lastWithdrawTime | date}}</td>
+                                        <td>{{item.HotWalletData.address}}</td>
+
+                                        <td class="action_td_btn3" style="cursor: pointer">
+                                            <a routerLink="/hot-cold-wallet-management/{{item.HotWalletData.coinType}}" data-toggle="modal"><i class="fa fa-history"
+                                                    aria-hidden="true"></i></a>
+                                            <a routerLink="/view-hot-cold-wallet-management/{{item.HotWalletData.coinType}}"><i class="fa fa-clock" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="coinData?.length==0">
+                                        <td colspan="10" vertical-align="middle">
+                                            <div class="no-record">
+                                                <div class="no-recordin">
+                                                    <H5 style="margin-left: 44%;">No record found</H5>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="custom-pagination mt20 " style="display: flex; justify-content:flex-end" *ngIf="coinData?.length>20">
+                            <pagination-controls (pageChange)="pageNumber = $event"></pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="container-fluid">
+        <p class="copyright">Alende  <strong class="theme-text-color"></strong> 
+            </p>
+    </div>
+</footer>

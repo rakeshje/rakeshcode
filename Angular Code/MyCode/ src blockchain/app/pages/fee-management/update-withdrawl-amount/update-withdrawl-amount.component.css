@@ -1,0 +1,16 @@
+
+.formcss{
+    margin-left: 140%;
+    width: 150%;
+    margin-top: 20%;
+    position: relative;
+    height: 45px;
+}
+.labelcss{
+    font-size: 160%;
+    position: absolute;
+    top: 51%;
+}
+input.ng-invalid.ng-touched{
+    border-color: red;
+}

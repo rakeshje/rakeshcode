@@ -1,0 +1,488 @@
+<!-- Start Right Bar -->
+<app-rightsidemenu></app-rightsidemenu>
+<!-- Close Right Bar -->
+
+<!-- Satrt Page Content -->
+<div class="page-wrap">
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="left-menu card">
+                    <app-sidemenu></app-sidemenu>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="page-content">
+                    <div class="card post-box main-post">
+                        <div class="post-warp">
+                            <div class="post-content-setting">
+                                Bank
+
+                            </div>
+                        </div>
+                        <div class="post-meta">
+                            <div class="tab pointer">
+                                <div style="font-size: 21px;" routerLink='/profile'>
+                                    <img style="margin-right: 15px; width: 28px;" src="assets/images/user.png" alt=""> Personal
+                                    Information</div>
+                                <div style="font-size: 21px;" routerLink='/select-lang'>
+                                    <img style="margin-right: 15px; width: 28px;" src="assets/images/language.png" alt="">
+                                    Languages</div>
+                                <div style="font-size: 21px;" routerLink='/bank'
+                                    [ngClass]="{active : currTab === 'Bank_Details'|| 'Add_Bank_Details'}">
+                                    <img style="margin-right: 15px; width: 28px;" src="assets/images/home.png" alt=""> Bank
+                                    Details</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card post-field main-post">
+                        <div class="field-wrap">
+
+                            <div class="heding-part">
+                                <div class="tab pointer">
+                                    <div class="tab bankingDetail">
+                                        <a class=" tablinks" [ngClass]="{active : currTab == 'Bank_Details'}"
+                                            (click)="switchTab('Bank_Details')" *ngIf="!viewDetails">My Bank</a>
+                                        <a class=" tablinks" [ngClass]="{active: currTab == 'Add_Bank_Details'}"
+                                            (click)="switchTab('Add_Bank_Details')" *ngIf="!viewDetails"> Add Bank</a>
+                                        <a class=" tablinks active" *ngIf="viewDetails"> Edit Bank Details</a>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!------Bank_Details Starts------->
+                            <div class="backgrnd" *ngIf="currTab == 'Bank_Details' && !viewDetails">
+                                <div class=" bank" style="padding-top:35px; padding-left:17%;max-width: 79% !important;"
+                                    *ngFor="let items of bankDetailsArr">
+                                    <div class="container" style="font-size: 15px; margin-top: 20px;">
+                                        <img style="margin-right: 15px; width: 28px;"
+                                            src="assets/images/home.png" alt="">{{items.bankName}}<br>{{items.cardNumber}}
+                                        
+                                    </div>
+                                    
+                                    <button type="submit" style="    margin-right: 9px;margin-top: -1%;"
+                                        (click)="editCard(items)">Edit</button>
+                                </div>
+                            </div>
+                            <!------Bank_Details Ends------->
+
+
+                            <!-----Add_Bank_Details Starts------->
+                            <form *ngIf="currTab == 'Add_Bank_Details' && !viewDetails" [formGroup]="addBankDetailsForm"
+                                novalidate autocomplete="off">
+                                <div class="field-area">
+                                    <h6 class="heading-title">First Name*</h6>
+                                    <input class="holder" type="text" placeholder="User first name"
+                                        formControlName="accountHolderFirstName" maxlength="256"
+                                        (keypress)="toCheckSpace($event)">
+                                    <span class="error"
+                                        *ngIf="accountHolderFirstName.invalid && (accountHolderFirstName.dirty || accountHolderFirstName.touched)">
+                                        <span *ngIf="accountHolderFirstName.errors.required" padding>
+                                            *Please enter your first name
+                                        </span>
+                                        <span *ngIf="accountHolderFirstName.errors.pattern" padding>
+                                            *Please enter your valid first name
+                                        </span>
+                                    </span>
+
+                                    <h6 class="heading-title">Last Name*</h6>
+                                    <input class="holder" type="text" placeholder="User last name"
+                                        formControlName="accountHolderLastName" maxlength="256">
+                                    <span class="error"
+                                        *ngIf="accountHolderLastName.invalid && (accountHolderLastName.dirty || accountHolderLastName.touched)">
+                                        <span *ngIf="accountHolderLastName.errors.required" padding>
+                                            *Please enter your last name
+                                        </span>
+                                        <span *ngIf="accountHolderLastName.errors.pattern" padding>
+                                            *Please enter your valid last name
+                                        </span>
+                                    </span>
+
+                                    <h6 class="heading-title">Email*</h6>
+                                    <input class="holder" type="text" placeholder="Enter email"
+                                        formControlName="accountHolderEmail" (keypress)="toCheckSpace($event)"
+                                        maxlength="64">
+                                    <span class="error"
+                                        *ngIf="accountHolderEmail.invalid && (accountHolderEmail.dirty || accountHolderEmail.touched)">
+                                        <span *ngIf="accountHolderEmail.errors.required" padding>
+                                            *Please enter email
+                                        </span>
+                                        <span *ngIf="accountHolderEmail.errors.pattern" padding>
+                                            *Please enter valid email
+                                        </span>
+                                    </span>
+
+                                    <h6 class="heading-title">Phone Number*</h6>
+                                    <div class="mobile-filed">
+                                       
+                                        <ngx-select-dropdown formControlName="accountHolderCountryCode"
+                                            [config]="config1" [options]="phoneCodeArr" style="min-width:200px">
+                                        </ngx-select-dropdown>
+                                        <input class="holder" type="text" placeholder="Your phone number"
+                                            formControlName="accountHolderContact">
+
+                                    </div>
+                                    <span class="error"
+                                        *ngIf="accountHolderContact.invalid && (accountHolderContact.dirty || accountHolderContact.touched)">
+                                        <span *ngIf="accountHolderContact.errors.required" padding>
+                                            *Please enter your phone number
+                                        </span>
+                                        <span *ngIf="accountHolderContact.errors.pattern" padding>
+                                            *Please enter valid phone number
+                                        </span>
+                                        <span *ngIf="accountHolderContact.errors.minlength" padding>
+                                            *Phone no must be of atleast 5 digits
+                                        </span>
+
+                                    </span>
+
+
+                                    <h6 class="heading-title">Bank Name*</h6>
+                                    <input class="holder" type="text" placeholder="Bank name"
+                                        formControlName="accountHolderBankName">
+                                    <span class="error"
+                                        *ngIf="accountHolderBankName.invalid && (accountHolderBankName.dirty || accountHolderBankName.touched)">
+                                        <span *ngIf="accountHolderBankName.errors.required" padding>
+                                            *Please enter bank name
+                                        </span>
+                                        <span *ngIf="accountHolderBankName.errors.pattern" padding>
+                                            *Please enter valid bank name
+                                        </span>
+                                    </span>
+
+
+
+
+                                    <h6 class="heading-title">Card Number*</h6>
+                                    <input class="holder" type="text" placeholder="Your debit/credit card number"
+                                        formControlName="accountHolderCardNumber" (keypress)="toCheckSpace($event)">
+                                    <span class="error"
+                                        *ngIf="accountHolderCardNumber.invalid && (accountHolderCardNumber.dirty || accountHolderCardNumber.touched)">
+                                        <span *ngIf="accountHolderCardNumber.errors.required" padding>
+                                            *Please enter your debit/credit card number
+                                        </span>
+                                        <span *ngIf="accountHolderCardNumber.errors.minlength" padding>
+                                            *Please enter valid card number
+                                        </span>
+                                        <span *ngIf="accountHolderCardNumber.errors.maxlength" padding>
+                                            *Please enter valid card number
+                                        </span>
+                                        <span *ngIf="accountHolderCardNumber.errors.pattern" padding>
+                                            *Please enter valid card number
+                                        </span>
+                                    </span>
+
+
+                                    <h6 class="heading-title">Expiry Date*</h6>
+                                   
+                                    <div class="email" style="display:flex; align-items: center; position:relative;">
+                                        <input class="holder" placeholder="Select a date" ngx-mydatepicker
+                                            name="accountHolderExpiryDate" formControlName="accountHolderExpiryDate"
+                                            [options]="myOptions" #dp="ngx-mydatepicker" />
+                                        <span style="display:flex" class="form-group-btn calendar1">
+                                            <span style="    margin-right: 10px;" (click)="dp.toggleCalendar()">
+                                                <em style="color:#818181" class="fa fa-calendar"></em>
+                                            </span>
+                                            <span (click)="dp.clearDate()">
+                                                <em style="color:#818181" class="far fa-times-circle"></em>
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <span class="error"
+                                        *ngIf="accountHolderExpiryDate.invalid && (accountHolderExpiryDate.dirty || accountHolderExpiryDate.touched)">
+                                        <span *ngIf="accountHolderExpiryDate.errors.required" padding>
+                                            *Please select expiry date
+                                        </span>
+                                    </span>
+
+
+
+
+                                    <h6 class="heading-title">CVV Number*</h6>
+                            <input class="holder" type="text"placeholder="CVV number" formControlName="accountHolderCvvNumber" (keypress)="toCheckSpace($event)">
+                            <span class="error" *ngIf="accountHolderCvvNumber.invalid && (accountHolderCvvNumber.dirty || accountHolderCvvNumber.touched)">
+                                    <span *ngIf="accountHolderCvvNumber.errors.required" padding>
+                                        *Please enter cvv number
+                                    </span>
+                                  <span *ngIf="accountHolderCvvNumber.errors.pattern" padding>
+                                        *Please enter valid cvv number
+                                    </span>
+                                  </span>
+
+                                    <h6 class="heading-title">Address*</h6>
+                                    <input class="holder" type="text" placeholder="Enter your address"
+                                        formControlName="accountHolderAddress">
+                                    <span class="error"
+                                        *ngIf="accountHolderAddress.invalid && (accountHolderAddress.dirty || accountHolderAddress.touched)">
+                                        <span *ngIf="accountHolderAddress.errors.required" padding>
+                                            *Please enter your address
+                                        </span>
+                                       
+                                    </span>
+
+                                    <h6 class="heading-title">Country*</h6>
+                                    
+                                    <ngx-select-dropdown (change)="selectionChanged($event)"
+                                        formControlName="accountHolderCountry" [config]="config"
+                                        [options]="countryCodeArr"></ngx-select-dropdown>
+
+
+
+
+                                    <h6 class="heading-title" *ngIf="stateArr.length">State*</h6>
+                                    
+                                    <ngx-select-dropdown (change)="selectionChanged($event)"
+                                        formControlName="accountHolderState" [config]="config" [options]="stateArr"
+                                        *ngIf="stateArr.length"></ngx-select-dropdown>
+
+                                    <h6 class="heading-title" *ngIf="cityArr.length">City*</h6>
+                                    
+                                    <ngx-select-dropdown formControlName="accountHolderCity" [config]="config"
+                                        [options]="cityArr" *ngIf="cityArr.length"></ngx-select-dropdown>
+
+                                    <h6 class="heading-title">Zip Code*</h6>
+                                    <input class="holder" type="text" placeholder="Enter zip code"
+                                        formControlName="accountHolderZipCode" (keypress)="toCheckSpace($event)"
+                                        minlength="5" maxlength="10">
+                                    <span class="error"
+                                        *ngIf="accountHolderZipCode.invalid && (accountHolderZipCode.dirty || accountHolderZipCode.touched)">
+                                        <span *ngIf="accountHolderZipCode.errors.required" padding>
+                                            *Please enter zip code
+                                        </span>
+                                        <span *ngIf="accountHolderZipCode.errors.pattern" padding>
+                                            *Please enter valid zip code
+                                        </span>
+                                        <span *ngIf="accountHolderZipCode.errors.minlength" padding>
+                                            *Zip code must be atleast 5 digits
+                                        </span>
+                                        <span *ngIf="accountHolderZipCode.errors.maxlength" padding>
+                                            *Zip code of maximum 10 digits are allowed
+                                        </span>
+                                    </span>
+
+                                    
+
+                                    <div class="job-post">
+                                        <button type="button" class="btn-global pointer"
+                                            [disabled]="!addBankDetailsForm.valid" (click)="addBankDetails()">Save
+                                        </button>
+                                        <button type="submit" class="addVank"
+                                            (click)="addBankDetailsFormReset()">Cancel</button>
+                                    </div>
+
+                                </div>
+
+
+                            </form>
+                            <!-----Add_Bank_Details Ends------->
+
+
+                            <!-----Edit Bank_Details Starts------->
+                            <form [formGroup]="editBankDetailsForm" novalidate autocomplete="off" *ngIf="viewDetails">
+                                <div class="field-area">
+                                    <h6 class="heading-title">First Name*</h6>
+                                    <input class="holder" type="text" placeholder="User first name"
+                                        formControlName="accountHolderFirstName1" maxlength="256"
+                                        (keypress)="toCheckSpace($event)">
+                                    <span class="error"
+                                        *ngIf="accountHolderFirstName1.invalid && (accountHolderFirstName1.dirty || accountHolderFirstName1.touched)">
+                                        <span *ngIf="accountHolderFirstName1.errors.required" padding>
+                                            *Please enter your first name
+                                        </span>
+                                        <span *ngIf="accountHolderFirstName1.errors.pattern" padding>
+                                            *Please enter your valid first name
+                                        </span>
+                                    </span>
+
+
+
+
+                                    <h6 class="heading-title">Last Name*</h6>
+                                    <input class="holder" type="text" placeholder="User last name"
+                                        formControlName="accountHolderLastName1" maxlength="256">
+                                    <span class="error"
+                                        *ngIf="accountHolderLastName1.invalid && (accountHolderLastName1.dirty || accountHolderLastName1.touched)">
+                                        <span *ngIf="accountHolderLastName1.errors.required" padding>
+                                            *Please enter your last name
+                                        </span>
+                                        <span *ngIf="accountHolderLastName1.errors.pattern" padding>
+                                            *Please enter your valid last name
+                                        </span>
+                                    </span>
+
+                                    <h6 class="heading-title">Email*</h6>
+                                    <input class="holder" type="text" placeholder="Enter email"
+                                        formControlName="accountHolderEmail1" (keypress)="toCheckSpace($event)"
+                                        maxlength="64">
+                                    <span class="error"
+                                        *ngIf="accountHolderEmail1.invalid && (accountHolderEmail1.dirty || accountHolderEmail1.touched)">
+                                        <span *ngIf="accountHolderEmail1.errors.required" padding>
+                                            *Please enter email
+                                        </span>
+                                        <span *ngIf="accountHolderEmail1.errors.pattern" padding>
+                                            *Please enter valid email
+                                        </span>
+                                    </span>
+
+                                    <h6 class="heading-title">Phone Number*</h6>
+                                    <div class="mobile-filed">
+                                        
+                                        <ngx-select-dropdown formControlName="accountHolderCountryCode1"
+                                            [config]="config1" [options]="phoneCodeArr" style="min-width:200px">
+                                        </ngx-select-dropdown>
+                                        <input class="holder" type="text" placeholder="Your phone number"
+                                            formControlName="accountHolderContact1">
+
+                                    </div>
+                                    <span class="error"
+                                        *ngIf="accountHolderContact1.invalid && (accountHolderContact1.dirty || accountHolderContact1.touched)">
+                                        <span *ngIf="accountHolderContact1.errors.required" padding>
+                                            *Please enter your phone number
+                                        </span>
+                                        <span *ngIf="accountHolderContact1.errors.pattern" padding>
+                                            *Please enter valid phone number
+                                        </span>
+                                        <span *ngIf="accountHolderContact1.errors.minlength" padding>
+                                            *Phone no must be of atleast 5 digits
+                                        </span>
+
+                                    </span>
+
+
+                                    <h6 class="heading-title">Bank Name*</h6>
+                                    <input class="holder" type="text" placeholder="Bank name"
+                                        formControlName="accountHolderBankName1">
+                                    <span class="error"
+                                        *ngIf="accountHolderBankName1.invalid && (accountHolderBankName1.dirty || accountHolderBankName1.touched)">
+                                        <span *ngIf="accountHolderBankName1.errors.required" padding>
+                                            *Please enter bank name
+                                        </span>
+                                        <span *ngIf="accountHolderBankName1.errors.pattern" padding>
+                                            *Please enter valid bank name
+                                        </span>
+                                    </span>
+
+
+
+
+                                    <h6 class="heading-title">Card Number*</h6>
+                                    <input class="holder" type="text" placeholder="Your debit/credit card number"
+                                        formControlName="accountHolderCardNumber1" (keypress)="toCheckSpace($event)">
+                                    <span class="error"
+                                        *ngIf="accountHolderCardNumber1.invalid && (accountHolderCardNumber1.dirty || accountHolderCardNumber1.touched)">
+                                        <span *ngIf="accountHolderCardNumber1.errors.required" padding>
+                                            *Please enter your debit/credit card number
+                                        </span>
+                                        <span *ngIf="accountHolderCardNumber1.errors.minlength" padding>
+                                            *Please enter valid card number
+                                        </span>
+                                        <span *ngIf="accountHolderCardNumber1.errors.maxlength" padding>
+                                            *Please enter valid card number
+                                        </span>
+                                        <span *ngIf="accountHolderCardNumber1.errors.pattern" padding>
+                                            *Please enter valid card number
+                                        </span>
+                                    </span>
+
+
+                                    <h6 class="heading-title">Expiry Date*</h6>
+                                    
+                                    <div class="email" style="display:flex; align-items: center;">
+                                        <input class="holder" placeholder="Select a date" ngx-mydatepicker
+                                            name="accountHolderExpiryDate1" formControlName="accountHolderExpiryDate1"
+                                            [options]="myOptions" #dp="ngx-mydatepicker" />
+                                        <span style="display:flex" class="form-group-btn calendar1">
+                                            <span style="    margin-right: 10px;" (click)="dp.toggleCalendar()">
+                                                <em style="color:#818181" class="fa fa-calendar"></em>
+                                            </span>
+                                            <span (click)="dp.clearDate()">
+                                                <em style="color:#818181" class="far fa-times-circle"></em>
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <span class="error"
+                                        *ngIf="accountHolderExpiryDate1.invalid && (accountHolderExpiryDate1.dirty || accountHolderExpiryDate1.touched)">
+                                        <span *ngIf="accountHolderExpiryDate1.errors.required" padding>
+                                            *Please select expiry date
+                                        </span>
+                                    </span>
+
+
+
+                                    
+
+                                    <h6 class="heading-title">Address*</h6>
+                                    <input class="holder" type="text" placeholder="Enter your address"
+                                        formControlName="accountHolderAddress1">
+                                    <span class="error"
+                                        *ngIf="accountHolderAddress1.invalid && (accountHolderAddress1.dirty || accountHolderAddress1.touched)">
+                                        <span *ngIf="accountHolderAddress1.errors.required" padding>
+                                            *Please enter your address
+                                        </span>
+                                        
+                                    </span>
+
+                                    <h6 class="heading-title">Country*</h6>
+                                    
+                                    <ngx-select-dropdown (change)="selectionChanged($event)"
+                                        formControlName="accountHolderCountry1" [config]="config"
+                                        [options]="countryCodeArr"></ngx-select-dropdown>
+
+
+
+
+
+                                    <h6 class="heading-title" *ngIf="stateArr.length">State*</h6>
+                                    
+                                    <ngx-select-dropdown (change)="selectionChanged($event)"
+                                        formControlName="accountHolderState1" [config]="config" [options]="stateArr"
+                                        *ngIf="stateArr.length"></ngx-select-dropdown>
+
+                                    <h6 class="heading-title" *ngIf="cityArr.length">City*</h6>
+                                    
+                                    <ngx-select-dropdown formControlName="accountHolderCity1" [config]="config"
+                                        [options]="cityArr" *ngIf="cityArr.length"></ngx-select-dropdown>
+
+                                    <h6 class="heading-title">Zip Code*</h6>
+                                    <input class="holder" type="text" placeholder="Enter zip code"
+                                        formControlName="accountHolderZipCode1" (keypress)="toCheckSpace($event)"
+                                        minlength="5" maxlength="10">
+                                    <span class="error"
+                                        *ngIf="accountHolderZipCode1.invalid && (accountHolderZipCode1.dirty || accountHolderZipCode1.touched)">
+                                        <span *ngIf="accountHolderZipCode1.errors.required" padding>
+                                            *Please enter zip code
+                                        </span>
+                                        <span *ngIf="accountHolderZipCode1.errors.pattern" padding>
+                                            *Please enter valid zip code
+                                        </span>
+                                        <span *ngIf="accountHolderZipCode1.errors.minlength" padding>
+                                            *Zip code must be atleast 5 digits
+                                        </span>
+                                        <span *ngIf="accountHolderZipCode1.errors.maxlength" padding>
+                                            *Zip code of maximum 10 digits are allowed
+                                        </span>
+                                    </span>
+
+                                    
+                                    <div class="job-post">
+                                        <button type="button" class="btn-global pointer"
+                                            [disabled]="!editBankDetailsForm.valid" (click)="updateBankDetails()">Update
+                                        </button>
+                                        <button type="submit" class="addVank"
+                                            (click)="resetUpdateBankDetailsForm()">Cancel</button>
+                                    </div>
+                                </div>
+
+
+                            </form>
+                            <!-----Edit Bank_Details Ends------->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,161 @@
+<div class="wrapper">
+                  <main class="middle-content">
+                      <div class="page_title_block">
+                          <h1 class="page_title "> User Management </h1>
+                      </div>
+                      <div class="content-section">
+                          <div class="outer-box">
+                              <div class="global-table no-radius p0">
+                                  <div class="tab-content1">
+                                      <div class="row">
+                                          <div class="col-md-12">
+                                              <div class=" order-view main-block-innner mb20 mt40 view-label-align" style="padding-top: 2%;
+                                              padding-left: 26%;">
+                                                  <div class="add-store-block input-style">
+                                                      <div class="form-group row ">
+                                                          <div class="col-md-12">
+                                                              <div class="user-profile mb-4">
+                                                                  <div class="image-box">
+                                                                      <img [src]="imageUrl ||  'assets/img/profile-img.jpg'"
+                                                                          alt="loading...">
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+              
+                                                  <div class="form-group row">
+                                                      <div class="col-md-3">
+                                                          <label>First Name <span>:</span> </label>
+                                                      </div>
+                                                      <div class="col-md-9">
+                                                          <p>{{user?.firstName || '--'}}
+                                                          </p>
+                                                      </div>
+                                                  </div>
+              
+              
+              
+              
+                                                  <div class="form-group row">
+                                                      <div class="col-md-3">
+                                                          <label>Last Name <span>:</span> </label>
+                                                      </div>
+                                                      <div class="col-md-9">
+                                                          <p>{{user?.firstName || '--'}}
+                                                          </p>
+                                                      </div>
+                                                  </div>
+                                                  <div class="form-group row">
+                                                      <div class="col-md-3">
+                                                          <label>Email Address <span>:</span> </label>
+                                                      </div>
+                                                      <div class="col-md-9">
+                                                          <p>{{user?.firstName || '--'}}
+                                                          </p>
+                                                      </div>
+                                                  </div>
+                                                  <div class="form-group row">
+                                                      <div class="col-md-3">
+                                                          <label>Phone Number <span>:</span> </label>
+                                                      </div>
+                                                      <div class="col-md-9">
+                                                          <p>{{user?.firstName || '--'}}
+                                                          </p>
+                                                      </div>
+                                                  </div>
+                                                  <div class="form-group row">
+                                                      <div class="col-md-3">
+                                                          <label>Country  <span>:</span> </label>
+                                                      </div>
+                                                      <div class="col-md-9">
+                                                          <p>{{user?.firstName || '--'}}
+                                                          </p>
+                                                      </div>
+                                                  </div>
+                                                  <div class="form-group row">
+                                                      <div class="col-md-3">
+                                                          <label>State <span>:</span> </label>
+                                                      </div>
+                                                      <div class="col-md-9">
+                                                          <p>{{user?.firstName || '--'}}
+                                                          </p>
+                                                      </div>
+                                                  </div>
+                                                  <div class="form-group row">
+                                                      <div class="col-md-3">
+                                                          <label>Postal Code <span>:</span> </label>
+                                                      </div>
+                                                      <div class="col-md-9">
+                                                          <p>{{user?.firstName || '--'}}
+                                                          </p>
+                                                      </div>
+                                                  </div>
+
+                                                  <div class="form-group row">
+                                                      <div class="col-md-3">
+                                                          <label>Address <span>:</span> </label>
+                                                      </div>
+                                                      <div class="col-md-9">
+                                                          <p>{{user?.firstName || '--'}}
+                                                          </p>
+                                                      </div>
+                                                  </div>
+                                             
+                                                  <div class="page_title_block">
+                                                      <h1 class="page_title "> Member Management </h1>
+                                                  </div>
+
+                                                  <div class="table-responsive">
+                                                      <table class="table table-bordered" aria-describedby="user management list">
+                                                          <thead>
+                                                              <tr class="no_wrap_th text-center">
+                                                                  <th class="Sorting-img" scope="col">S.No.</th>
+                                                                  <th scope="col" class="Sorting-img">User Name</th>
+                                                                  <th scope="col" class="Sorting-img">Email</th>
+                                                                  <th scope="col" class="Sorting-img">Phone Number</th>
+                                                                  
+                                                                  
+                                                              </tr>
+                                                          </thead>
+                                                          <tbody>
+                                                              <!-- <tr *ngFor="let item of userDataList | paginate: { itemsPerPage: itemPerPage, currentPage: currentPage, totalItems: total}; let i = index"
+                                                                  class="text-center">
+                                                                  <td>{{itemPerPage * (currentPage-1)+ i+1}}</td>
+                                                                  <td class="content" [tooltip]="item?.firstName + ' ' + item?.lastName || '--'">
+                                                                      {{item?.firstName + ' ' + item?.lastName || '--'}}</td>
+                                                                  <td class="content" [tooltip]="item?.email || '--'">{{item?.email || '--'}}</td>
+                                                                  <td class="content" [tooltip]="item?.mobileNumber || '--'">
+                                                                      {{item?.mobileNumber || '--'}}</td>
+                                                                  <td class="content">{{item?.disease || '--'}}</td>
+                                                                  <td class="content">{{item?.createdAt | date :'d/M/y' || '--'}}</td> -->
+                                                                  <tr>
+                                                                  <td>1</td>
+                                                                  <td>Rakesh</td>
+                                                                 
+                                                                  <td>rakesh@mailinator.com</td>
+                                                                  <td>9999999999</td>
+                                                      </tr>
+                                                      <!-- <tr *ngIf="!userDataList.length">
+                                                          <td class="table-no-record" colspan="9">No Record Found</td>
+                                                      </tr> -->
+                                                  </tbody>
+                                              </table>
+                                              <!-- <div class="custom-pagination mt-2 text-align-end" *ngIf="total > 10">
+                                                  <pagination-controls (pageChange)="pagination($event)"></pagination-controls>
+                                              </div> -->
+                                          </div>     
+
+                                                  <div class="text-center mt40 mb40">
+                                                      <button class="btn btn-large  max-WT-150 btn-theme"
+                                                          routerLink="/user-management">Back</button>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </main>
+              </div>

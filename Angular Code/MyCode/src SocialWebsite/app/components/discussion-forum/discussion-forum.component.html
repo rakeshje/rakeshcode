@@ -1,0 +1,99 @@
+
+<!-- Start Right Bar -->
+<app-rightsidemenu></app-rightsidemenu>
+<!-- Close Right Bar -->
+
+<div class="page-wrap">
+  <div class="container-fluid py-4">
+  <div class="row">
+  <div class="col-md-3">
+     <div class="left-menu card">
+      <app-sidemenu></app-sidemenu> 
+     </div>
+  </div>
+  <div class="col-md-9">
+     <div class="page-content">
+        
+        <div class="card post-box main-post">
+           <div class="post-warp">
+              <div class="header-tab">
+                 <div class="tab">
+                    <div [ngClass]="{active : selected === 'discussion-forum'}" style="cursor:pointer">
+                       <a  (click)="selection('discussion-forum')">Discussion Forum</a>
+                    </div>
+                    <div [ngClass]="{active : selected === 'create-discussion-forum'}" style="cursor:pointer">
+                      <a  (click)="selection('create-discussion-forum')">Create Discussion Forum</a>
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </div>
+        <div class="card post-box post-search" *ngIf="selected == 'discussion-forum'">
+           <div class="post-wrap post-formsec" >
+              <form class="search-form" novalidate autocomplete="off" >
+                 <input type="text" placeholder="Search by discussion forum name" class="form-control" (keyup)="searchByName.next($event.target.value)">
+              </form>
+           </div>
+        </div>
+        <div class="card post-field main-post scoll-sec" *ngIf="selected == 'discussion-forum'">
+           <div class="field-wrap">
+              <div class="backgrnd" *ngFor="let data of listOfDiscussionForum?.docs">
+                 <div class="three-con"  [routerLink]="['/view-discussion-forum',data?._id]" style="cursor:pointer">
+                    <div class="soft-coll">
+                       <h3>{{ data?.title }}</h3>
+                    </div>
+                    <div class="dammy-img">
+                       <img src="assets/images/userprofile.png" alt="">
+                       
+                    </div>
+                 </div>
+                 <hr>
+                 
+              </div>
+              <h4 *ngIf="!listOfDiscussionForum?.docs">No data found</h4>
+           </div>
+        </div>
+      
+        <div class="card post-box main-post" *ngIf="selected == 'create-discussion-forum'">
+          <div class="discussion-forum-code">
+            <form [formGroup]="discussionForm">
+              <div class="form-group">
+                <label for="exampleInputPassword1">Subject</label>
+                <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Subject"  formControlName="title">
+                <span class="error" *ngIf="discussionForm.controls['title'].invalid && discussionForm.controls['title'].touched">Subject is required</span>
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlTextarea1">Description:</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" formControlName="description"></textarea>
+               <span class="error" *ngIf="discussionForm.controls['description'].invalid && discussionForm.controls['description'].touched">Description is required</span>
+              </div>
+              <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Notify via email when new  discussion is posted</label>
+              </div>
+            <div class="submit-form mb-5">
+              <button type="button" class="btn btn-success paynow" data-toggle="modal"  [disabled]="!discussionForm.valid" (click)="postSubmit()">Post submitted</button>
+            </div>          
+            </form>  
+          </div>
+        </div> 
+     </div>
+  </div>
+
+  <!-- Modal pay now start -->
+        <div class="modal fade" id="post-submit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content paynow confirm-modal">
+              <div class="modal-header-paynow">
+              
+              <button type="button" class="close" data-dismiss="modal" (click)="discussionForm.reset()" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+              </div>
+              <div class="modal-body-paynow post">
+                  <h5><b> Congratulations !</b></h5>
+                  <p>you have successfully posted the dicussion, your Id 12345678 </p>
+               </div>  </div>
+          </div>
+        </div>
+      <!--modal pay now end-->

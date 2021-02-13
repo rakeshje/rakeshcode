@@ -1,0 +1,80 @@
+ <div class="login-wrapper">
+     <div class="container-common">
+         <div class="row justify-content-center">
+             <div class="col-md-6">
+                 <div class="d-flex align-items-center minheight70vh">
+                     <form class="login_box_outer w-100">
+                         <div class="login-box max-WT-530">
+                             <div class="login-right-block">
+                                 <div class="login-heading">
+                                     <h4>OTP verification</h4>
+                                 </div>
+                                 <!-- email id otp start -->
+                                 <div class="login-box-body">
+                                     <p class="common-paragrph text-center">Please enter the 4 digits OTP sent on your
+                                         registered Email ID .</p>
+                                     <div>
+                                         <p class="otp-mid-head text-center">Enter 4 - digits code</p>
+                                         <div class="modal-body otp-input-box">
+                                             <ng-otp-input (onInputChange)="onEmailOtp($event)"
+                                                 [config]="mainService.config"></ng-otp-input>
+                                         </div>
+                                         <div class="otp-resend">
+                                             <a (click)="otpResend()">Resend</a>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <!-- email id otp end -->
+                                 <!-- mobile number otp start -->
+                                 <div class="login-box-body">
+                                   <p class="common-paragrph text-center">Please enter the 4 digits OTP sent on your
+                                       registered phone number .</p>
+                                   <div>
+                                       <p class="otp-mid-head text-center">Enter 4 - digits code</p>
+                                       <div class="modal-body otp-input-box">
+                                           <ng-otp-input (onInputChange)="onMobileOtp($event)"
+                                               [config]="mainService.config"></ng-otp-input>
+                                       </div>
+                                       <div class="otp-resend">
+                                           <a (click)="otpResendd()">Resend</a>
+                                       </div>
+                                   </div>
+                               </div>
+                                 <!-- mobile number otp end -->
+
+                                  <div class="text-center mt40 admin-profile">
+                                     <button type="button" (click)="otpSubmit()"
+                                         class="btn btn-login btn-large  width100 font-100">Submit</button>
+                                 </div>
+                             </div>
+                         </div>
+                     </form>
+                 </div>
+             </div>
+         </div>
+     </div>
+ </div> 
+ <!-- delete_modal Start -->
+<div class="modal fade global-modal reset-modal " id="resend">
+     <div class="modal-dialog max-WT-500">
+         <form class="change_password">
+             <div class="modal-content" style="margin-top: -62%;">
+                 <div class="modal-inner-content">
+                     <div class="modal-body">
+                         <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                             <div class="w-100">
+                                 <p>OTP  resent successfully.</p>
+                                 <div class="modal-btn-box">
+                                     <button type="button" class="btn btn-danger ml-2" data-dismiss="modal">OK</button>
+                                    
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </form>
+     </div>
+ </div>
+ <!-- delete_modal End -->
+  

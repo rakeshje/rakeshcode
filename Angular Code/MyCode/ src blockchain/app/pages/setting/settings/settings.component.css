@@ -1,0 +1,13 @@
+.content{
+display: flex;
+justify-content: space-between;
+width: 72%;
+margin-left: 6%;
+margin-top: 3%;
+}
+.line{
+    width: 72%;
+    background-color: black;
+    margin-left: 6%;
+    margin-top: 0%;
+}

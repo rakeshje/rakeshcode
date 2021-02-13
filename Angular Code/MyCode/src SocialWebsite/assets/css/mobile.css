@@ -1,0 +1,109 @@
+
+/* ================Lov Patsariya============ */
+
+
+@media(max-width:1366px) {
+.container1440{max-width:1140px;}
+}
+
+
+
+@media(max-width:1199px) {
+.container1440{max-width:991px;}
+.menu ul li {padding:15px 5px;}
+.logo {max-width:120px;}
+.login-box{max-width:150px;}
+.btn.btnHeader{padding:5px 10px;}
+.sliderCommonStyle .slick-prev {left:-15px;}
+.sliderCommonStyle .slick-next {right:-15px;}
+.topBanner h1{font-size:40px;}
+}
+
+
+/* =============767px 991px Start========== */
+@media(max-width:991px) {
+
+header  nav {padding-right:50px;position:relative;min-height:60px;}
+header  nav.formNav{padding-right:0px;}
+.mob-menu{display:block;}
+.close-menu{display:block;}
+.menu{opacity:0; visibility:hidden; backface-visibility:hidden; position:fixed; top:0px; right:0px; margin-right:-100%; background:rgba(10, 10, 10, 0.92); padding-top:50px; width:300px; height:100vh; overflow:hidden; overflow-y:auto; z-index:1; transition:400ms;}
+.menu ul li {display:block;padding:0px; border-bottom:1px solid #3b3b3b;}
+.menu ul li a { border-radius: 0; padding: 11px; text-align: left; font-size: 14px; }
+.menu-slide{margin-right:0; opacity:1; visibility:visible; backface-visibility:visible; transition:400ms;}
+
+.topBanner h1{font-size:35px;}
+.imgtWidthInfo {margin:15px 0;}
+
+
+}
+/* =============991px End========== */
+
+/* =============767px Start========== */
+@media (max-width:767px) {
+.modal-dialog{margin:.5rem 0;}	
+.logo{max-width:60px;}
+span.titleHead{font-size:14px;}
+.login-box{max-width:90px;}
+.btn.btnHeader{padding:3px 6px;font-size:12px;}
+.topBanner h1{font-size:26px;}
+.commonSectionStyle,.headerTop{padding:2em 0;}
+.sectionHead {margin-bottom:2em;}
+.sectionHead h2{font-size:18px;}
+.sectionHead .col-md-4.text-right{text-align:center!important;margin-top:15px;}
+.loginBox {margin-top:55px!important;}
+
+.programBanner,.contactInfoBox{margin-top:30px;}
+.readMore{text-align:center;}
+.imgtHeadParaBox ,.socialLinks {margin:15px 0;}
+.footLogo{margin:0 auto;}
+.footerMenu{justify-content:center;}
+
+.rewardsInfoBox figure{height:180px;}
+
+.footerMenu li a{font-size:12px;}
+.footerMenu li + li {margin-left:9px;}
+.copyRight{font-size:11px;}
+
+.sliderCommonStyle {padding-left:20px;padding-right:20px;}
+.sliderCommonStyle .slick-arrow{width:30px;height:30px;}
+.sliderCommonStyle .slick-prev {left:0;}
+.sliderCommonStyle .slick-next {right:0px;}
+.sliderCommonStyle .slick-prev:before,.sliderCommonStyle .slick-next:before{top:9px;}
+.sliderCommonStyle .slick-prev:before {left:10px;}
+.sliderCommonStyle .slick-next:before {left:5px;}
+
+.rewardPointsBox {margin-bottom:15px;}
+.summaryDetailList li .rewardPointsBox ,.summaryDetailContent,.summaryLeft,.summaryRight{width:100%;}
+.summaryRight{padding-left:0;text-align:center;margin-top:15px;}
+.summaryDetailContent h3{font-size:18px;}
+}
+/* =============767px End========== */
+
+@media(min-width:768px){
+.mob-view-logo{display:none;}
+.mainContent {min-height:calc(100vh - 221px);}
+.mainContent.mainContentNoBanner {min-height:calc(100vh - 305px);}
+.modal .sectionHead h2{font-size:28px;}	
+}
+
+@media(min-width:768px) and (max-width:991px){
+.footerMenu li + li {margin-left:8px;}
+
+}
+
+@media(min-width:992px) and (max-width:1199px){
+.loginBox {margin-top:55px!important;}	
+.footerMenu li + li {margin-left:9px;}
+.footerMenu li a{font-size:12px;}
+}
+
+@media(max-width:375px){
+    .profileNew{
+        width: unset!important;
+    }
+}
+
+
+
+

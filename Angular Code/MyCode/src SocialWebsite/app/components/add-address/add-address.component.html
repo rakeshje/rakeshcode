@@ -1,0 +1,96 @@
+<!-- Start Right Bar -->
+<app-rightsidemenu></app-rightsidemenu>
+<!-- Close Right Bar -->
+<!-- Satrt Page Content -->
+<div class="page-wrap">
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="left-menu card">
+          <app-sidemenu></app-sidemenu>
+        </div>
+      </div>
+      <div class="col-md-9 post-boxorder">
+        <div class="orderreview-page-content">
+          <div class="edit-head-pra mb-3">
+            <h6> <strong>Add address
+              </strong>
+            </h6>
+          </div>
+          <div class="head-pra">
+            <h4><strong> Personal Details
+              </strong></h4>
+            <form [formGroup]="addAddressForm">
+              <div class="form-group">
+                <label>Name</label>
+                <input type="email" class="form-control" placeholder="Enter Your Name" formControlName="name">
+                <div *ngIf="(name.dirty || name.touched) && name.invalid">
+                  <span [ngClass]='{"errorClass": name.errors.pattern}' *ngIf="name.errors.pattern">Please enter valid name</span>
+                  <span [ngClass]='{"errorClass": name.errors.required}' *ngIf="name.errors.required">Name is
+                    required</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Contact Number</label>
+                <input type="email" class="form-control" placeholder="Enter Your Number"
+                  formControlName="contactNumber">
+              </div>
+              <div class="form-group">
+                <label for="exampleFormControlTextarea1">
+                  <h4><strong> Address Details </strong></h4>
+                </label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                  formControlName="address"></textarea>
+              </div>
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col">
+                    <label for="inputState">City</label>
+                    <input type="text" class="form-control" placeholder="Enter Your City" formControlName="city">
+                  </div>
+                  <div class="col">
+                    <label for="inputState">Pincode</label>
+                    <input type="text" class="form-control" placeholder="Enter Your Pincode" formControlName="pincode">
+                    <div *ngIf="(pincode.dirty || pincode.touched) && pincode.invalid">
+                      <span [ngClass]='{"errorClass": pincode.errors.pattern}' *ngIf="pincode.errors.pattern">Please
+                        enter valid pincode</span>
+                      <span [ngClass]='{"errorClass": pincode.errors.required}' *ngIf="pincode.errors.required">Pincode
+                        is required</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Landmark (Optional)</label>
+                <input type="text" class="form-control" placeholder="Oppeosite to relexo" formControlName="landmark">
+              </div>
+              <div class="form-group">
+                <label>Alternate Phone number(Optional)</label>
+                <input type="text" class="form-control" placeholder="Enter Your Alternate Phone  Number"
+                  formControlName="alternateNumber">
+              </div>
+              <div class="form-group">
+                <div class="form-row d-flex justify-content-center">
+                  <div class="col d-flex justify-content-center">
+                    <button type="button" class="btn btn-danger btn-return" (click)="cancel()">Cancel</button>
+                  </div>
+                  <div class="col d-flex justify-content-center">
+                    <button type="button" class="btn btn-success paynow btn-return" [disabled]="addAddressForm.invalid"
+                      (click)="addAddress()">Save </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="chat-box mb-5">
+            <img src="assets/images/Layer 55.png" alt="">
+            <span class="chat-gol">
+              8
+            </span>
+          </div>
+        </div>
+      </div>
+      <!-- end -->
+    </div>
+  </div>
+</div>

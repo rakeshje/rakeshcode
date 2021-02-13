@@ -1,0 +1,272 @@
+   <aside class="sidebar" aria-label="side-menu" style="z-index: 7" [hidden] = "!showSidebar" *ngIf="flag">
+                  <div class="adminprofile">
+                      <a class="navbar-brand logo" style="width: 100%; display: inline-flex; justify-content: center;">
+                          <img class="lg-logo" src="{{profileData?.profilePic }} " alt="image"
+                              style=" border-radius: 50px; cursor: pointer;" (click)="profile()">
+                      </a>
+                      <div id="admin" class="profile-data-section" style="text-align: center; color: #221d54;">
+                          <label style="cursor: pointer;" >{{profileData?.name}}</label>
+                          <p style="cursor: pointer;" >{{profileData?.email}}</p>
+                      </div>
+                  </div>
+                  <div class="sidebar-scroller">
+                      <div id="accordion" class="sidebar-menu">
+
+                          <div class="menu-box toggle-menu" [ngClass]="{'active':currentUrl === '/dashboard' }" *ngIf="per?.dashboard === true"
+                              style="border-top: 1px solid #1975a7;">
+                              <div class="card-header clearfix" [routerLink]="['/dashboard']" id="headingThree" data-toggle="collapse"
+                                  data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                  <a class="side_menu">
+                                      <span class="side_menu_icon"><i class="fa fa-dashboard" aria-hidden="true"></i></span><span
+                                          class="side_page_name head_color">Dashboard</span></a>
+                              </div>
+                          </div>
+                          <div class="menu-box toggle-menu" [ngClass]="{'active':currentUrl === '/user-management' || currentUrl === '/view-user'}" *ngIf="per?.userManagement === true">
+                              <div class="card-header clearfix" [routerLink]="['/user-management']" id="headingThree"
+                                  data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                                  aria-controls="collapseThree">
+                                  <a class="side_menu">
+                                      <span class="side_menu_icon"><i class="fa fa-user" aria-hidden="true"></i></span><span
+                                          class="side_page_name head_color">User Management</span></a>
+                              </div>
+                          </div>
+                          <div class="menu-box toggle-menu" [ngClass]="{'active':currentUrl === '/sub-admin-management' || currentUrl === '/add-sub-admin'
+                          || currentUrl === '/edit-sub-admin' || currentUrl === '/view-sub-admin'}" *ngIf="per?.subAdminManagement === true">
+                              <div class="card-header clearfix" [routerLink]="['/sub-admin-management']" id="headingThree"
+                                  data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                                  aria-controls="collapseThree">
+                                  <a class="side_menu">
+                                      <span class="side_menu_icon"><i class="fa fa-hospital-o" aria-hidden="true"></i></span><span
+                                          class="side_page_name head_color">Sub Admin Mangement</span></a>
+                              </div>
+                          </div>
+
+
+
+                          <div class="menu-box toggle-menu" [ngClass]="{'active' :currentUrl === '/subscription-management' || currentUrl === '/add-subscription' ||
+                           currentUrl === '/edit-subscription' || currentUrl === '/view-subscription'}" *ngIf="per?.subscriptionManagement === true">
+                              <div class="card-header clearfix" [routerLink]="['/subscription-management']" id="headingThree"
+                                  data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                                  aria-controls="collapseThree">
+                                  <a class="side_menu">
+                                      <span class="side_menu_icon"><i class="fa fa-phone" aria-hidden="true"></i></span><span
+                                          class="side_page_name head_color">Subscription Management</span></a>
+                              </div>
+                          </div>
+
+                          <div class="menu-box toggle-menu" [ngClass]="{'active':currentUrl === '/transaction-management' || currentUrl === '/view-transaction'}" *ngIf="per?.transactionManagement === true">
+                              <div class="card-header clearfix" [routerLink]="['/transaction-management']" id="headingThree"
+                                  data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                                  aria-controls="collapseThree">
+                                  <a class="side_menu">
+                                      <span class="side_menu_icon"><i class="fa fa-bell" aria-hidden="true"></i></span><span
+                                          class="side_page_name head_color">Transaction Management </span></a>
+                              </div>
+                          </div>
+
+
+                          <div class="menu-box toggle-menu" [ngClass]="currentUrl === '/change-password' ? 'active': ''" >
+                              <div class="card-header clearfix" [routerLink]="['/change-password']" id="headingThree"
+                                  data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                                  aria-controls="collapseThree">
+                                  <a class="side_menu">
+                                      <span class="side_menu_icon"><i class="fa fa-file-text" aria-hidden="true"></i></span><span
+                                          class="side_page_name head_color">Change Password</span></a>
+                              </div>
+                          </div>
+
+                          <div class="menu-box toggle-menu" [ngClass]="currentUrl === '/profile-screen' ? 'active': ''">
+                            <div class="card-header clearfix" [routerLink]="['/profile-screen']" id="headingThree" data-toggle="collapse"
+                                data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <a class="side_menu">
+                                    <span class="side_menu_icon"><i class="fa fa-user" aria-hidden="true"></i></span><span
+                                        class="side_page_name head_color">My Profile</span></a>
+                            </div>
+                        </div>
+
+                          <div class="menu-box toggle-menu" [ngClass]="{active : currentUrl === '/static-page-management' ||  currentUrl === '/view-static-page' ||  currentUrl === '/edit-static-page' }" *ngIf="per?.staticContentManagement === true">
+                              <div class="card-header clearfix" [routerLink]="['/static-page-management']" id="headingThree" data-toggle="collapse"
+                                  data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                  <a class="side_menu">
+                                      <span class="side_menu_icon"><i class="fa fa-dashboard" aria-hidden="true"></i></span><span
+                                          class="side_page_name head_color">Static Content Management</span></a>
+                              </div>
+                          </div>
+                          <div class="menu-box toggle-menu" [ngClass]="{active : currentUrl === '/contact-us' ||  currentUrl === '/view-contact'  }" *ngIf="per?.contactUsManagement === true">
+                            <div class="card-header clearfix" [routerLink]="['/contact-us']" id="headingThree" data-toggle="collapse"
+                                data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <a class="side_menu">
+                                    <span class="side_menu_icon"><i class="fa fa-user-md" aria-hidden="true"></i></span><span
+                                        class="side_page_name head_color">Contact Us Management</span></a>
+                            </div>
+                        </div>
+
+                        
+                          <div class="menu-box">
+                              <div class="card-header clearfix" id="headingOne">
+                                  <a class="side_menu" (click)="logOutModal()">
+                                      <span class="side_menu_icon"><img src="assets/img/logout-icon.png" alt="Icon"></span><span
+                                          class="side_page_name head_color">Log Out</span>
+                                  </a>
+                              </div>
+                          </div>
+
+                      </div>
+                  </div>
+
+              </aside>
+
+
+<!--+++++++++++++++++++++++++ side bar for ADMIN +++++++++++++++++++++++++++++++++++++++ -->
+              <aside class="sidebar" aria-labelledby="" style="z-index: 7" [hidden] = "!showSidebar" *ngIf="!flag">
+                <div class="adminprofile">
+                    <a class="navbar-brand logo" style="width: 100%; display: inline-flex; justify-content: center;">
+                        <img class="lg-logo" src="{{profileData?.profilePic || 'assets/img/testimonial-img1.jpg'}} " alt="image"
+                            style=" border-radius: 50px; cursor: pointer;" (click)="profile()">
+                    </a>
+                    <div id="admin" class="profile-data-section" style="text-align: center; color: #221d54;">
+                        <label style="cursor: pointer;" >{{profileData?.name}}</label>
+                        <p style="cursor: pointer;" >{{profileData?.email}}</p>
+                    </div>
+                </div>
+                <div class="sidebar-scroller">
+                    <div id="accordion" class="sidebar-menu">
+
+                        <div class="menu-box toggle-menu" [ngClass]="{'active':currentUrl === '/dashboard' }"
+                            style="border-top: 1px solid #1975a7;">
+                            <div class="card-header clearfix" [routerLink]="['/dashboard']" id="headingThree" data-toggle="collapse"
+                                data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <a class="side_menu">
+                                    <span class="side_menu_icon"><i class="fa fa-dashboard" aria-hidden="true"></i></span><span
+                                        class="side_page_name head_color">Dashboard</span></a>
+                            </div>
+                        </div>
+                        <div class="menu-box toggle-menu" [ngClass]="{'active':currentUrl === '/user-management' || currentUrl === '/view-user'}">
+                            <div class="card-header clearfix" [routerLink]="['/user-management']" id="headingThree"
+                                data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                                aria-controls="collapseThree">
+                                <a class="side_menu">
+                                    <span class="side_menu_icon"><i class="fa fa-user" aria-hidden="true"></i></span><span
+                                        class="side_page_name head_color">User Management</span></a>
+                            </div>
+                        </div>
+                        <div class="menu-box toggle-menu" [ngClass]="{'active':currentUrl === '/sub-admin-management' || currentUrl === '/add-sub-admin'
+                        || currentUrl === '/edit-sub-admin' || currentUrl === '/view-sub-admin'}">
+                            <div class="card-header clearfix" [routerLink]="['/sub-admin-management']" id="headingThree"
+                                data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                                aria-controls="collapseThree">
+                                <a class="side_menu">
+                                    <span class="side_menu_icon"><i class="fa fa-hospital-o" aria-hidden="true"></i></span><span
+                                        class="side_page_name head_color">Sub Admin Mangement</span></a>
+                            </div>
+                        </div>
+
+
+
+                        <div class="menu-box toggle-menu" [ngClass]="{'active' :currentUrl === '/subscription-management' || currentUrl === '/add-subscription' ||
+                         currentUrl === '/edit-subscription' || currentUrl === '/view-subscription'}">
+                            <div class="card-header clearfix" [routerLink]="['/subscription-management']" id="headingThree"
+                                data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                                aria-controls="collapseThree">
+                                <a class="side_menu">
+                                    <span class="side_menu_icon"><i class="fa fa-phone" aria-hidden="true"></i></span><span
+                                        class="side_page_name head_color">Subscription Management</span></a>
+                            </div>
+                        </div>
+
+                        <div class="menu-box toggle-menu" [ngClass]="{'active':currentUrl === '/transaction-management' || currentUrl === '/view-transaction'}" >
+                            <div class="card-header clearfix" [routerLink]="['/transaction-management']" id="headingThree"
+                                data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                                aria-controls="collapseThree">
+                                <a class="side_menu">
+                                    <span class="side_menu_icon"><i class="fa fa-bell" aria-hidden="true"></i></span><span
+                                        class="side_page_name head_color">Transaction Management </span></a>
+                            </div>
+                        </div>
+
+
+                        <div class="menu-box toggle-menu" [ngClass]="currentUrl === '/change-password' ? 'active': ''">
+                            <div class="card-header clearfix" [routerLink]="['/change-password']" id="headingThree"
+                                data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                                aria-controls="collapseThree">
+                                <a class="side_menu">
+                                    <span class="side_menu_icon"><i class="fa fa-file-text" aria-hidden="true"></i></span><span
+                                        class="side_page_name head_color">Change Password</span></a>
+                            </div>
+                        </div>
+
+                        <div class="menu-box toggle-menu" [ngClass]="currentUrl === '/profile-screen' ? 'active': ''">
+                          <div class="card-header clearfix" [routerLink]="['/profile-screen']" id="headingThree" data-toggle="collapse"
+                              data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                              <a class="side_menu">
+                                  <span class="side_menu_icon"><i class="fa fa-user" aria-hidden="true"></i></span><span
+                                      class="side_page_name head_color">My Profile</span></a>
+                          </div>
+                      </div>
+
+                        <div class="menu-box toggle-menu" [ngClass]="{active : currentUrl === '/static-page-management' ||  currentUrl === '/view-static-page' ||  currentUrl === '/edit-static-page' }">
+                            <div class="card-header clearfix" [routerLink]="['/static-page-management']" id="headingThree" data-toggle="collapse"
+                                data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <a class="side_menu">
+                                    <span class="side_menu_icon"><i class="fa fa-dashboard" aria-hidden="true"></i></span><span
+                                        class="side_page_name head_color">Static Content Management</span></a>
+                            </div>
+                        </div>
+
+                        <div class="menu-box toggle-menu" [ngClass]="{active : currentUrl === '/contact-us' ||  currentUrl === '/view-contact'  }" >
+                            <div class="card-header clearfix" [routerLink]="['/contact-us']" id="headingThree" data-toggle="collapse"
+                                data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <a class="side_menu">
+                                    <span class="side_menu_icon"><i class="fa fa-user-md" aria-hidden="true"></i></span><span
+                                        class="side_page_name head_color">Contact Us Management</span></a>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="menu-box">
+                            <div class="card-header clearfix" id="headingOne">
+                                <a class="side_menu" (click)="logOutModal()">
+                                    <span class="side_menu_icon"><img src="assets/img/logout-icon.png" alt="Icon"></span><span
+                                        class="side_page_name head_color">Log Out</span>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </aside>
+
+            <aside  aria-labelledby=""   *ngIf="success!='success'"></aside>
+
+           
+
+
+              <!-- logout modal -->
+              <div class="modal fade global-modal reset-modal" id="logoutModal">
+                  <div class="modal-dialog max-WT-500">
+                      <form class="change_password">
+                          <div class="modal-content">
+                              <div class="modal-header d-block text-center modal-header-custm">
+                                  <h5 class="modal-title d-inline-block">Logout?</h5>
+                              </div>
+                              <div class="modal-inner-content">
+                                  <div class="modal-body">
+                                      <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                                          <div class="w-100">
+                                              <p>Are you sure you want to logout?</p>
+                                              <div class="modal-btn-box">
+                                                  <button type="button" class="btn btn-theme" (click)="logout()">YES</button>
+                                                  <button type="button" class="btn btn-danger btn-theme ml-2"
+                                                      data-dismiss="modal">No</button>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+              </div>

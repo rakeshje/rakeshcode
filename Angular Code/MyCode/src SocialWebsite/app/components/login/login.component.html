@@ -1,0 +1,539 @@
+
+<div class="main" style="margin-top: 7vh;">
+   <div class="container">
+      <div class="row loginSection">
+         <div class="col-xs-7 col-sm-6 col-lg-8 loginText">
+            <h3>Welcome to the Biggest Social</h3>
+            <h3>Network in the World</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+               et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tem
+               por incididunt ut labore et dolore magna aliqua.</p>
+         </div>
+         <div class="col-xs-5 col-sm-6 col-lg-4">
+            <div class="boxMain" *ngIf="message == 'login'">
+               <div class="box">
+                  <div>
+                     Login to Social Media
+                  </div>
+               </div>
+               <form class="emailField" [formGroup]="loginForm" novalidate autocompletet="off">
+                  <div class="email">
+                     <input type="text" class="form-control" placeholder="Email Address"
+                        formControlName="email_ph">
+                  </div>
+                  <span class="error" *ngIf="email_ph.invalid && (email_ph.dirty || email_ph.touched)">
+                     <span *ngIf="email_ph.errors.required" padding>
+                        *Please enter email
+                     </span>
+                  </span>
+                  <div class="password">
+                     <input type="password" class="form-control" placeholder="Password" formControlName="pass">
+                  </div>
+                  <span class="error" *ngIf="pass.invalid && (pass.dirty || pass.touched)">
+                     <span *ngIf="pass.errors.required" padding>
+                        *Please enter password
+                     </span>
+                  </span>
+                  <div class="rem">
+                     <label class="remeberBox pointer">
+                        <input type="checkbox" formControlName="remember_me" (click)="checkboxValue2()">
+                        <span class="checkmarkNew"></span>
+                        <span style="margin-left: 29px; font-size: 14px;">Remember me</span>
+                     </label>
+
+                     <div class="forgot">
+                        <p style="margin:0" class="pointer" (click)="showSection('forgot')">Forgot Password?</p>
+                        <p style="margin:0">or</p>
+                        <p style="margin:0" class="pointer" (click)="showSection('forgotEmail')">Forgot Email?</p>
+                     </div>
+                  </div>
+                  <div class="login">
+                     <button class="btn-global pointer" [disabled]="!loginForm.valid || disableCheck2"
+                        (click)="loginSubmit()">Login </button>
+
+
+                     <p style="text-align: center;
+                                 margin: 0;margin-top: 16px;">OR</p>
+
+                     <div class="facebook">
+                        <button class="btn-global facebook pointer" (click)="signInWithFb()"><i
+                              style="margin-right: 20px;" class="fab fa-facebook-f"></i>LOGIN WITH FACEBOOK </button>
+                     </div>
+                     <div class="google">
+                        <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
+                        <button class="btn-global google pointer" (click)="signInWithGoogle()">LOGIN WITH GOOGLE +</button>
+                     </div>
+                  </div>
+
+               </form>
+            </div>
+
+            <div class="boxMain" *ngIf="message == 'signup'">
+               <div class="box">
+                  <div>
+                     Sign Up to Social Media
+                  </div>
+               </div>
+               <form class="emailField" [formGroup]="signupForm" novalidate autocompletet="off">
+                  <div class="email">
+                     <input type="text" class="form-control" placeholder="First Name*" maxlength="16"
+                        formControlName="first_name" (keypress)="toCheckSpace($event)">
+                  </div>
+                  <span class="error" *ngIf="first_name.invalid && (first_name.dirty || first_name.touched)">
+                     <span *ngIf="first_name.errors.required" padding>
+                        *Please enter first name
+                     </span>
+                     <span *ngIf="first_name.errors.pattern" padding>
+                        *Please enter valid first name
+                     </span>
+                  </span>
+                  <div class="password">
+                     <input type="text" class="form-control" placeholder="Last Name" maxlength="32"
+                        formControlName="last_name">
+                  </div>
+                  <span class="error" *ngIf="last_name.invalid && (last_name.dirty || last_name.touched)">
+                     <span *ngIf="last_name.errors.required" padding>
+                        *Please enter last name
+                     </span>
+                     <span *ngIf="last_name.errors.pattern" padding>
+                        *Please enter valid last name
+                     </span>
+                  </span>
+
+
+                  <div class="password">
+                     <input type="text" class="form-control" placeholder="Email*" formControlName="email" maxlength="64"
+                        (keypress)="toCheckSpace($event)">
+                  </div>
+                  <span class="error" *ngIf="email.invalid && (email.dirty || email.touched)">
+                     <span *ngIf="email.errors.required" padding>
+                        *Please enter email address
+                     </span>
+                     <span *ngIf="email.errors.pattern" padding>
+                        *Please enter valid email address.
+                     </span>
+                     <span *ngIf="email.errors.maxlength && !email.errors.pattern" padding>
+                        *Maximum length allowed is 64 characters.
+                     </span>
+                  </span>
+
+                  <div class="password">
+                     <input type="text" class="form-control" placeholder="Recovery Email*" formControlName="recovery_email" maxlength="64"
+                        (keypress)="toCheckSpace($event)">
+                  </div>
+                  <span class="error" *ngIf="recovery_email.invalid && (recovery_email.dirty || recovery_email.touched)">
+                     <span *ngIf="recovery_email.errors.required" padding>
+                        *Please enter recovery email address
+                     </span>
+                     <span *ngIf="recovery_email.errors.pattern" padding>
+                        *Please enter valid email address.
+                     </span>
+                     <span *ngIf="recovery_email.errors.maxlength && !recovery_email.errors.pattern" padding>
+                        *Maximum length allowed is 64 characters.
+                     </span>
+                  </span>
+
+                  <div class="password">
+                     <!-- <select type="text" class="form-control" formControlName="selectcountry"
+                        (change)="selectCountry()">
+                        <option value="">-Select Country-</option>
+                        <option *ngFor="let option of dialCodeArr" [value]="option.name">{{option.name}}</option>
+                     </select> -->
+                     <ngx-select-dropdown  formControlName="selectcountry" [config]="config" [options]="dialCodeArr"></ngx-select-dropdown>
+
+                     <!-- <kendo-dropdownlist [data]="dialCodeArr"  formControlName="selectcountry"  (change)="selectCountry()"></kendo-dropdownlist> -->
+                  </div>
+                  <span class="error" *ngIf="selectcountry.invalid && (selectcountry.dirty || selectcountry.touched)">
+                     <span *ngIf="selectcountry.errors.required" padding>
+                        *Please select country
+                     </span>
+                  </span>
+
+                  <!-- <div class="password"> -->
+                     <!-- <input class="form-control" placeholder="DialCode" formControlName="dialCode" [value]="dialVal"
+                        readonly> -->
+                        <!-- <select>
+                     <option value="">-Select DialCode-</option>
+                     <option *ngFor="let option of dialCodeArr" [value]="option.dial_code">{{option.dial_code}}</option>
+                           </select> -->
+                  <!-- </div> -->
+                  <!-- <span class="error" *ngIf="dialCode.invalid && (dialCode.dirty || dialCode.touched)"> -->
+                     <!-- <span *ngIf="dialCode.errors.required" padding>
+                                   *Select dial-code 
+                           </span> -->
+                  <!-- </span> -->
+                  <div class="password">
+                     <input class="form-control" placeholder="Phone No*" formControlName="contact"
+                        (keypress)="toCheckSpaceChar($event)" maxlength="16">
+                  </div>
+
+                  <span class="error" *ngIf="contact.invalid && (contact.dirty || contact.touched)">
+                     <span *ngIf="contact.errors.required" padding>
+                        *Enter contact no.
+                     </span>
+                     <span *ngIf="contact.errors.minlength" padding>
+                        *Contact no must be of atleast 8 digits
+                     </span>
+                  </span>
+
+                  <div class="password" style="position: relative;">
+                   
+                     <input class="form-control" style="float:none" placeholder="Select a date" ngx-mydatepicker
+                        name="dateOfBirth" formControlName="dateOfBirth" [options]="myOptions" #dp="ngx-mydatepicker"
+                        />
+                     <span class="form-group-btn calendar1" style="position: absolute;
+                     top: 10px;
+                     right: 63px;">
+                        <span  style="margin-right: 5px;" (click)="dp.toggleCalendar()">
+                           <i style="color:#818181" class="fa fa-calendar"></i>
+                     </span>
+                     <span style="margin-right: 5px;" (click)="dp.clearDate()">
+                           <i style="color:#818181" class="far fa-times-circle"></i>
+                     </span>
+                  </span>
+                  </div>
+
+                  <span class="error" *ngIf="dateOfBirth.invalid && (dateOfBirth.dirty || dateOfBirth.touched)">
+                     <span *ngIf="dateOfBirth.errors.required" padding>
+                        *Please select date of birth
+                     </span>
+                  </span>
+
+                  <div class="password">
+                     <input type="password" class="form-control" placeholder="Password*" formControlName="password"
+                        maxlength="16" (keypress)="toCheckSpace($event)">
+                  </div>
+                  <span class="error" *ngIf="password.invalid && (password.dirty || password.touched)">
+                     <span *ngIf="password.errors.required" class='danger' style="color: red" padding>
+                        *Please enter password.
+                     </span>
+                     <span *ngIf="password.errors.pattern && !password.errors.minlength" class='danger' padding>
+                        *Password must be alphanumeric including special characters(~! @ # $ % ^ & * _ - + = , : ; ’ ” /
+                        <> ? \ |).
+                     </span>
+
+                     <span *ngIf="password.errors.minlength" class='danger' padding>
+                        *Password must be atleast 8 characters.
+                     </span>
+                  </span>
+
+                  <div class="password">
+                     <input placeholder="Confirm Password*" class="form-control" type="password"
+                        formControlName="confirm_pass" maxlength="16" (keypress)="toCheckSpace($event)">
+                  </div>
+                  <span class="error" *ngIf="confirm_pass.invalid && (confirm_pass.dirty || confirm_pass.touched)">
+                     <span *ngIf="confirm_pass.errors.required" class='danger' style="color: red" padding>
+                        *Enter Confirm password
+                     </span>
+                     <span *ngIf="confirm_pass.errors?.mismatch" style="color: red">*Confirm password should be same as
+                        password
+                     </span>
+                  </span>
+
+
+                  <div class="rem">
+                     <label class="remeberBox pointer">
+                        <input type="checkbox" checked="checked" formControlName="terms" (click)="checkboxValue()"
+                           required>
+                        <span class="checkmarkNew"></span>
+                        <span style="margin-left: 29px; font-size: 14px;">I agree to Terms & Conditions</span>
+                     </label>
+                     <!-- <label class="remeberBox pointer">
+                           <input type="checkbox" formControlName="remember_me" (click)="checkboxValue2()">
+                           <span class="checkmarkNew"></span>
+                           <span style="margin-left: 29px; font-size: 14px;">Remember me</span>
+                        </label> -->
+
+                    
+                  </div>
+                  <div class="login">
+                     <button class="btn-global pointer" [disabled]="!signupForm.valid || disableCheck"
+                        (click)="register()">Register </button>
+
+
+                   
+                  </div>
+
+               </form>
+            </div>
+
+            <!----OTP verification starts-->
+            <div class="boxMain" *ngIf="message == 'otp'">
+               <div class="box">
+                  <div>
+                     OTP Verification
+                  </div>
+               </div>
+               <form class="emailField" novalidate autocomplete="off">
+
+                  <div style="display: flex;">
+                     <input class="form-control" type="tel" maxlength="1" name="one" [(ngModel)]="otp.one"
+                        (keyup)="onKey(otp.one,1)">
+                     <input class="form-control" type="tel" maxlength="1" name="two" [(ngModel)]="otp.two"
+                        (keyup)="onKey(otp.two,2)" id="otp2">
+                     <input class="form-control" type="tel" maxlength="1" name="three" [(ngModel)]="otp.three"
+                        (keyup)="onKey(otp.three,3)" id="otp3">
+                     <input class="form-control" type="tel" maxlength="1" name="four" [(ngModel)]="otp.four"
+                        (keyup)="onKey(otp.four,4)" id="otp4">
+
+                     <!-- <input class="otpBox" type="tel" value="" [(ngModel)]="Otp.pinOne" #otp1 maxlength="1" (keyup)="changeFocus(Otp.pinOne,1,$event)" id="otp1" class="otp1" [formControl]="OtpForm.controls['pinOne']">
+                          
+                        <input class="otpBox" type="tel" value="" [(ngModel)]="Otp.pinTwo" #otp2 maxlength="1" (keyup)="changeFocus(Otp.pinTwo,2,$event)" id="otp2" class="otp2" [formControl]="OtpForm.controls['pinTwo']">
+
+                          <input class="otpBox" type="tel" value="" [(ngModel)]="Otp.pinThree" #otp3 maxlength="1" (keyup)="changeFocus(Otp.pinThree,3,$event)" id="otp3" class="otp3" [formControl]="OtpForm.controls['pinThree']">
+
+                            <input class="otpBox" type="tel" value="" [(ngModel)]="Otp.pinFour" #otp4 maxlength="1" (keyup)="changeFocus(Otp.pinFour,4,$event)" id="otp4" class="otp4" [formControl]="OtpForm.controls['pinFour']"> -->
+
+                  </div>
+                  <div class="green_color pointer timer"  (click)="tester()"
+                     *ngIf="resendButton">Resend?</div>
+                  <div class="green_color pointer timer" *ngIf="hiddenTimer && !resendButton">00 :
+                     0{{count}}</div>
+                  <div class="green_color pointer timer" *ngIf="!hiddenTimer && !resendButton">00
+                     : {{count}}</div>
+
+                  <div class="login">
+                     <button class="btn-global pointer" (click)="verifyOTP()">Verify </button>
+
+
+
+                  </div>
+
+               </form>
+            </div>
+             <!----OTP verification ends-->
+
+            <!------Forgot password--->
+            <div class="boxMain" *ngIf="message == 'forgot'">
+               <div class="box">
+                  <div>
+                     Forgot Password?
+                  </div>
+               </div>
+               <form class="emailField" [formGroup]="forgotForm" novalidate autocompletet="off">
+                  <div class="email">
+                     <input type="text" class="form-control" placeholder="Enter Your Email Address"
+                        formControlName="forgot_password">
+                  </div>
+                  <span class="error" *ngIf="forgot_password.invalid && (forgot_password.dirty || forgot_password.touched)">
+                     <span *ngIf="forgot_password.errors.required" padding>
+                        *Please enter your email address.
+                     </span>
+                  </span>
+
+                  <div class="login">
+                     <button class="btn-global pointer" [disabled]="!forgotForm.valid" (click)="forgotPass()">Send
+                        OTP</button>
+
+                  </div>
+
+               </form>
+            </div>
+            <!------Forgot password ends--->
+
+
+            <!----Forgot Email-->
+            <div class="boxMain" *ngIf="message == 'forgotEmail'">
+               <div class="box">
+                  <div>
+                     Forgot Email?
+                  </div>
+               </div>
+               <form class="emailField" [formGroup]="forgotEmailForm" novalidate autocompletet="off">
+                  
+                  
+                     <!-- <div class="row"> -->
+                        <!-- <div class="col-sm-7 col-lg-7 col-md-7">
+                           <div class="email">
+                             
+                              <select type="text" class="form-control" formControlName="dialCode2">
+                        <option value="">-Select-</option>
+                        <option *ngFor="let option of dialCodeArr" [value]="option.dial_code">{{option.name}}</option>
+                     </select>
+                           </div>
+                           <span class="error" *ngIf="dialCode2.invalid && (dialCode2.dirty || dialCode2.touched)">
+                              <span *ngIf="dialCode2.errors.required" padding>
+                                 *Please select country
+                              </span>
+                           </span>
+                        </div> -->
+                        <!-- <div class="col-sm-5 col-lg-5 col-md-5" style="padding-left: 0px;">
+                           <div class="email">
+                              <input style="font-size: 12px;" type="text" class="form-control" placeholder="Phone no" formControlName="forgot_ph" (keypress)="toCheckSpaceChar($event)">
+                           </div>
+                           <span class="error" *ngIf="forgot_ph.invalid && (forgot_ph.dirty || forgot_ph.touched)">
+                              <span *ngIf="forgot_ph.errors.required" padding>
+                                 *Please enter mobile no.
+                              </span>
+                           </span>
+                        </div> -->
+                     <!-- </div> -->
+                  <!-- </div> -->
+                  
+                  <!-- <div>
+                  <div class="email">
+                     <input type="text" class="form-control" placeholder="DialCode(+91)" formControlName="dialCode2">
+                  </div>
+                  <span class="error" *ngIf="dialCode2.invalid && (dialCode2.dirty || dialCode2.touched)">
+                     <span *ngIf="dialCode2.errors.required" padding>
+                        *Please enter dial code
+                     </span>
+                  </span>
+                  <div class="email">
+                     <input type="text" class="form-control" placeholder="Phone number" formControlName="forgot_ph">
+                  </div>
+                  <span class="error" *ngIf="forgot_ph.invalid && (forgot_ph.dirty || forgot_ph.touched)">
+                     <span *ngIf="forgot_ph.errors.required" padding>
+                        *Please enter mobile no.
+                     </span>
+                  </span>
+               </div> -->
+               <div class="email">
+                  <input type="text" class="form-control" placeholder="Enter Your Recovery Email Address"
+                     formControlName="forgot_email">
+               </div>
+               <span class="error" *ngIf="forgot_email.invalid && (forgot_email.dirty || forgot_email.touched)">
+                  <span *ngIf="forgot_email.errors.required" padding>
+                     *Please enter your recovery email address.
+                  </span>
+               </span>
+                  <div class="login">
+                     <button class="btn-global pointer" [disabled]="!forgotEmailForm.valid"
+                        (click)="forgot_Email()">Send</button>
+
+                  </div>
+
+               </form>
+            </div>
+            <!----Forgot Email ends---->
+
+            <!---Reset OTP verification-->
+            <div class="boxMain" *ngIf="message == 'resetOtp'">
+               <div class="box">
+                  <div>
+                     OTP Verification
+                  </div>
+               </div>
+               <form class="emailField" novalidate autocomplete="off">
+
+                  <div style="display: flex;">
+                     <input class="form-control" type="tel" maxlength="1" name="one" [(ngModel)]="otp.one"
+                        (keyup)="onKey(otp.one,1)">
+                     <input class="form-control" type="tel" maxlength="1" name="two" [(ngModel)]="otp.two"
+                        (keyup)="onKey(otp.two,2)" id="otp2">
+                     <input class="form-control" type="tel" maxlength="1" name="three" [(ngModel)]="otp.three"
+                        (keyup)="onKey(otp.three,3)" id="otp3">
+                     <input class="form-control" type="tel" maxlength="1" name="four" [(ngModel)]="otp.four"
+                        (keyup)="onKey(otp.four,4)" id="otp4">
+
+
+
+                  </div>
+                  <div class="green_color pointer timer"  (click)="tester()"
+                     *ngIf="resendButton">Resend?</div>
+                  <div class="green_color timer"  *ngIf="hiddenTimer && !resendButton">00 :
+                     0{{count}}</div>
+                  <div class="green_color timer"  *ngIf="!hiddenTimer && !resendButton">00 :
+                     {{count}}</div>
+
+                  <div class="login">
+                     <button class="btn-global pointer" (click)="verifyOTP()">Verify </button>
+
+
+
+                  </div>
+
+               </form>
+            </div>
+            <!---Reset OTP verification ends-->
+
+
+            <!---Reset Password-->
+            <div class="boxMain" *ngIf="message == 'resetpass'">
+               <div class="box">
+                  <div>
+                     Reset Password
+                  </div>
+               </div>
+               <form class="emailField" [formGroup]="resetPassForm" novalidate autocompletet="off">
+
+                  <div class="password">
+                     <input type="password" class="form-control" placeholder="Password*" formControlName="newPassword"
+                        maxlength="16" (keypress)="toCheckSpace($event)">
+                  </div>
+                  <span class="error" *ngIf="newPassword.invalid && (newPassword.dirty || newPassword.touched)">
+                     <span *ngIf="newPassword.errors.required" class='danger' style="color: red" padding>
+                        *Please enter password.
+                     </span>
+                     <span *ngIf="newPassword.errors.pattern && !newPassword.errors.minlength" class='danger' padding>
+                        *Password must be alphanumeric including special characters(~! @ # $ % ^ & * _ - + = , : ; ’ ” /
+                        <> ? \ |).
+                     </span>
+
+                     <span *ngIf="newPassword.errors.minlength" class='danger' padding>
+                        *Password must be atleast 8 characters.
+                     </span>
+                  </span>
+
+                  <div class="password">
+                     <input placeholder="Confirm Password*" class="form-control" type="password"
+                        formControlName="confirmPassword" maxlength="16" (keypress)="toCheckSpace($event)">
+                  </div>
+                  <span class="error"
+                     *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)">
+                     <span *ngIf="confirmPassword.errors.required" class='danger' style="color: red" padding>
+                        *Enter Confirm password
+                     </span>
+                     <span *ngIf="confirmPassword.errors?.mismatch" style="color: red">*Confirm password should be same
+                        as password
+                     </span>
+                  </span>
+
+
+
+                  <div class="login">
+                     <button class="btn-global pointer" [disabled]="!resetPassForm.valid"
+                        (click)="resetPassApi()">Reset</button>
+
+
+                     <!-- <p style="text-align: center;
+                           margin: 0;margin-top: 16px;">OR</p> -->
+
+                     <!-- <div class="facebook">
+                              <button class="btn-global facebook"><i style="margin-right: 20px;" class="fab fa-facebook-f"></i>LOGIN WITH FACEBOOK </button>
+                           </div> 
+                           <div class="google">
+                                 <button class="btn-global google">LOGIN WITH GOOGLE +</button>
+                              </div>     -->
+                  </div>
+
+               </form>
+            </div>
+
+
+         </div>
+      </div>
+   </div>
+</div>
+<!-- Number not match Modal Start-->
+<div class="modal fade" id="otpModal" tabindex="-1" role="dialog">
+   <div class="modal-dialog max-WT-500 modal-dialog-centered" role="document">
+      <div class="modal-content">
+
+         <div class="modal-body p0">
+            <div class="modalInnerContent minHeight150">
+               <div class="w-100">
+                  <div class="sectionHead text-center headLine mb0">
+                     <p>Your number is not in out database, Please enter more details and complete the process.</p>
+                  </div>
+               </div>
+            </div>
+            <div class="modalActionBtn pt15 pb15 text-center">
+               <button type="button" class="btn btnRed minWidth100 radius4" data-dismiss="modal">OK</button>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- Number not match Modal End -->
+

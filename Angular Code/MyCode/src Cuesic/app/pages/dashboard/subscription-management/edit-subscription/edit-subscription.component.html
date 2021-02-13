@@ -1,0 +1,139 @@
+<div class="wrapper">
+  <main class="middle-content">
+      <div class="page_title_block">
+          <h1 class="page_title">Subscription Management / Edit</h1>
+      </div>
+      <div class="content-section">
+          <div class="outer-box">
+              <div class="global-table no-radius p0">
+                  <div class="tab-content1">
+                      <div class="row">
+                          <div class="col-md-12">
+                              <div [formGroup] = "form" class=" order-view main-block-innner mb20 mt40 view-label-align">
+                                  <div class="add-store-block input-style">
+                                      <div class="form-group row ">
+                                          <div class="col-md-12">
+                                            <div class="user-profile">
+                                              <div class="image-box">
+                                                  <img [src]="imageUrl || 'assets/img/profile-img.jpg'" id="sub-admin-image" alt="">
+                                                  <label class="upload-label">
+                                                      <input type="file"  name="image"
+                                                          accept="image/jpg,image/jpeg,image/png" id="image"
+                                                          (change)="ValidateFileUpload($event)" maxlength="56">
+                                                      <em class="fa fa-pencil" style="color: #86559f!important; font-size: 12px;"></em>
+                                                  </label>
+                                              </div>
+                                          </div>
+                                          </div>
+                                      </div>
+                                  </div>
+
+                                   <!--************ One Row Start here ********************* -->
+                                   <div class="form-group row m-auto" style="width: 90%">
+                                    <div class="col-md-12">
+                                        <div class="form-group row mt-3">
+                                            <div class="col-md-6">
+                                                <label>Subscription Name <span>:</span> </label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input (keypress)="mainService.preventSpace($event)" placeholder="Subscription name"
+                                                    maxlength="30" formControlName="subscriptionName" type="text"
+                                                    class="form-control">
+                                                    <span class="text-danger"
+                                                    *ngIf="form.get('subscriptionName').hasError('required') && (form.get('subscriptionName').dirty || form.get('subscriptionName').touched)">
+                                                    *subscription name is required.
+                                                </span>
+                                                <span class="text-danger"
+                                                    *ngIf="form.get('subscriptionName').hasError('pattern') && form.get('subscriptionName').dirty">
+                                                    *Please enter valid subscription name.
+                                                </span>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!--************ One Row end here ********************* -->
+
+                                   <!--************ One Row Start here ********************* -->
+                                   <div class="form-group row m-auto" style="width: 90%">
+                                    <div class="col-md-12">
+                                        <div class="form-group row">
+                                            <div class="col-md-6">
+                                                <label>Validity Period
+                                                  <span>:</span> </label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input (keypress)="mainService.preventSpace($event)" placeholder="Validity period"
+                                                    formControlName="ValidityPeriod" type="text" class="form-control"
+                                                    maxlength="2">
+                                                    <span class="text-danger"
+                                                    *ngIf="form.get('ValidityPeriod').hasError('required') && (form.get('ValidityPeriod').dirty || form.get('ValidityPeriod').touched)">
+                                                    *Validity period is required.
+                                                </span>
+                                                <span class="text-danger"
+                                                    *ngIf="form.get('ValidityPeriod').hasError('pattern') && form.get('ValidityPeriod').dirty">
+                                                    *Please enter valid Validity period.
+                                                </span>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!--************ One Row end here ********************* -->
+
+                                   <!--************ One Row Start here ********************* -->
+                                   <div class="form-group row m-auto" style="width: 90%">
+                                    <div class="col-md-12">
+                                        <div class="form-group row">
+                                            <div class="col-md-6">
+                                                <label>Cost <span>:</span> </label>
+                                            </div>
+                                            <div class="col-md-6 d-flex">
+                                              <input type="text" maxlength="1" formControlName ="currency" (keypress)="preventSpace($event)" class="form-control mr-1" style="width: 19%" placeholder="$">
+                                              
+                                                     <input (keypress)="preventSpace($event)" placeholder="Cost"
+                                                         formControlName="cost" type="text" class="form-control"
+                                                         maxlength="6">
+
+                                                 </div>
+                                                 <div class="text-danger text-center w-100" style="margin-left:35%">
+                                                    <span class="text-danger"
+                                                    *ngIf="form.get('cost').hasError('required') && (form.get('cost').dirty || form.get('cost').touched)">
+                                                    *Cost is required.
+                                                </span>
+                                                <span class="text-danger"
+                                                    *ngIf="form.get('currency').hasError('pattern') && form.get('currency').dirty">
+                                                    <div style="margin-left:15px" >*Please enter valid currency.</div>
+                                                </span>
+                                                <span class="text-danger"
+                                                    *ngIf="form.get('cost').hasError('pattern') && form.get('cost').dirty">
+                                                    <div style="margin-left:15px">*Please enter valid Cost.</div>
+                                                </span>
+                                                     </div>
+                                        </div>
+                                    </div>
+                                    
+
+                                </div>
+                                <!--************ One Row end here ********************* -->
+
+
+
+
+                                  <div class="text-center mt40 mb40">
+                                      <button class="btn btn-large  max-WT-150 btn-theme"
+                                          routerLink="/subscription-management">Cancel</button>
+                                      <button class="btn btn-large  max-WT-150 btn-theme ml-3" [disabled]="form.invalid" (click)="editSubscription()">Save</button>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </main>
+</div>

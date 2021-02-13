@@ -1,0 +1,60 @@
+<!-- Start Right Bar -->
+<app-rightsidemenu></app-rightsidemenu>
+<!-- Close Right Bar -->
+
+<!-- Satrt Page Content -->
+<div class="page-wrap">
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="left-menu card">
+          <app-sidemenu></app-sidemenu>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="page-content">
+          <div class="card post-box main-post">
+          </div>
+          <div class="card post-box post-search">
+            <div class="post-wrap">
+              <form class="search-form">
+                <input type="text" placeholder="Shop by product name" class="form-control" name="searchValue" [(ngModel)]="searchValue" (keyup)="searchChange.next($event.target.value)">
+              </form>
+            </div>
+          </div>
+          <div class="card post-box main-post mt-2" *ngFor="let product of productList">
+            <div class="post-warp">
+              <div class="post-content">
+                <div class="product-summery">
+                  <div class="post-summry wishlist-img">
+                    <img *ngIf="product?.image || product?.productImages.length" [src]="product.productImages[0].image" class="img-fluid cart-image" (click)="displayProduct(product)">
+                    <img *ngIf="!product?.image && !product?.productImages.length" class="img-fluid cart-image" src="assets/images/Layer 115.jpg" (click)="displayProduct(product)">
+                  </div>
+                </div>
+              </div>
+              <div class="prodect-name">
+                <div class="heart-icon mt-2">
+                  <div>
+                    <h5>{{product.productName}}</h5>
+                    <h5>{{product.description}}</h5>
+                    <h6> ${{product.productCost}}</h6>
+                    <p><i class="fas fa-map-marker-alt"></i>
+                      {{product.location}}, {{product.city}}</p>
+                  </div>
+                  <div class="like-icon mt-2">
+                    <i class="fas fa-heart" id="{{product._id}}" (click)="wishlist(product._id)"></i>
+                    <!-- <div class="btn-green">
+                      <button type="button" class="btn btn-success paynow" data-toggle="modal" data-target="#post-submit" (click)="addToCart(product)">Add To Card</button>
+                    </div> -->
+                    <p>{{product.createdAt}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end -->

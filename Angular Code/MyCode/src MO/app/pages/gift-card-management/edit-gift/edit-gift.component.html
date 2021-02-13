@@ -1,0 +1,48 @@
+<div class="wrapper" style="width: 80%;
+margin-left: 2%;">
+    <main class="middle-content">
+        <div class="page_title_block">
+            <h1 class="page_title"> Edit New Giftcard</h1>
+            <hr style="background: black; opacity: 0.5;width: 135%;">
+        </div>
+        <form [formGroup]="editGiftForm">
+            <div class="order-view main-block-innner mb20 mt40 view-label-align" style="margin-left: 18%;">
+                <div class="row card-body" style=" margin-left: 2%; margin-top: 8%; margin-right: 2%;">
+                    <div class="col">
+                        <label>Title :</label><br><br>
+                        <label>Discount (in %) :</label><br><br>
+                        <label>Maximum amount :</label><br><br>
+                        <label>Expiry date : </label><br><br>
+                    </div>
+                    <div class="col" style=" margin-top: -1.5%;">
+                        <input type="text" class="form-control" formControlName="title">
+                        <span class="text text-danger" *ngIf="editGiftForm.get('title').hasError('required') && editGiftForm.get('title').touched">*Title is Required</span><br>
+                        <input type="text" class="form-control" formControlName="discount">
+                        <span class="text text-danger" *ngIf="editGiftForm.get('discount').hasError('required') && editGiftForm.get('discount').touched">*Discount is Required</span><br>
+                        <input type="text" class="form-control" formControlName="maxAmount">
+                        <span class="text text-danger" *ngIf="editGiftForm.get('maxAmount').hasError('required') && editGiftForm.get('maxAmount').touched">*Maximum amount is Required</span><br>
+                        <input type="date" class="form-control" formControlName="expiry">
+                        <span class="text text-danger" *ngIf="editGiftForm.get('expiry').hasError('required') && editGiftForm.get('expiry').touched">*Expiry date is Required</span><br>
+                        <div class="image-box">
+                            <img src="{{img || 'assets/img/profile-img.jpg'}}" id="sub-admin-image" alt="">
+                            <label class="upload-label">
+                                <input type="file" formControlName="image" name="image"
+                                    accept="image/jpg,image/jpeg,image/png" id="image"
+                                    (change)="ValidateFileUpload($event)" maxlength="56">
+                                <em class="fa fa-pencil" style="color: #86559f!important;font-size: 12px"></em>
+                            </label>
+                        </div>
+                        <span class="text text-danger" *ngIf="editGiftForm.get('image').hasError('required') && editGiftForm.get('image').touched">*Image is Required</span><br>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-left: 25%;margin-top: 5%; margin-bottom: 8%; ">
+                    <button type="button" class="btn btn-theme" style="margin-left: 10%; width: 12%;"
+                        [routerLink]="['/gift-card-management']">Back</button>
+                    <button type="button" class="btn btn-theme" style="margin-left: 10%; width: 12%;" [disabled]=editGiftForm.invalid
+                        (click)="editGift()">Save </button>
+                </div>
+            </div>
+        </form>
+    </main>
+</div>

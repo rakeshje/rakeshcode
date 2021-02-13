@@ -1,0 +1,998 @@
+<div class="wrapper">
+    <main class="middle-content">
+        <div class="page_title_block">
+            <h1 class="page_title text-center">Retailer Management</h1>
+        </div>
+        <div class="content-section">
+
+            <div class="outer-box">
+                <div class="global-table no-radius p0">
+                    <div class="tab-content1">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class=" order-view main-block-innner mb20">
+                                    <div>
+                                        <button class="btn btn-light btn-lg col-md-2"
+                                            [ngClass]="{active : selectedTab == 'viewinformation'}"
+                                            (click)="changeTab('viewinformation')">View Information</button>
+                                        <button class="btn btn-light btn-lg col-md-2"
+                                            [ngClass]="{active : selectedTab == 'website'}"
+                                            (click)="changeTab('website')"> Website</button>
+                                        <button class="btn btn-light btn-lg col-md-2"
+                                            [ngClass]="{active :  selectedTab == 'rechargedetails'}"
+                                            (click)="changeTab('rechargedetails')"> Recharge Details</button>
+                                        <button class="btn btn-light btn-lg col-md-2"
+                                            [ngClass]="{active : selectedTab == 'couponhistory'}"
+                                            (click)="changeTab('couponhistory')"> Coupon History</button>
+                                        <button class="btn btn-light btn-lg col-md-2"
+                                            [ngClass]="{active : selectedTab == 'credithistory'}"
+                                            (click)="changeTab('credithistory')"> Credit History</button>
+                                        <button class="btn btn-light btn-lg col-md-2"
+                                            [ngClass]="{active : selectedTab == 'viewqrcode'}"
+                                            (click)="changeTab('viewqrcode')">
+                                            View QR Code</button>
+                                    </div>
+                                    <!-- start search and sumit and cancel button     -->
+
+                                    <!-- **********Marts section start here *********** -->
+                                    <div *ngIf="selectedTab == 'viewinformation'">
+                                        <form [formGroup]="searchByStatus">
+                                            <div class="row">
+                                                <div class="col-md-12" style="margin-top: 5%">
+                                                    <div class=" order-view main-block-innner mb20">
+                                                        <div class="col-md-8 datelabel" style="    justify-content: flex-end;
+                                                    margin-left: 19%;">
+                                                            <button type="button"
+                                                                class="btn  btn-theme ml-2 Go_btn">Download Proof
+                                                                PDF</button>
+                                                        </div>
+
+
+                                                        <div style="margin-left: 68%;">
+                                                            <label>Active:</label>
+                                                            <label *ngIf="retailerStatusData == 'INACTIVE'"
+                                                                class="switch" (click)="changeStatus('ACTIVE')">
+                                                                <input type="checkbox" formControlName="activeSwitch">
+                                                                <span class="slider round"></span>
+                                                            </label>
+                                                            <label *ngIf="retailerStatusData == 'ACTIVE'" class="switch"
+                                                                (click)="changeStatus('INACTIVE')">
+                                                                <input type="checkbox" formControlName="activeSwitch">
+                                                                <span class="slider round"></span>
+                                                            </label>
+                                                        </div>
+
+
+                                                        <div>
+                                                            <label>Total credits
+                                                                :</label>&nbsp;&nbsp;<label>{{retailerData.credit}}</label>
+                                                            <br>
+                                                            <label>Recent Recharge Date
+                                                                :</label>&nbsp;&nbsp;<label>{{retailerData.createdAt | date}}</label>
+                                                            <br>
+                                                            <label>Status
+                                                                :</label>&nbsp;&nbsp;<label>{{retailerData.retailerStatus}}</label>
+                                                        </div>
+
+                                                        <div class="col-md-8 datelabel" style="    justify-content: flex-end;
+                                                    margin-left: 19%;">
+                                                            <button type="button" (click)="approveInformation()"
+                                                                class="btn  btn-theme ml-2 Go_btn">Reasign
+                                                                Account Manager</button>
+                                                        </div>
+
+
+                                                    </div>
+
+                                                    <div class="content-section">
+                                                        <div class="outer-box">
+                                                            <div class="global-table no-radius p0">
+                                                                <div class="tab-content1">
+                                                                    <div class="row">
+                                                                        <div class="col-md-12">
+                                                                            <div
+                                                                                class=" order-view main-block-innner mb20 mt40">
+                                                                                <div
+                                                                                    class="add-store-block input-style">
+                                                                                    <div class="form-group row ">
+                                                                                        <label class="col-md-6"> Mart
+                                                                                            Name:</label>
+                                                                                        <div
+                                                                                            class="col-md-6 text-center">
+                                                                                            <label>{{retailerData.shopName}}</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group row ">
+                                                                                        <label class="col-md-6">Retailer
+                                                                                            Name :</label>
+                                                                                        <div
+                                                                                            class="col-md-6 text-center">
+                                                                                            <label>{{retailerData.shopName}}</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group row ">
+                                                                                        <label class="col-md-6">Floor
+                                                                                            Number:</label>
+                                                                                        <div class="col-md-6 text-center"
+                                                                                            style="    white-space: nowrap;">
+                                                                                            <label>{{retailerData.floorNumber}}</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group row ">
+                                                                                        <label class="col-md-6">Email id
+                                                                                            for
+                                                                                            Managing Coupons and Getting
+                                                                                            Communications From
+                                                                                            LH:</label>
+                                                                                        <div class="col-md-6 text-center"
+                                                                                            style="    white-space: nowrap;">
+                                                                                            <label>{{retailerData.email}}</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group row ">
+                                                                                        <label class="col-md-6">Mobile
+                                                                                            Phone
+                                                                                            Number for Managing Coupons
+                                                                                            and
+                                                                                            Getting Communications From
+                                                                                            LH
+                                                                                            :</label>
+                                                                                        <div class="col-md-6 text-center"
+                                                                                            style="    white-space: nowrap;">
+                                                                                            <label>{{retailerData.mobileNumber}}</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group row ">
+                                                                                        <label class="col-md-6">Shop
+                                                                                            Phone
+                                                                                            Number to be Displayed on
+                                                                                            Coupons :</label>
+                                                                                        <div class="col-md-6 text-center"
+                                                                                            style="    white-space: nowrap;">
+                                                                                            <label>{{retailerData.shopNumber}}</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group row ">
+                                                                                        <label
+                                                                                            class="col-md-6">Registered
+                                                                                            Business Name :</label>
+                                                                                        <div class="col-md-6 text-center"
+                                                                                            style="    white-space: nowrap;">
+                                                                                            <label>{{retailerData.registeredBusinessName}}</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group row ">
+                                                                                        <label
+                                                                                            class="col-md-6">Registered
+                                                                                            Business Address:</label>
+                                                                                        <div class="col-md-6 text-center"
+                                                                                            style="    white-space: nowrap;">
+                                                                                            <label>{{retailerData.shopNumber}}</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group row ">
+                                                                                        <label class="col-md-6">GSTIN:
+                                                                                        </label>
+                                                                                        <div class="col-md-6 text-center"
+                                                                                            style="    white-space: nowrap;">
+                                                                                            <label>{{retailerData.GSTIN}}</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group row ">
+                                                                                        <label class="col-md-6">Initial
+                                                                                            Payment Amount:</label>
+                                                                                        <div class="col-md-6 text-center"
+                                                                                            style="    white-space: nowrap;">
+                                                                                            <label>{{retailerData.credit}}</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <h5> Address Details</h5>
+                                                                            <div
+                                                                                class=" order-view main-block-innner mb40 mt20">
+                                                                                <div
+                                                                                    class="add-store-block input-style">
+                                                                                    <div class="form-group row ">
+                                                                                        <label class="col-md-6"> Pin
+                                                                                            Code:</label>
+                                                                                        <div
+                                                                                            class="col-md-6 text-center">
+                                                                                            <label>{{retailerData.pinCode}}</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group row ">
+                                                                                        <label
+                                                                                            class="col-md-6">State:</label>
+                                                                                        <div
+                                                                                            class="col-md-6 text-center">
+                                                                                            <label>{{retailerData.state}}</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group row ">
+                                                                                        <label
+                                                                                            class="col-md-6">City:</label>
+                                                                                        <div class="col-md-6 text-center"
+                                                                                            style="    white-space: nowrap;">
+                                                                                            <label>{{retailerData.city}}</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="form-group row ">
+                                                                                        <label
+                                                                                            class="col-md-6">Address:</label>
+                                                                                        <div
+                                                                                            class="col-md-6 text-center">
+                                                                                            <label>{{retailerData.address}}</label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <div class="text-center mt40">
+                                                                            <button
+                                                                                [routerLink]="['/retailer-management']"
+                                                                                class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ml-2">Back</button>
+                                                                            <button (click)="rejectInformation()"
+                                                                                class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ml-2">Reject</button>
+                                                                            <button (click)="approveInformation()"
+                                                                                class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ml-2">Approve</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </form>
+                                    </div>
+
+
+                                    <!--************ Retailers section start here***********  -->
+
+                                    <div *ngIf="selectedTab == 'website'"> &nbsp;&nbsp;
+                                        <div style="width: 100%">
+                                            <img src="assets/img/header-logo.png" style="width: 100%" alt="">
+                                        </div>
+
+                                        <div class="content-section">
+                                            <div class="outer-box">
+                                                <div class="global-table no-radius p0">
+                                                    <div class="tab-content1">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <h5> <u>Basic Information</u></h5>
+                                                                <div class=" order-view main-block-innner mb20 mt40">
+                                                                    <div class="add-store-block input-style">
+                                                                        <div class="form-group row ">
+                                                                            <label class="col-md-6">Shop Name:</label>
+                                                                            <div class="col-md-6 text-center">
+                                                                                {{getWebsiteDataa?.basicInformation[0]?.shopName}}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row ">
+                                                                            <label class="col-md-6">Shop Number:</label>
+                                                                            <div class="col-md-6 text-center">
+                                                                                {{getWebsiteDataa?.basicInformation[0]?.shopNumber}}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row ">
+                                                                            <label class="col-md-6">Floor
+                                                                                Number:</label>
+                                                                            <div class="col-md-6 text-center"
+                                                                                style="    white-space: nowrap;">
+                                                                                {{getWebsiteDataa?.basicInformation[0]?.floorNumber}}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row ">
+                                                                            <label class="col-md-6">Mart Number:</label>
+                                                                            <div class="col-md-6 text-center"
+                                                                                style="    white-space: nowrap;">
+                                                                                {{getWebsiteDataa?.basicInformation[0]?.shopPhoneNumber}}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row ">
+                                                                            <label class="col-md-6">Mart
+                                                                                Address:</label>
+                                                                            <div class="col-md-6 text-center"
+                                                                                style="    white-space: nowrap;">
+                                                                                {{getWebsiteDataa?.basicInformation[0]?.martAddress}}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <h5> <u>About Us</u></h5>
+                                                                <div class=" order-view main-block-innner mb40 mt20">
+                                                                    <div class="add-store-block input-style">
+                                                                        <div class="form-group row ">
+                                                                            <label class="col-md-12">
+                                                                                {{getWebsiteDataa?.aboutUs}}</label>
+
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <h5> <u>Shop Timings</u></h5>
+                                                                <div class=" order-view main-block-innner mb40 mt20">
+                                                                    <div class="add-store-block input-style">
+                                                                        <div class="form-group row ">
+                                                                            <label class="col-md-6">Sunday:</label>
+                                                                            <div class="col-md-6 text-center"
+                                                                                style="    white-space: nowrap;">
+                                                                                {{getWebsiteDataa?.shopTiming[0]?.sunday[0]?.startTime}}-{{getWebsiteDataa?.shopTiming[0]?.sunday[0]?.endTime}}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row ">
+                                                                            <label class="col-md-6">Monday:</label>
+                                                                            <div class="col-md-6 text-center"
+                                                                                style="    white-space: nowrap;">
+                                                                                {{getWebsiteDataa?.shopTiming[0]?.monday[0]?.startTime}}-{{getWebsiteDataa?.shopTiming[0]?.monday[0]?.endTime}}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row ">
+                                                                            <label class="col-md-6">Tuesday:</label>
+                                                                            <div class="col-md-6 text-center"
+                                                                                style="    white-space: nowrap;">
+                                                                                {{getWebsiteDataa?.shopTiming[0]?.tuesday[0]?.startTime}}-{{getWebsiteDataa?.shopTiming[0]?.tuesday[0]?.endTime}}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row ">
+                                                                            <label class="col-md-6">Wednesday:</label>
+                                                                            <div class="col-md-6 text-center"
+                                                                                style="    white-space: nowrap;">
+                                                                                {{getWebsiteDataa?.shopTiming[0]?.wednesday[0]?.startTime}}-{{getWebsiteDataa?.shopTiming[0]?.wednesday[0]?.endTime}}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row ">
+                                                                            <label class="col-md-6">Thursday:</label>
+                                                                            <div class="col-md-6 text-center"
+                                                                                style="    white-space: nowrap;">
+                                                                                {{getWebsiteDataa?.shopTiming[0]?.thursday[0]?.startTime}}-{{getWebsiteDataa?.shopTiming[0]?.thursday[0]?.endTime}}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row ">
+                                                                            <label class="col-md-6">Friday:</label>
+                                                                            <div class="col-md-6 text-center"
+                                                                                style="    white-space: nowrap;">
+                                                                                {{getWebsiteDataa?.shopTiming[0]?.friday[0]?.startTime}}-{{getWebsiteDataa?.shopTiming[0]?.friday[0]?.endTime}}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group row ">
+                                                                            <label class="col-md-6">Saturday:</label>
+                                                                            <div class="col-md-6 text-center"
+                                                                                style="    white-space: nowrap;">
+                                                                                {{getWebsiteDataa?.shopTiming[0]?.saturday[0]?.startTime}}-{{getWebsiteDataa?.shopTiming[0]?.saturday[0]?.endTime}}
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+
+                                                                <h5> <u>Product Service Details</u></h5>
+                                                                <div class=" order-view main-block-innner mb40 mt20">
+                                                                    <h5> <u>Category Name</u></h5>
+                                                                    <div *ngFor=" let data of getWebsiteDataa?.productServiceDetails"
+                                                                        class=" order-view main-block-innner mb40 mt20">
+                                                                        <div class="add-store-block input-style">
+                                                                            <div class="form-group row ">
+                                                                                <label class="col-md-12">Sub Category
+                                                                                    Name :</label>
+                                                                            </div>
+                                                                            <div class="form-group row ">
+                                                                                <label
+                                                                                    class="col-md-3">{{data?.itemType}}
+                                                                                    :</label>
+                                                                                <label class="col-md-2">{{data?.brand}}
+                                                                                    :</label>
+                                                                                <label
+                                                                                    class="col-md-3">{{data?.itemName}}
+                                                                                    :</label>
+                                                                                <label
+                                                                                    class="col-md-4">{{data?.price}}</label>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="text-center mt40">
+                                                                <button (click)="approveWebsite()"
+                                                                    class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ml-2">Approve</button>
+                                                                <button (click)="rejectWebsite()"
+                                                                    class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ml-2">Reject</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <!--************ Retailers section start here *********** -->
+                                    <div *ngIf="selectedTab == 'rechargedetails'">
+                                        <div class="d-flex">
+                                            <div class="col-md-8 datelabel">
+                                                <div class="col-md-6">
+                                                    <label for="">From Date : </label> <br>
+                                                    <input type="date" name="" id="" class="form-control">
+
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="">To Date : </label>
+                                                    <input type="date" name="" id="" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-xl-4 margin-6" style="padding-top: 5%">
+                                                <div class="text-center admin-btn ">
+                                                    <button type="button"
+                                                        class="btn  btn-theme ml-2 Go_btn">Submit</button>
+                                                    <button type="button"
+                                                        class="btn  btn-theme ml-2 Go_btn">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        &nbsp;&nbsp;
+                                        <h5>Recharge Details</h5>
+                                        <div class="table-responsive">
+                                            <table aria-describedby="" class="table table-bordered">
+                                                <thead>
+                                                    <tr class="no_wrap_th text-center">
+                                                        <th id="" class="Sorting-img">S.No.</th>
+                                                        <th id="" class="Sorting-img">Cost In (INR)</th>
+                                                        <th id="" class="Sorting-img">Credits</th>
+                                                        <th id="" class="Sorting-img">Date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr
+                                                        *ngFor="let data of rechargeDetailsData | paginate : { id: 'user' , itemsPerPage: pagination?.limit,
+                                                currentPage: pagination?.currPage, totalItems: pagination?.total }; let i = index ">
+                                                        <td>{{pagination?.limit * (pagination?.currPage-1)+ i+1 }}</td>
+                                                        <td class="content">{{data.rechargeAmount}}</td>
+                                                        <td class="content">{{data.credit}}</td>
+                                                        <td class="content">{{data.dateOfRecharge | date}}</td>
+                                                    </tr>
+                                                    <tr *ngIf="!rechargeDetailsData.length">
+                                                        <td colspan="8"
+                                                            style="text-align: center;font-size: 20px;font-weight: 600;">
+                                                            No Record Found
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                            <div class="custom-pagination mt-2 text-align-end" *ngIf="total > 10">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <pagination-controls (pageChange)="userListPagination($event)" id="user"
+                                                    class="pull-right">
+                                                </pagination-controls>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                                    <!--************ SubCat section start here***********  -->
+                                    <div *ngIf="selectedTab == 'couponhistory'">
+                                        <div class="content-section">
+                                            <div class="outer-box">
+                                                <div class="global-table no-radius p0">
+                                                    <div class="tab-content1">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class=" main-block-innner mb20">
+                                                                    <div style="    text-align: center;">
+                                                                        <button class="btn btn-light btn-lg col-md-2"
+                                                                            [ngClass]="{active : selectedTabb == 'Marts'}"
+                                                                            (click)="changeTabb('Marts')">Submitted
+                                                                            Coupons</button>
+                                                                        <button class="btn btn-light btn-lg col-md-2"
+                                                                            [ngClass]="{active : selectedTabb == 'Retailers'}"
+                                                                            (click)="changeTabb('Retailers')">
+                                                                            Published Coupons</button>
+                                                                        <button class="btn btn-light btn-lg col-md-2"
+                                                                            [ngClass]="{active :  selectedTabb == 'Catgeories'}"
+                                                                            (click)="changeTabb('Catgeories')">
+                                                                            Rejected Coupons</button>
+                                                                        <button class="btn btn-light btn-lg col-md-2"
+                                                                            [ngClass]="{active : selectedTabb == 'SubCat'}"
+                                                                            (click)="changeTabb('SubCat')">
+                                                                            Withdrawn Coupons</button>
+                                                                        <button class="btn btn-light btn-lg col-md-2"
+                                                                            [ngClass]="{active : selectedTabb == 'SubCa'}"
+                                                                            (click)="changeTabb('SubCa')">
+                                                                            Expired Coupons</button>
+                                                                    </div>
+                                                                    <!-- start search and sumit and cancel button     -->
+
+                                                                    <!-- **********Marts section start here *********** -->
+
+                                                                    <div *ngIf="selectedTabb == 'Marts'">
+                                                                        <form [formGroup]="searchByForm">
+                                                                            <div class="d-flex">
+                                                                                <div class="col-md-8 datelabel">
+                                                                                    <div class="col-md-6">
+                                                                                        <label for="">From Date :
+                                                                                        </label>
+                                                                                        <br>
+                                                                                        <input
+                                                                                            formControlName="fromDate"
+                                                                                            type="date" name="" id=""
+                                                                                            class="form-control">
+
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <label for="">To Date : </label>
+                                                                                        <input formControlName="toDate"
+                                                                                            type="date" name="" id=""
+                                                                                            class="form-control">
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-4 col-xl-4 margin-6"
+                                                                                    style="margin-top: 6%">
+                                                                                    <div class="text-center admin-btn ">
+                                                                                        <button type="button"
+                                                                                            (click)="searchFormSubmit()"
+                                                                                            class="btn  btn-theme ml-2 Go_btn">Submit</button>
+                                                                                        <button type="button"
+                                                                                            class="btn  btn-theme ml-2 Go_btn">Cancel</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div
+                                                                                *ngFor="let data of submittedCouponsData">
+                                                                                <h5 style="padding-right: 44%;">
+                                                                                    Submitted
+                                                                                    Date
+                                                                                    :-{{data.ExpiryDate | date}}</h5>
+                                                                                <div
+                                                                                    class=" order-view main-block-innner mb40 mt20">
+
+                                                                                    <div
+                                                                                        class="add-store-block input-style">
+                                                                                        <div class="form-group row "
+                                                                                            style="    text-align: center;
+                                                                                            padding-top: 4%;">
+                                                                                            <a class="col-md-6"
+                                                                                                style="color: #169BD5;     overflow: hidden;
+                                                                                        white-space: nowrap;
+                                                                                        text-overflow: ellipsis">{{data.link}}</a>
+                                                                                            <div
+                                                                                                class="col-md-6 text-center">
+                                                                                                <button type="button"
+                                                                                                    (click)="viewCouponData(data._id)"
+                                                                                                    class="btn  btn-theme ml-2 Go_btn">View</button>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div *ngIf="!submittedCouponsData.length"
+                                                                                style="white-space: nowrap;
+                                                                        margin-left: 38%;
+                                                                        margin-top: 5%;">
+                                                                                <td colspan="8"
+                                                                                    style="text-align: center;font-size: 20px;font-weight: 600;">
+                                                                                    No Record Found
+                                                                                </td>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+
+
+                                                                    <!--************ Retailers section start here***********  -->
+
+                                                                    <div *ngIf="selectedTabb == 'Retailers'">
+                                                                        <div class="d-flex">
+                                                                            <div class="col-md-8 datelabel">
+                                                                                <div class="col-md-6">
+                                                                                    <label for="">From Date : </label>
+                                                                                    <br>
+                                                                                    <input type="date" name="" id=""
+                                                                                        class="form-control">
+
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <label for="">To Date : </label>
+                                                                                    <input type="date" name="" id=""
+                                                                                        class="form-control">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4 col-xl-4 margin-6"
+                                                                                style="margin-top: 6%">
+                                                                                <div class="text-center admin-btn ">
+                                                                                    <button type="button"
+                                                                                        (click)="searchFormSubmit()"
+                                                                                        class="btn  btn-theme ml-2 Go_btn">Submit</button>
+                                                                                    <button type="button"
+                                                                                        class="btn  btn-theme ml-2 Go_btn">Cancel</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div *ngFor="let data of submittedCouponsData">
+                                                                            <h5 style="padding-right: 44%;">Published
+                                                                                Date
+                                                                                :-{{data.createdAt | date}}</h5>
+                                                                            <div
+                                                                                class=" order-view main-block-innner mb40 mt20">
+
+                                                                                <div
+                                                                                    class="add-store-block input-style">
+                                                                                    <div class="form-group row " style="    text-align: center;
+                                                                                                    padding-top: 4%;">
+                                                                                        <a class="col-md-6"
+                                                                                            style="color: #169BD5;     overflow: hidden;
+                                                                                            white-space: nowrap;
+                                                                                            text-overflow: ellipsis">{{data.link}}</a>
+                                                                                        <div
+                                                                                            class="col-md-6 text-center">
+                                                                                            <button type="button"
+                                                                                                (click)="viewCouponData(data._id)"
+                                                                                                class="btn  btn-theme ml-2 Go_btn">View</button>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div *ngIf="!submittedCouponsData.length" style="white-space: nowrap;
+                                                                        margin-left: 38%;
+                                                                        margin-top: 5%;">
+                                                                            <td colspan="8"
+                                                                                style="text-align: center;font-size: 20px;font-weight: 600;">
+                                                                                No Record Found
+                                                                            </td>
+                                                                        </div>
+                                                                    </div>
+
+
+
+                                                                    <!--************ Retailers section start here *********** -->
+                                                                    <div *ngIf="selectedTabb == 'Catgeories'">
+                                                                        <div class="d-flex">
+                                                                            <div class="col-md-8 datelabel">
+                                                                                <div class="col-md-6">
+                                                                                    <label for="">From Date : </label>
+                                                                                    <br>
+                                                                                    <input type="date" name="" id=""
+                                                                                        class="form-control">
+
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <label for="">To Date : </label>
+                                                                                    <input type="date" name="" id=""
+                                                                                        class="form-control">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4 col-xl-4 margin-6"
+                                                                                style="margin-top: 6%">
+                                                                                <div class="text-center admin-btn ">
+                                                                                    <button type="button"
+                                                                                        (click)="searchFormSubmit()"
+                                                                                        class="btn  btn-theme ml-2 Go_btn">Submit</button>
+                                                                                    <button type="button"
+                                                                                        class="btn  btn-theme ml-2 Go_btn">Cancel</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div *ngFor="let data of submittedCouponsData">
+                                                                            <h5 style="padding-right: 44%;">Rejected
+                                                                                Date
+                                                                                :-{{data.ExpiryDate | date}}</h5>
+                                                                            <div
+                                                                                class=" order-view main-block-innner mb40 mt20">
+
+                                                                                <div
+                                                                                    class="add-store-block input-style">
+                                                                                    <div class="form-group row "
+                                                                                        style="    text-align: center;
+                                                                                                        padding-top: 4%;">
+                                                                                        <a class="col-md-6"
+                                                                                            style="color: #169BD5;     overflow: hidden;
+                                                                                         white-space: nowrap;
+                                                                                         text-overflow: ellipsis">{{data.link}}</a>
+                                                                                        <div
+                                                                                            class="col-md-6 text-center">
+                                                                                            <button type="button"
+                                                                                                (click)="viewCouponData(data._id)"
+                                                                                                class="btn  btn-theme ml-2 Go_btn">View</button>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div *ngIf="!submittedCouponsData.length" style="white-space: nowrap;
+                                                                        margin-left: 38%;
+                                                                        margin-top: 5%;">
+                                                                            <td colspan="8"
+                                                                                style="text-align: center;font-size: 20px;font-weight: 600;">
+                                                                                No Record Found
+                                                                            </td>
+                                                                        </div>
+                                                                    </div>
+
+
+
+                                                                    <!--************ SubCat section start here***********  -->
+                                                                    <div *ngIf="selectedTabb == 'SubCat'">
+                                                                        <div class="d-flex">
+                                                                            <div class="col-md-8 datelabel">
+                                                                                <div class="col-md-6">
+                                                                                    <label for="">From Date : </label>
+                                                                                    <br>
+                                                                                    <input type="date" name="" id=""
+                                                                                        class="form-control">
+
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <label for="">To Date : </label>
+                                                                                    <input type="date" name="" id=""
+                                                                                        class="form-control">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4 col-xl-4 margin-6"
+                                                                                style="margin-top: 6%">
+                                                                                <div class="text-center admin-btn ">
+                                                                                    <button type="button"
+                                                                                        (click)="searchFormSubmit()"
+                                                                                        class="btn  btn-theme ml-2 Go_btn">Submit</button>
+                                                                                    <button type="button"
+                                                                                        class="btn  btn-theme ml-2 Go_btn">Cancel</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div *ngFor="let data of submittedCouponsData">
+                                                                            <h5 style="padding-right: 44%;">Withdrawn
+                                                                                Date
+                                                                                :-{{data.ExpiryDate | date}}</h5>
+                                                                            <div
+                                                                                class=" order-view main-block-innner mb40 mt20">
+
+                                                                                <div
+                                                                                    class="add-store-block input-style">
+                                                                                    <div class="form-group row "
+                                                                                        style="    text-align: center;
+                                                                                                        padding-top: 4%;">
+                                                                                        <a class="col-md-6"
+                                                                                            style="color: #169BD5;     overflow: hidden;
+                                                                                         white-space: nowrap;
+                                                                                         text-overflow: ellipsis">{{data.link}}</a>
+                                                                                        <div
+                                                                                            class="col-md-6 text-center">
+                                                                                            <button type="button"
+                                                                                                (click)="viewCouponData(data._id)"
+                                                                                                class="btn  btn-theme ml-2 Go_btn">View</button>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div *ngIf="!submittedCouponsData.length" style="white-space: nowrap;
+                                                                        margin-left: 38%;
+                                                                        margin-top: 5%;">
+                                                                            <td colspan="8"
+                                                                                style="text-align: center;font-size: 20px;font-weight: 600;">
+                                                                                No Record Found
+                                                                            </td>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div *ngIf="selectedTabb == 'SubCa'">
+                                                                        <div class="d-flex">
+                                                                            <div class="col-md-8 datelabel">
+                                                                                <div class="col-md-6">
+                                                                                    <label for="">From Date : </label>
+                                                                                    <br>
+                                                                                    <input type="date" name="" id=""
+                                                                                        class="form-control">
+
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <label for="">To Date : </label>
+                                                                                    <input type="date" name="" id=""
+                                                                                        class="form-control">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4 col-xl-4 margin-6"
+                                                                                style="margin-top: 6%">
+                                                                                <div class="text-center admin-btn ">
+                                                                                    <button type="button"
+                                                                                        (click)="searchFormSubmit()"
+                                                                                        class="btn  btn-theme ml-2 Go_btn">Submit</button>
+                                                                                    <button type="button"
+                                                                                        class="btn  btn-theme ml-2 Go_btn">Cancel</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div *ngFor="let data of submittedCouponsData">
+                                                                            <h5 style="padding-right: 44%;">Expiry Date
+                                                                                :-{{data.ExpiryDate | date}}</h5>
+                                                                            <div
+                                                                                class=" order-view main-block-innner mb40 mt20">
+
+                                                                                <div
+                                                                                    class="add-store-block input-style">
+                                                                                    <div class="form-group row " style="    text-align: center;
+                                                                                                    padding-top: 4%;">
+                                                                                        <a class="col-md-6"
+                                                                                            style="color: #169BD5;     overflow: hidden;
+                                                                                         white-space: nowrap;
+                                                                                         text-overflow: ellipsis">{{data.link}}</a>
+                                                                                        <div
+                                                                                            class="col-md-6 text-center">
+                                                                                            <button type="button"
+                                                                                                (click)="viewCouponData(data._id)"
+                                                                                                class="btn  btn-theme ml-2 Go_btn">View</button>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div *ngIf="!submittedCouponsData.length" style="white-space: nowrap;
+                                                                        margin-left: 38%;
+                                                                        margin-top: 5%;">
+                                                                            <td colspan="8"
+                                                                                style="text-align: center;font-size: 20px;font-weight: 600;">
+                                                                                No Record Found
+                                                                            </td>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div *ngIf="selectedTab == 'credithistory'">
+                                        <h5> <u>About Us</u></h5>
+                                        <div *ngFor="let data of creditHistoryData"
+                                            class=" order-view main-block-innner mb40 mt20">
+                                            <div class="add-store-block input-style">
+                                                <div class="form-group row ">
+                                                    <label class="col-md-6">{{data?.createdAt | date}}</label>
+
+                                                    <div class="col-md-6 text-center">
+                                                        {{data?.credit}} Credits <label
+                                                            style="color: red">{{data?.creditNature || 'CR'}} </label>
+                                                    </div>
+                                                   
+                                                    <label
+                                                        style="margin-left: 66%; font-size: 12px">{{data?.creditType}}</label>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div *ngIf="selectedTab == 'viewqrcode'">
+                                        &nbsp;&nbsp;
+                                        <h5> {{userDataList.brandName}} </h5>
+                                        <div class=" order-view main-block-innner mb40 mt20">
+                                            <div class=" order-view main-block-innner mb40 mt20">
+                                                <div class="add-store-block input-style">
+                                                    <div class="form-group row ">
+                                                        <img [src]="this.qrCode || 'assets/img/header-logo.png'" style="    padding-left: 36%;
+                                                            max-height: 140px;" alt="">
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="text-center mt40">
+                                                    <a [routerLink]="['/']"
+                                                        class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ml-2">Print</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</div>
+
+
+<!-- Comment_modal Start -->
+<div class="modal fade global-modal reset-modal" id="comment">
+    <div class="modal-dialog max-WT-500">
+        <form [formGroup]="searchFormm" class="change_password">
+            <div class="modal-content">
+                <div class="modal-header d-block text-center">
+                    <h5 class="modal-title d-inline-block">Comment</h5>
+                </div>
+                <div>
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <textarea formControlName="comment" style="width:100%; padding: 1%" rows="4" cols="4"
+                                    maxlength="100"></textarea>
+                                <div>
+                                    <button type="submit" (click)="rejectAccepted()"
+                                        class="btn btn-success ml-2">Send</button>
+                                    <button type="button" class="btn btn-danger ml-2"
+                                        data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Select Account Manager Start -->
+<div class="modal fade global-modal reset-modal" id="assignManager">
+    <div class="modal-dialog max-WT-500">
+        <form [formGroup]="searchFormm" class="change_password">
+            <div class="modal-content">
+                <div class="modal-header d-block text-center">
+                    <h5 class="modal-title d-inline-block">Select Account Manager</h5>
+                </div>
+                <div>
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <div style="padding-bottom: 16%;">
+                                    <select formControlName="manager" style="width: 100%">
+                                        <option value="">Assign Manager</option>
+                                        <option *ngFor="let data of loopData" [value]="data?._id">{{data?.firstName}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <button type="submit" (click)="submitAccepted()"
+                                        class="btn btn-success ml-2">Submit</button>
+                                    <button type="button" class="btn btn-danger ml-2"
+                                        data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

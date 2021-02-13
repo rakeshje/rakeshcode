@@ -1,0 +1,59 @@
+<div class="wrapper">
+    
+                  <!-- Aside End -->
+                  <main class="middle-content">
+                      <!-- Page Title Start -->
+                      <div class="page_title_block">
+                          <h1 class="page_title" style="color:black">Add Faq</h1>
+                         
+                      </div>
+                      <!-- Page Title End -->
+                      <div class="content-section">
+                          <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+                              <div class="main-block-innner mb40 mt40">
+                                  <div class="add-store-block input-style">
+                                    <form [formGroup]="addFaqForm">
+                                      <div class="form-group row ">
+                                          <label class="col-md-4">Question :</label>
+                                          <div class="col-md-8">
+                                              <input type="text" class="form-control " formControlName="title" (keypress)="service.preventSpace($event)" />
+
+                                              <span class="error">
+                                                <p *ngIf="addFaqForm.get('title').hasError('required') && (addFaqForm.get('title').dirty || addFaqForm.get('title').touched )"
+                                                    class="error" padding>*Field is required</p>
+                                            </span> 
+                                            <span class="error">
+                                                    <p *ngIf="addFaqForm.get('title').hasError('pattern') && (addFaqForm.get('title').dirty || addFaqForm.get('title').touched )"
+                                                        class="error" padding>*Please enter valid question</p>
+                                                </span>
+                                          </div>
+
+                                      </div>
+                                      <div class="form-group row">
+                                  
+                                          <label class="col-md-4">Answer:</label>
+                                          <div class="col-md-8" class="ex1" style="width: 66%;
+                                          margin-left: 36%;" >
+                                            <textarea  class="ex1" class="form-control" cols="150" rows="5" formControlName="description" (keypress)="service.preventSpace($event)"></textarea>
+                                            
+                                        </div>
+                                      </div>
+                                      <div class="text-center mt40">
+                                          <button  class="btn btn-large  max-WT-200 font-100 btn-green mr-2"  (click)="addFaqLanguage()">Add</button>
+                                          <a  class="btn btn-large  max-WT-200 font-100 btn-grey ml5" [routerLink]="['/faq-management']">Cancel</a>
+                                      </div>
+                                    </form>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </main>
+                  <!-- Middle Content End -->
+              </div>
+              
+              <footer>
+                <div class="container-fluid">
+                    <p class="copyright">Alende  <strong class="theme-text-color"></strong> 
+                        </p>
+                </div>
+            </footer>

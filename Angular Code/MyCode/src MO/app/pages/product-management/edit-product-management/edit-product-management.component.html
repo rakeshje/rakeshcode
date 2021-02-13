@@ -1,0 +1,45 @@
+<div class="wrapper">
+    <main class="middle-content">
+      <div class="page_title_block">
+        <h1 class="page_title">EDIT PRODUCT</h1>
+        <hr style="width: 118%; margin-left: -9%; background-color: gray;">
+      </div>
+      <div style="margin-left: 37%;">
+        <img style="border-radius: 50%;" [src]="profile?profile:'assets/img/profile-img.jpg'" alt="" />
+         
+    <input type="file" name="imageUrl" accept="image/*" style="position: relative;left: -50px;top: 25px; opacity: -0.9;"
+    (change)="handleInputChange($event)" ><em class="fa fa-camera" style="position: relative;left: -327px;top: 25px;font-size: xx-large"></em></div>
+      <form [formGroup]="editproductForm">
+  
+        <div class="card" style="margin-left: 13%;
+        margin-right: 19%;">
+            <div class="row" style=" margin-left: 2%; margin-top: 8%; margin-right: 2%;">
+                <div class="col">
+                    <label>Name of product :</label><br><br>
+                    <label>Price :</label><br><br>
+                    <label>Used for :</label><br><br>
+                    <label>Type : </label><br><br>
+                </div>
+                <div class="col" style=" margin-top: -1.5%;">
+                    <input type="text" class="form-control" formControlName="productName">
+                    <span class="text text-danger" *ngIf="editproductForm.controls.productName.touched && editproductForm.controls.productName.invalid && editproductForm.controls.productName.errors.required">*Product Name is Required</span><br>
+                    <input type="text" class="form-control" formControlName="price">
+                    <span class="text text-danger" *ngIf="editproductForm.controls.price.touched && editproductForm.controls.price.invalid && editproductForm.controls.price.errors.required">*Price is Required</span><br>
+                    <input type="text" class="form-control" formControlName="UsedFor">
+                    <span class="text text-danger" *ngIf="editproductForm.controls.UsedFor.touched && editproductForm.controls.UsedFor.invalid && editproductForm.controls.UsedFor.errors.required">*UsedFor  is Required</span><br>
+                    <input type="text" class="form-control" formControlName="type">
+                    <span class="text text-danger" *ngIf="editproductForm.controls.type.touched && editproductForm.controls.type.invalid && editproductForm.controls.type.errors.required">*Type is Required</span><br>
+                    
+                </div>
+            </div>
+
+            <div class="row" style="margin-left: 25%;margin-top: 5%; margin-bottom: 8%; ">
+                <button type="button" class="btn btn-theme" style="margin-left: 10%; width: 12%;"
+                [routerLink]="['/product-management']">Back</button>
+                <button type="button" class="btn btn-theme" style="margin-left: 10%; width: 12%;" [disabled]=editproductForm.invalid
+                    (click)="editProduct()">Save </button>
+            </div>
+        </div>
+      </form>
+    </main>
+  </div>

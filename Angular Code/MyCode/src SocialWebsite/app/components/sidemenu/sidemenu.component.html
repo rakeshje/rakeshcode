@@ -1,0 +1,94 @@
+
+              <div class="nav-item user-profile">
+                <div class="userimg-col"><img [src]="server.profileImage" style="border-radius:50%"></div>
+               
+              </div>
+              <div class="content-col user-profile"> {{server.first_name}} </div> 
+              <ul class="navbar-nav">
+                <li class="nav-item" (click)="navigateTo('home')">
+                  <a class="nav-link" href="javascript:;"><img class="leftImg" src="assets/images/Layer 63 copy.png"> <span [ngClass]="{active : selected === 'home'}">Home</span></a>
+                </li>
+                <li class="nav-item" (click)="navigateTo('friendlist/suggestion')">
+                  <a class="nav-link" href="javascript:;"><img class="leftImg" src="assets/images/friends.png"> <span [ngClass]="{active : selected === 'friendlist'}">Friends</span></a>
+                </li>
+                <li class="nav-item" (click)="navigateTo('marketing')">
+                  <a class="nav-link" href="javascript:;"><img class="leftImg" src="assets/images/cart.png"> <span [ngClass]="{active: selected === 'marketing'}">Market</span></a>
+                </li>
+                <li class="nav-item" (click)="navigateTo('news')">
+                  <a class="nav-link" href="javascript:;"><img class="leftImg" src="assets/images/news.png"> <span [ngClass]="{active : selected === 'news'}">News</span></a>
+                </li>
+                <li class="nav-item" (click)="navigateTo('post')">
+                  <a class="nav-link" href="javascript:;"><img class="leftImg" src="assets/images/cart.png"> <span [ngClass]="{active : selected === 'post'}">Post</span></a>
+                </li>
+                <li class="nav-item" (click)="navigateTo('creategroup')">
+                  <a class="nav-link" href="javascript:;"><img class="leftImg" src="assets/images/group.png"> <span [ngClass]="{active : selected === 'creategroup'}">Groups</span></a>
+                </li>
+                             <!-- rohit code start  -->
+                             <li class="nav-item" (click)="navigateTo('createpage')"> 
+                              <a class="nav-link" href="javascript:;"><img class="leftImg" src="assets/images/group.png"> <span [ngClass]="{active : selected === 'createpage'}">Pages</span></a>
+                            </li>
+                            <!-- rohit code end -->
+                <li class="nav-item" (click)="navigateTo('classroom/classroom')">
+                  <a class="nav-link" href="javascript:;"><img class="leftImg" src="assets/images/classroom.png"> <span [ngClass]="{active : selected === 'classroom'}">Classroom</span></a>
+                </li>
+                <li class="nav-item" (click)="navigateTo('non-profit-group/nonProfitGroup')">
+                  <a class="nav-link" href="javascript:;"><img class="leftImg" src="assets/images/classroom.png"> <span [ngClass]="{active : selected === 'non-profit-group'}">Non-Profit Group</span></a>
+                </li>
+                <li class="nav-item" (click)="navigateTo('events')">
+                    <a class="nav-link" href="javascript:;"><img class="leftImg" src="assets/images/event.png"> <span [ngClass]="{active : selected === 'events'}">Events</span></a>
+                  </li>
+                <!-- <li class="nav-item" (click)="navigateTo('recommendation')">
+                  <a class="nav-link" href="javascript:;"><img class="leftImg" src="assets/images/recommendation.png"> <span>Recommendations</span></a>
+                </li> -->
+                <li class="nav-item">
+                  <a class="nav-link" href="javascript:;" routerLink="/view-advertisement"><img class="leftImg" src="assets/images/advertisement.png"> <span class="class">Current Advertisement</span></a>
+                </li>
+                <li class="nav-item" (click)="navigateTo('jobs/job')">
+                  <a class="nav-link" href="javascript:;"><img class="leftImg" src="assets/images/job.png"> <span [ngClass]="{active : selected === 'jobs'}">Jobs</span></a>
+                </li>
+                <li class="nav-item" (click)="navigateTo('gaming-video/gamingvideo')">
+                  <a class="nav-link" href="javascript:;"><img class="leftImg" src="assets/images/game.png"> <span [ngClass]="{active : selected === 'gaming-video'}">Gaming Video</span></a>
+                </li>
+                <!-- <li class="nav-item" (click)="navigateTo('bidding')">
+                  <a class="nav-link" href="javascript:;"><img class="leftImg" src="assets/images/game.png"> <span [ngClass]="{active : selected === 'bidding'}">Bidding</span></a>
+                </li> -->
+                <li class="nav-item" (click)="navigateTo('settings')">
+                  <a class="nav-link" href="javascript:;"><img class="leftImg" src="assets/images/settings.jpeg"> <span [ngClass]="{active : selected === 'settings'}">Settings</span></a>
+                </li>
+                <li class="nav-item" (click)="navigateTo('my-profile')">
+                  <a class="nav-link" href="javascript:;"><img class="leftImg" src="assets/images/user 2.png"> <span [ngClass]="{active : selected === 'my-profile'}">My Profile</span></a>
+                </li>
+                <li class="nav-item" (click)="more = !more">
+                  <a class="nav-link" href="javascript:;"><span class="more">More</span></a>
+                </li>
+                <div *ngIf="more">
+                  <!-- <li class="nav-item" >
+                    <a class="nav-link" href="javascript:;"><img class="leftImg" src="assets/images/advertisement.png"> <span class="class">Help</span></a>
+                  </li> -->
+                  <li class="nav-item" (click)="navigateTo('terms-conditions')" >
+                    <a class="nav-link" href="javascript:;"><img class="leftImg" src="assets/images/advertisement.png"> <span class="class">Trems and Condition</span></a>
+                   </li>
+                  <li class="nav-item" (click)="navigateTo('/report-problem')">
+                    <a class="nav-link" href="javascript:;"><img class="leftImg" src="assets/images/job.png"> <span >Report a problem</span></a>
+                  </li> 
+                  <!-- <li class="nav-item" >
+                    <a class="nav-link" href="javascript:;"><img class="leftImg" src="assets/images/game.png"> <span >Live Stream</span></a>
+                  </li> -->
+                  <!-- <li class="nav-item" >
+                    <a class="nav-link" href="javascript:;"><img class="leftImg" src="assets/images/game.png"> <span >Help Community</span></a>
+                  </li> -->
+                  <!-- <li class="nav-item"  (click)="navigateTo('change-password')">
+                    <a class="nav-link" href="javascript:;"><img class="leftImg" src="assets/images/settings.jpeg"> <span >Change password</span></a>
+                  </li> -->
+                   <!-- <li class="nav-item" >
+                    <a class="nav-link" href="javascript:;"><img class="leftImg" src="assets/images/game.png"> <span >Non profit group</span></a>
+                  </li> -->
+                  <li class="nav-item" (click)="navigateTo('discussion-forum')">
+                    <a class="nav-link" href="javascript:;"><img class="leftImg" src="assets/images/event.png" > <span >Discussion Forum</span></a>
+                  </li>
+                  <li class="nav-item" >
+                    <a class="nav-link" href="javascript:;"><span class="leftImg">Log out</span></a>
+                  </li>
+                </div>
+              </ul>
+           

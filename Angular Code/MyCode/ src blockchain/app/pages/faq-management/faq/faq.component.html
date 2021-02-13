@@ -1,0 +1,242 @@
+<main class="middle-content">
+                  <div class="page_title_block">
+                      <h1 class="page_title" style="color:#26272d">FAQ MANAGEMENT</h1>
+                  </div>
+
+                   <!-- tab start -->
+                      <div class="custom_tabs common-tabs">
+                        <div class="row mb20 justify-content-center">
+                            <div class="col-sm-11">
+                                <ul class="nav nav-tabs d-flex  justify-content-center text-center">
+                                    <li class="nav-item flex-fill"> <a class="nav-link active show"
+                                            [ngClass]="{'active': currTab=='English'}" (click)="selectTab('English')"
+                                            href="javascript:;">English</a>
+                                    </li>
+                                    <li class="nav-item flex-fill"> <a class="nav-link active show"
+                                            [ngClass]="{'active': currTab=='German'}" (click)="selectTab('German')"
+                                            href="javascript:;">German</a>
+                                    </li>
+                                    <li class="nav-item flex-fill"> <a class="nav-link active show"
+                                      [ngClass]="{'active': currTab=='Spanish'}" (click)="selectTab('Spanish')"
+                                      href="javascript:;">Spanish</a>
+                              </li>
+                              
+                                </ul>
+                            </div>
+                        </div>
+                      </div>
+                      <!-- tab end -->
+                  <div class="content-section">
+                      <div class="outer-box">
+                          <div class="global-table no-radius p0">
+                              <div class="tab-content1">
+                                  <div class="tab-pane1">
+                                            
+                                                  <div class="two-btnline" >
+                                                      <div class="text-left" style="display: flex; justify-content: end" (click)="addFaq(currTab)">
+                                                          <button type="submit" class="btn  btn-theme cus-mr" >Add Faq</button>
+                                                      </div>
+              
+                                                  </div>
+                                    <!-- tab english faq start -->
+                                    <div class="tab-pane active show" *ngIf="this.currTab =='English'">
+                                      <div class="table-responsive">
+                                          <table class="table table-bordered" aria-describedby="user list">
+                                              <thead>
+                                                  <tr class="no_wrap_th">
+                                                      <th scope="col">S.No.</th>
+                                                      <th scope="col">Question</th>
+                                                      <th scope="col">Answer</th>
+                                                      
+                                                      <th scope="col" class="action_td_btn3">Action</th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody>
+                                                  <tr *ngFor="let items of faqData | paginate:{itemsPerPage:20, currentPage:pageNumber, totalItems:faqData?.length}; let i=index">
+                                                      <td>{{20*(this.pageNumber-1)+i+1}}</td>
+                                                      <td>{{items?.question}}</td>
+                                                      <td>{{items?.answer}}</td>
+                                                      
+              
+                                                      <td class="action_td_btn3" style="cursor: pointer">
+                                                                    
+                                                                    <a (click)="editFaq(items.faqId, currTab)"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                                                    <a (click)="delete(items.faqId, currTab)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                                                    <a (click)="publish(true,items.faqId,currTab)" *ngIf="items?.isPublished==false" ><i class="fa fa-ban"
+                                                                       style="color: green" aria-hidden="true"></i></a>
+                                                                    <a (click)="publish(false,items.faqId, currTab)" *ngIf="items?.isPublished==true" ><i class="fa fa-ban"
+                                                                        style="color: red" aria-hidden="true"></i></a>
+                                                                </td>
+                                                  </tr>
+              
+                                                  
+                                              </tbody>
+                                          </table>
+                                      </div>
+                                      </div>
+                                      <!-- tab english faq end -->
+                                      <!-- tab german faq start -->
+                                       <div class="tab-pane active show" *ngIf="this.currTab =='German'">
+                                      <div class="table-responsive">
+                                                      <table class="table table-bordered" aria-describedby="user list">
+                                                          <thead>
+                                                              <tr class="no_wrap_th">
+                                                                <th scope="col">S.No.</th>
+                                                                <th scope="col">Question</th>
+                                                                <th scope="col">Answer</th>
+                                                                
+                                                                <th scope="col" class="action_td_btn3">Action</th>
+                                                              </tr>
+                                                          </thead>
+                                                          <tbody>
+                                                            <tr *ngFor="let items of faqData | paginate:{itemsPerPage:20, currentPage:pageNumber, totalItems:faqData?.length}; let i=index">
+                                                                <td>{{20*(this.pageNumber-1)+i+1}}</td>
+                                                                <td>{{items?.question}}</td>
+                                                                <td>{{items?.answer}}</td>
+                                                                  
+                          
+                                                                  <td class="action_td_btn3" style="cursor: pointer">
+                                                                    <a (click)="editFaq(items.faqId, currTab)"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                                                    <a (click)="delete(items.faqId, currTab)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                                                    <a (click)="publish(true,items.faqId,currTab)" *ngIf="items?.isPublished==false" ><i class="fa fa-ban"
+                                                                       style="color: green" aria-hidden="true"></i></a>
+                        
+                                                                    <a (click)="publish(false,items.faqId,currTab)" *ngIf="items?.isPublished==true" ><i class="fa fa-ban"
+                                                                        style="color: red" aria-hidden="true"></i></a>
+                                    
+                                    
+                                                                            </td>
+                                                              </tr>
+                          
+                                                              
+                                                          </tbody>
+                                                      </table>
+                                                  </div>
+                                    </div> 
+                                                  <!-- tab german faq end -->
+                                                  <!-- tab spanish faq start -->
+                                                  <div class="tab-pane active show" *ngIf="this.currTab =='Spanish'">
+                                      <div class="table-responsive">
+                                                      <table class="table table-bordered" aria-describedby="user list">
+                                                          <thead>
+                                                              <tr class="no_wrap_th">
+                                                                <th scope="col">S.No.</th>
+                                                                <th scope="col">Question</th>
+                                                                <th scope="col">Answer</th>
+                                                                
+                                                                <th scope="col" class="action_td_btn3">Action</th>
+                                                              </tr>
+                                                          </thead>
+                                                          <tbody>
+                                                            <tr *ngFor="let items of faqData | paginate:{itemsPerPage:20, currentPage:pageNumber, totalItems:faqData?.length}; let i=index">
+                                                                <td>{{20*(this.pageNumber-1)+i+1}}</td>
+                                                                <td>{{items?.question}}</td>
+                                                                <td>{{items?.answer}}</td>
+                                                                  
+                          
+                                                                  <td class="action_td_btn3" style="cursor: pointer">
+                                                                                
+                                                                    <a (click)="editFaq(items.faqId, currTab)"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                                                    <a (click)="delete(items.faqId,currTab)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                                                    <a (click)="publish(true,items.faqId,currTab)" *ngIf="items?.isPublished==false" ><i class="fa fa-ban"
+                                                                       style="color: green" aria-hidden="true"></i></a>
+                        
+                                                                    <a (click)="publish(false,items.faqId,currTab)" *ngIf="items?.isPublished==true" ><i class="fa fa-ban"
+                                                                        style="color: red" aria-hidden="true"></i></a>
+                                    
+                                    
+                                                                            </td>
+                                                              </tr>
+                          
+                                                              
+                                                          </tbody>
+                                                      </table>
+                                                  </div>
+                                                  </div> 
+                                                  <!-- tab spanish faq end -->
+              
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </main>
+              
+              <footer>
+                <div class="container-fluid">
+                    <p class="copyright">Alende  <strong class="theme-text-color"></strong> 
+                        </p>
+                </div>
+            </footer>
+              
+              <!-- delete_modal Start -->
+              <div class="modal fade global-modal reset-modal" id="deleteModal">
+                  <div class="modal-dialog max-WT-500">
+                      <form class="change_password">
+                          <div class="modal-content">
+                              <div>
+                                  <div class="modal-body">
+                                      <h3 *ngIf="this.lan=='English'" style="text-align: center; ">Delete Faq </h3>
+                                      <h3 *ngIf="this.lan=='German'" style="text-align: center; ">FAQ löschen </h3>
+                                      <h3 *ngIf="this.lan=='Spanish'" style="text-align: center; ">Eliminar preguntas frecuentes</h3>
+                                      <hr>
+                                      <button type="button" class="close" data-dismiss="modal"
+                                          style="margin-top: -85px;">&times;</button>
+                                      <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                                          <div class="w-100">
+                                              <p  *ngIf="this.lan=='English'" style="font-size: 25px;">Are you sure you want to delete this Faq?</p>
+                                              <p  *ngIf="this.lan=='German'" style="font-size: 25px;">Möchten Sie diese FAQ wirklich löschen?</p>
+                                              <p  *ngIf="this.lan=='Spanish'" style="font-size: 25px;">¿Estás segura de que quieres eliminar este Faq?</p>
+                                              <div>
+                                                  <button type="submit" class="btn btn-info mr-2" (click)="deleteFaqLanguage()">Yes</button>
+                                                  <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+              <!-- delete_modal End -->
+
+              <!-- publish_modal Start -->
+              <div class="modal fade global-modal reset-modal" id="publishModal">
+                <div class="modal-dialog max-WT-500">
+                    <form class="change_password">
+                        <div class="modal-content">
+                            <div>
+                                <div class="modal-body">
+                                    <h3 *ngIf="isPublished==true &&  this.lan=='English'" style="text-align: center; ">Publish </h3>
+                                    <h3 *ngIf="isPublished==false && this.lan=='English'" style="text-align: center; ">UnPublish </h3>
+                                    <h3 *ngIf="isPublished==true &&  this.lan=='German'" style="text-align: center; ">Veröffentlichen </h3>
+                                    <h3 *ngIf="isPublished==false && this.lan=='German'" style="text-align: center; ">Veröffentlichung aufheben </h3>
+                                    <h3 *ngIf="isPublished==true &&  this.lan=='Spanish'" style="text-align: center; ">Publicar </h3>
+                                    <h3 *ngIf="isPublished==false && this.lan=='Spanish'" style="text-align: center; ">Anular publicación </h3>
+                                    <hr>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                        style="margin-top: -85px;">&times;</button>
+                                    <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                                        <div class="w-100">
+                                            <p  *ngIf="isPublished==true && this.lan=='English'" style="font-size: 25px;">Are you sure you want to publish this Faq?</p>
+                                            <p  *ngIf="isPublished==false && this.lan=='English'" style="font-size: 25px;">Are you sure you want to unpublish this Faq?</p>
+                                            <p  *ngIf="isPublished==true && this.lan=='German'" style="font-size: 25px;">Möchten Sie diese FAQ wirklich veröffentlichen?</p>
+                                            <p  *ngIf="isPublished==false && this.lan=='German'" style="font-size: 25px;">Sind Sie sicher, dass Sie diese FAQ nicht veröffentlichen möchten?</p>
+                                            <p  *ngIf="isPublished==true && this.lan=='Spanish'" style="font-size: 25px;">¿Estás segura de que quieres publicar esta Faq?</p>
+                                            <p  *ngIf="isPublished==false && this.lan=='Spanish'" style="font-size: 25px;">¿Está seguro de que desea anular la publicación de estas preguntas frecuentes?</p>
+                                            <div>
+                                                <button type="submit" class="btn btn-info mr-2" (click)="publishFaqLanguage()">Yes</button>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- publish_modal End -->
+              
+              

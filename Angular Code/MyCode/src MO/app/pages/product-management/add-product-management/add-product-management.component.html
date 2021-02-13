@@ -1,0 +1,55 @@
+<div class="wrapper" style="width: 80%;
+margin-left: 2%;">
+    <main class="middle-content">
+        <div class="page_title_block">
+            <h1 class="page_title"> ADD PRODUCT</h1>
+            <hr style="background: black; opacity: 0.5;width: 135%;">
+        </div>
+        <div style="margin-left: 49%;">
+            <img style="border-radius: 50%;" [src]="profile?profile:'assets/img/profile-img.jpg'" alt="" />
+                <input type="file" name="imageUrl" accept="image/*" (change)="handleInputChange($event)" style="position: relative;top: 33px;left: -54px;opacity: -0.9;"> <i class="fa fa-camera" style=" position: relative;left: -118%;bottom: 36px;"></i>
+        </div>
+        <form [formGroup]="addproductForm">
+            <div class="card" style="margin-left: 18%;">
+                <div class="row" style=" margin-left: 2%; margin-top: 8%; margin-right: 2%;">
+                    <div class="col">
+                        <label>Name of product :</label><br><br>
+                        <label>Price :</label><br><br>
+                        <label>Used for :</label><br><br>
+                        <label>Type : </label><br><br>
+                        <label>Category : </label><br><br>
+                    </div>
+                    <div class="col" style=" margin-top: -1.5%;">
+                        <input type="text" class="form-control" formControlName="productName">
+                        <span class="text text-danger"
+                            *ngIf="addproductForm.controls.productName.touched && addproductForm.controls.productName.invalid && addproductForm.controls.productName.errors.required">*Product
+                            Name is Required</span><br>
+                        <input type="text" class="form-control" formControlName="price">
+                        <span class="text text-danger"
+                            *ngIf="addproductForm.controls.price.touched && addproductForm.controls.price.invalid && addproductForm.controls.price.errors.required">*Price
+                            is Required</span><br>
+                        <input type="text" class="form-control" formControlName="UsedFor">
+                        <span class="text text-danger"
+                            *ngIf="addproductForm.controls.UsedFor.touched && addproductForm.controls.UsedFor.invalid && addproductForm.controls.UsedFor.errors.required">*UsedFor
+                            is Required</span><br>
+                        <input type="text" class="form-control" formControlName="type">
+                        <span class="text text-danger" *ngIf="addproductForm.controls.type.touched && addproductForm.controls.type.invalid && addproductForm.controls.type.errors.required">*Type is Required</span><br>
+                        <select class="form-control" placeholder="Enter Category"
+                                    formControlName="category" (change)="selected($event)" >
+                                    <option *ngFor="let item of categoryList" value="{{item._id}}"  > {{item.categoryName}}
+                                    </option>
+                                </select>
+                               
+                    </div>
+                </div>
+
+                <div class="row" style="margin-left: 25%;margin-top: 5%; margin-bottom: 8%; ">
+                    <button type="button" class="btn btn-theme" style="margin-left: 10%; width: 12%;"
+                        [routerLink]="['/product-management']">Back</button>
+                    <button type="button" class="btn btn-theme" style="margin-left: 10%; width: 12%;"
+                        [disabled]=addproductForm.invalid (click)="addProduct()">Save </button>
+                </div>
+            </div>
+        </form>
+    </main>
+</div>

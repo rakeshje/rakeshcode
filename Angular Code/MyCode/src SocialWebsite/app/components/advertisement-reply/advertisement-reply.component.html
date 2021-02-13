@@ -1,0 +1,88 @@
+<app-rightsidemenu></app-rightsidemenu>
+<div class="page-wrap">
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="left-menu card">
+          <app-sidemenu></app-sidemenu>
+        </div>
+      </div>
+
+      <div class="col-md-9">
+        <div class="page-content">
+          <div class="card post-box main-post">
+            <div class="post-warp">
+              <div class="post-content-setting" style="color:#3CC114">
+                Reply Comment
+              </div>
+            </div>
+            <div class="card post-field main-post">
+              <div class="field-wrap">
+                <div class="form-group">
+                  <div class="row" style="align-items: center;">
+                     
+                    <div class="col-md-1">
+                       
+                        <img src="{{userPic}}" style="border-radius: 50%; max-width: 90%;" alt="">
+                    </div>
+                    <div class="col-md-9">
+                        <div>
+                            {{username}}
+                         </div>
+                         <ul>
+                      <li style="margin-right: 35%;"  class="form-control"  >{{comment}}</li>
+                    </ul>
+                      <div>
+                        {{showTime| date:"HH:MM:ss"}}
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div class="form-group" >
+                  <div class="row" *ngFor="let data of getreply">
+                    
+                        <div class="col-md-1">
+                            
+                            <img src="{{data?.userPic}}" style="border-radius: 50%; max-width: 90%;" alt="">
+                            
+                        </div>
+                        <div class="col-md-3"> 
+                         <div>
+                          {{data?.userName}}
+                         </div>
+                          <div>
+                            {{data?.comment}}
+                            </div>
+                            <div>
+                              {{data?.commentedTime| date:"HH:MM:ss"}}
+                            </div>
+                         
+                         
+                        </div>
+
+                    
+                   
+                  </div>
+                  
+                  <div >
+                    <input style="position: absolute;
+                    max-width: 93%;" type="text" placeholder="Reply on comment" class="form-control" [(ngModel)]="replycom" (keyup.enter)="replyComment()">
+                      <p style="color: #20d220;
+                      position: relative;
+                      display: flex;
+                      float: right;
+                      margin: 15px 20px 0px 0px;
+" class="fas fa-paper-plane" ></p>
+                  </div>
+                </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+</div>

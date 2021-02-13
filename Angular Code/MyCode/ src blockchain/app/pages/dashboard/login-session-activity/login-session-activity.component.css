@@ -1,0 +1,49 @@
+/* user details css */
+#updateAddress1 .btn-info.disabled,
+.btn-info:disabled {
+    color: #fff;
+    background-color: #191b24 !important;
+    border-color: #191b24;
+    opacity: 1;
+}
+#updateAddress1 .btn-info.disabled:hover,
+.btn-info:disabled:hover {
+    color: #fff;
+    background-color: #e0a354 !important;
+    border-color: #e0a354;
+}
+#updateAddress1 .close {
+    position: relative;
+    z-index: 99;
+    margin-right: 7px;
+    font-size: 36px;
+}
+
+.hot-coldpopup input {
+    height: 40px;
+    border: 1px solid #d4d4d4;
+    padding: 0px 10px;
+    font-size: 14px;
+}
+.hot-coldpopup label {
+    margin-bottom: 0px;
+    margin-right: 10px;
+}
+.hot-coldpopup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hot-coldpopup span.error {
+    position: absolute;
+    top: 38px;
+    left: 36%;
+}
+img{
+  width: 100px;
+  height: 100px;
+}
+.padd_6{
+  padding: 6%;
+}

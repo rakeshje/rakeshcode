@@ -1,0 +1,210 @@
+<div class="wrapper">
+    <main class="middle-content">
+        <div class="page_title_block">
+            <h1 class="page_title text-center">End User Management</h1>
+        </div>
+        <div class="content-section">
+            <div class="outer-box">
+                <div class="global-table no-radius p0">
+                    <div class="tab-content1">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class=" order-view main-block-innner mb20 mt40">
+                                    <div class="add-store-block input-style">
+                                        <div class="form-group row ">
+                                            <label class="col-md-6"> Name:</label>
+                                            <div class="col-md-6 text-center">
+                                                <label>{{editdata?.firstName}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="col-md-6">Phone Number:</label>
+                                            <div class="col-md-6 text-center">
+                                                <label><a>{{ editdata?.mobileNumber }}</a></label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="col-md-6">Email:</label>
+                                            <div class="col-md-6 text-center" style="    white-space: nowrap;">
+                                                <label><a>{{ editdata?.email }}</a></label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="col-md-6">Referral Code:</label>
+                                            <div class="col-md-6 text-center" style="    white-space: nowrap;">
+                                                <label><a>{{ editdata?.retailerReferralCode }}</a></label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="col-md-6">Age Range:</label>
+                                            <div class="col-md-6 text-center" style="    white-space: nowrap;">
+                                                <label><a>{{ editdata?.ageRange }}</a></label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="col-md-6">Gender:</label>
+                                            <div class="col-md-6 text-center" style="    white-space: nowrap;">
+                                                <label><a>{{ editdata?.gender }}</a></label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="col-md-6">Date and Month of Birth:</label>
+                                            <div class="col-md-6 text-center" style="    white-space: nowrap;">
+                                                <label><a>{{ editdata?.dateOfBirth }}</a></label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="col-md-6">Date and Month of Anniversary:</label>
+                                            <div class="col-md-6 text-center" style="    white-space: nowrap;">
+                                                <label><a>{{ editdata?.dateOfAnniversary }}</a></label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="col-md-6">Occupation:</label>
+                                            <div class="col-md-6 text-center" style="    white-space: nowrap;">
+                                                <label><a>{{ editdata?.occupation }}</a></label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="col-md-6">Income Range : </label>
+                                            <div class="col-md-6 text-center" style="    white-space: nowrap;">
+                                                <label><a>{{ editdata?.incomeRange }}</a></label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="col-md-6">Homeownership:</label>
+                                            <div class="col-md-6 text-center" style="    white-space: nowrap;">
+                                                <label><a>{{ editdata?.homeOwnership }}</a></label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="col-md-6">Educational Level:</label>
+                                            <div class="col-md-6 text-center" style="    white-space: nowrap;">
+                                                <label><a>{{ editdata?.educationalLevel }}</a></label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <h5> Address Details</h5>
+                                <div class=" order-view main-block-innner mb40 mt20">
+                                    <div class="add-store-block input-style">
+                                        <div class="form-group row ">
+                                            <label class="col-md-6"> Pin Code:</label>
+                                            <div class="col-md-6 text-center">
+                                                <label>{{editdata?.pinCode}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="col-md-6">State:</label>
+                                            <div class="col-md-6 text-center">
+                                                <label><a>{{ editdata?.state }}</a></label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="col-md-6">City:</label>
+                                            <div class="col-md-6 text-center" style="    white-space: nowrap;">
+                                                <label><a>{{ editdata?.city }}</a></label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row ">
+                                            <label class="col-md-6">Address:</label>
+                                            <div class="col-md-6 text-center">
+                                                <label><a>{{ editdata?.address  }}</a></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="text-center mt40">
+                                <a [routerLink]="['/user-management']"
+                                    class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ml-2">Back</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- delete_modal Start -->
+<div class="modal fade global-modal reset-modal" id="delete">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div class="modal-header d-block text-center">
+                    <h5 class="modal-title d-inline-block">Delete</h5>
+                </div>
+                <div>
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p>Are you sure want to delete this user?</p>
+                                <div>
+                                    <button type="submit" class="btn btn-info ml-2">Delete</button>
+                                    <button type="button" class="btn btn-danger ml-2"
+                                        data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- delete_modal End -->
+<!-- block_modal Start -->
+<div class="modal fade global-modal reset-modal" id="block">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div class="modal-header d-block text-center">
+                    <h5 class="modal-title d-inline-block">Deactivate</h5>
+                </div>
+                <div>
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p>Are you sure want to block this user?</p>
+                                <div>
+                                    <button type="submit" class="btn btn-success ml-2">Yes</button>
+                                    <button type="button" class="btn btn-danger ml-2" data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- unblock_modal Start -->
+<div class="modal fade global-modal reset-modal" id="unblock">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div class="modal-header d-block text-center">
+                    <h5 class="modal-title d-inline-block">Activate</h5>
+                </div>
+                <div>
+                    <div class="modal-body">
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p>Are you sure want to unblock this user?</p>
+                                <div>
+                                    <button type="submit" class="btn btn-success ml-2">Yes</button>
+                                    <button type="button" class="btn btn-danger ml-2" data-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

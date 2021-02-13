@@ -1,0 +1,56 @@
+
+ <main class="middle-content">
+  <div class="content-section">
+      <div class="page_title_block pL0 pR0">
+          <h1 class="page_title" style="color:#26272d">VIEW USER TRADING DETAIL          </h1>
+      </div>
+      
+      <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+          <div class="main-block-innner mb40 mt40">
+              <div class="add-store-block input-style">
+          <div class="form-group row">
+            <label class="col-md-5 text" for="">TRANSACTION ID </label>
+            <span class="col-md-1">:</span>
+            <p class="col-md-6">{{viewTradingDetails?.basicTradeHistoryId}}  </p>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-5 text" for="">BASE COIN</label>
+          <span class="col-md-1">:</span>
+          <p class="col-md-6">{{viewTradingDetails?.baseCoinName}}</p>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-5 text" for="">EXECUTABLE COIN        </label>
+        <span class="col-md-1">:</span>
+        <p class="col-md-6">{{viewTradingDetails?.execCoinName}}</p>
+    </div>
+    <div class="form-group row">
+      <label class="col-md-5 text" for="">PRICE</label>
+      <span class="col-md-1">:</span>
+      <p class="col-md-6">{{viewTradingDetails?.baseCoinMarketPrice}}</p>
+  </div>
+    <div class="form-group row">
+      <label class="col-md-5 text" for="">AMOUNT</label>
+      <span class="col-md-1">:</span>
+      <p class="col-md-6">{{viewTradingDetails?.baseCoinAmmount}}</p>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-5 text" for="">TYPE</label>
+    <span class="col-md-1">:</span>
+    <p class="col-md-6">{{viewTradingDetails?.orderType}}</p>
+</div>
+<div class="form-group row">
+  <label class="col-md-5 text" for="">DATE AND TIME</label>
+  <span class="col-md-1">:</span>
+  <p class="col-md-6">{{viewTradingDetails?.creationTime | date}}  </p>
+</div>
+
+
+
+    </div>
+    </div>
+    </div>
+
+
+
+      </div>
+    </main>

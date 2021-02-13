@@ -1,0 +1,254 @@
+<!-- plasma donated patient  -->
+<div *ngIf="viewScreen == 'viewPlasmaDonatedPatientManagement'" class="tabcontent">
+    <div class="tab-pane1">
+        <div class="sec_head_new">
+            <form [formGroup]="searchForm">
+                <div class="row">
+                    <div class="col-md-2 col-xl-3 col-lg-3">
+                        <div class="filter_search mb20 width100">
+                            <div class="input-group filter_search_group">
+                                <input type="text" class="form-control overflow-text" formControlName="search"
+                                    placeholder="Search by name, email & mobile number" maxlength="60">
+                                <div class="input-group-append">
+                                    <button class="btn btn_search_group" type="button"><img
+                                            src="assets/img/icon-search.png" alt="Search"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-control" formControlName="disease">
+                            <option value="" selected>Select Disease</option>
+                            <option value="COVID-19">Covid-19</option>
+                        </select>
+
+                    </div>
+                    <div class="col-md-4">
+                        <div class="date-input-box">
+                            <input type="date" name="" id="fromDate" class="form-control date-input mr-2"
+                                formControlName="fromDate">
+                            <input type="date" name="" id="toDate" class="form-control date-input"
+                                formControlName="toDate">
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xl-3 col-lg-3">
+                        <div class="text-center admin-btn ">
+                            <button type="button" class="btn  btn-theme ml-2 Go_btn"
+                                (click)="searchFormSubmit()">Submit</button>
+                            <button type="button" class="btn  btn-theme ml-2 Go_btn"
+                                (click)="searchFormReset()">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered" aria-describedby="view plasma list">
+            <thead>
+                <tr class="no_wrap_th text-center">
+                    <th scope="col" class="Sorting-img">S.No.</th>
+                    <th scope="col" class="Sorting-img">Patient ID</th>
+                    <th scope="col" class="Sorting-img">Name</th>
+                    <th scope="col" class="Sorting-img">Email Address</th>
+                    <th scope="col" class="Sorting-img">Mobile Number</th>
+                    <th scope="col" class="Sorting-img">Plasma Donated Date</th>
+                    <th scope="col" class="Sorting-img">Test Counts</th>
+                    <th scope="col" class="action_td_btn3 Sorting-img">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of plasmaDonatedpatientData | paginate: { itemsPerPage: itemPerPage, currentPage: currentPage, totalItems: total}; let i = index"
+                    class="text-center">
+                    <td>{{itemPerPage * (currentPage-1)+ i+1}}</td>
+                    <td class="content" [tooltip]="item?.patientId || '--'">{{(item?.patientId | slice: -4) || '--'}}
+                    </td>
+                    <td class="content" [tooltip]="(item?.firstName + ' ' + item?.lastName) || '--'">
+                        {{(item?.firstName + ' ' + item?.lastName) || '--'}}</td>
+                    <td class="content" [tooltip]="item?.email || '--'">{{item?.email || '--'}}</td>
+                    <td class="content" [tooltip]="item?.mobileNumber || '--'">{{item?.mobileNumber || '--'}}</td>
+                    <td class="content">{{item?.donatedDate | date:'d/M/y' || '--'}}</td>
+                    <td class="content">{{item?.testCount}}</td>
+                    <td class="justify-content-center d-flex">
+                        <button class="btn btn-info ml-2 bt-margin" title="view"
+                            (click)="viewPlasmaDonatedPatient(item?.patientId, item?.hospitalId, 'viewPlasmaDonatedPatient')">
+                            <i class="fa fa-eye" aria-hidden="true" style="color:white"></i></button>
+                    </td>
+                </tr>
+                <tr *ngIf="!plasmaDonatedpatientData.length">
+                    <td class="table-no-record" colspan="8">No Record Found</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="custom-pagination mt-2 text-align-end" *ngIf="total > 10">
+            <pagination-controls (pageChange)="pagination($event)"></pagination-controls>
+        </div>
+    </div>
+</div>
+<!--end plasma donated patient  -->
+
+
+
+
+
+
+<!-- ---------------------  view patient ----------------------------------------- -->
+<div *ngIf="viewScreen == 'viewPlasmaDonatedPatient'">
+    <div class="wrapper">
+        <div class="page_title_block" style="padding: 15px 15px">
+            <h1 class="page_title">Personal Details</h1>
+        </div>
+        <div class="content-section" style="padding: 1px">
+            <div class="outer-box">
+                <div class="global-table no-radius p0">
+                    <div class="tab-content1">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class=" order-view main-block-innner mb20 view-label-align"
+                                    style="max-width: 100%;">
+                                    <div class="form-group row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <div class="col-md-6">
+                                                    <label>First Name <span>:</span></label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p class="content-view"
+                                                        [tooltip]="viewPlasmaDonatedPatientData?.firstName || '--'">
+                                                        {{viewPlasmaDonatedPatientData?.firstName || '--'}} </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <div class="col-md-6">
+                                                    <label>Last Name <span>:</span> </label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p class="content-view"
+                                                        [tooltip]="viewPlasmaDonatedPatientData?.lastName || '--'">
+                                                        {{viewPlasmaDonatedPatientData?.lastName || '--'}} </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <div class="col-md-6">
+                                                    <label>Email Address <span>:</span> </label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p class="content-view"
+                                                        [tooltip]="viewPlasmaDonatedPatientData?.email || '--'">
+                                                        {{viewPlasmaDonatedPatientData?.email || '--'}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <div class="col-md-6">
+                                                    <label>Phone Number <span>:</span> </label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p class="content-view"
+                                                        [tooltip]="viewPlasmaDonatedPatientData?.mobileNumber || '--'">
+                                                        {{viewPlasmaDonatedPatientData?.mobileNumber || '--'}} </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <div class="col-md-6">
+                                                    <label>Date of Birth <span>:</span> </label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>{{(viewPlasmaDonatedPatientData?.DOB | date:'d/M/y') || '--'}}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <div class="col-md-6">
+                                                    <label>Gender <span>:</span> </label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p>{{viewPlasmaDonatedPatientData?.gender || '--'}} </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <div class="col-md-6">
+                                                    <label>Address <span>:</span> </label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <p class="content-view"
+                                                        [tooltip]="viewPlasmaDonatedPatientData?.location.address || '--'">
+                                                        {{viewPlasmaDonatedPatientData?.location.address || '--'}} </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h3 *ngIf="!viewPlasmaDonatedPatientData?.testDetails.length">No Test Detail Found.
+                                    </h3>
+                                    <h3 *ngIf="viewPlasmaDonatedPatientData?.testDetails.length"> Test Details </h3>
+                                    <div *ngFor="let item of viewPlasmaDonatedPatientData?.testDetails; let i=index">
+                                        <h5> {{'Test-' + (i+1)}}</h5>
+                                        <div class="form-group row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <div class="col-md-6">
+                                                        <label>Test Name <span>:</span> </label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>{{item?.testName || '--'}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <div class="col-md-6">
+                                                        <label>Test Date <span>:</span> </label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <p>{{item?.testDate | date:'d/M/y' || '--'}} </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-md-12">
+                                                <div class="form-group row">
+                                                    <div class="col-md-3">
+
+                                                        <label>Remark <span>:</span> </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <p>{{item?.remark || '--'}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    </div>
+                                    <div class="text-center mt40 mb40">
+                                        <button class="btn btn-large  max-WT-150 btn-theme"
+                                            (click)="back('viewPlasmaDonatedPatientManagement')">Back</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end view patient -->

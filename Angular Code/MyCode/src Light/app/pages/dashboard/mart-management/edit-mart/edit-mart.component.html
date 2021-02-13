@@ -1,0 +1,123 @@
+<div class="wrapper">
+    <main class="middle-content">
+        <div class="page_title_block">
+            <h1 class="page_title text-center">MART MANAGEMENT</h1>
+        </div>
+        <div class="content-section">
+            <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+                <div class="main-block-innner mb40 mt40">
+                    <form [formGroup]="addCategoryForm" #f="ngForm" style="padding: 10px;">
+                        <div class="add-store-block input-style">
+
+                            <div class="user-profile">
+                                <div class="image-box">
+                                    <img [src]="imageUrl || 'assets/img/profile-img.jpg'" id="sub-admin-image" alt="">
+                                    <label class="upload-label">
+                                        <input type="file" formControlName="image" name="image"
+                                            accept="image/jpg,image/jpeg,image/png" id="image"
+                                            (change)="ValidateFileUpload($event)" maxlength="56">
+                                        <em class="fas fa-pencil-alt"
+                                            style="color: #2F3ABD!important;font-size: 12px"></em>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-5">Mart Name :</label>
+                                <div class="col-md-7">
+                                    <input type="text" (keypress)="mainService.preventSpace($event)"
+                                        formControlName="name" maxlength="20" placeholder="Mart name"
+                                        class="form-control">
+                                    <div class="text-danger"
+                                        *ngIf="addCategoryForm.get('name').hasError('required') && (addCategoryForm.get('name').dirty || addCategoryForm.get('name').touched)">
+                                        *Please enter name.
+                                    </div>
+                                    <div class="text-danger"
+                                        *ngIf="addCategoryForm.get('name').hasError('pattern') && (addCategoryForm.get('name').dirty || f.submitted)">
+                                        *name accept only alphabets.
+                                    </div>
+                                    <div class="text-danger"
+                                        *ngIf="addCategoryForm.get('name').hasError('minlength') && !(addCategoryForm.get('name').hasError('pattern')) && (addCategoryForm.get('name').dirty || f.submitted)">
+                                        *Minimum length must be 2.
+                                    </div>
+                                    <div class="text-danger"
+                                        *ngIf="addCategoryForm.get('name').hasError('maxlength') && !(addCategoryForm.get('name').hasError('pattern')) && (addCategoryForm.get('name').dirty || f.submitted)">
+                                        *Maximum length should not more than 20.
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-5">Parking Availability :</label>
+                                <div class="col-md-7">
+                                    <select formControlName="parking" class="form-control">
+                                        <option style="width: 100%;" value="">Select</option>
+                                        <option style="width: 100%;" value="Yes">Yes</option>
+                                        <option style="width: 100%;" value="No">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <label><b>Location Address :</b></label>
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-5">Pin Code:</label>
+                                <div class="col-md-7">
+                                    <input formControlName="pin" placeholder="Pin Code" maxlength="6" class="form-control" type="number">
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-5">State :</label>
+                                <div class="col-md-7">
+                                    <select formControlName="state" class="form-control">
+                                        <option style="width: 100%;" value="">Select</option>
+                                        <option style="width: 100%;" value="UP">UP</option>
+                                        <option style="width: 100%;" value="Hariyana">Hariyana</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-5">City:</label>
+                                <div class="col-md-7">
+                                    <input formControlName="city" placeholder="City" maxlength="15" class="form-control" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-5">Address:</label>
+                                <div class="col-md-7">
+                                    <textarea formControlName="address" placeholder="Address" maxlength="200" class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-5">Latitude:</label>
+                                <div class="col-md-7">
+                                    <input formControlName="latitude" placeholder="Latitude" maxlength="11" class="form-control" type="number">
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-5">Longitude:</label>
+                                <div class="col-md-7">
+                                    <input formControlName="longitude" placeholder="Longitude" maxlength="11" class="form-control" type="number">
+                                </div>
+                            </div>
+                            <div class="form-group row align-items-baseline">
+                                <label class="col-md-5">Radius:</label>
+                                <div class="col-md-7">
+                                    <input formControlName="radius" placeholder="Radius" maxlength="7" class="form-control" type="number">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="text-center mt40">
+                                    <a [routerLink]="['/mart-management']"
+                                        class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ">Cancel</a>
+                                    <button (click)="addCategory()"
+                                        class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ml-2">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

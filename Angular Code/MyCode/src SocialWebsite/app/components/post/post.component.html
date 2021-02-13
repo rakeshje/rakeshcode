@@ -1,0 +1,543 @@
+<!-- Start Right Bar -->
+<app-rightsidemenu></app-rightsidemenu>
+<!-- Close Right Bar -->
+
+<!-- Start Page Content -->
+<div class="page-wrap">
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="left-menu card">
+                    <app-sidemenu></app-sidemenu>
+
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="page-content">
+                    <div class="card post-box main-post">
+                        <div class="post-warp">
+                            <div class="post-content-setting" style="color:#3CC114">
+                                Create Post
+                            </div>
+
+                        </div>
+                        <!-- <div class="comment-box">
+                                <div class="comment-form-section">
+                                    <div class="userimg-col">
+                                        <img class="user-icon" src="assets/images/Layer 61.png">
+                                    </div>
+                                    <div class="content-col">
+                                        
+                                        <div class="form-buttons">
+                                            <a class="userIcon" href="">
+                                                <span>Go Live
+                                                    <img src="assets/images/video.png">
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div> -->
+                    </div>
+
+
+                    <!-- <div class="modal-dialog modal-dialog-centered" role="document"> -->
+                    <div class="modal-content">
+                        <div class="modal-body detail-about">
+                            <div class="social-none">
+                                <div class="comment-form-section">
+                                    <div class="userimg-col">
+                                        <img class="user-icon" [src]="server.profileImage">
+                                    </div>
+                                    <input type="text" placeholder="Write something here..." name="caption"
+                                        class="form-control" [(ngModel)]="obj.caption">
+                                </div>
+                                <div *ngFor = "let item of fileData">
+                                    <img style="width:50%; display: flex" src="{{item}}" 
+                                        *ngIf="(type1 != 'video/mp4' && type1 != 'video/mov' && type1 != 'video/flv') && base64Image">
+
+                                    <video style="height: 300px;width:100%;" src="{{item}}" controls
+                                        *ngIf="type1 === 'video/mp4' || type1 === 'video/mov' || type1 === 'video/flv'"></video>
+                                </div>
+                                <div class="row">
+                                  
+                                                        <div class="col-md-6 col-sm-6 col-lg-6 live-Images" data-toggle="modal"
+                                                        data-target="#photoVideoModal" style="cursor: pointer;">
+                                                        <img src="assets/images/photolive.png">
+                                                        <input style="position: absolute;     
+                                                        width: 110px;                                         
+                                                          opacity: 0;
+                                                          top: 0px;
+                                                          cursor: pointer;" type="file" (change)="handleFileInput($event)" multiple accept="image/jpg, image/png, image/jpeg, video/mp4, video/mov, video/flv"
+                                                            >
+                                                        <!-- <span *ngIf="!base64Image">Remove Photo/Video</span> -->
+                                                        <span *ngIf="type1==''">remove Photo/Video</span>
+                                                        <span *ngIf="type1!=''" (click)="removePhotoOrVideo()">Upload Photo/Video
+                                                            </span>
+                                                       </div>
+
+                                    <!-- <div class="col-md-6 col-sm-6 col-lg-6 live-Images" data-toggle="modal"
+                                        data-target="#photoVideoModal" style="cursor: pointer;">
+                                        <img src="assets/images/photolive.png">
+                                        <input style="position: absolute;     
+                                        width: 110px;                                         
+                                          opacity: 0;
+                                          top: 0px;
+                                          cursor: pointer;" type="file" (change)="handleFileInput($event)"
+                                            *ngIf="(type != 'video/mp4' && type != 'video/mov' && type != 'video/flv')">
+                                        <span *ngIf="!base64Image">Upload Photo/Video</span>
+                                        <span *ngIf="base64Image" (click)="removePhotoOrVideo()">Remove
+                                            Photo/Video</span>
+                                    </div> -->
+                                    <div class="col-md-6 col-sm-6 col-lg-6 live-Images" data-toggle="modal"
+                                        data-target="#tagFriendsModal" (click)="tagFriendsModal()"
+                                        style="cursor: pointer">
+                                        <img src="assets/images/Tagfriend.png">
+                                        <span>Tag Friends</span>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-lg-6 live-Images" data-toggle="modal"
+                                        data-target="#stickerModal" style="cursor: pointer">
+                                        <img src="assets/images/feelings.png">
+                                        <span>Feelings/Activity/Sticker</span>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-lg-6 live-Images" data-toggle="modal"
+                                        data-target="#checkinModal" style="cursor: pointer">
+                                        <img src="assets/images/checkin.png">
+                                        <span>Check In</span>
+                                    </div>
+                                    <!-- <div class="col-md-6 col-sm-6 live-Images" data-toggle="modal" data-target="#goLiveModal" (click)="goLiveModal()" style="cursor: pointer">
+                                  <img src="assets/images/live.png">
+                                  <span>Go Live</span>
+                              </div> -->
+                                    <!-- <div class="col-md-6 col-sm-6 live-Images" data-toggle="modal" data-target="#cameraModal" (click)="cameraModal()" style="cursor: pointer">
+                                  <img src="assets/images/camera.png">
+                                  <span>Camera</span>
+                              </div> -->
+                                    <div class="col-md-6 col-sm-6 live-Images" style="cursor: pointer" (click)="openGif()">
+                                        <img src="assets/images/gif.png">
+                                        <span>GIF</span>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 live-Images" data-toggle="modal"
+                                        data-target="#pollModal" style="cursor: pointer">
+                                        <img src="assets/images/poll.png">
+                                        <span>Poll</span>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-lg-6 live-Images" data-toggle="modal"
+                                        data-target="#recommendationModal" style="cursor: pointer">
+                                        <img src="assets/images/ask.png">
+                                        <span>Recommendation</span>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-lg-6 live-Images">
+
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-6 col-lg-6">
+                                        <select class="selectField public-dropdown"
+                                            (change)="selectPrivacy($event.target.value)">
+                                            <option value="PUBLIC">Public</option>
+                                            <option value="FRIENDS">Friends</option>
+                                            <option value="EXCEPTFRIENDS">Friends Except</option>
+                                            <option value="SPECIFICFRIENDS">Specific Friend</option>
+                                            <option value="ONLYME">Only Me</option>
+                                            <option value="ONLYME">Group</option>
+                                            <option value="ONLYME">Class Room</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-lg-6 ">
+                                        <div class="cancel-butn">
+                                            <button type="button" class="btn btn-secondary cncl-btn"
+                                                (click)="createPost()">Share</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- </div> -->
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Close Page Content -->
+
+<!---Check in Modal Starts--->
+<div class="modal fade" id="checkinModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body detail-about">
+
+                <div class="checkin-none">
+                    <h4>Add Location</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <form [formGroup]="locationForm">
+                        <div class="comment-form-section">
+
+                            <input style="margin-top: 5%" type="text" placeholder="Search" class="form-control"
+                                formControlName="location" ngx-google-places-autocomplete [options]='options'
+                                #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)">
+                        </div>
+                        <div id="googleMap" style="width:466px;height:258px;margin:0 auto;"></div>
+
+                        <!-- <div class="comment-form-section ">
+                                  <input type="text" ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places" placeholder="Where are you asking for recommendations?" class="form-control" formControlName="location"
+                                  (onAddressChange)="handleAddressChange($event)">
+                          </div> -->
+                    </form>
+
+
+                    <div class="row">
+
+                        <div class="col-md-6 col-sm-6 col-lg-6">
+                            <div class="cancel-butn">
+                                <button type="button" style="margin-left: 55%;" class="btn btn-secondary cncl-btn"
+                                    data-dismiss="modal" (click)="shareCheckIn()">Share</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!---Check in Modal Ends--->
+
+
+<!---GIF Modal starts-->
+<div class="modal fade" id="gifModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body detail-about">
+                <div class="gif-none">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <div class="row" style="cursor:pointer">
+                        <div class="col-md-6 col-sm-6 col-lg-6 gif-image" *ngFor="let gif of gifList">
+                            <img [src]="gif.gif" (click)="selectGif(gif)">
+                        </div>
+                        <!-- <div class="col-md-6 col-sm-6 col-lg-6  gif-image">
+                            <img src="assets/gif/train1.gif">
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-lg-6  gif-image ">
+                            <img src="assets/gif/train.gif">
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-lg-6  gif-image">
+                            <img src="assets/gif/cat.gif">
+                        </div> -->
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!---GIF Modal ends-->
+
+<!----Tag Friends modal starts-->
+<div class="modal fade" id="tagFriendsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body detail-about">
+                <!-- <div class="friendList">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <div class="friend-heading">
+                          <h5>Friends exception</h5>
+                          <h6>Who can see your post?</h6>
+                          <div class="friend-pra">
+                              <p class="frnd-news">Your post will appear in News feed, on your profile
+                                  and in search results</p>
+                          </div>
+                      </div>
+                  </div> -->
+                <div class="ask-none">
+                    <h4>Tag Friends</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                    <div class="comment-form-section">
+
+                        <!-- <div class="userimg-col">
+                            <img class="user-icon" src="assets/images/Layer 61.png">
+                        </div>
+                        <input type="text" placeholder="Write something..." class="form-control"> -->
+                    </div>
+                    <div class="comment-form-section">
+                        <!-- <div class="userimg-col">
+                            At
+                        </div> -->
+                        <!-- <img src="assets/images/Layer51.png"> -->
+                        <input type="text" placeholder="Search" class="form-control">
+                    </div>
+                    <div class="check-user userList">
+                        <!-- <div [class]="items.typeClass" style="margin-left: 2%;" *ngFor="let items of friendListArray"
+                            (click)="addTagFriends(items)">
+                            <div class="user mr-2">
+                                <img src={{items.profilePic}}>
+                            </div>
+                            <div class="" style="margin-top: 3%;">
+                                <span> {{items.firstName}}</span>
+                            </div>
+
+
+                        </div> -->
+
+                        <div *ngFor="let friend of friendListArray" [class]="friend.typeClass" style="margin-left: 2%;">
+                                <input type="checkbox" style="margin-top: 20px;" (change)="addTagFriends(friend)">
+                                <img style="height: 60px; width: 60px; border-radius: 30px; padding: 10px;" [src]="friend?.profilePic ? friend?.profilePic : 'assets/images/Layer 61.png'">
+                                <span style="margin-top: 3%;">{{friend.firstName}}</span>
+                              </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!---Tag Friends Modal ends-->
+
+<!-- sticker modal starts -->
+<div class="modal fade" id="stickerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body detail-about">
+                <div class="sticker-none">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4>How are you feeling?</h4>
+
+                    <div class=" heding-part">
+                        <!-- <div class="tab bankingDetail">
+                                <a class="active tablinks">Feelings</a>
+                                <a class=" tablinks">Stickers</a>
+                                <a class=" tablinks">Activity</a>
+                            </div> -->
+                        <div>
+                            <emoji-mart title="Pick your emoji…" emoji="point_up" (emojiSelect)="addEmoji($event)"
+                                [style]="{ position: 'relative'}"></emoji-mart>
+                        </div>
+                        <!-- <emoji-input></emoji-input> -->
+                    </div>
+                    <!-- <div class="row">
+                            <div [class]="items.addClass" [ngClass]="{activeEmoji: selectedEmoji == i}" *ngFor="let items of emojiList; let i = index;" (click)="selectEmoji(i,items)" style="cursor:pointer">
+                                <div class="userListItem mt-3">
+                                    <div class="emoji mr-2">
+                                        {{items.x}}
+                                        
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </div> -->
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Sticker modal ends -->
+
+<!-- Reccomendation modal starts -->
+<div class="modal fade" id="recommendationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body detail-about">
+                <div class="ask-none">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <div class="comment-form-section">
+                        <div class="userimg-col" style="width: 50%;margin-left: -15%;">
+                            <img class="user-icon" [src]="server.profileImage" style="height: 55px;border-radius: 70%;">
+                            <span class="content-col"> {{server.first_name}} </span>
+                        </div>
+                        <!-- <input type="text" placeholder="Write something..." class="form-control"> -->
+                    </div>
+                    <!-- <div class="comment-form-section">
+                          
+                          <input type="text" placeholder="What are you looking for?" class="form-control">
+                          <div class="comment-form-section">
+                                <span class="container"> Looking for recommendations in
+                                        <input type="text" ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places" placeholder="Where are you asking for recommendations?" class="form-control">
+                                  </span>
+                          </div>
+                         
+                      </div> -->
+                    <form [formGroup]="recommendationLocationForm">
+                        <div class="comment-form-section">
+
+                            <input style="margin-top: 1%" type="text" placeholder="What are you looking for?"
+                                class="form-control" formControlName="recommendationTitle">
+                        </div>
+                        <div id="googleMap" style="width:466px;height:258px;margin:0 auto;"></div>
+                        Looking for recommendations in
+                        <div class="comment-form-section ">
+                            <input type="text" ngx-google-places-autocomplete [options]='options'
+                                #placesRef="ngx-places" placeholder="Where are you asking for recommendations?"
+                                class="form-control" formControlName="location1"
+                                (onAddressChange)="handleAddressChange1($event)">
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-lg-6" style="margin-top: 5%;">
+                            <div class="cancel-butn">
+                                <button type="button" style="margin-left: 55%;" class="btn btn-secondary cncl-btn"
+                                    data-dismiss="modal">Share</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Reccomendation modal ends -->
+
+<!-- <div class="form-group">
+            <label for="Address">Address:</label>
+            <input ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places" formControlName='Address' (onAddressChange)="handleAddressChange($event)"/><br>
+          </div> -->
+
+
+<!----Location modal starts-->
+<!-- <div class="modal fade" id="locationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body detail-about">
+                        <div class="sticker-none">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4>Find location</h4>
+                            <input type="text" ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places" placeholder="Where are you asking for recommendations?" class="form-control">
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+<!----Location modal ends-->
+
+<!-- Poll modal starts -->
+<div class="modal fade" id="pollModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body detail-about">
+                <div class="poll-none">
+                    <button style="margin-top: -15px;margin-right: -13px;" type="button" class="close"
+                        data-dismiss="modal">&times;</button>
+                    <div class="comment-form-section">
+                        <div class="userimg-col">
+                            <img class="user-icon" src="assets/images/Layer 61.png">
+                        </div>
+                        <input type="text" placeholder="Write something here..." class="form-control">
+                    </div>
+                    <div class="gif-photoSection mt-3">
+                        <div class="option1">
+                            <input type="text" placeholder="Option 1" class="form-control">
+                        </div>
+                        <div class="photo-gif">
+                            <img src="assets/images/gif.png">
+                            <img src="assets/images/photolive.png">
+                        </div>
+                    </div>
+                    <div class="gif-photoSection mt-3">
+                        <div class="option1">
+                            <input type="text" placeholder="Option 2" class="form-control">
+                        </div>
+                        <div class="photo-gif">
+                            <img src="assets/images/gif.png">
+                            <img src="assets/images/photolive.png">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-lg-6 mt-3" style="display: flex;">
+                            <input type="number" style="width: 135px; border: none; border: 1px solid #ced4da;" [(ngModel)]="pollDuration" (keydown)="checkNum($event.target.value)">
+                            <select class="selectField public-dropdown">
+                                <option value="hours">hours</option>
+                                <option value="day">day</option>
+                                <option value="week">week</option>
+                                <option value="month">month</option>
+                                <!-- <option value="saab">Friend</option>
+                                    <option value="mercedes">Friend Expert</option>
+                                    <option value="audi">Specific Friend</option>
+                                    <option value="audi">Only Me</option> -->
+                            </select>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-lg-6 mt-3 ">
+                            <div class="cancel-butn">
+                                <span>Remove Poll</span>
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-6 col-sm-6 col-lg-6 live-Images">
+                                <img src="assets/images/photolive.png">
+                                <span>Photo/Video</span>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-lg-6 live-Images">
+                                <img src="assets/images/Tagfriend.png">
+                                <span>Tag Friends</span>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-lg-6 live-Images">
+                                <img src="assets/images/feelings.png">
+                                <span>Feelings/Activity/Sticker</span>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-lg-6 live-Images">
+                                <img src="assets/images/checkin.png">
+                                <span>Check In</span>
+                            </div>
+                            <div class="col-md-6 col-sm-6 live-Images">
+                                <img src="assets/images/live.png">
+                                <span>Go Live</span>
+                            </div>
+                            <div class="col-md-6 col-sm-6 live-Images">
+                                <img src="assets/images/camera.png">
+                                <span>Camera</span>
+                            </div>
+                            <div class="col-md-6 col-sm-6 live-Images">
+                                <img src="assets/images/gif.png">
+                                <span>GIF</span>
+                            </div>
+                            <div class="col-md-6 col-sm-6 live-Images">
+                                <img src="assets/images/poll.png">
+                                <span>Poll</span>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-lg-6 live-Images">
+                                
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-lg-6 live-Images">
+
+                            </div>
+
+                            <div class="col-md-6 col-sm-6 col-lg-6">
+                                <select class="selectField public-dropdown">
+                                    <option value="volvo">Public</option>
+                                    <option value="saab">Friend</option>
+                                    <option value="mercedes">Friend Expert</option>
+                                    <option value="audi">Specific Friend</option>
+                                    <option value="audi">Only Me</option>
+                                </select>
+                            </div> -->
+                        <div class="col-md-6 col-sm-6 col-lg-6 ">
+                            <div class="cancel-butn">
+                                <button type="button" class="btn btn-secondary cncl-btn"
+                                    data-dismiss="modal">Share</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Poll modal ends-->

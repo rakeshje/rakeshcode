@@ -1,0 +1,291 @@
+<main class="middle-content">
+    <div class="content-section">
+        <div class="page_title_block pL0 pR0">
+            <h1 class="page_title" style="color:#26272d">ADD ADMINISTRATOR</h1>
+        </div>
+        
+        <form [formGroup]="addAdmin">
+            <div class="user-profile">
+                <div class="image-box">
+                    <img [src]="editImage || 'assets/img/testimonial-img1.jpg'" class="profile-pic" alt="profile image">
+                    <label class="upload-label">
+                          <input type="file" class="hidden" accept=".png, .jpg, .jpeg"
+                              (change)="uploadImg($event)" />
+                          <i class="fas fa-camera" aria-hidden="true"></i>
+                      </label>
+                </div>
+            </div>
+        <div class="padd_6" style="margin: 0% 15%;">
+            <div class="form-group row">
+                <label class="col-md-3 text" for="" >First Name:</label>
+                <div class="col-md-9">
+                <input type="text" class="form-control" formControlName="name"
+                 maxlength="30" (keypress)="service.preventSpace($event)"/>
+                    <span class="error"
+                         *ngIf="addAdmin.get('name').hasError('required') && (addAdmin.get('name').dirty || addAdmin.get('name').touched )"
+                            class="error">
+                            <p>
+                                *Field is required
+                            </p>
+                    </span>
+                  <span class="error"
+                         *ngIf="addAdmin.get('name').hasError('pattern') && addAdmin.get('name').dirty"
+                            class="error">
+                            <p>
+                                *Please enter valid name
+                            </p>
+                    </span>
+                </div>
+                 
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 text" for="" >Last Name:</label>
+                <div class="col-md-9">
+                <input type="text" class="form-control" formControlName="lastName" >
+                <span class="error"
+                         *ngIf="addAdmin.get('lastName').hasError('required') && (addAdmin.get('lastName').dirty || addAdmin.get('lastName').touched )"
+                            class="error">
+                            <p>
+                                *Field is required
+                            </p>
+                    </span>
+                  <span class="error"
+                         *ngIf="addAdmin.get('lastName').hasError('pattern') && addAdmin.get('lastName').dirty"
+                            class="error">
+                            <p>
+                                *Please enter valid lastName
+                            </p>
+                    </span>
+            </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 text" for="" >Email:</label>
+                <div class="col-md-9">
+                <input type="email" class="form-control" formControlName="email"
+                maxlength="64" (keypress)="service.preventSpace($event)"/>
+                <span class="error">
+                    <p *ngIf="addAdmin.get('email').hasError('required') && (addAdmin.get('email').dirty || addAdmin.get('email').touched )"
+                        class="error" padding>*Field is required</p>
+                </span>
+              <span class="error">
+                  <p *ngIf="addAdmin.get('email').hasError('pattern') && addAdmin.get('email').dirty"
+                      class="error" padding>*Please enter valid email</p>
+              </span>
+            </div>
+            </div>
+            
+            <div class="form-group row">
+                <label class="col-md-3 text" for="" >Phone Number:</label>
+                <div class="col-md-9">
+                <input type="tel" class="form-control" formControlName="contact" >
+                <span class="error"
+                         *ngIf="addAdmin.get('contact').hasError('required') && (addAdmin.get('contact').dirty || addAdmin.get('contact').touched )"
+                            class="error">
+                            <p>
+                                *Field is required
+                            </p>
+                    </span>
+                  <span class="error"
+                         *ngIf="addAdmin.get('contact').hasError('pattern') && addAdmin.get('contact').dirty"
+                            class="error">
+                            <p>
+                                *Please enter valid contact
+                            </p>
+                    </span>
+            </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 text" for="" >Password:</label>
+                <div class="col-md-9">
+                <input type="password" class="form-control" formControlName="password" >
+                <div
+                                      *ngIf="addAdmin.get('password').invalid && (addAdmin.get('password').touched || addAdmin.get('password').dirty)"
+                                      class="text-danger">
+                                      <span *ngIf="addAdmin.get('password').hasError('required')">
+                                        *Please enter  password.</span>
+                                      <span *ngIf="addAdmin.get('password').hasError('pattern')">
+                                        *Password should have minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, 1
+                                        number and 1 special character.</span>
+                                    </div>
+            </div>
+        </div>
+            <div class="form-group row">
+                <label class="col-md-3 text" for="" >Confirm Password:</label>
+                <div class="col-md-9">
+                <input type="password" class="form-control" formControlName="confirmPassword" >
+                <div *ngIf="addAdmin.get('confirmPassword').dirty" class="text-danger">
+                    <span *ngIf="addAdmin.get('confirmPassword').value != addAdmin.get('password').value">*Password
+                      mismatched.</span>
+                  </div>
+            </div>
+        </div>
+            <div class="form-group row">
+                <label class="col-md-3 text" for="" >Select Role:</label>
+                
+                <select class="col-md-9" formControlName="status" class="form-control"  style="width: 20%;">
+                    <option value="">Select Role</option>
+                    <option>SUBADMIN</option>
+                    <option>ADMIN</option>
+                </select>
+            </div>
+           
+        </div>
+        <span style=" margin: 0 15%">Select Permission:</span><br><br>
+        <div class="row form-group" style="margin-left:25%">
+            <div class="col-md-2" style="display: flex; margin-left: 35px; align-items:baseline" >
+                <input type="checkbox" (change)="checkboxClick('DASHBOARD',$event.target.checked)">
+                <label for="" style="margin-left: 10px">Dashboard</label>
+            </div>
+            <div class="col-md-2" style="display: flex; margin-left: 35px; align-items:baseline" >
+                    <input type="checkbox" (change)="checkboxClick('USER_MANAGEMENT',$event.target.checked)">
+                    <label for="" style="white-space: nowrap; margin-left: 10px">User Management</label>
+                </div>
+                <div class="col-md-2" style="display: flex; margin-left: 35px; align-items:baseline" >
+                        <input type="checkbox" (change)="checkboxClick('KYC_MANAGEMENT',$event.target.checked)">
+                        <label for="" style="white-space: nowrap; margin-left: 10px">KYC Management</label>
+                    </div>
+                
+                    <div class="col-md-2" style="display: flex; margin-left: 35px; align-items:baseline" >
+                            <input type="checkbox" (change)="checkboxClick('HOT_COLD_LIMIT_MANAGEMENT',$event.target.checked)">
+                            <label for="" style="white-space: nowrap; margin-left: 10px">Hot Wallet Managemet</label>
+                        </div>
+        </div>
+        <div class="row form-group" style="margin-left:25%">
+                <div class="col-md-2" style="display: flex; margin-left: 35px; align-items:baseline" >
+                        <input type="checkbox" (change)="checkboxClick('TICKET_MANAGEMENT',$event.target.checked)" >
+                        <label for="" style="white-space: nowrap; margin-left: 10px"> Ticket Management</label>
+                    </div>
+                    <div class="col-md-2" style="display: flex; margin-left: 35px; align-items:baseline" >
+                        <input type="checkbox" (change)="checkboxClick('FEE_MANAGEMENT',$event.target.checked)">
+                        <label for="" style="white-space: nowrap;margin-left: 10px">Fee Management</label>
+                    </div>
+                    <div class="col-md-2" style="display: flex; margin-left: 35px; align-items:baseline" >
+                            <input type="checkbox" (change)="checkboxClick('SETTINGS',$event.target.checked)">
+                            <label for="" style="white-space: nowrap;margin-left: 10px">Settings</label>
+                        </div>
+                        <div class="col-md-2" style="display: flex; margin-left: 35px; align-items:baseline" >
+                                <input type="checkbox" (change)="checkboxClick('STATIC_CONTENT',$event.target.checked)">
+                                <label for="" style="white-space: nowrap; margin-left: 10px">Static content</label>
+                            </div>
+                
+                   
+                        
+            </div>
+
+            <div class="row form-group" style="margin-left:25%">
+                
+                    <div class="col-md-2" style="display: flex; margin-left: 35px; align-items:baseline" >
+                        <input type="checkbox" (change)="checkboxClick('FAQ_MANAGEMENT',$event.target.checked)">
+                        <label for="" style="white-space: nowrap;margin-left: 10px">Faq Management</label>
+                    </div>
+                    
+                
+                   
+                        
+            </div>
+        
+        </form>
+    </div>
+    <div class="row" style="margin-left: 30%;margin-top: 3%; margin-bottom: 5%;">
+    <div class="head_flt_select">
+        <div class="head_flt_select input-label" >
+            <button  routerLink="/user-management-admin" type="submit" class="btn  btn-theme" style="width: 235%;">Cancel</button>
+        </div>
+    </div>
+    <div class="head_flt_select">
+        <div class="head_flt_select input-label" >
+            <button  routerLink='/user-management-admin' type="submit" class="btn  btn-theme" style="width: 265%;margin-left: 225%;"  (click)="addSubAdmin()">Save</button>
+        </div>
+    </div>
+</div>
+</main>
+<footer>
+    <div class="container-fluid">
+        <p class="copyright">Alende  <strong class="theme-text-color"></strong> 
+            </p>
+    </div>
+</footer>
+
+<!-- delete_modal Start -->
+<div class="modal fade global-modal reset-modal" id="deleteModal">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div>
+                    <div class="modal-body">
+                        <h3 style="text-align: center; ">Delete Admin </h3>
+                        <hr>
+                        <button type="button" class="close" data-dismiss="modal"
+                            style="margin-top: -85px;">&times;</button>
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p style="font-size: 25px;">Are you sure you want to delete this Admin?</p>
+                                <div>
+                                    <button type="submit" class="btn btn-info mr-2 " style="width: 25%;"  >Yes</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal" style="width: 25%;">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- delete_modal End -->
+
+<!-- block_modal Start -->
+<div class="modal fade global-modal reset-modal" id="block">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div>
+                    <div class="modal-body">
+                       
+                        <h3   style="text-align: center; ">Block  </h3>
+                        <hr>
+                        <button type="button" class="close" data-dismiss="modal"
+                            style="margin-top: -85px;">&times;</button>
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p   style="font-size: 25px;">Are you sure you want to block?</p>
+                                <div>
+                                    <button type="submit" class="btn btn-info mr-2 " style="width: 25%;"  >Yes</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal" style="width: 25%;">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="modal fade global-modal reset-modal" id="block">
+    <div class="modal-dialog max-WT-500">
+        <form class="change_password">
+            <div class="modal-content">
+                <div>
+                    <div class="modal-body">
+                       
+                        <h3   style="text-align: center; ">Block  </h3>
+                        <hr>
+                        <button type="button" class="close" data-dismiss="modal"
+                            style="margin-top: -85px;">&times;</button>
+                        <div class="text-center modal_flax_height d-flex align-items-center justify-content-center">
+                            <div class="w-100">
+                                <p   style="font-size: 25px;">Are you sure you want to block?</p>
+                                <div>
+                                    <button type="submit" class="btn btn-info mr-2 " style="width: 25%;"  >Yes</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal" style="width: 25%;">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

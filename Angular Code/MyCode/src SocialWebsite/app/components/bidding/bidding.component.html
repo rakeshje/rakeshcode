@@ -1,0 +1,565 @@
+<!-- Start Right Bar -->
+<app-rightsidemenu></app-rightsidemenu>
+<!-- Close Right Bar -->
+
+<!-- Satrt Page Content -->
+<div class="page-wrap">
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="left-menu card">
+                    <app-sidemenu></app-sidemenu>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="page-content">
+                 <span style="color: white;" id="location"></span>
+                    <div class="card post-box main-post">
+                        
+
+
+                        <div class="card  post-search bidding">
+                            <div class="post-wrap" style="width:100%;">
+                                <form class="search-form">
+                                    <input type="search" placeholder="Search by product name or category "
+                                        class="form-control" (keyup)="searchChange.next($event.target.value)">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card post-field main-post">
+
+                        <div class=" heding-part">
+                            <div class="tab bankingDetail">
+                                
+                                <a class=" tablinks" [ngClass]="{active : selected === 'dashboard'}"
+                                    (click)="selectTab('dashboard')" >Dashboard</a>
+                                <a class=" tablinks" [ngClass]="{active : selected === 'sell_Auction'}"
+                                    (click)="selectTab('sell_Auction')">Sell on auction</a>
+                                <a class=" tablinks" [ngClass]="{active : selected === 'wishlist'}"
+                                    (click)="selectTab('wishlist')">Wishlist</a>
+                                <a class=" tablinks" [ngClass]="{active : selected === 'chats'}"
+                                    (click)="selectTab('chats')">Chats</a>
+                                <a class=" tablinks" [ngClass]="{active : selected === 'auction_History'}"
+                                    (click)="selectTab('auction_History')">My sell on auction history</a>
+                                <a class=" tablinks" [ngClass]="{active : selected === 'orderHistory'}"
+                                    (click)="selectTab('orderHistory') ; selectedTab2('myBiddingHistory')" >Order History</a>
+                            </div>
+
+                        </div>
+
+                        <!---Dashboard starts-->
+                        <div class="field-area" *ngIf="selected=='dashboard'">
+                            <div class="slider-div">
+                                <div id="carouselExampleControls" class="carousel slide styleCarousel"
+                                    data-ride="carousel">
+                                    <div class="carousel-inner" >
+                                        <div class="carousel-item active" >
+                                            <img [src]="image" class="d-block w-100" alt="...">
+                                        </div>
+                                        
+                                    </div>
+                                    <a class="carousel-control-prev" (click)="changeImage(1)" role="button"
+                                        data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: gray;cursor: pointer;"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" (click)="changeImage(2)" role="button"
+                                        data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: gray;cursor: pointer;"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="bidding-row">
+                                <div class="row mt-4">
+                                    <div class="col-md-12 col-sm-12 col-lg-12 dressLook ">
+                                        <h5>Browse popular Category</h5>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-lg-4 dressLook"
+                                        [routerLink]="['/bidding-category']" *ngFor="let category of popularCategories?.docs ">
+                                        <img src="{{ category?.image }}" alt="">
+                                        <p>{{ category?.auctionCategoryName }}</p>
+                                    </div>
+                                    
+                                    <div class="col-md-4 col-sm-4 col-lg-4 dressLook"
+                                        [routerLink]="['/bidding-category']">
+                                        <img src="assets/images/Layer 115.jpg" alt="">
+                                        <p>More</p>
+                                    </div>
+
+                                    <div class="col-md-12 col-sm-12 col-lg-12 dressLook">
+                                        <h5>Most Popular buying product</h5>
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-lg-4 dressLook" routerLink="/bidding-product"  *ngFor="let product of popularProduct?.docs ">
+                                        <img *ngIf="(product?.auctionProductName && product?.productImages[0]?.image)" src="{{ product?.productImages[0]?.image }}" style="max-width: 100%;" alt="">
+                                        <p>{{ product?.auctionProductName }}</p>
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+
+                        </div>
+                        <!---Dashboard ends-->
+
+                        <!-- sell on action start -->
+                        <div class="card post-field main-post" *ngIf="selected =='sell_Auction'">
+
+                            <div class="bidding-body">
+                                <div>
+                                    <div class="card" *ngFor="let category of categories; let i= index">
+                                        <div  class="accordion" id="accordion">
+                                        <div class="card-header" >
+                                            <h2 class="mb-0">
+                                                <div class="btn btn-link shz-clss">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="butn-img" >
+                                                                <img src="{{ category?.image}}" alt="" >
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3 catgeory-text">
+                                                            <h5>{{ category?.auctionCategoryName }}</h5>
+                                                        </div>
+                                                        <div class="col-md-5 icon-box">
+                                                            <div class="icon"  id="headingOne" data-toggle="collapse" data-target="#collapseOne"  aria-expanded="false" aria-controls="collapseOne">
+                                                                <em class="fa fa-angle-down" (click)="openSubCategory(category)"></em>
+                                                       </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </h2>
+                                        </div>
+
+                                        <div  id="collapse{{category._id}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                            <div class="card-body">
+                                                <ul class="list-group" *ngFor="let subcategory of subcategories">
+                                                    <li class="list-group-item"><a href="bidding-product">{{subcategory?.auctionSubCategoryName}}</a></li>
+                                                    
+                                                </ul>
+
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    
+
+
+                                </div>
+                            </div>
+
+                            <div class="field-area">
+
+
+                            </div>
+
+                        </div>
+                        <!-- sell on auction ends -->
+
+                        <!--start auction History -->
+                        <div class="card post-box main-post" *ngIf="selected == 'auction_History'">
+                            <div class="post-warp" *ngFor="let data of auctionHistoryData">
+                              <div class="post-content">
+                                <div class="content-col">
+                                 
+                                  <div class="post-summry">
+                                    <img [src]="(data?.productImages[0]?.image) ? (data?.productImages[0]?.image) : 'assets/images/product-img2.png'" class="img-fluid" alt="">
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="userName">
+                                    <p style="font-weight: 500;">{{ data?.auctionProductName }}
+                                    </p>
+                                            <p style="color: #989696; font-size: 15px;">{{ data?.auctionSubCategoryName }}
+                                            </p>
+                                            <p style="font-weight: 500;">$ {{ data?.productInitialCost }}
+                                                </p>
+                                                        <p>Status:- {{ data?.status }}</p>
+                                                        <p>{{ data?.location }}</p>
+                                                        <p>{{ data?.createdAt | date}}</p>
+                                </div>
+                                <div class="userIcon">
+                                        <button type="submit" (click)="cancelAuctionHistory(data._id)">Cancel</button>
+                                    </div>
+                                    <div class="userIcon">
+                                            <button type="submit" [routerLink]="['/participant-details',data._id]">View total participant details</button>
+                                        </div>
+                            </div>
+                          </div>
+                        <!--end auction History -->
+
+                        <!---Wishlist starts-->
+                        <div class="card post-box main-post mt-2" *ngIf="selected=='wishlist'">
+                            <div class="post-warp" *ngFor="let data of newProductList; let i =index">
+                                <div class="post-content">
+                                    <div class="product-summery">
+
+                                        <div class="post-summry wishlist-img" >
+                                            <img src="{{ data?.productImages[0]?.image }}" class="img-fluid" style="position: relative;height: 550px;" alt="">
+                                            <img src="{{cross}}"  style="width: 30px;right:30px;top:30px;position: absolute;" (click)="removeWishList(data?._id)" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="prodect-name">
+                                    <div class="heart-icon" style="color:#666">
+                                        <div>
+                                            <h5>{{ data?.auctionProductName }}</h5>
+                                            <h5>{{ data?.auctionSubCategoryName }}</h5>
+                                            <h6>Initial bidding ${{ data?.productInitialCost }}</h6>
+                                            <p><em class="fas fa-map-marker-alt"></em>
+                                                {{ data?.location }}</p>
+                                        </div>
+                                        <div class="like-icon">
+                                            <p>8 Feb</p>
+                                            <em class="fas fa-heart" style="color:#666"></em>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="enter mt-3">
+                                    <h6>Enter Bidding</h6>
+                                    <div class="enter-box">
+                                        <div class="enter1"> <i class="fa fa-minus" aria-hidden="true" (click)="decreament()"></i></div>
+                                        
+                                           
+                                            <input class="enter2" [(ngModel)]="noOfItem" type="text"  (keydown)="checkValue()">
+                                        <div class="enter3"> <i class="fa fa-plus" aria-hidden="true" (click)="increament()"></i> </div>
+
+                                        <button (click)="checkValue()">check</button>
+                                    </div>
+                                </div>
+
+                                <div class="time mt-4">
+                                    <p><strong>Time Left :</strong></p>
+                                    <countdown units=" Days | Hours | Minutes | Seconds" [end]="data?.endTime"></countdown>
+                                    <button class="confirm-btn" data-toggle="modal"
+                                        data-target="#Congratulations" >Confirm bidding</button>
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+
+                        <!-- chat room start -->
+                        <div *ngIf="selected == 'chats'">
+                                <div class=" heding-part">
+                                    <div class="tab bankingDetail wd">
+                                        <a class=" tablinks" [ngClass]="{'active': chatTabActive=='all'}" (click)="changeChatTab('all')">All</a>
+                                        <a class=" tablinks" [ngClass]="{'active': chatTabActive=='buying'}" (click)="changeChatTab('buying')">Buying</a>
+                                        <a class=" tablinks" [ngClass]="{'active': chatTabActive=='selling'}" (click)="changeChatTab('selling')">Selling</a>
+                                    </div>
+                                </div>
+    
+                                <div class="card post-box main-post" *ngIf="chatTabActive == 'all'">
+                                        <div class="card post-box main-post mt-2" *ngFor="let chat of chatList">
+                                                <div class="post-warp" (click)="openChat(chat)">
+                                                    <div class="chat-list-box">
+                                                        <ul class="list-body">
+                                                            <li class="chat-list-1">
+                                                                <div class="chat-list-img">
+                                                                    <img 
+                                                                    [src]="chat?.receiverProfile ? chat?.receiverProfile : 'assets/images/profile.png'" alt="">
+                                                                    <div class="active-list"></div>
+                                                                </div>
+                                                                <div class="list-text">
+                                                                    <h5>{{chat?.receiverName}}</h5>
+                                                                    <p *ngIf="chat?.message[chat.message.length-1]?.mediaType == 'text'">
+                                                                        {{chat.message[chat.message.length-1].message}}
+                                                                    </p>
+                                                                    <p *ngIf="chat?.message[chat.message.length-1]?.mediaType == 'image'">
+                                                                        Photo
+                                                                    </p>
+                                                                </div>
+                                                            </li>
+                                                            <li class="chat-list-2">{{chat?.createdAt}}</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                </div>
+                                <div class="card post-box main-post" *ngIf="chatTabActive == 'buying'">
+                                        <div class="card post-box main-post mt-2" *ngFor="let chat of chatList">
+                                                <div class="post-warp" (click)="openChat(chat)" *ngIf="chat.type == 'buying'">
+                                                    <div class="chat-list-box">
+                                                        <ul class="list-body">
+                                                            <li class="chat-list-1">
+                                                                <div class="chat-list-img">
+                                                                    <img 
+                                                                    [src]="chat?.receiverProfile ? chat?.receiverProfile : 'assets/images/profile.png'"
+                                                                alt="" >
+                                                                    <div class="active-list"></div>
+                                                                </div>
+                                                                <div class="list-text">
+                                                                        <h5> {{chat?.receiverName}}</h5>
+                                                                        <p
+                                                                            *ngIf="chat.message[chat.message.length-1].messageType == 'text'">
+                                                                            {{chat.message[chat.message.length-1].message}}</p>
+                                                                        <p
+                                                                            *ngIf="chat.message[chat.message.length-1].messageType == 'image'">
+                                                                            Photo</p>
+                                                                </div>
+                                                            </li>
+                                                            <li class="chat-list-2">{{chat.createdAt}}</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                </div>
+                                <div class="card post-box main-post" *ngIf="chatTabActive == 'selling'">
+                                        <div class="card post-box main-post mt-2" *ngFor="let chat of chatList">
+                                                <div class="post-warp" (click)="openChat(chat)" *ngIf="chat.type == 'selling'">
+                                                    <div class="chat-list-box">
+                                                        <ul class="list-body">
+                                                            <li class="chat-list-1">
+                                                                <div class="chat-list-img">
+                                                                    <img 
+                                                                    [src]="chat?.receiverProfile ? chat?.receiverProfile : 'assets/images/profile.png'"
+                                                                  alt=""  >
+                                                                    <div class="active-list"></div>
+                                                                </div>
+                                                                <div class="list-text">
+                                                                     <h5> {{chat?.receiverName}}</h5>
+                                                                    <p
+                                                                        *ngIf="chat.message[chat.message.length-1].messageType == 'text'">
+                                                                        {{chat.message[chat.message.length-1].message}}</p>
+                                                                    <p
+                                                                        *ngIf="chat.message[chat.message.length-1].messageType == 'image'">
+                                                                        Photo</p>
+                                                                </div>
+                                                            </li>
+                                                            <li class="chat-list-2">{{chat.createdAt}}</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                </div>                            
+                            </div>
+                        <!-- chat room end -->
+
+                        <!---Wishlist ends-->
+
+                        <!--bidding history starts-->
+                        <div class="card post-box main-post mt-2" *ngIf="selected=='orderHistory'">
+                            <div class="post-warp">
+                                <ul class="nav nav-pills mb-3 wishlist-tab" id="" role="tablist">
+                                    <li class="nav-item wishlist-item">
+                                        <a class="nav-link wishlist-link" id="" data-toggle="pill"
+                                            href="#My-biding" role="tab" aria-controls="My-biding" [ngClass]="{active : selectTab2 == 'myBiddingHistory'}"
+                                            aria-selected="true" (click)="selectedTab2('myBiddingHistory')">My biding history</a>
+                                    </li>
+                                    <li class="nav-item wishlist-item">
+                                        <a class="nav-link wishlist-link" id="" data-toggle="pill"
+                                            href="#My-Order-historye" role="tab" aria-controls="My-Order-historye" [ngClass]="{active : selectTab2 == 'myOrderHistory'}"
+                                            aria-selected="false" (click)="selectedTab2('myOrderHistory')">My Order history</a>
+                                    </li>
+                                </ul>
+
+                                <!--start myBiddingHistory -->
+                                <div class="tab-content" id="pills-tabContent" *ngIf="this.selectTab2 == 'myBiddingHistory'">
+                                    <div class="tab-pane fade-in active" id="My-biding" role="tabpanel">
+                                        <div class="my-bidding-body" *ngFor="let data of myBiddingHistoryData?.bidderData">
+                                            <h4>Product ID: {{ data._id}} </h4>
+                                            <div class="prodect-div">
+                                                <div class="product-img">
+                                                    <img src={{data.image}} alt="">
+                                                </div>
+                                                <div class="product-text">
+                                                    <div class="status">
+                                                        <label class="status1">Status :</label>
+                                                        <div class="status2">
+                                                            <label class="approved">{{ data.status}}</label>
+                                                        </div>
+                                                    </div>
+                                                    <p>{{ data.auctionProductName }}</p>
+                                                    <p class="rat">${{ data.productInitialCost }}</p>
+                                                    <button *ngIf="data.status == 'Approved'" class="btn buy-btn" (click)="buyNow(data._id)">Buy now</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        
+                                    </div>
+                                </div>
+                                 <!--End myBiddingHistory -->
+
+                                <!-- myOrderHistoty -->
+                                <div class="tab-content" id="pills-tabContent" *ngIf="this.selectTab2 == 'myOrderHistory'">
+                                    <div class="tab-pane fade-in active" id="My-biding" role="tabpanel">
+                                        <div class="my-bidding-body" *ngFor="let data of orderHistoryData">
+                                            <h4>Order ID: {{data._id}} </h4>
+                                            <div class="prodect-div">
+                                                <div class="product-img">
+                                                    <img src="assets/images/Layer 115.jpg" alt="">
+                                                </div>
+                                                <div class="product-text">
+                                                    <div class="status">
+                                                        <label class="status1">Status :</label>
+                                                        <div class="status2">
+                                                            <label class="approved">{{data?.orderStatus}}</label>
+                                                        </div>
+                                                    </div>
+                                                    <p>Ladies dress</p>
+                                                    <p class="rat">${{data?.amount}}</p>
+                                                    <div style="display: flex; ">
+                                                        <button class="btn buy-cancel" style="margin: 5px;" *ngIf="data?.orderStatus == 'Delivered'">Return</button>
+                                                        <button class="btn buy-btn" style="margin: 5px;" *ngIf="data?.orderStatus == 'Delivered'">feedback and rating</button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        
+                             <!--End myOrderHistoty -->
+
+                            </div>
+                        </div>
+                        <!--bidding history ends-->
+                    </div>
+                    <!--  end of tab section -->
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal -->
+<div class="modal fade" id="Congratulations" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-content">
+    <div class="modal-body congratulations-body">
+      <h2> Congratulations</h2>
+      <h3> You have done bidding successfully !</h3>
+    </div>
+    <div class="modal-footer ok-btn">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">ok</button>
+
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+
+<!-- Change status Modal -->
+<div class="modal fade" id="changeStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body detail-about">
+                    <form [formGroup]="customStripeForm">
+                            <div class="panel-body mt-5">
+                              <div class="row">
+                                <div class="col-xs-12 col-md-12">
+                                  <div class="form-group">
+                                    <label>CARD NUMBER</label>
+                                    <div class="input-group">
+                                      <input type="text" formControlName="cardNumber" class="form-control" placeholder="Valid Card Number" name="cardNumber"/>
+                                      <span class="input-group-addon">
+                                        <span class="fa fa-credit-card"></span>
+                                      </span>
+                                    </div>
+                                    <div *ngIf="(cardNumber.dirty || cardNumber.touched) && cardNumber.invalid">
+                                            
+                                            <span [ngClass]='{"errorClass": cardNumber.errors.required}' *ngIf="cardNumber.errors.required">                                              cardNumber is required</span>
+                                          </div>
+                                    
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-xs-7 col-md-7">
+                                  <div class="form-group">
+                                    <label><span class="hidden-xs">EXPIRATION</span> Date</label>
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                        <div class="form-group">
+                                          <select formControlName="expMonth" class="form-control">
+                                            <option value="">Select Month</option>
+                                            <option value="1">01</option>
+                                            <option value="2">02</option>
+                                            <option value="3">03</option>
+                                            <option value="4">04</option>
+                                            <option value="5">05</option>
+                                            <option value="6">06</option>
+                                            <option value="7">07</option>
+                                            <option value="8">08</option>
+                                            <option value="9">09</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-6 pull-right">
+                                      <div class="form-group">
+                                        <select formControlName="expYear" class="form-control">
+                                          <option value="">Select Year</option>
+                                          <option value="20">2020</option>
+                                          <option value="21">2021</option>
+                                          <option value="22">2022</option>
+                                          <option value="23">2023</option>
+                                          <option value="24">2024</option>
+                                          <option value="25">2025</option>
+                                          <option value="26">2026</option>
+                                          <option value="27">2027</option>
+                                          <option value="28">2028</option>
+                                          <option value="29">2029</option>
+                                          <option value="30">2030</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div *ngIf="(expMonth.dirty || expMonth.touched) && expMonth.invalid">
+                                        <span [ngClass]='{"errorClass": expMonth.errors.required}' *ngIf="expMonth.errors.required">                                              expMonth is required</span>
+                                      </div>
+                                      <div *ngIf="(expYear.dirty || expYear.touched) && expYear.invalid">
+                                            <span [ngClass]='{"errorClass": expYear.errors.required}' *ngIf="expYear.errors.required">                                              expYear is required</span>
+                                          </div>
+                   
+                                  
+                                </div>                            
+                              </div>
+                              <div class="col-xs-5 col-md-5 pull-right">
+                                <div class="form-group">
+                                  <label>CV CODE</label>
+                                  <input type="text" formControlName="cvv" class="form-control" placeholder="CVC" maxlength="4" />
+                                </div>
+                                <div *ngIf="(cvv.dirty || cvv.touched) && cvv.invalid">
+                                        <span [ngClass]='{"errorClass": cvv.errors.pattern}' *ngIf="cvv.errors.pattern">Please
+                                          enter valid cvv</span>
+                                        <span [ngClass]='{"errorClass": cvv.errors.required}' *ngIf="cvv.errors.required">                                              cvv is required</span>
+                                      </div>
+                                
+                              </div>
+                            </div>
+                          </div>
+                          <div class="panel-footer">
+                            <div class="row">
+                              <div class="col-xs-12 col-md-12">
+                                <button class="btn btn-warning btn-lg btn-block" (click)="pay(customStripeForm.value)">Process payment</button>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal End -->

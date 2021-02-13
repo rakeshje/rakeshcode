@@ -1,0 +1,83 @@
+.img{
+     height: auto;
+ }
+ .img1{
+     width: 200px !important;
+     height: 170px !important;
+ }
+ .profile-added{
+     position: relative;
+     bottom: 110px !important
+ }
+ .profile-added1{
+     display: flex;
+     justify-content: flex-end;
+     position: relative;
+     bottom: 43px !important;
+     right: 30px !important;
+ }
+
+ .file{
+     position: absolute;
+     width: 110px !important;
+     opacity: 0;
+     top: 0px !important;
+     margin-left: -92px !important;
+ }
+
+ .camera{
+     bottom: 11px;
+     right: 32px;
+ }
+ .cam{
+    position: relative;
+    margin-bottom: 10px;
+    right: 28px;
+    font-size: x-large;
+}
+ 
+.file1{
+    position: absolute;
+    width: 110px !important;
+    top: 0px !important;
+    opacity: 0;
+    right: 6%;
+
+
+}
+
+// .file1{
+//     position: relative;
+//     width: 110px !important;
+//     opacity: 0;
+//     left: -32% !important;
+// }
+.button{
+    text-align: center;
+    color: white;
+    background-color: green;
+    width: 100px;
+    height: 49px;
+    border-radius: 13px;
+    padding-top: 6px;
+    margin-left: 390px
+}
+
+// .backgroungFile{
+//     display: flex;
+//     // background: #bfbdbd;
+//     position: relative;
+//     bottom: 207px;
+//     right: 2%;
+//     width: 11%;
+//     top: 47%;
+//     font-size: 104%;
+// }
+.backgroungFile{
+display: flex;
+background: #bfbdbd;
+position: relative;
+bottom: 207px;
+right: 18px;
+width: 10%;
+}

@@ -1,0 +1,37 @@
+<div class="login-wrapper">
+    <div class="container-common">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="d-flex align-items-center minheight70vh">
+                    <form class="login_box_outer w-100">
+                        <div class="login-box max-WT-530">
+                            <div class="login-right-block">
+                                <div class="login-heading">
+                                    <h4>OTP verification</h4>
+                                </div>
+                                <div class="login-box-body">
+                                    <p class="common-paragrph text-center">Please enter the 4 digits OTP sent on your
+                                        registered phone number or Email ID .</p>
+                                    <div>
+                                        <p class="otp-mid-head text-center">Enter 4 - digits code</p>
+                                        <div class="modal-body otp-input-box">
+                                            <ng-otp-input (onInputChange)="onOtpChange($event)"
+                                                [config]="mainService.config"></ng-otp-input>
+                                        </div>
+                                        <div class="otp-resend">
+                                            <a (click)="otpResend()">Resend</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center mt40 admin-profile">
+                                    <button type="button" (click)="otpSubmit()"
+                                        class="btn btn-login btn-large  width100 font-100">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

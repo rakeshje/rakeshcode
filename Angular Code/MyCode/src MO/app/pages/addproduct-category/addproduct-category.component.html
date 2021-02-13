@@ -1,0 +1,44 @@
+<div class="wrapper" style="width: 80%;
+margin-left: 2%;">
+    <main class="middle-content">
+        <div class="page_title_block">
+            <h1 class="page_title"> ADD PRODUCT CATEGORY</h1>
+            <hr style="background: black; opacity: 0.5;width: 135%;">
+        </div>
+        <div style="margin-left: 49%;">
+            <img style="border-radius: 50%;" [src]="profile?profile:'assets/img/profile-img.jpg'" alt="" />
+             <em class="fa fa-camera" >
+        <input type="file" name="imageUrl" accept="image/*"
+        (change)="handleInputChange($event)" style="position: absolute; position: absolute;opacity: -0.9;"> </em> </div>
+        <form [formGroup]="addproductcategoryForm">
+            <div class="card" style="margin-left: 18%;">
+                <div class="row" style=" margin-left: 2%; margin-top: 8%; margin-right: 2%;">
+                    <div class="col">
+                        <label>Name of product Categroy:</label><br><br>
+                        <label>Price :</label><br><br>
+                        <label>Used for :</label><br><br>
+                        <label>Type : </label><br><br>
+                    </div>
+                    <div class="col" style=" margin-top: -1.5%;">
+                        <input type="text" class="form-control" formControlName="productName">
+                        <span class="text text-danger" *ngIf="addproductcategoryForm.controls.productName.touched && addproductcategoryForm.controls.productName.invalid && addproductcategoryForm.controls.productName.errors.required">*Product Name is Required</span><br>
+                        <input type="text" class="form-control" formControlName="price">
+                        <span class="text text-danger" *ngIf="addproductcategoryForm.controls.price.touched && addproductcategoryForm.controls.price.invalid && addproductcategoryForm.controls.price.errors.required">*Price is Required</span><br>
+                        <input type="text" class="form-control" formControlName="UsedFor">
+                        <span class="text text-danger" *ngIf="addproductcategoryForm.controls.UsedFor.touched && addproductcategoryForm.controls.UsedFor.invalid && addproductcategoryForm.controls.UsedFor.errors.required">*UsedFor  is Required</span><br>
+                        <input type="text" class="form-control" formControlName="type">
+                        <span class="text text-danger" *ngIf="addproductcategoryForm.controls.type.touched && addproductcategoryForm.controls.type.invalid && addproductcategoryForm.controls.type.errors.required">*Type is Required</span><br>
+                        
+                    </div>
+                </div>
+
+                <div class="row" style="margin-left: 25%;margin-top: 5%; margin-bottom: 8%; ">
+                    <button type="button" class="btn btn-theme" style="margin-left: 10%; width: 12%;"
+                    [routerLink]="['/product-management']">Back</button>
+                    <button type="button" class="btn btn-theme" style="margin-left: 10%; width: 12%;" [disabled]=addproductcategoryForm.invalid
+                        (click)="addProductCategory()">Save</button>
+                </div>
+            </div>
+        </form>
+    </main>
+</div>

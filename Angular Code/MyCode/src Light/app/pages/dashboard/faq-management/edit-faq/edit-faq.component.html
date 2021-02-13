@@ -1,0 +1,65 @@
+<div class="wrapper">
+     
+     <main class="middle-content">
+         <!-- Page Title Start -->
+         <div class="page_title_block">
+             <!-- <h1 class="page_title">Static Content Management> {{title}}>Edit</h1> -->
+             <h1 class="page_title text-center">FAQ MANAGEMENT</h1>
+         </div>
+         <!-- Page Title End -->
+         <div class="content-section">
+         <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+             <div class="main-block-innner mb40 mt40">
+                 <form [formGroup]="editFaqForm" #f="ngForm">
+                     <div class="add-store-block input-style">
+                         <div class="form-group row align-items-baseline">
+                             <label class="col-md-12">Topic :</label>
+                         </div>
+                         <div class="row">
+                             <div class="col-md-12">
+                                 <input type="text" formControlName="topic" class="form-control" >
+                                 <div class="text-danger" *ngIf="editFaqForm.get('topic').hasError('required') && (editFaqForm.get('topic').dirty || f.submitted)">
+                                     Please enter topic.
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="form-group row align-items-baseline">
+                              <label class="col-md-12">Question :</label>
+                          </div>
+                          <div class="row">
+                              <div class="col-md-12">
+                                  <input type="text" formControlName="question" class="form-control" >
+                                  <div class="text-danger" *ngIf="editFaqForm.get('question').hasError('required') && (editFaqForm.get('question').dirty || f.submitted)">
+                                      Please enter question.
+                                  </div>
+                              </div>
+                          </div>
+                         <div class="form-group row align-items-baseline mt-2">
+                             <label class="col-md-12">Answer :</label>
+                         </div>
+                         <div class="row">
+                             <div class="col-md-12">
+                                 <!-- <input type="text" formControlName="description" class="form-control"> -->
+                                 <!-- <ck-editor formControlName="description"></ck-editor> -->
+                                 <textarea class="form-control" cols="100" rows="18" formControlName="answer"></textarea>
+                                 <div class="text-danger" *ngIf="editFaqForm.get('answer').hasError('required') && (editFaqForm.get('answer').dirty || f.submitted)">
+                                     Please enter answer.
+                                 </div>
+                             </div>
+                         </div>
+                         <div class="form-group" style="justify-content: space-between">
+                             <div class="text-center mt40">
+                                     <a [routerLink]="['/faq-management']" class="btn btn-large  max-WT-200 font-100 btn-green mb-5 ml-2">Cancel</a>&nbsp;
+                                 <a (click)="updateFaq()" class="btn btn-large  max-WT-200 font-100 btn-green mb-5">Update</a>
+                                 
+                             </div>
+                         </div>
+                     </div>
+                 </form>
+             </div>
+         </div>
+         </div>
+         <!-- Table Responsive End -->
+         
+     </main>
+ </div>

@@ -1,0 +1,174 @@
+<!-- Start Right Bar -->
+<app-rightsidemenu></app-rightsidemenu>
+<!-- Close Right Bar -->
+
+<!-- Start Page Content -->
+<div class="page-wrap">
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="left-menu card">
+          <app-sidemenu></app-sidemenu>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="page-content">
+
+          <!-- chat container -->
+          <div class="card post-box main-post">
+            <div class="card  post-search chat">
+              <div class="post-wrap" style="width:100%;">
+                <div class="chat-head">
+                  <div class="chate-1">
+                    <img [src]="receiverProfile ? receiverProfile : 'assets/images/profile.png'" alt="">
+                    <h6>{{receiverName}}</h6>
+                  </div>
+                  <div class="chate-2">
+                    
+                    <div class="elips">
+                      <em class="fa fa-ellipsis-v doted " style="color: #fff;" (click)="open()"></em>
+                      <div class="hide-clas none " style="color: #000;" id="action">
+                        <a class="" *ngIf="status == 'active'" (click)="changeStatus('blockConfirmation')" style="cursor: pointer;">Block</a>
+                        <a class="" *ngIf="status == 'block'" (click)="changeStatus('unblockConfirmation')">Unblock</a>
+                        <a class="" (click)="clearChat()" style="cursor: pointer;">Clear Chat</a>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="post-field main-post chat-post">
+              <div class="chate-box mt-4">
+                <div class="main-chat">
+                  <div *ngFor="let data of chat" [ngClass]="{'chate-lest1': data.role=='receiver', 'chate-lest2 darker': data.role=='sender'}">
+                    <img [src]="data.role=='sender' ? (senderProfile ? senderProfile : 'assets/images/profile.png') : (receiverProfile ? receiverProfile : 'assets/images/profile.png')" alt="">
+                    <p *ngIf="data.mediaType == 'text'">{{data.message}}</p>
+                    <img *ngIf="data.mediaType == 'image'" [src]="data.message" alt="">
+                    <a [href]="data.message" target="_blank"><img *ngIf="data.mediaType == 'pdf'" src="assets/images/pdfsymbol.jpeg" alt=""></a>
+                    <span [ngClass]="{'time-right': data.role=='receiver', 'time-left': data.role=='sender'}">{{data.time}}</span>
+                  </div>
+
+                 
+
+                </div>
+
+                <div class="send-msg">
+                  <div class="file-atech">
+                    <input type="text" value="" class="form-control type" [(ngModel)]="newMessage" placeholder="Type your Message Here....." (keyup.enter)="submitChat('text')" [disabled]="status == 'block'">
+                    <div class="atech">
+                      <img src="assets/images/atach.png" alt="">
+                      <input type="file" class="form-control file" placeholder="Type your Message Here....." (change)="upload($event)" accept="application/pdf, image/png, image/jpeg, image/jpg" [disabled]="status == 'block'">
+                    </div>
+                  </div>
+                  <button class="btn send-img" [disabled]="status == 'block'"> <img src="assets/images/send-btn.png" (click)="submitChat('text')" alt=""></button>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Close Page Content -->
+
+
+
+<!-- modal for Bidding product image -->
+<div class="modal fade" id="bidding-product-image" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body congratulations-body">
+        <h2>Product Image</h2>
+        
+
+        <div class="slider-div">
+          <div id="carouselExampleControls" class="carousel slide styleCarousel" data-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="assets/images/Layer 115.jpg" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="assets/images/Layer 115.jpg" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="assets/images/Layer 115.jpg" class="d-block w-100" alt="...">
+              </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer ok-btn">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">ok</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="showImage" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <img *ngIf="type != 'application/pdf'" [src]="fileData" alt="">
+        <img *ngIf="type == 'application/pdf'" src="assets/images/pdfsymbol.jpeg" alt="">
+      </div>
+      <div class="modal-footer">
+        <div class="retur-product">
+          <button type="button" class="btn btn-danger btn-return" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success paynow btn-return" (click)="submitImage()">OK </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="blockConfirmation" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p>Are you sure you want to block?</p>
+      </div>
+      <div class="modal-footer">
+        <div class="retur-product">
+          <button type="button" class="btn btn-danger btn-return" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success paynow btn-return" (click)="block('blockConfirmation')">Block </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="unblockConfirmation" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p>Are you sure you want to unblock?</p>
+      </div>
+      <div class="modal-footer">
+        <div class="retur-product">
+          <button type="button" class="btn btn-danger btn-return" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success paynow btn-return" (click)="block('unblockConfirmation')">Unblock </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

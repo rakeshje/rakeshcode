@@ -1,0 +1,13 @@
+.profile-data-section{
+                  text-align: center;
+                  width: 90%;
+                  margin: auto;
+              }
+              
+              .profile-data-section p{
+                  white-space: nowrap;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+              }
+              
+              

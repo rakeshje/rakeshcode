@@ -1,0 +1,109 @@
+<main class="middle-content">
+    <div class="page_title_block">
+        <h1 class="page_title" style="color:#26272d">KYC UPDATE</h1>
+    </div>
+    <div class="content-section">
+        <div class="outer-box">
+            <div class="global-table no-radius p0">
+                <div class="tab-content1">
+                    <div class="tab-pane1">
+                        
+                        <div class="user-main-head">
+                            <p style="margin-top: -3%;font-size: 124%;background-color: white; width: 10%; padding-left: 1%;">Filter By</p>
+                            <form [formGroup]="kycForm">
+                                <div class="row form-group">
+                                    <div class="col-md-1"style="padding-top: 2%;">
+                                          <label for="" style="white-space: nowrap">Search By:</label>
+                                            </div>
+                                            <div class="col-md-2"style="padding-top: 1%;">
+                                                <select formControlName="status" class="form-control">
+                                                    <option value="">Select status</option>
+                                                    <option>PENDING</option>
+                                                    <option>ACCEPTED</option>
+                                                    <option>REJECTED</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-4 user-lst"  >
+                                                <div class="two-btnline">
+                                                    <div class="text-left" style="margin-top: 3%; margin-right: 5%" >
+                                                        <input type="text" placeholder="Username" class="form-control"
+                                                        formControlName="userName" > 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        
+                                    <div class="col-md-2 user-lst"  >
+                                        <div class="two-btnline">
+                                            <div class="text-left" style="margin-left: 1%" (click)="search()">
+                                                <button type="submit"  class="btn  btn-theme cus-mr" style="margin-top: 10%" >SEARCH</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2 user-lst"  >
+                                            <div class="two-btnline">
+                                                <div class="text-left" style="margin-left: 1%" (click)="reset()">
+                                                    <button type="submit"  class="btn  btn-theme cus-mr" style="margin-top: 10%" >RESET</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                                
+                            </form>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered" aria-describedby="user list">
+                                <thead>
+                                    <tr class="no_wrap_th">
+                                        <th scope="col">S.No</th>
+                                        <th scope="col">User Name</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Phone Number</th>
+                                        <th scope="col">Document ID</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col" class="action_td_btn3">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let data of kycList | paginate:{itemsPerPage:20, currentPage:pageNumber, totalItems:kycList?.length}; let i=index">
+                                        <td>{{20*(this.pageNumber-1)+i+1}}</td>
+                                        <td>{{data.firstName}}</td>
+                                        <td>{{data.email}}</td>
+                                        <td>{{data.phoneNO}}</td>
+                                        <td>{{data.kycId}}</td>
+                                        <td>{{data.kycStatus}}</td>
+                                        <td class="action_td_btn3" style="cursor: pointer"  routerLink="/kyc-detail/{{data.userId}}">
+                                            <a ><em class="fa fa-eye"  style="font-size: 185%;color:black"></em></a>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="kycList?.length==0">
+                                        <td colspan="10" vertical-align="middle">
+                                            <div class="no-record">
+                                                <div class="no-recordin">
+                                                    <H5 style="margin-left: 44%;">No record found</H5>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="custom-pagination mt20 " style="display: flex; justify-content:flex-end" *ngIf="kycList?.length>20">
+                            <pagination-controls (pageChange)="pageNumber = $event"></pagination-controls>
+                        </div>                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="container-fluid">
+        <p class="copyright">Alende  <strong class="theme-text-color"></strong> 
+            </p>
+    </div>
+</footer>
+

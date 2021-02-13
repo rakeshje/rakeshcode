@@ -1,0 +1,10 @@
+
+.check{
+    position: relative;
+    margin-right: 9%;
+}
+.box{
+    position: absolute;
+    right: 95%;
+    top: 18%;
+}

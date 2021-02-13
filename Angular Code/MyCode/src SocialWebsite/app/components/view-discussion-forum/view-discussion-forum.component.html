@@ -1,0 +1,174 @@
+  
+  <!-- Start Right Bar -->
+  <app-rightsidemenu></app-rightsidemenu>
+  <!-- Close Right Bar -->
+
+  <!-- Satrt Page Content -->
+  <div class="page-wrap">
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="left-menu card">
+            <app-sidemenu></app-sidemenu> 
+          </div>
+        </div>
+        <div class="col-md-9">
+          <div class="page-content">
+
+            <!-- <div class="card post-box post-search">
+                <form class="search-form">
+                 <input type="text" placeholder="Search by friend..." class="form-control" (keyup)="Subject.next($event.target.value)">
+                </form>
+            </div> -->
+
+            <div class="card post-box main-post" >
+              <div class="post-warp">
+                <div class="post-content">
+                  <div class="userimg-col"><img class="user-icon" [src]="( discussionViewData?.comments[0]?.userPic ) ? ( discussionViewData?.comments[0]?.userPic ) : 'assets/images/profile.png' "><span style="color:green;">{{ discussionViewData?.userName }} </span></div>
+                  <div class="content-col">
+                    <div class="post-header">
+                      <h5 class="post-header">{{ discussionViewData?.title }}</h5>
+                      <div style="margin-left: 10px;">
+                          <span class="post-time">{{ discussionViewData?.description }}</span>
+                          <span class="post-time">Posted date: {{ discussionViewData?.createdAt | date }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="post-me">
+                  <a ><span style="color: black;">{{ discussionViewData?.likes?.length }}</span><img src="assets/images/like.png"></a>
+                  <a ><img src="assets/images/heart.png"> </a>
+                  <a ><img src="assets/images/chat-comment-oval-speech-bubble-with-text-lines.png"></a>
+                  <a class="emoji" href=""><img src="assets/images/emojiii.png"></a>
+                  <a ><img src="assets/images/Layer 76.png"> Saswat and 150 others</a>
+                  <a class="emojiiIcon" >{{ discussionViewData?.comments?.length }} comments</a>
+              </div>
+              <div class="post-meta">
+                <a *ngIf="!myLike" (click)="like('true')"  tyle="cursor:pointer"><img src="assets/images/thumb-up.png" class="likeActive"> Like</a>
+                <a *ngIf="myLike"  (click)="like('false')"  tyle="cursor:pointer"><img src="assets/images/blue-like.png" class="like-blue"> Like</a>
+                <a ><img src="assets/images/chat-comment-oval-speech-bubble-with-text-lines.png" (click)="comment(comments)"> Comment</a>
+                <a ><img src="assets/images/Layer 76.png" (click)="gettingFriendList()" style="cursor:pointer"> Share</a>
+              </div>
+              <div class="comment-box">
+                <div class="comment-list" *ngFor="let comment of discussionViewData?.comments; let i=index">
+                  <div class="comment">
+                    <div class="userimg-col"><img class="user-icon" [src]="(comment?.userPic) ? (comment?.userPic) : 'assets/images/profile.png'"></div>
+                    <div class="content-col">
+                      <h5>{{ comment?.userName }}</h5>
+                       <p name="" id="comment" cols="1" rows="1" style="width:100%" *ngIf = "edit=='para'" >{{ comment?.comment }}</p> 
+                       <p>{{ comment?.commentedTime | date }}</p>
+                      <input type="text" class="form-control" *ngIf = "edit=='edit'" [value] = "comment?.comment"  
+                      (keyup.enter) = "updateComment($event.target.value)">
+                    </div>
+                    <div *ngIf="userid==discussionViewData.userId">
+                      <!-- <a   <i class="fa fa-trash" aria-hidden="true"  data-toggle="tooltip"  title="Delete" ></i></a>  -->
+                       <i    (click)="editComment(comment.comment,comment._id, i,'edit')"  class="fa fa-edit" aria-hidden="true"   data-toggle="tooltip"  title="Edit"></i>
+                       <i  (click)="deleteComment(comment._id, discussionViewData._id)" class="fa fa-trash" aria-hidden="true"  data-toggle="tooltip"  title="Delete" ></i>
+                    </div>
+                    <div>
+                    <a  (click)="replyComment(comment)" style="margin-bottom:35px" *ngIf="userid!=comment?.commentedUser"><i class="fa fa-reply"></i></a>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="comment-form-section">
+                  <div class="userimg-col"><img class="user-icon" [src]="(discussionViewData?.comments[0]?.userPic) ? (discussionViewData?.comments[0]?.userPic) : 'assets/images/profile.png'"></div>
+                  <div class="content-col">
+                    <form class="comment-form">
+                      <input type="text" placeholder="Write a comment..." class="form-control"  [value]="commentt" (keyup.enter)="comment($event.target.value)">
+                      <div class="form-buttons">
+                        <a class="medai" ><i class="fas fa-camera"></i></a>
+                        <a class="emogi" ><i class="fas fa-laugh"></i></a>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- <div class="card post-box main-post">
+              <div class="post-warp">
+                <div class="post-content">
+                  <div class="userimg-col"><img class="user-icon" src="assets/images/Layer 61.png"><span style="color:green;">Bhaswati</span></div>
+                  <div class="content-col">
+                    <div class="post-header">
+                    
+                      <span class="post-time"> Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an ,</span>
+                          <span class="post-time">Posted date: 12/01/2019</span>
+                    </div>
+                   
+                  </div>
+                </div>
+              </div>
+              <div class="post-me">
+                  <a href="#"><img src="assets/images/like.png"> </a>
+                  <a href="#"><img src="assets/images/heart.png"> </a>
+                  <a href="#"><img src="assets/images/chat-comment-oval-speech-bubble-with-text-lines.png"></a>
+                  <a class="emoji" href=""><img src="assets/images/emojiii.png"></a>
+                  <a href="#"><img src="assets/images/Layer 76.png"> Saswat and 150 others</a>
+                  <a class="emojiiIcon" href="#">200 comments</a>
+                  </div>
+              <div class="post-meta">
+                <a href="#"><img src="assets/images/thumb-up.png"> Like</a>
+                <a href="#"><img src="assets/images/chat-comment-oval-speech-bubble-with-text-lines.png"> Commnet</a>
+                <a href="#"><img src="assets/images/Layer 76.png"> Share</a>
+              </div>
+              <div class="comment-box">
+                <div class="comment-list">
+                  <div class="comment">
+                    <div class="userimg-col"><img class="user-icon" src="assets/images/Layer 61.png"></div>
+                    <div class="content-col">
+                      <h5>Jenny Thomas</h5>
+                      <p>Looking Cool Dude</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="comment-form-section">
+                  <div class="userimg-col"><img class="user-icon" src="assets/images/Layer 61.png"></div>
+                  <div class="content-col">
+                    <form class="comment-form">
+                      <input type="text" placeholder="Write a comment..." class="form-control">
+                      <div class="form-buttons">
+                        <a class="medai" href=""><i class="fas fa-camera"></i></a>
+                        <a class="emogi" href=""><i class="fas fa-laugh"></i></a>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Close Page Content -->
+
+  <!-- Share post start -->
+<div class="modal fade" id="sharePost" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-content">
+    <div class="modal-body detail-about">
+      <!-- <form class="search-form">
+        <input type="text" placeholder="Search" class="form-control" (click)="searchFriend()">
+      </form> -->
+      <div *ngFor="let friend of friends" style="text-align: left;">
+        <input type="checkbox" (change)="chooseFriend(friend, $event)">
+        <img style="height: 60px; width: 60px; border-radius: 30px; padding: 10px;" [src]="(friend?.profilePic) ? (friend?.profilePic) : 'assets/images/profile.png'">
+        <span>{{friend.firstName}}</span>
+      </div>
+      <div class="btnnns">
+        <div class="flexProp">
+          <button type="submit" class="btn btn-danger btn-return" style="width: auto;margin-right: 10px;" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-success paynow" (click)="sharePostFriends()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<!-- Share post end -->

@@ -1,0 +1,171 @@
+<!-- Start Right Bar -->
+<app-rightsidemenu></app-rightsidemenu>
+<!-- Close Right Bar -->
+
+<!-- Satrt Page Content -->
+<div class="page-wrap">
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="left-menu card">
+          <app-sidemenu></app-sidemenu>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="page-content">
+          <div class="card post-box main-post">
+            <div class="post-warp">
+              <div class="header-tab">
+                <div class="tab pointer">
+                  <div [ngClass]="{active : selected === 'suggestion'}" (click)="selectTab('suggestion')">
+                    Suggestion
+                  </div>
+                  <div [ngClass]="{active : selected === 'request'}" (click)="selectTab('request')">
+                    Request
+                  </div>
+                  <div [ngClass]="{active : selected === 'contacts'}" (click)="selectTab('contacts')">
+                    Contact
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card post-box main-post">
+            <div class="post-warp">
+              <div class="white-input">
+                <input type="name" class="white-input" id="name" placeholder="Search people here.."
+                  (keyup)="searchByName($event.target.value)">
+                <i class="fa fa-search"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Suggestion Start -->
+
+          <div class="card post-box main-post" *ngIf="selected == 'request'" >
+            
+
+             
+                <div class="mainDisable" *ngFor="let option of requestList | paginate: { itemsPerPage: limit, currentPage: page, totalItems: total }; let i = index">
+                  <div class="user"><img [src]="option.profilePic">
+                  </div>
+                  <div class="userName"><label>{{option.firstName}} {{option.lastName}}</label>
+                    <p>{{option.mutual || 0}} mutual friend</p>
+                  </div>
+                  <div class="userIcon">
+                    <span (click)="action('ACCEPT',i)"><img src="assets/images/right.png"></span >
+                      <span (click)="action('BLOCK',i)"><img src="assets/images/disable.png"></span>
+                    <span (click)="action('DELETE',i)">
+                      <img src="assets/images/cross.png"> </span>
+                     </div> 
+                    </div> 
+                    <div class="mainDisable" style="margin-top: 15px;" *ngIf="requestList.length == 0">
+        
+                        <div class="userName">
+                          
+                          <h2>No Record Found!</h2>
+                         
+                        </div>
+                        
+                       
+                      </div>
+                      <div  *ngIf="requestList.length != 0">
+                        <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+                      </div>
+
+              </div> 
+                        <!-- Contact Start -->
+
+                        <div class="card post-box main-post" *ngIf="selected == 'contacts'">
+                          <div class="post-warp">
+
+                            <div class="mainDisable" style="margin-top: 15px;" *ngFor="let option of contactList | paginate: { itemsPerPage: limit, currentPage: page, totalItems: total };">
+                              <div class="user">
+                                <img [src]="option.profilePic">
+                              </div>
+                              <div class="userName">
+                                <label>{{option.firstName}} {{option.lastName}}</label>
+                                <p>{{option.mutual || 0}} mutual friend </p>
+                              </div>
+                              <div class="userIcon">
+                                <span><img src="assets/images/chat.png" (click) = "openChat(option._id,option.profilePic,option.firstName)"></span>
+                                <!-- <span><img src="assets/images/phone.png"></span>
+                                <span><img src="assets/images/video.png"></span> -->
+                                <!-- <span><img src="assets/images/dot.png"></span> -->
+
+                              </div>
+
+                            </div>
+                            <div class="mainDisable" style="margin-top: 15px;" *ngIf="contactList.length == 0">
+        
+                                <div class="userName">
+                                    <!-- <ion-label>fgdgdsh</ion-label> -->
+                                  <h2>No Record Found!</h2>
+                                 
+                                </div>
+                                
+                               
+                              </div>
+                              <div *ngIf="contactList.length != 0">
+                                <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+
+                              </div>
+
+                          </div>
+
+                        </div>
+
+                        <!-- contact End -->
+
+                        <!-- -----------Suggestion Start-------------- -->
+
+
+                        <div class="card post-box main-post" *ngIf="selected == 'suggestion'">
+                          <div class="post-warp">
+
+                            <div class="mainDisable" style="margin-top: 15px;" *ngFor="let option of suggestionList | paginate: { itemsPerPage: limit, currentPage: page, totalItems: total }; let i = index">
+                              <div class="user">
+                                <img [src]="option.profilePic">
+                              </div>
+                              <div class="userName">
+                                <label>{{option.firstName}} {{option.lastName}}</label>
+                                <p>{{option.mutual || 0}} mutual friend</p>
+                              </div>
+                              <div class="userIcon pointer">
+                                <span style="margin-right: 12px;" (click)="addFriend(option['_id'], i,'SENT')"><img src="assets/images/addfriend.png"></span>
+                                <span (click)="addFriend(option['_id'], i,'REMOVE')"><img src="assets/images/cross.png"></span>
+
+
+                              </div>
+
+                            </div>
+                            <div class="mainDisable" style="margin-top: 15px;" *ngIf="suggestionList.length == 0">
+        
+                                <div class="userName">
+                                    <!-- <ion-label>fgdgdsh</ion-label> -->
+                                  <h2>No Record Found!</h2>
+                                 
+                                </div>
+                                
+                               
+                              </div>
+
+                          </div>
+                          <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+
+                        </div>
+                        
+
+
+
+
+
+                        <!-- -----------Suggestion End-------------- -->
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Close Page Content -->

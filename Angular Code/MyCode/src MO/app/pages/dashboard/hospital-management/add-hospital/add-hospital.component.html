@@ -1,0 +1,184 @@
+<div class="wrapper">
+    <main class="middle-content">
+        <div class="page_title_block">
+            <h1 class="page_title">Hospital Management / Add</h1>
+        </div>
+        <div class="content-section">
+            <div class="order-view mt30 mrgn-0-auto">
+                <div class="main-block-innner mb40 mt40">
+                    <form [formGroup]="addHospitalForm" #f="ngForm" style="padding: 10px;">
+                        <div class="input-style">
+                            <div class="user-profile">
+                                <div class="image-box">
+                                    <img [src]="imageUrl || 'assets/img/profile-img.jpg'" id="sub-admin-image" alt="">
+                                    <label class="upload-label">
+                                        <input type="file" formControlName="image" name="image"
+                                            accept="image/jpg,image/jpeg,image/png" id="image"
+                                            (change)="ValidateFileUpload($event)" maxlength="56">
+                                        <em class="fa fa-pencil" style="color: #86559f!important; font-size: 12px"></em>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row mt-5 pb-1 ">
+                                <div class="col-md-6">
+                                    <ul class="view-ul view-ul2">
+                                        <li><label>Hospital Name <span>:</span></label></li>
+                                        <li>
+                                            <input type="text" class="form-control" placeholder="Hospital Name*"
+                                                formControlName="hospitalName"
+                                                (keypress)="mainService.preventSpace($event)" maxlength="60">
+                                            <div class="text-danger">
+                                                <span
+                                                    *ngIf="addHospitalForm.get('hospitalName').hasError('required') && (addHospitalForm.get('hospitalName').dirty || addHospitalForm.get('hospitalName').touched)">
+                                                    *Please enter hospital name.
+                                                </span>
+                                                <span
+                                                    *ngIf="addHospitalForm.get('hospitalName').hasError('pattern') && (addHospitalForm.get('hospitalName').dirty || f.submitted)">
+                                                    *Hospital Name accept only alphabets.
+                                                </span>
+                                                <span
+                                                    *ngIf="addHospitalForm.get('hospitalName').hasError('minlength') && !(addHospitalForm.get('hospitalName').hasError('pattern')) && (addHospitalForm.get('hospitalName').dirty || f.submitted)">
+                                                    *Minimum length must be 2.
+                                                </span>
+                                                <span
+                                                    *ngIf="addHospitalForm.get('hospitalName').hasError('maxlength') && !(addHospitalForm.get('hospitalName').hasError('pattern')) && (addHospitalForm.get('hospitalName').dirty || f.submitted)">
+                                                    *Maximum length should not more than 20.
+                                                </span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="view-ul view-ul2">
+                                        <li><label> Email Address <span>:</span></label></li>
+                                        <li>
+                                            <input type="text" class="form-control" placeholder="Email Address"
+                                                formControlName="email" (keypress)="mainService.preventSpace($event)"
+                                                maxlength="50">
+                                            <div class="text-danger">
+                                                <span
+                                                    *ngIf="addHospitalForm.get('email').hasError('required') && (addHospitalForm.get('email').dirty || addHospitalForm.get('email').touched)">
+                                                    *Please enter you email.
+                                                </span>
+                                                <span *ngIf="addHospitalForm.get('email').hasError('pattern')">
+                                                    *Please enter valid email.
+                                                </span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="view-ul view-ul2">
+                                        <li><label>Phone Number <span>:</span></label></li>
+                                        <li>
+                                            <div class="phone-number-input-box">
+                                                <select class="form-control mr-2" formControlName="countryCode">
+                                                    <option *ngFor="let item of countryCode" [value]="item">{{item}}
+                                                    </option>
+                                                </select>
+                                                <input type="text" class="form-control" placeholder="Mobile no."
+                                                    formControlName="mobileNumber"
+                                                    (keypress)="mainService.preventSpace($event)" maxlength="16">
+                                            </div>
+                                            <div *ngIf="addHospitalForm.get('countryCode').hasError('required') && (addHospitalForm.get('mobileNumber').dirty || addHospitalForm.get('mobileNumber').touched)"
+                                                class="text-danger">
+                                                <span *ngIf="!addHospitalForm.get('countryCode').value">*Please Select
+                                                    country code</span>
+                                            </div>
+                                            <div *ngIf="addHospitalForm.get('countryCode').value" class="text-danger">
+                                                <span
+                                                    *ngIf="addHospitalForm.get('mobileNumber').hasError('required') && (addHospitalForm.get('mobileNumber').dirty || addHospitalForm.get('mobileNumber').touched)">
+                                                    *Please enter mobile Number.
+                                                </span>
+                                                <span
+                                                    *ngIf="(addHospitalForm.get('mobileNumber').hasError('pattern')) && addHospitalForm.get('mobileNumber').dirty">
+                                                    *Please enter valid mobile Number.
+                                                </span>
+                                                <span
+                                                    *ngIf="addHospitalForm.get('mobileNumber').hasError('maxlength') && !(addHospitalForm.get('mobileNumber').hasError('pattern')) && addHospitalForm.get('mobileNumber').dirty ">
+                                                    *Maximum length should not more than 18.
+                                                </span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="view-ul view-ul2">
+                                        <li><label>Password <span>:</span></label></li>
+                                        <li>
+                                            <input type="password" class="form-control" placeholder="Password"
+                                                formControlName="password" (keypress)="mainService.preventSpace($event)"
+                                                maxlength="16">
+                                            <div class="text-danger">
+                                                <span
+                                                    *ngIf="addHospitalForm.get('password').hasError('required') && (addHospitalForm.get('password').dirty || addHospitalForm.get('password').touched)">
+                                                    Please enter password.
+                                                </span>
+                                                <span
+                                                    *ngIf="addHospitalForm.get('password').hasError('pattern') && (addHospitalForm.get('password').dirty || f.submitted)">
+                                                    Invalid password(password must have at least one uppercase,
+                                                    lowercase, numbers and special characters).
+                                                </span>
+                                                <span
+                                                    *ngIf="addHospitalForm.get('password').hasError('minlength') && !(addHospitalForm.get('password').hasError('pattern')) && (addHospitalForm.get('password').dirty || f.submitted)">
+                                                    Minimum length must be 8.
+                                                </span>
+                                                <span
+                                                    *ngIf="addHospitalForm.get('password').hasError('maxlength') && !(addHospitalForm.get('password').hasError('pattern')) && (addHospitalForm.get('password').dirty || f.submitted)">
+                                                    Maximum length should not more than 56.
+                                                </span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="view-ul view-ul2">
+                                        <li><label>Confirm Password <span>:</span></label></li>
+                                        <li>
+                                            <input type="password" class="form-control" placeholder="Confirm Password"
+                                                formControlName="confirmPassword"
+                                                (keypress)="mainService.preventSpace($event)" maxlength="16">
+                                            <div class="text-danger">
+                                                <span
+                                                    *ngIf="addHospitalForm.get('confirmPassword').hasError('required') && (addHospitalForm.get('confirmPassword').dirty || f.submitted)">
+                                                    Please enter comfirm password.
+                                                </span>
+                                                <span
+                                                    *ngIf="(addHospitalForm.value.confirmPassword !== addHospitalForm.value.password) && (addHospitalForm.get('confirmPassword').dirty || f.submitted)">
+                                                    Comfirm password must be same as password.
+                                                </span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="view-ul view-ul2">
+                                        <li><label>Address <span>:</span></label></li>
+                                        <li>
+                                            <input type="text" class="form-control" placeholder="Address"
+                                                formControlName="address" ngx-google-places-autocomplete
+                                                #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)"
+                                                (keypress)="mainService.preventSpace($event)" maxlength="60" />
+                                            <div class="text-danger">
+                                                <span
+                                                    *ngIf="addHospitalForm.get('address').hasError('required') && (addHospitalForm.get('address').dirty || addHospitalForm.get('address').touched)">
+                                                    *Please select address.
+                                                </span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="text-center mt40">
+                                    <button class="btn btn-large  max-WT-200 font-100 btn-theme mb-5"
+                                        [disabled]="addHospitalForm.invalid" (click)="addHospital()">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

@@ -1,0 +1,117 @@
+<!-- Start Right Bar -->
+<app-rightsidemenu></app-rightsidemenu>
+<!-- Close Right Bar -->
+
+
+<!-- Satrt Page Content -->
+<div class="page-wrap">
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="left-menu card">
+          <app-sidemenu></app-sidemenu>
+        </div>
+      </div>
+
+      <div class="col-md-9">
+        <div class="page-content">
+          <div class="card post-box main-post">
+
+            <div class="card  post-search bidding">
+              <div class="post-wrap" style="width:100%;">
+                <form class="search-form">
+                  <input type="search" placeholder="Bidding by category name " class="form-control"
+                  (keyup)="serchBiddingByCategoryName($event.target.value)">
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="card post-field main-post">
+
+            <div class="bidding-body">
+              <div class="accordion" id="accordionExample">
+                <div class="card" *ngFor="let category of categories ">
+                  <div class="card-header" id="headingOne" >
+                    <h2 class="mb-0">
+                        <div class="btn btn-link shz-clss">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <div class="butn-img">
+                              <img src="{{ category.image}}" alt="">
+                            </div>
+                          </div>
+                          <div class="col-md-3 catgeory-text">
+                            <h5>{{ category.auctionCategoryName }}</h5>
+                          </div>
+                          <div class="col-md-5 icon-box">
+                            <div class="icon" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                              aria-controls="collapseOne">
+                              <i class="fa fa-angle-down" aria-hidden="true" (click)="openSubCategory(category)"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </h2>
+                  </div>
+
+                  <div id="collapse{{category._id}}" class="collapse" aria-labelledby="headingOne"
+                    data-parent="#accordionExample">
+                    <div class="card-body">
+                      <ul class="list-group" *ngFor="let subcategory of subcategories">
+                        <li class="list-group-item" style="cursor:pointer;color:blue"><p (click)="addProduct(subcategory, category)"> {{ subcategory.auctionSubCategoryName }}</p></li>
+                        
+                      </ul>
+
+                    </div>
+                  </div>
+                </div>
+                
+                  <div class="card-header" id="headingThree">
+                    <h2 class="mb-0">
+                      <div class="btn btn-link">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <div class="butn-img">
+                              <img src="assets/images/Layer 115.jpg" alt="">
+                              <p>Jewelry</p>
+                            </div>
+                          </div>
+                          <div class="col-md-3 catgeory-text">
+                            <h5>Jewelry</h5>
+                          </div>
+                          <div class="col-md-5 icon-box">
+                            <div class="icon" data-toggle="collapse" data-target="#collapseSix" aria-expanded="true"
+                              aria-controls="collapseSix">
+                              <i class="fa fa-angle-down" aria-hidden="true"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </h2>
+                  </div>
+                  <div id="collapseSix" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                    <div class="card-body">
+                      <ul class="list-group">
+                        <li class="list-group-item"><a href="bidding-product"> Ladies Dress</a></li>
+                        <li class="list-group-item"><a href="bidding-product">Men's Dress</a></li>
+                        <li class="list-group-item"><a href="bidding-product">Babies Dress</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div> -->
+
+
+
+              </div>
+            </div>
+
+            <div class="field-area">
+
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>

@@ -1,0 +1,53 @@
+<main class="middle-content">
+    <div class="content-section">
+        <div class="page_title_block pL0 pR0">
+            <h1 class="page_title" style="color:#26272d">TICKET DETAILS</h1>
+        </div>
+        <div class="order-view mt30 max-WT-700 mrgn-0-auto">
+            <div class="main-block-innner mb40 mt40">
+                <div class="add-store-block input-style">
+                    <div class="form-group row">
+                        <label class="col-md-5 text" for="">Description</label>
+                        <span class="col-md-1">:</span>
+                        <div class="col-md-6">
+                            <p>{{ticketDetail?.description}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-5 text" for="">Customer Name</label>
+                        <span class="col-md-1">:</span>
+                        <div class="col-md-6">
+                            <p>{{ticketDetail?.firstName}}{{ticketDetail?.lastName}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-5 text" for="">Customer Email</label>
+                        <span class="col-md-1">:</span>
+                        <div class="col-md-6">
+                            <p>{{ticketDetail?.email}}</p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-5 text" for="">Attachment</label>
+                        <span class="col-md-1">:</span>
+                        <div class="col-md-6">
+                            <img src="{{ticketDetail?.imageUrl}}" alt="">
+                        </div>
+                    </div>
+                    
+
+                    <div class="text-left mt40 text-center">
+                                        <a routerLink="/ticket-management" class="btn btn-large  max-WT-200 font-100 btn-green" >Back</a>
+                                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="container-fluid">
+        <p class="copyright">Alende  <strong class="theme-text-color"></strong> 
+            </p>
+    </div>
+</footer>

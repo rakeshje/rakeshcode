@@ -1,0 +1,43 @@
+<div class="wrapper">
+  <main class="middle-content">
+      <div class="page_title_block">
+          <h1 class="page_title">Dashboard</h1>
+      </div>
+      <div class="content-section dashboard-block">
+          <ul class="dash_list d-flex w-100 flex-wrap text-center justify-content-around">
+              <li class="blue" style="cursor:pointer" routerLink="/user-management">
+                  <div class="dash_icon">
+                      <i class="fa fa-users" aria-hidden="true"></i>
+                  </div>
+                  <h2>TOTAL USERS</h2>
+                  <h4 >{{users}}</h4>
+              </li>
+              <li class="red" style="cursor:pointer">
+                  <div class="dash_icon">
+                      <i class="fa fa-hospital-o" aria-hidden="true"></i>
+                  </div>
+                  <h2>TOTAL REVENUE</h2>
+                  <h4>450000</h4>
+              </li>
+          </ul>
+      </div>
+      <form [formGroup]="dash" style="margin-left: 7%">
+      <div class="form-group row">
+          <div class="col-md-4">
+          <input type="date" class="form-control" placeholder="From date" formControlName="fromDate" >
+        </div>
+        <div class="col-md-4">
+                <input type="date" class="form-control" placeholder="To date"  formControlName="toDate">
+              </div>
+              
+              <div class="col-md-4">
+                  <button type="button" class="btn  btn-theme Go_btn" (click)="graphContent()">Filter</button>
+              </div>
+      </div>
+    </form>
+
+      <div class="graphBlock">
+        <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+    </div>
+  </main>
+</div>

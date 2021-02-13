@@ -1,0 +1,40 @@
+<div class="wrapper">
+          <main class="middle-content">
+              <div class="page_title_block">
+                  <h1 class="page_title text-center">Static Page Management</h1>
+              </div>
+              <div class="content-section">
+                  <div class="outer-box">
+                      <div class="global-table no-radius p0">
+                          <div class="tab-content1">
+                              <div class="table-responsive">
+                                  <table aria-describedby="" class="table table-bordered" id="patientPdf">
+                                      <thead>
+                                          <tr class="no_wrap_th text-center">
+                                              <th id="" class="Sorting-img">S.No.</th>
+                                              <th  id=""class="Sorting-img" style="width:200px!important">Title </th>
+                                              <th  id="" class="Sorting-img" style="width:200px!important">Description </th>
+                                              <th  id="" class="action_td_btn3 Sorting-img" style="width:200px!important">Action </th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          
+                                          <tr *ngFor="let data of StaticContentList;let i = index">
+                                              <td>{{i+1}}</td>
+                                              <td>{{data?.title}}</td>
+                                              <td>{{data?.description}}</td>
+
+                                              <td class="text-center">
+                                                  <button [routerLink]="['/view-static-page/' + data.title, data._id]" class="btn btn-info ml-2">View</button>
+                                                  <button (click)="gotoEditstatic(data)"  class="btn btn-info ml-2">Edit</button>
+                                              </td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </main>
+      </div>
